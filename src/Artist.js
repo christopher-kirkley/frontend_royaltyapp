@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import Button from 'react-bootstrap/Button';
 import { Redirect } from 'react-router-dom'
+import AddArtist from "./AddArtist";
 
 
 class ArtistTable extends React.Component {
@@ -50,21 +51,34 @@ function Table ({artists}) {
 			</table>
 	)}
 
-function AddArtist () {
-	return (
-		<p>Test</p>
-	)
-}
 
 function Artist() {
+
+	const [form, showForm] = useState(null)
+	const [table, showTable] = useState(<ArtistTable/>)
+	const [value, setValue] = useState(true)
+	console.log({value})
+
+	// this isn't evaluating at ALL
+	if ({value}==false) {
+		return (
+			<div>
+			<p>Cheeseburger</p>
+			</div>
+		);
+	}
+
 	return (
 		<div className="Artist">
 			<header className="Artist-header">
-			<Button id="add_artist" onClick={() => AddArtist()}>
-			Add Artist
-			</Button>
+				<Button id="add_artist" onClick={() => showForm(<AddArtist setValue={setValue}/>) | showTable(null)}>
+					Add Artist
+				</Button>
+		
+
+			{form}
 			</header>
-			<ArtistTable/>
+			{table}
 		</div>
 	);
 }

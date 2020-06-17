@@ -6,6 +6,7 @@ import {
 } from "react-router-dom";
 import Artist from "./Artist";
 import AddArtist from "./AddArtist";
+import Test from "./Test";
 
 class Main extends Component {
 	render() {
@@ -16,10 +17,12 @@ class Main extends Component {
 				<ul className="header">
 					<li><NavLink to="/">Home</NavLink></li>
 					<li><NavLink to="/artist" id="artist">Artist</NavLink></li>
+					<li><NavLink to="/test" id="test">Test</NavLink></li>
 				</ul>
 			<div className="content">
 				<Route path="/artist" component={Artist}/>
 				<Route path="/add_artist" component={AddArtist}/>
+				<Route path="/test" component={Test}/>
 			</div>
 		</div>
 		</HashRouter>
