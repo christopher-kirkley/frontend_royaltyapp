@@ -2,23 +2,36 @@ import React, { useState } from 'react';
 import './App.css';
 import Button from 'react-bootstrap/Button';
 
+import {
+	Redirect
+} from "react-router-dom";
 
-function AddArtist(params) {
+function AddArtist() {
 	const [artist_name, setArtistName] = useState('')
 	const [prenom, setPrenom] = useState('')
 	const [surnom, setSurnom] = useState('')
+
+	const [submit, setSubmit] = useState(false)
 	
-	function submit(e) {
+	function handleSubmit(e) {
 		e.preventDefault()
 		fetch('http://localhost:5000/artists', {
 			method: 'POST',
 			body: JSON.stringify({ artist_name, prenom, surnom }),
-		}).then(params.setValue(false))
+		})
+		.then(res => res.json())
+		.then(json => console.log(json))
+		// .then(json => this.setState({'artists': json}))
+		// .then(setSubmit(true))onsole.log(this.state.artists)
 	};
+
+	if (submit === true) {
+			return <Redirect to='/artist' />
+	}
 
 
   return (
-			<form onSubmit={submit} id="form">
+			<form onSubmit={handleSubmit} id="form">
 				<label htmlFor="artist_name">Artist Name</label>
 				<input type="text" name="artist_name" id="artist_name"
 					onChange={e => setArtistName(e.target.value)}/>

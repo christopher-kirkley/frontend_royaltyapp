@@ -6,6 +6,7 @@ import {
 } from "react-router-dom";
 import Artist from "./Artist";
 import AddArtist from "./AddArtist";
+import ArtistDetail from "./ArtistDetail";
 import Test from "./Test";
 
 class Main extends Component {
@@ -22,6 +23,7 @@ class Main extends Component {
 			<div className="content">
 				<Route path="/artist" component={Artist}/>
 				<Route path="/add_artist" component={AddArtist}/>
+				<Route path="/artist_detail" component={ArtistDetail}/>
 				<Route path="/test" component={Test}/>
 			</div>
 		</div>

@@ -3,6 +3,10 @@ import './App.css';
 import Button from 'react-bootstrap/Button';
 import { Redirect } from 'react-router-dom'
 import AddArtist from "./AddArtist";
+import {
+	NavLink
+} from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 
 class ArtistTable extends React.Component {
@@ -28,6 +32,21 @@ class ArtistTable extends React.Component {
 }
 			
 function Table ({artists}) {
+
+	const [click, setClick] = useState(false);
+
+	function handleClick(e) {
+		e.preventDefault()
+		fetch('http://localhost:5000/artists', {
+			method: 'POST',
+			// body: JSON.stringify({ id }),
+		}).then(setClick(true))
+	};
+
+	if (click === true) {
+			return <Redirect to='/artist_detail' />
+	}
+
 	return (
 			<table id="artist_table">
 				<thead>
@@ -44,6 +63,7 @@ function Table ({artists}) {
 								<td>{artists.artist_name}</td>
 								<td>{artists.prenom}</td>
 								<td>{artists.surnom}</td>
+								<td><Button id="artist_detail" onClick={handleClick}>Detail</Button></td>
 							</tr>
 						)
 					})}
@@ -52,40 +72,28 @@ function Table ({artists}) {
 	)}
 
 
+
 function Artist() {
 
-	const [form, showForm] = useState(null)
-	const [table, showTable] = useState(<ArtistTable/>)
-	const [value, setValue] = useState(true)
-	console.log({value})
+	const history = useHistory();
 
-	// this isn't evaluating at ALL
-	if ({value}==false) {
+	function routeChange() {
+		let path = '/add_artist';
+		history.push(path);
+	};
+
 		return (
 			<div>
-			<p>Cheeseburger</p>
+			<Button id="add_artist" onClick={routeChange}>
+				Add Artist
+			</Button>
+			<ArtistTable/>
 			</div>
 		);
 	}
 
-	return (
-		<div className="Artist">
-			<header className="Artist-header">
-				<Button id="add_artist" onClick={() => showForm(<AddArtist setValue={setValue}/>) | showTable(null)}>
-					Add Artist
-				</Button>
-		
+	
 
-			{form}
-			</header>
-			{table}
-		</div>
-	);
-}
-
-function onClickButton () {
-	this.setState({ showForm: true });
-}
 	
 
 export default Artist;
