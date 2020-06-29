@@ -2,8 +2,13 @@ import React, { useState, useEffect } from 'react'
 
 import { useHistory, useParams } from 'react-router-dom'
 
-import Button from 'react-bootstrap/Button';
-
+import Button from 'react-bootstrap/Button'
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
 
 function ArtistTable() {
 	
@@ -25,29 +30,31 @@ function ArtistTable() {
 
 	return (
 		<div>
-		Artist Table
-			<table id="artist_table">
-				<thead>
-					<tr>
-						<th>Artist Name</th>
-						<th>Prenom</th>
-						<th>Surnom</th>
-						<th></th>
-					</tr>
-				</thead>
-				<tbody>
-					{artists.map((artists, i) => {
-						return (
-							<tr key={i}>
-								<td>{artists.artist_name}</td>
-								<td>{artists.prenom}</td>
-								<td>{artists.surnom}</td>
-								<td><Button id="artist-detail" value={artists.id} onClick={handleArtistDetail}>Detail</Button></td>
-							</tr>
-						)
-					})}
-				</tbody>
-			</table>
+		<TableContainer>
+		<Table id="artist-table">
+			<TableHead>
+				<TableRow>
+					<TableCell>Artist Name</TableCell>
+					<TableCell>Prenom</TableCell>
+					<TableCell>Surnom</TableCell>
+					<TableCell></TableCell>
+				</TableRow>
+			</TableHead>
+			<TableBody>
+				{artists.map((artists, i) => {
+					return (
+						<TableRow key={i}>
+							<TableCell>{artists.artist_name}</TableCell>
+							<TableCell>{artists.prenom}</TableCell>
+							<TableCell>{artists.surnom}</TableCell>
+							<TableCell>
+								<Button id="artist-detail" value={artists.id} onClick={handleArtistDetail}>Detail</Button></TableCell>
+						</TableRow>
+					)
+				})}
+			</TableBody>
+			</Table>
+			</TableContainer>
 		</div>
 	)
 }

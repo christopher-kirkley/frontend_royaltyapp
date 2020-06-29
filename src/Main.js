@@ -9,6 +9,10 @@ import {
 
 import Artists from "./artists/Artists"
 import ArtistDetail from "./artists/ArtistDetail"
+
+import Catalog from "./catalog/Catalog"
+import AddCatalogItem from "./catalog/AddCatalogItem"
+
 import Test from "./Test";
 import Button from '@material-ui/core/Button';
 
@@ -26,7 +30,7 @@ import AppBar from '@material-ui/core/AppBar';
 
 import HomeIcon from "@material-ui/icons/Home"
 import PeopleIcon from "@material-ui/icons/People"
-import AlbumIcon from '@material-ui/icons/Album'
+import CatalogIcon from '@material-ui/icons/Album'
 
 const useStyles = makeStyles((theme) => ({
 		drawerPaper: { width: 'inherit' },
@@ -71,11 +75,21 @@ function Main() {
 						<ListItemText primary={"Artists"}/>
 					</ListItem>
 					</Link>
+					<Link to="/catalog" className={classes.link}>
+						<ListItem button id="catalog">
+							<ListItemIcon>
+								<CatalogIcon />
+							</ListItemIcon>
+							<ListItemText primary={"Catalog"}/>
+						</ListItem>
+					</Link>
 				</List>
 			</Drawer>
 			<Switch>
 				<Route path="/artists" component={Artists}/>
 				<Route path="/artist/:id" component={ArtistDetail}/>
+				<Route path="/catalog" component={Catalog}/>
+				<Route path="/catalog/add" component={AddCatalogItem}/>
 			</Switch>
 		</div>
 		{

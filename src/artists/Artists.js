@@ -19,11 +19,6 @@ function Artist() {
 
 	const [addArtist, setAddArtist] = useState(false)
 
-	function routeChange() {
-		let path = '/add_artist';
-		history.push(path);
-	};
-	
 	function handleClick() {
 		setAddArtist(true)
 	}
