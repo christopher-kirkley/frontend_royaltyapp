@@ -1,5 +1,9 @@
-import React, { useState } from 'react';
-import Button from 'react-bootstrap/Button';
+import React, { useState } from 'react'
+import Button from '@material-ui/core/Button'
+import FormGroup from '@material-ui/core/FormGroup'
+import Input from '@material-ui/core/Input'
+import InputLabel from '@material-ui/core/InputLabel'
+import Grid from '@material-ui/core/Grid'
 
 import { useForm } from 'react-hook-form'
 
@@ -26,18 +30,16 @@ function AddArtist(props) {
 
 
   return (
-			<div>
-			<p>Add Artist</p>
-			<form onSubmit={handleSubmit(onSubmit)} id="form">
-				<label htmlFor="artist_name">Artist Name</label>
-				<input type="text" name="artist_name" id="artist_name" ref={register}/><br/>
-				<label htmlFor="prenom">Prenom</label>
-				<input type="text" name="prenom" id="prenom" ref={register}/><br/>
-				<label htmlFor="surnom">Surnom</label>
-				<input type="text" name="surnom" id="surnom" ref={register}/><br/>
-				<button type="submit" id="submit">Submit</button>
-			</form>
-			</div>
+			<FormGroup onSubmit={handleSubmit(onSubmit)} id="form">
+				<Input type="text" name="artist_name" id="artist_name" ref={register}/>
+				<InputLabel htmlFor="artist_name">Artist Name</InputLabel>
+				<Input type="text" name="prenom" id="prenom" ref={register}/>
+				<InputLabel htmlFor="prenom">Prenom</InputLabel>
+				<Input type="text" name="surnom" id="surnom" ref={register}/>
+				<InputLabel htmlFor="surnom">Surnom</InputLabel>
+				<br/>
+				<Button type="submit" variant="contained" color="primary" id="submit">Submit</Button>
+			</FormGroup>
   );
 }
 

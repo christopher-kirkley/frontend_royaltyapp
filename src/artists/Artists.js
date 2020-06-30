@@ -9,8 +9,13 @@ import {
 } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 
-import Button from '@material-ui/core/Button';
-import Container from '@material-ui/core/Container';
+import Grid from '@material-ui/core/Grid'
+import AppBar from '@material-ui/core/AppBar'
+import Toolbar from '@material-ui/core/Toolbar'
+import Button from '@material-ui/core/Button'
+import Container from '@material-ui/core/Container'
+import Typography from '@material-ui/core/Typography'
+
 import { makeStyles } from '@material-ui/core/styles';
 
 function Artist() {
@@ -24,19 +29,32 @@ function Artist() {
 	}
 
 		return (
-			<div className="component">
-				<h1 id="header">Artists Page</h1>
-				{addArtist ?
-					<AddArtist onChange={() => setAddArtist(false)}/>
-					:
-					<div>
-					<Button variant="contained" color="primary" id="add_artist" onClick={handleClick}>
-					Add Artist
-					</Button>
-					<ArtistTable/>
-					</div>
-				}
-			</div>
+			<Container>
+				<AppBar position="static">
+					<Toolbar variant="dense">
+						<Typography variant="h6" color="inherit">
+						Artists
+						</Typography>
+					</Toolbar>
+				</AppBar>
+				<div>
+					{addArtist ?
+						<AddArtist onChange={() => setAddArtist(false)}/>
+						:
+						<Grid container spacing={3}>
+							<Grid item xs={8}>
+								<ArtistTable/>
+							</Grid>
+							<Grid item xs={4} spacing={3} align="right">
+								<br/>
+								<Button variant="contained" color="primary" id="add_artist" onClick={handleClick}>
+								Add Artist
+								</Button>
+							</Grid>
+						</Grid>
+					}
+				</div>
+			</Container>
 		)
 	}
 
