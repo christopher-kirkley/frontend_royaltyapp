@@ -28,6 +28,7 @@ function Catalog() {
 					:
 					<div>
 					<h1 id="header">Catalog</h1>
+					<CatalogTable/>
 					<Button variant="contained" color="primary" id="add-catalog-item" onClick={handleClick}>Add Catalog Item</Button>
 					</div>
 				}

@@ -12,6 +12,7 @@ import {
 } from "react-router-dom";
 
 function AddArtist(props) {
+	
 	const { register, handleSubmit, error } = useForm()
 	
 	function onSubmit(data) {
@@ -30,16 +31,16 @@ function AddArtist(props) {
 
 
   return (
-			<FormGroup onSubmit={handleSubmit(onSubmit)} id="form">
-				<Input type="text" name="artist_name" id="artist_name" ref={register}/>
+			<form onSubmit={handleSubmit(onSubmit)} id="form">
+				<Input type="text" name="artist_name" id="artist_name" inputRef={register}/>
 				<InputLabel htmlFor="artist_name">Artist Name</InputLabel>
-				<Input type="text" name="prenom" id="prenom" ref={register}/>
+				<Input type="text" name="prenom" id="prenom" inputRef={register}/>
 				<InputLabel htmlFor="prenom">Prenom</InputLabel>
-				<Input type="text" name="surnom" id="surnom" ref={register}/>
+				<Input type="text" name="surnom" id="surnom" inputRef={register}/>
 				<InputLabel htmlFor="surnom">Surnom</InputLabel>
 				<br/>
 				<Button type="submit" variant="contained" color="primary" id="submit">Submit</Button>
-			</FormGroup>
+			</form>
   );
 }
 

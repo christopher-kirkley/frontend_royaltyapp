@@ -38,14 +38,15 @@ function Artist() {
 					</Toolbar>
 				</AppBar>
 				<div>
-					{addArtist ?
+					{
+						addArtist ?
 						<AddArtist onChange={() => setAddArtist(false)}/>
 						:
 						<Grid container spacing={3}>
 							<Grid item xs={8}>
 								<ArtistTable/>
 							</Grid>
-							<Grid item xs={4} spacing={3} align="right">
+							<Grid item xs={4} align="right">
 								<br/>
 								<Button variant="contained" color="primary" id="add_artist" onClick={handleClick}>
 								Add Artist
