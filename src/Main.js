@@ -12,6 +12,7 @@ import ArtistDetail from "./artists/ArtistDetail"
 
 import Catalog from "./catalog/Catalog"
 import AddCatalogItem from "./catalog/AddCatalogItem"
+import CatalogDetail from "./catalog/CatalogDetail"
 
 import Test from "./Test";
 import Button from '@material-ui/core/Button';
@@ -40,10 +41,11 @@ const useStyles = makeStyles((theme) => ({
 					}
 }))
 
+
 function Main() {
 	const classes= useStyles()
 	return (
-		<Router>
+		<Router >
 		<div style={{ display: 'flex' }}>
 			<Drawer
 				style={{ width: '220px' }}
@@ -88,8 +90,9 @@ function Main() {
 			<Switch>
 				<Route path="/artists" component={Artists}/>
 				<Route path="/artist/:id" component={ArtistDetail}/>
-				<Route path="/catalog" component={Catalog}/>
-				<Route path="/catalog/add" component={AddCatalogItem}/>
+				<Route exact path="/catalog" component={Catalog}/>
+				<Route exact path="/catalog/add" component={AddCatalogItem}/>
+				<Route exact path="/catalog/:id" component={CatalogDetail}/>
 			</Switch>
 		</div>
 		{

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { useHistory }  from 'react-router'
+
+import { useHistory, useParams } from 'react-router-dom'
 
 import Button from 'react-bootstrap/Button'
 import Table from '@material-ui/core/Table';
@@ -19,6 +20,7 @@ function CatalogTable() {
 		fetch('http://localhost:5000/catalog')
 		.then(res => res.json())
 		.then(json => setCatalog(json))
+		.then(json => console.log(json))
 	}, [])
 
 	function handleCatalogDetail(e) {
@@ -44,10 +46,10 @@ function CatalogTable() {
 					return (
 						<TableRow key={i}>
 							<TableCell>{catalogitem.catalog_number}</TableCell>
-							<TableCell>{catalogitem.artist_id}</TableCell>
+							<TableCell>{catalogitem.artist.artist_name}</TableCell>
 							<TableCell>{catalogitem.catalog_name}</TableCell>
 							<TableCell>
-								<Button id="artist-detail" value={catalogitem.id} onClick={handleCatalogDetail}>Detail</Button></TableCell>
+								<Button id="catalog_detail" value={catalogitem.id} onClick={handleCatalogDetail}>Detail</Button></TableCell>
 						</TableRow>
 					)
 				})}

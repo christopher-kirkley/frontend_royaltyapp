@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 
-import { useHistory, useParams } from 'react-router-dom'
+import { useHistory } from "react-router-dom";
 
 import Button from 'react-bootstrap/Button'
 import Table from '@material-ui/core/Table';
