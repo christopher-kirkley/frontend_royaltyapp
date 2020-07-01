@@ -12,27 +12,18 @@ import { makeStyles } from '@material-ui/core/styles';
 
 function Catalog() {
 
-	const [addCatalog, setAddCatalog] = useState(false)
+	const history = useHistory()
 
 	function handleClick() {
-		setAddCatalog(true)
+		history.push('/catalog/add')
 	}
 
 		return (
-			<div className="component">
-				{addCatalog ?
-					<div>
-						<h1 id="header">Add Catalog Item</h1>
-						<AddCatalogItem onChange={() => setAddCatalog(false)}/>
-					</div>
-					:
-					<div>
-					<h1 id="header">Catalog</h1>
-					<CatalogTable/>
-					<Button variant="contained" color="primary" id="add-catalog-item" onClick={handleClick}>Add Catalog Item</Button>
-					</div>
-				}
-			</div>
+			<Container>
+				<h1 id="header">All Catalog</h1>
+				<CatalogTable/>
+				<Button variant="contained" color="primary" id="add-catalog-item" onClick={handleClick}>Add Catalog Item</Button>
+			</Container>
 		)
 	}
 

@@ -5,12 +5,13 @@ import { useParams } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 
 function CatalogDetail () {
-	const { id } = useParams()
 
 	const [catalog, setCatalog] = useState([])
 	
 	const { register, handleSubmit, error, setValue } = useForm()
 	
+	const { id } = useParams()
+
 	useEffect(() => { 
 		fetch(`http://localhost:5000/catalog/${id}`)
 		.then(res => res.json())
@@ -18,12 +19,12 @@ function CatalogDetail () {
 	}, [])
 
 	useEffect(() => {
-		console.log(catalog)
-		// setValue([
-		// 	{catalog_number: catalog.catalog_number},
-		// 	{catalog_name: catalog.catalog_name},
-		// 	{artist_name: catalog.artist.artist_name},
-		// ])
+		const artist_name = catalog && catalog.artist ? catalog.artist.artist_name : null;
+		setValue([
+			{catalog_number: catalog.catalog_number},
+			{catalog_name: catalog.catalog_name},
+			{artist_name: artist_name}
+		])
 	}, [catalog])
 
 		
