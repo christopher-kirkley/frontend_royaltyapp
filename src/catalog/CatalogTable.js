@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 
 import { useHistory, useParams } from 'react-router-dom'
 
-import Button from 'react-bootstrap/Button'
+import Button from '@material-ui/core/Button';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -23,8 +23,7 @@ function CatalogTable() {
 		.then(json => console.log(json))
 	}, [])
 
-	function handleCatalogDetail(e) {
-		const id = e.target.value
+	function handleCatalogDetail(id) {
 		history.push(`/catalog/${id}`)
 
 	}
@@ -49,7 +48,12 @@ function CatalogTable() {
 							<TableCell>{catalogitem.artist.artist_name}</TableCell>
 							<TableCell>{catalogitem.catalog_name}</TableCell>
 							<TableCell>
-								<Button id="catalog_detail" value={catalogitem.id} onClick={handleCatalogDetail}>Detail</Button></TableCell>
+								<Button
+									id="catalog_detail"
+									onClick={()=>handleCatalogDetail(catalogitem.id)}>
+										Detail
+								</Button>
+							</TableCell>
 						</TableRow>
 					)
 				})}
