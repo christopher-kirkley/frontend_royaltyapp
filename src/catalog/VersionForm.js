@@ -20,7 +20,8 @@ function VersionForm(props) {
 										version_number: ''}
 	
 	const [version, setVersion] = useState([])
-	const [number, setNumber] = useState(0)
+
+	const [length, setLength] = useState(0)
 
 	useEffect(() => { 
 		fetch(`http://localhost:5000/catalog/${id}`)
@@ -45,6 +46,9 @@ function VersionForm(props) {
 				'version': data['version']})
 		})
 		.then(res => res.json())
+		// need to post new data here, after waiting for data to update
+		// currently have to reload the form to see changes which is bullshit
+		
 	}
 		
 
