@@ -1,10 +1,15 @@
 import React from 'react'
 
+import TrackForm from './TrackForm'
+
+import Container from '@material-ui/core/Container';
+
 function TrackInfo() {
 	return (
-		<div>
+		<Container style={{border: '3px solid black'}}>
 		<h2>Track Info</h2>
-		</div>
+		<TrackForm/>
+		</Container>
 	)
 }
 

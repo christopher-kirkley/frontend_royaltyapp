@@ -8,27 +8,32 @@ import TextField from '@material-ui/core/TextField'
 
 function VersionForm(props) {
 
-	let version = props.version
 	let id = props.id
+	
+	const { register, setValue, control, reset, handleSubmit } = useForm()
 
-	const empty_row = {version: [{upc: '', version_number: '', version_name: '', format: ''}]}
+	const emptyRow = {format: '',
+										catalog_id: '',
+										id: '',
+										upc: '',
+										version_name: '',
+										version_number: ''}
+	
+	const [version, setVersion] = useState([])
+	const [number, setNumber] = useState(0)
 
-	const { register, setValue, control, reset, handleSubmit } = useForm({defaultValues: empty_row})
-
-	// const [version, setVersion] = useState([])
-
-	// useEffect(() => { 
-	// 	fetch(`http://localhost:5000/catalog/${id}`)
-	// 	.then(res => res.json())
-	// 	.then(json => setVersion(json['version']))
-	// }, [])
+	useEffect(() => { 
+		fetch(`http://localhost:5000/catalog/${id}`)
+		.then(res => res.json())
+		.then(json => setVersion(json['version']))
+	}, [])
 
 	
-	const { fields, append, remove } = useFieldArray(
-		{ control,
-			name: 'version'
-		}
-		)
+	// const { fields, append, remove } = useFieldArray(
+	// 	{ control,
+	// 		name: 'version'
+	// 	}
+	// 	)
 
 	function onSubmit(data) {
 		console.log(data)
@@ -41,11 +46,12 @@ function VersionForm(props) {
 		})
 		.then(res => res.json())
 	}
+		
 
 	
 	return (
 		<div>
-		<form>
+		<form onSubmit={handleSubmit(onSubmit)}>
 		{ version.map((version, index) => (
 			<div name='child' key={index}>
 			<Controller
@@ -88,12 +94,37 @@ function VersionForm(props) {
 				color="secondary"
 				id="add_version"
 				name="add_version"
-				onClick={() => remove(index)}
 			>Delete
 			</Button>
 			</div>
 			)
 		)}
+				<Button
+					variant="contained"
+					color="primary"
+					id="version_submit"
+					name="submit"
+					type="submit"
+				>Submit
+				</Button>
+				<Button
+					variant="contained"
+					color="primary"
+					id="add_version"
+					name="add_version"
+					onClick={() =>
+						{
+							console.log(version)
+							const newVersion = [...version]
+							newVersion.push(emptyRow)
+							setVersion(newVersion)
+							
+							
+					}
+					}
+
+				>Add Version
+				</Button>
 		</form>
 		
 		</div>
