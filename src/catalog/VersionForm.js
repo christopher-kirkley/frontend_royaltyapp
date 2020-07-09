@@ -29,11 +29,11 @@ function VersionForm(props) {
 		.then(json => setVersion(json['version']))
 	}, [])
 
-	useEffect(() => { 
-		fetch(`http://localhost:5000/catalog/${id}`)
-		.then(res => res.json())
-		.then(json => setVersion(json['version']))
-	}, [version])
+	// useEffect(() => { 
+	// 	fetch(`http://localhost:5000/catalog/${id}`)
+	// 	.then(res => res.json())
+	// 	.then(json => setVersion(json['version']))
+	// }, [version])
 	
 	const { fields, append, remove } = useFieldArray(
 		{ control,
@@ -48,12 +48,13 @@ function VersionForm(props) {
 			method: 'POST',
 			body: JSON.stringify(
 				{'catalog': id,
-				'version': data['version']})
+				'version': data['addVersion']})
 		})
 		.then(res => res.json())
 		.then(res => fetch(`http://localhost:5000/catalog/${id}`))
 		.then(res => res.json())
 		.then(json => setVersion(json['version']))
+		.then(res => reset(version))
 		// need to post new data here, after waiting for data to update
 		// currently have to reload the form to see changes which is bullshit
 		
@@ -111,6 +112,56 @@ function VersionForm(props) {
 			</div>
 			)
 		)}
+		</form>
+		<form onSubmit={handleSubmit(onSubmit)}>
+		{ fields.map((addVersion, index) => (
+			<div name='child' key={index}>
+			<Controller
+				type="hidden"
+				as={TextField}
+				control={control}
+				name={`addVersion[${index}].id`}
+				defaultValue={`${addVersion.id}`}
+			/>
+			<Controller
+				as={TextField}
+				control={control}
+				name={`addVersion[${index}].upc`}
+				defaultValue={`${addVersion.upc}`}
+				label='UPC'
+			/>
+			<Controller
+				as={TextField}
+				control={control}
+				id={`addVersion[${index}].version_number`}
+				name={`addVersion[${index}].version_number`}
+				defaultValue={`${addVersion.version_number}`}
+				label='Version Number'
+			/>
+			<Controller
+				as={TextField}
+				control={control}
+				name={`addVersion[${index}].version_name`}
+				defaultValue={`${addVersion.version_name}`}
+				label='Version Name'
+			/>
+			<Controller
+				as={TextField}
+				control={control}
+				name={`addVersion[${index}].format`}
+				defaultValue={`${addVersion.format}`}
+				label='Format'
+			/>
+			<Button
+				variant="contained"
+				color="secondary"
+				id="add_version"
+				name="add_version"
+			>Delete
+			</Button>
+			</div>
+			)
+		)}
 				<Button
 					variant="contained"
 					color="primary"
@@ -125,11 +176,7 @@ function VersionForm(props) {
 					id="add_version"
 					name="add_version"
 					onClick={() =>
-						{
-							const newVersion = [...version]
-							newVersion.push(emptyRow)
-							setVersion(newVersion)
-					}
+						append(emptyRow)
 					}
 
 				>Add Version
