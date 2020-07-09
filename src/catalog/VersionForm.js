@@ -26,7 +26,9 @@ function VersionForm(props) {
 	useEffect(() => { 
 		fetch(`http://localhost:5000/catalog/${id}`)
 		.then(res => res.json())
-		.then(json => setVersion(json['version']))
+		.then((json) => {
+			json['version'].sort((a, b) => a.id - b.id);
+			setVersion(json['version'])})
 	}, [])
 
 	// useEffect(() => { 
@@ -41,9 +43,24 @@ function VersionForm(props) {
 		}
 		)
 
-	function onSubmit(data) {
-		console.log(data)
-		const json_res = JSON.stringify(data)
+	function updateVersion(data) {
+		fetch('http://localhost:5000/version', {
+			method: 'PUT',
+			body: JSON.stringify(
+				{'catalog': id,
+				'version': data['version']})
+		})
+		.then(res => res.json())
+		.then(res => fetch(`http://localhost:5000/catalog/${id}`))
+		.then(res => res.json())
+		.then((json) => {
+			json['version'].sort((a, b) => a.id - b.id);
+			setVersion(json['version'])
+		})
+		.then(res => reset(version))
+	}
+
+	function addVersion(data) {
 		fetch('http://localhost:5000/version', {
 			method: 'POST',
 			body: JSON.stringify(
@@ -55,13 +72,12 @@ function VersionForm(props) {
 		.then(res => res.json())
 		.then(json => setVersion(json['version']))
 		.then(res => reset(version))
-		// need to post new data here, after waiting for data to update
-		// currently have to reload the form to see changes which is bullshit
-		
+	}
+
+	function onSubmit(data) {
+		data['addVersion'] ? addVersion(data) : updateVersion(data)
 	}
 		
-
-	
 	return (
 		<div>
 		<form onSubmit={handleSubmit(onSubmit)}>
