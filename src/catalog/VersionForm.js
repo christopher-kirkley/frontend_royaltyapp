@@ -29,12 +29,17 @@ function VersionForm(props) {
 		.then(json => setVersion(json['version']))
 	}, [])
 
+	useEffect(() => { 
+		fetch(`http://localhost:5000/catalog/${id}`)
+		.then(res => res.json())
+		.then(json => setVersion(json['version']))
+	}, [version])
 	
-	// const { fields, append, remove } = useFieldArray(
-	// 	{ control,
-	// 		name: 'version'
-	// 	}
-	// 	)
+	const { fields, append, remove } = useFieldArray(
+		{ control,
+			name: 'version'
+		}
+		)
 
 	function onSubmit(data) {
 		console.log(data)
@@ -46,6 +51,9 @@ function VersionForm(props) {
 				'version': data['version']})
 		})
 		.then(res => res.json())
+		.then(res => fetch(`http://localhost:5000/catalog/${id}`))
+		.then(res => res.json())
+		.then(json => setVersion(json['version']))
 		// need to post new data here, after waiting for data to update
 		// currently have to reload the form to see changes which is bullshit
 		
@@ -118,12 +126,9 @@ function VersionForm(props) {
 					name="add_version"
 					onClick={() =>
 						{
-							console.log(version)
 							const newVersion = [...version]
 							newVersion.push(emptyRow)
 							setVersion(newVersion)
-							
-							
 					}
 					}
 
