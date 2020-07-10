@@ -1,15 +1,23 @@
 import React, { useState, useEffect } from 'react';
 
-import { useParams } from 'react-router-dom'
+import { useParams, useHistory } from 'react-router-dom'
 
-import { useForm } from 'react-hook-form'
+import { useForm, Controller } from 'react-hook-form'
+
+import TextField from '@material-ui/core/TextField'
+import Button from '@material-ui/core/Button'
+import Container from '@material-ui/core/Container'
 
 function ArtistDetail () {
 	const { id } = useParams()
 
 	const [artist, setArtist] = useState([])
 	
-	const { register, handleSubmit, error, setValue } = useForm()
+	const { register, handleSubmit, control, error, setValue } = useForm()
+	
+	const history = useHistory();
+
+	// post if new, put if edit
 	
 	useEffect(() => { 
 		fetch(`http://localhost:5000/artists/${id}`)
@@ -18,6 +26,7 @@ function ArtistDetail () {
 	}, [])
 
 	useEffect(() => {
+		
 		setValue([
 			{artist_name: artist.artist_name},
 			{prenom: artist.prenom},
@@ -29,7 +38,6 @@ function ArtistDetail () {
 		
 
 	function onSubmit(data) {
-		console.log(data)
 		const artist_name = data.artist_name
 		const prenom = data.prenom
 		const surnom = data.surnom
@@ -39,25 +47,37 @@ function ArtistDetail () {
 			body: JSON.stringify({ artist_name, prenom, surnom }),
 		})
 		.then(res => res.json())
-		.then(json => console.log(json))
+		.then(json => history.push('/artists/'))
 	}
 
 	return (
 			<div>
 				<h1 id="heading">Artist Detail</h1>
-				<form onSubmit={handleSubmit(onSubmit)}>
-					<input type="hidden" name="id" id="id" ref={register}/>
-					<label>Artist Name:  
-					<input type="text" name="artist_name" id="artist_name" ref={register}/>
-					</label><br/>
-					<label>Prenom:
-					<input type="text" name="prenom" id="prenom" ref={register} />
-					</label><br/>
-					<label>Surnom:
-					<input type="text" name="surnom" id="surnom" ref={register}/>
-					</label><br/>
-					<input id="update" value="Update" type="submit"/>
-				</form>
+			<form onSubmit={handleSubmit(onSubmit)} id="form">
+				<Controller
+					as={TextField}
+					name="artist_name"
+					id="artist_name"
+					control={control}
+					label="Artist Name"
+				/>
+				<Controller
+					as={TextField}
+					name="prenom"
+					id="prenom"
+					control={control}
+					label="Prenom"
+				/>	
+				<Controller
+					as={TextField}
+					name="surnom"
+					id="surnom"
+					control={control}
+					label="Surnom"
+				/>	
+				<br/>
+				<Button type="submit" variant="contained" color="primary" id="submit">Submit</Button>
+			</form>
 		</div>
 	)}
 

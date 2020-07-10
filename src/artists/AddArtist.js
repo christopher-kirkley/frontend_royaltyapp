@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
 import Button from '@material-ui/core/Button'
 import FormGroup from '@material-ui/core/FormGroup'
-import Input from '@material-ui/core/Input'
-import InputLabel from '@material-ui/core/InputLabel'
+
+import TextField from '@material-ui/core/TextField'
+import Container from '@material-ui/core/Container'
 import Grid from '@material-ui/core/Grid'
 
-import { useForm } from 'react-hook-form'
+import { useForm, Controller } from 'react-hook-form'
 
 import {
 	Redirect
@@ -13,7 +14,7 @@ import {
 
 function AddArtist(props) {
 	
-	const { register, handleSubmit, error } = useForm()
+	const { register, handleSubmit, control, error } = useForm()
 	
 	function onSubmit(data) {
 		
@@ -32,12 +33,27 @@ function AddArtist(props) {
 
   return (
 			<form onSubmit={handleSubmit(onSubmit)} id="form">
-				<Input type="text" name="artist_name" id="artist_name" inputRef={register}/>
-				<InputLabel htmlFor="artist_name">Artist Name</InputLabel>
-				<Input type="text" name="prenom" id="prenom" inputRef={register}/>
-				<InputLabel htmlFor="prenom">Prenom</InputLabel>
-				<Input type="text" name="surnom" id="surnom" inputRef={register}/>
-				<InputLabel htmlFor="surnom">Surnom</InputLabel>
+				<Controller
+					as={TextField}
+					name="artist_name"
+					id="artist_name"
+					control={control}
+					label="Artist Name"
+				/>
+				<Controller
+					as={TextField}
+					name="prenom"
+					id="prenom"
+					control={control}
+					label="Prenom"
+				/>	
+				<Controller
+					as={TextField}
+					name="surnom"
+					id="surnom"
+					control={control}
+					label="Surnom"
+				/>	
 				<br/>
 				<Button type="submit" variant="contained" color="primary" id="submit">Submit</Button>
 			</form>

@@ -22,10 +22,8 @@ function Artist() {
 
 	const history = useHistory();
 
-	const [addArtist, setAddArtist] = useState(false)
-
 	function handleClick() {
-		setAddArtist(true)
+		history.push('/artist/add')
 	}
 
 		return (
@@ -38,10 +36,6 @@ function Artist() {
 					</Toolbar>
 				</AppBar>
 				<div>
-					{
-						addArtist ?
-						<AddArtist onChange={() => setAddArtist(false)}/>
-						:
 						<Grid container spacing={3}>
 							<Grid item xs={8}>
 								<ArtistTable/>
@@ -53,7 +47,6 @@ function Artist() {
 								</Button>
 							</Grid>
 						</Grid>
-					}
 				</div>
 			</Container>
 		)
