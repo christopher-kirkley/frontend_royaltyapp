@@ -11,10 +11,8 @@ import Artists from "./artists/Artists"
 import ArtistDetail from "./artists/ArtistDetail"
 
 import Catalog from "./catalog/Catalog"
-import AddCatalogItem from "./catalog/AddCatalogItem"
-import CatalogDetail from "./catalog/CatalogDetail"
+import CatalogItem from "./catalog/CatalogItem"
 
-import Test from "./Test";
 import Button from '@material-ui/core/Button';
 
 import { makeStyles } from "@material-ui/core/styles"
@@ -88,11 +86,12 @@ function Main() {
 				</List>
 			</Drawer>
 			<Switch>
-				<Route path="/artists" component={Artists}/>
-				<Route path="/artist/:id" component={ArtistDetail}/>
+				<Route exact path="/artists" component={Artists}/>
+				<Route exact path="/artist/add" component={ArtistDetail}/>
+				<Route exact path="/artist/:id" component={ArtistDetail}/>
 				<Route exact path="/catalog" component={Catalog}/>
-				<Route exact path="/catalog/add" component={AddCatalogItem}/>
-				<Route exact path="/catalog/:id" component={CatalogDetail}/>
+				<Route exact path="/catalog/add" component={CatalogItem}/>
+				<Route exact path="/catalog/:id" component={CatalogItem}/>
 			</Switch>
 		</div>
 		{

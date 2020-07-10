@@ -20,9 +20,11 @@ function ArtistDetail () {
 	// post if new, put if edit
 	
 	useEffect(() => { 
+		if (id) {
 		fetch(`http://localhost:5000/artists/${id}`)
 		.then(res => res.json())
 		.then(json => setArtist(json))
+		}
 	}, [])
 
 	useEffect(() => {
@@ -36,8 +38,20 @@ function ArtistDetail () {
 	}, [artist])
 
 		
+	function addArtist(data) {
+		const artist_name = data.artist_name
+		const prenom = data.prenom
+		const surnom = data.surnom
+		fetch('http://localhost:5000/artists', {
+			method: 'POST',
+			body: JSON.stringify({ artist_name, prenom, surnom }),
+		})
+		.then(res => res.json())
+		.then(json => history.push('/artists/'))
+	}
+	
 
-	function onSubmit(data) {
+	function editArtist(data) {
 		const artist_name = data.artist_name
 		const prenom = data.prenom
 		const surnom = data.surnom
@@ -48,6 +62,15 @@ function ArtistDetail () {
 		})
 		.then(res => res.json())
 		.then(json => history.push('/artists/'))
+	}
+
+	function onSubmit(data) {
+		if (id) {
+			editArtist(data)
+		}
+		else {
+			addArtist(data)
+		}
 	}
 
 	return (
