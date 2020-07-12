@@ -21,7 +21,7 @@ function TrackForm() {
 		fetch(`http://localhost:5000/catalog/${id}`)
 		.then(res => res.json())
 		.then((json) => 
-			console.log(json)
+		console.log(json)
 		)
 
 			// {
@@ -60,14 +60,14 @@ function TrackForm() {
 				{'catalog': id,
 				'track': data['addTrack']})
 		})
-		.then(res => res.json())
-		.then(res => fetch(`http://localhost:5000/catalog/${id}`))
-		.then(res => res.json())
-		.then(json => setTrack(json['track']))
-		.then(res => reset(track))
+		// .then(res => res.json())
+		// .then(res => fetch(`http://localhost:5000/catalog/${id}`))
+		// .then(res => res.json())
+		// .then(json => setTrack(json['track']))
+		// .then(res => reset(track))
 	}
 
-	function onSubmit() {
+	function onSubmit(data) {
 		data['addTrack'] ? addTrack(data) : updateTrack(data)
 	}
 	
