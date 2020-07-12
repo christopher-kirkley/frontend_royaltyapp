@@ -9,6 +9,7 @@ import TextField from '@material-ui/core/TextField'
 function VersionForm(props) {
 
 	let id = props.id
+
 	
 	const { register, setValue, control, reset, handleSubmit } = useForm()
 
@@ -121,8 +122,8 @@ function VersionForm(props) {
 			<Button
 				variant="contained"
 				color="secondary"
-				id="add_version"
-				name="add_version"
+				id="delete_version"
+				name="delete_version"
 			>Delete
 			</Button>
 			</div>
