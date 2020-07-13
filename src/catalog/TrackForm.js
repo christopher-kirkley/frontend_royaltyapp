@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from 'react'
+import Select from 'react-select'
 
 import { useForm, Controller, useFieldArray } from 'react-hook-form'
 import { useParams } from 'react-router-dom'
 
+// import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
 import TextField from '@material-ui/core/TextField'
 
@@ -28,7 +32,6 @@ function TrackForm() {
 			 // json['tracks'].sort((a, b) => a.id - b.id);
 				setTracks(json['tracks']);
 				setNumberOfTracks(json['tracks'].length)
-				console.log(json)
 		})
 
 	}, [])
@@ -57,13 +60,13 @@ function TrackForm() {
 	}
 
 	function addTrack(data) {
+		console.log(data)
 		fetch('http://localhost:5000/track', {
 			method: 'POST',
 			body: JSON.stringify(
 				{'catalog': id,
 				'track': data['addTrack']})
 		})
-		// .then(res => res.json())
 		// .then(res => fetch(`http://localhost:5000/catalog/${id}`))
 		// .then(res => res.json())
 		// .then(json => setTrack(json['track']))
@@ -108,13 +111,6 @@ function TrackForm() {
 			<Controller
 				as={TextField}
 				control={control}
-				name={`tracks[${index}].artist_id`}
-				defaultValue={`${track.artist_id}`}
-				label='Artist'
-			/>
-			<Controller
-				as={TextField}
-				control={control}
 				name={`tracks[${index}].track_name`}
 				defaultValue={`${track.track_name}`}
 				label='Track Name'
@@ -126,49 +122,68 @@ function TrackForm() {
 		<form onSubmit={handleSubmit(onSubmit)}>
 		{ fields.map((addTrack, index) => (
 			<div name='child' key={index}>
-			<Controller
-				type="hidden"
-				as={TextField}
-				control={control}
-				name={`addTrack[${index}].id`}
-				defaultValue={`${addTrack.id}`}
+			<Grid container xs={12} spacing={2}>
+				<Controller
+					type="hidden"
+					as={TextField}
+					control={control}
+					name={`addTrack[${index}].id`}
+					defaultValue={`${addTrack.id}`}
+				/>
+				<Grid item xs={2}>
+				<Controller
+					as={TextField}
+					control={control}
+					id={`addTrack[${index}].track_number`}
+					name={`addTrack[${index}].track_number`}
+					defaultValue={`${index + numberOfTracks + 1}`}
+					label='Track Number'
+				/>
+				</Grid>
+				<Grid item>
+				<Controller
+					as={TextField}
+					control={control}
+					name={`addTrack[${index}].isrc`}
+					defaultValue={`${addTrack.isrc}`}
+					label='ISRC'
+				/>
+				</Grid>
+				<Grid item xs={3}>
+				<Controller
 			/>
-			<Controller
-				as={TextField}
-				control={control}
-				id={`addTrack[${index}].track_number`}
-				name={`addTrack[${index}].track_number`}
-				defaultValue={`${index + numberOfTracks + 1}`}
-				label='Track Number'
-			/>
-			<Controller
-				as={TextField}
-				control={control}
-				name={`addTrack[${index}].isrc`}
-				defaultValue={`${addTrack.isrc}`}
-				label='ISRC'
-			/>
-			<Controller
-				as={TextField}
-				control={control}
-				name={`addTrack[${index}].artist_id`}
-				defaultValue={`${addTrack.artist_id}`}
-				label='Artist'
-			/>
-			<Controller
-				as={TextField}
-				control={control}
-				name={`addTrack[${index}].track_name`}
-				defaultValue={`${addTrack.track_name}`}
-				label='Track Name'
-			/>
-			<Button
-				variant="contained"
-				color="secondary"
-				id="delete_track"
-				name="delete_track"
-			>Delete
-			</Button>
+			// {
+			// 	<Controller
+			// 		as={<Select placeholder="Artist"/>}
+			// 		options={[
+			// 			{value: '1', label: 'Amanar' },
+			// 			{value: '2', label: 'vanilla' },
+			// 		]}
+			// 		control={control}
+			// 		name={`addTrack[${index}].artist_id`}
+			// 		label='Artist'
+			// 	/>
+			// 	}
+				</Grid>
+				<Grid Item xs={2}>
+				<Controller
+					as={TextField}
+					control={control}
+					name={`addTrack[${index}].track_name`}
+					defaultValue={`${addTrack.track_name}`}
+					label='Track Name'
+				/>
+				</Grid>
+				<Grid item xs={2}>
+				<Button
+					variant="contained"
+					color="secondary"
+					id="delete_track"
+					name="delete_track"
+				>Delete
+				</Button>
+				</Grid>
+			</Grid>
 			</div>
 			)
 		)}
