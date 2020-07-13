@@ -55,12 +55,14 @@ function TrackForm() {
 		)
 
 	function updateTrack(data) {
+		console.log(data)
 		fetch('http://localhost:5000/track', {
 			method: 'PUT',
 			body: JSON.stringify(
 				{'catalog': id,
-				'track': data['track']})
-		})
+				'tracks': data['tracks']
+		})}
+		)
 		.then(res => res.json())
 		.then(res => fetch(`http://localhost:5000/catalog/${id}`))
 		.then(res => res.json())
@@ -87,7 +89,6 @@ function TrackForm() {
 
 	function onSubmit(data) {
 		data['addTrack'] ? addTrack(data) : updateTrack(data)
-		console.log(artistChoices)
 	}
 	
 	const emptyRow = { track_number: '',
@@ -105,7 +106,7 @@ function TrackForm() {
 				as={TextField}
 				control={control}
 				name={`tracks[${index}].id`}
-				defaultValue={`${tracks.id}`}
+				defaultValue={`${track.id}`}
 			/>
 			<Controller
 				as={TextField}
@@ -121,6 +122,16 @@ function TrackForm() {
 				defaultValue={`${track.isrc}`}
 				label='ISRC'
 			/>
+				<Controller
+				as={
+					<select>
+						{artistChoices}
+					</select>
+				}
+					name={`tracks[${index}].artist_id`}
+					defaultValue={`${track.artist_id}`}
+					control={control}
+				/>
 			<Controller
 				as={TextField}
 				control={control}
@@ -136,13 +147,6 @@ function TrackForm() {
 		{ fields.map((addTrack, index) => (
 			<div name='child' key={index}>
 			<Grid container xs={12} spacing={2}>
-				<Controller
-					type="hidden"
-					as={TextField}
-					control={control}
-					name={`addTrack[${index}].id`}
-					defaultValue={`${addTrack.id}`}
-				/>
 				<Grid item xs={2}>
 				<Controller
 					as={TextField}
