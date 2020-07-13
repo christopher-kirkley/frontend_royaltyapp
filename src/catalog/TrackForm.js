@@ -15,19 +15,22 @@ function TrackForm() {
 
 	const { register, setValue, control, reset, handleSubmit } = useForm()
 	
-	const [track, setTrack] = useState([])
+	const [tracks, setTracks] = useState([])
+
+	const [numberOfTracks, setNumberOfTracks] = useState(0)
 	
 	useEffect(() => { 
 		fetch(`http://localhost:5000/catalog/${id}`)
 		.then(res => res.json())
 		.then((json) => 
-		console.log(json)
-		)
+			 {
+			 
+			 // json['tracks'].sort((a, b) => a.id - b.id);
+				setTracks(json['tracks']);
+				setNumberOfTracks(json['tracks'].length)
+				console.log(json)
+		})
 
-			// {
-			// 
-			// json['track'].sort((a, b) => a.id - b.id);
-			// setTrack(json['track'])})
 	}, [])
 
 	const { fields, append, remove } = useFieldArray(
@@ -47,10 +50,10 @@ function TrackForm() {
 		.then(res => fetch(`http://localhost:5000/catalog/${id}`))
 		.then(res => res.json())
 		.then((json) => {
-			json['track'].sort((a, b) => a.id - b.id);
-			setTrack(json['track'])
+			json['tracks'].sort((a, b) => a.id - b.id);
+			setTracks(json['tracks'])
 		})
-		.then(res => reset(track))
+		.then(res => reset(tracks))
 	}
 
 	function addTrack(data) {
@@ -73,19 +76,50 @@ function TrackForm() {
 	
 	const emptyRow = { track_number: '',
 										isrc: '',
+										artist_id: '',
 										track_name: ''}
 
 	return (
 		<div>
 		<form>
-		{ track.map((track, index) => (
+		{ tracks.map((track, index) => (
+			<div name='child' key={index}>
 			<Controller
 				type="hidden"
 				as={TextField}
 				control={control}
-				name={`track[${index}].id`}
-				defaultValue={`${track.id}`}
+				name={`tracks[${index}].id`}
+				defaultValue={`${tracks.id}`}
 			/>
+			<Controller
+				as={TextField}
+				control={control}
+				name={`tracks[${index}].track_number`}
+				defaultValue={`${track.track_number}`}
+				label='Track Number'
+			/>
+			<Controller
+				as={TextField}
+				control={control}
+				name={`tracks[${index}].isrc`}
+				defaultValue={`${track.isrc}`}
+				label='ISRC'
+			/>
+			<Controller
+				as={TextField}
+				control={control}
+				name={`tracks[${index}].artist_id`}
+				defaultValue={`${track.artist_id}`}
+				label='Artist'
+			/>
+			<Controller
+				as={TextField}
+				control={control}
+				name={`tracks[${index}].track_name`}
+				defaultValue={`${track.track_name}`}
+				label='Track Name'
+			/>
+			</div>
 		))}
 		</form>
 
@@ -104,15 +138,8 @@ function TrackForm() {
 				control={control}
 				id={`addTrack[${index}].track_number`}
 				name={`addTrack[${index}].track_number`}
-				defaultValue={`${index+1}`}
+				defaultValue={`${index + numberOfTracks + 1}`}
 				label='Track Number'
-			/>
-			<Controller
-				as={TextField}
-				control={control}
-				name={`addTrack[${index}].track_name`}
-				defaultValue={`${addTrack.track_name}`}
-				label='Track Name'
 			/>
 			<Controller
 				as={TextField}
@@ -120,6 +147,20 @@ function TrackForm() {
 				name={`addTrack[${index}].isrc`}
 				defaultValue={`${addTrack.isrc}`}
 				label='ISRC'
+			/>
+			<Controller
+				as={TextField}
+				control={control}
+				name={`addTrack[${index}].artist_id`}
+				defaultValue={`${addTrack.artist_id}`}
+				label='Artist'
+			/>
+			<Controller
+				as={TextField}
+				control={control}
+				name={`addTrack[${index}].track_name`}
+				defaultValue={`${addTrack.track_name}`}
+				label='Track Name'
 			/>
 			<Button
 				variant="contained"
