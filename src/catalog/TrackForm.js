@@ -23,6 +23,18 @@ function TrackForm() {
 
 	const [numberOfTracks, setNumberOfTracks] = useState(0)
 	
+	const [artists, setArtists] = useState([])
+	
+	useEffect(() => { 
+		fetch('http://localhost:5000/artists')
+		.then(res => res.json())
+		.then(json => setArtists(json))
+	}, [])
+
+	const artistChoices = artists.map((artist, index) =>
+		<option key={index} value={artist.id}>{artist.artist_name}</option>
+	)
+
 	useEffect(() => { 
 		fetch(`http://localhost:5000/catalog/${id}`)
 		.then(res => res.json())
@@ -75,11 +87,12 @@ function TrackForm() {
 
 	function onSubmit(data) {
 		data['addTrack'] ? addTrack(data) : updateTrack(data)
+		console.log(artistChoices)
 	}
 	
 	const emptyRow = { track_number: '',
 										isrc: '',
-										artist_id: '',
+										artist_id: 1,
 										track_name: ''}
 
 	return (
@@ -151,19 +164,15 @@ function TrackForm() {
 				</Grid>
 				<Grid item xs={3}>
 				<Controller
-			/>
-			// {
-			// 	<Controller
-			// 		as={<Select placeholder="Artist"/>}
-			// 		options={[
-			// 			{value: '1', label: 'Amanar' },
-			// 			{value: '2', label: 'vanilla' },
-			// 		]}
-			// 		control={control}
-			// 		name={`addTrack[${index}].artist_id`}
-			// 		label='Artist'
-			// 	/>
-			// 	}
+				as={
+					<select>
+						{artistChoices}
+					</select>
+				}
+					name={`addTrack[${index}].artist_id`}
+					defaultValue={`${addTrack.artist_id}`}
+					control={control}
+				/>
 				</Grid>
 				<Grid Item xs={2}>
 				<Controller
