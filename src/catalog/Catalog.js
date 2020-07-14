@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
 import AddCatalogItem from "./AddCatalogItem";
 import CatalogTable from "./CatalogTable";
@@ -14,6 +14,10 @@ function Catalog() {
 
 	const history = useHistory()
 
+	function handleImportCatalog() {
+		history.push('/catalog/import')
+	}
+
 	function handleClick() {
 		history.push('/catalog/add')
 	}
@@ -23,6 +27,7 @@ function Catalog() {
 				<h1 id="header">All Catalog</h1>
 				<CatalogTable/>
 				<Button variant="contained" color="primary" id="add-catalog-item" onClick={handleClick}>Add Catalog Item</Button>
+				<Button variant="contained" color="primary" id="import_catalog" onClick={handleImportCatalog}>Import Catalog</Button>
 			</Container>
 		)
 	}

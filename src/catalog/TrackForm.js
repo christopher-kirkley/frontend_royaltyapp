@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import Select from 'react-select'
 
 import { useForm, Controller, useFieldArray } from 'react-hook-form'
 import { useParams } from 'react-router-dom'
 
-// import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
