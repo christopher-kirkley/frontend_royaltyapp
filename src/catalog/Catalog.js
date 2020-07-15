@@ -10,6 +10,8 @@ import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
 
+import Header from '../components/Header'
+
 function Catalog() {
 
 	const history = useHistory()
@@ -24,7 +26,7 @@ function Catalog() {
 
 		return (
 			<Container>
-				<h1 id="header">All Catalog</h1>
+				<Header name='Catalog'/>
 				<CatalogTable/>
 				<Button variant="contained" color="primary" id="add-catalog-item" onClick={handleClick}>Add Catalog Item</Button>
 				<Button variant="contained" color="primary" id="import_catalog" onClick={handleImportCatalog}>Import Catalog</Button>

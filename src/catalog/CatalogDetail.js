@@ -44,7 +44,7 @@ function CatalogDetail () {
 
 	return (
 			<div>
-				<h1 id="heading">Catalog Detail</h1>
+				<Header name='Catalog Item'.>
 				<form onSubmit={handleSubmit(onSubmit)}>
 					<input type="hidden" name="id" id="id" ref={register}/>
 					<label>Catalog Number:  

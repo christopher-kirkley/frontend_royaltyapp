@@ -33,15 +33,18 @@ function TrackForm() {
 		<option key={index} value={artist.id}>{artist.artist_name}</option>
 	)
 
+	function getTracks(json) {
+			json['tracks'].sort((a, b) => a.track_number - b.track_number);
+			setTracks(json['tracks']);
+			setNumberOfTracks(json['tracks'].length)
+	}
+
 	useEffect(() => { 
 		fetch(`http://localhost:5000/catalog/${id}`)
 		.then(res => res.json())
 		.then((json) => 
 			 {
-			 
-			 // json['tracks'].sort((a, b) => a.id - b.id);
-				setTracks(json['tracks']);
-				setNumberOfTracks(json['tracks'].length)
+				 getTracks(json)
 		})
 
 	}, [])
@@ -53,7 +56,6 @@ function TrackForm() {
 		)
 
 	function updateTrack(data) {
-		console.log(data)
 		fetch('http://localhost:5000/track', {
 			method: 'PUT',
 			body: JSON.stringify(

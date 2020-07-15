@@ -7,12 +7,13 @@ import TrackInfo from './TrackInfo'
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
 
+import Header from '../components/Header'
 
 function CatalogItem() {
 
 	return (
 		<Container>
-			<h2>Catalog Item</h2>
+			<Header name='Catalog Item'/>
 			<CatalogInfo/>
 			<VersionInfo/>
 			<TrackInfo/>

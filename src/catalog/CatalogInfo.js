@@ -13,6 +13,8 @@ import InputLabel from '@material-ui/core/InputLabel'
 import MenuItem from '@material-ui/core/MenuItem'
 import Grid from '@material-ui/core/Grid'
 
+import Header from '../components/Header'
+
 function CatalogInfo() {
 
 	const [catalog, setCatalog ] = useState('')
