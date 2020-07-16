@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react'
 import { useForm, Controller, useFieldArray } from 'react-hook-form'
 // import { useParams } from 'react-router-dom'
 
+
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField'
 import Container from '@material-ui/core/Container'
@@ -17,12 +18,12 @@ function AddStatementForm() {
 
 	const { register, setValue, control, reset, handleSubmit } = useForm()
 
-	function onSubmit() {
+	function handleUpload(e) {
+		e.preventDefault()
+		setMsg('Uploaded!')
 	}
 
-	function handleUpload() {
-	}
-
+	const [msg, setMsg] = useState('')
 		
 	return (
 		<Container component="main" maxWidth="xs" spacing={4}>
@@ -34,13 +35,13 @@ function AddStatementForm() {
 			<form onSubmit={handleUpload} id="form" style={{marginTop: 10, width: '100%'}}>
 			<Grid container  spacing={4}> 
 			<Grid item xs={12}>
-				<TextField fullWidth id="catalog_to_upload" name="upload" type="file"/>	
+				<TextField fullWidth id="select_statement" name="upload" type="file"/>	
 			</Grid>
 			<Grid item xs={12}>
 				<FormControl fullWidth>
 				<InputLabel>Statement Source</InputLabel>
-				<Select>
-		          <MenuItem value={10}>Bandcamp</MenuItem>
+				<Select name="source_statement"> 
+		          <MenuItem value={10} id='bandcamp'>Bandcamp</MenuItem>
 		          <MenuItem value={10}>SD</MenuItem>
 		          <MenuItem value={10}>SD Digital</MenuItem>
 				</Select>
@@ -50,7 +51,7 @@ function AddStatementForm() {
 				<Button
 					variant="contained"
 					color="primary"
-					id="catalog_upload"
+					id="upload_statement"
 					name="submit"
 					type="submit"
 					fullWidth
@@ -59,6 +60,7 @@ function AddStatementForm() {
 		</Grid>
 		</form>
 		</div>
+		<Typography id="statement_message">{msg}</Typography>
 		</Container>
 	)
 }

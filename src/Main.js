@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 
 import {
 	BrowserRouter as Router,
@@ -12,8 +12,10 @@ import ArtistDetail from "./artists/ArtistDetail"
 
 import Catalog from "./catalog/Catalog"
 import CatalogItem from "./catalog/CatalogItem"
+import Import from "./catalog/Import"
 
-import Button from '@material-ui/core/Button';
+import Income from "./income/Income"
+
 
 import { makeStyles } from "@material-ui/core/styles"
 import { 
@@ -25,11 +27,11 @@ import {
 	Typography 
 } from "@material-ui/core"
 
-import AppBar from '@material-ui/core/AppBar';
 
 import HomeIcon from "@material-ui/icons/Home"
 import PeopleIcon from "@material-ui/icons/People"
 import CatalogIcon from '@material-ui/icons/Album'
+import IncomeIcon from '@material-ui/icons/AttachMoney'
 
 const useStyles = makeStyles((theme) => ({
 		drawerPaper: { width: 'inherit' },
@@ -83,6 +85,14 @@ function Main() {
 							<ListItemText primary={"Catalog"}/>
 						</ListItem>
 					</Link>
+					<Link to="/income" className={classes.link}>
+						<ListItem button id="income">
+							<ListItemIcon>
+								<IncomeIcon />
+							</ListItemIcon>
+							<ListItemText primary={"Income"}/>
+						</ListItem>
+					</Link>
 				</List>
 			</Drawer>
 			<Switch>
@@ -91,7 +101,9 @@ function Main() {
 				<Route exact path="/artist/:id" component={ArtistDetail}/>
 				<Route exact path="/catalog" component={Catalog}/>
 				<Route exact path="/catalog/add" component={CatalogItem}/>
+				<Route exact path="/catalog/import" component={Import}/>
 				<Route exact path="/catalog/:id" component={CatalogItem}/>
+				<Route exact path="/income" component={Income}/>
 			</Switch>
 		</div>
 		{

@@ -11,7 +11,7 @@ import TextField from '@material-ui/core/TextField'
 
 function TrackForm() {
 
-	const data= {}
+	const data = {}
 
 	const { id } = useParams()
 

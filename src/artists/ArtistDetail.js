@@ -8,6 +8,8 @@ import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
 import Container from '@material-ui/core/Container'
 
+import Header from '../components/Header'
+
 function ArtistDetail () {
 	const { id } = useParams()
 
@@ -75,7 +77,7 @@ function ArtistDetail () {
 
 	return (
 			<div>
-				<h1 id="heading">Artist Detail</h1>
+			<Header name='Artist Detail'/>
 			<form onSubmit={handleSubmit(onSubmit)} id="form">
 				<Controller
 					as={TextField}
