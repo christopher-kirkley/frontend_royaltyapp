@@ -21,14 +21,16 @@ function Income() {
 	useEffect(() => { 
 			fetch(`http://localhost:5000/income/matching-errors`)
 			.then(res => res.json())
-			.then(json => setMatchingErrors(json['errors']))
+			.then(res => res.length)
+			.then(res => setMatchingErrors(res))
 			.catch(error => setMatchingErrorsMsg('Error!'))
 	}, [])
 
 	function getMatchingErrors() {
 		fetch(`http://localhost:5000/income/matching-errors`)
 		.then(res => res.json())
-		.then(json => setMatchingErrors(json['errors']))
+		.then(res => res.length)
+		.then(res => setMatchingErrors(res))
 	}
 
 	return (
