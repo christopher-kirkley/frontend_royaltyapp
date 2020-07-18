@@ -20,7 +20,17 @@ function AddStatementForm() {
 
 	function handleUpload(e) {
 		e.preventDefault()
-		setMsg('Uploaded!')
+		const file = e.target.upload.files
+		const formData = new FormData()
+		formData.append('file', file[0])
+		formData.append('statement_source', 'bandcamp')
+		fetch('http://localhost:5000/income/import-sales', {
+				method: 'POST',
+				body: formData
+			})
+		.then(resp => resp.json())
+		.then(res => setMsg('Uploaded!'))
+		.catch(error => setMsg('Error uploading'))
 	}
 
 	const [msg, setMsg] = useState('')
@@ -28,7 +38,7 @@ function AddStatementForm() {
 	return (
 		<Container component="main" maxWidth="xs" spacing={4}>
 		<div style={{marginTop: 10, display: "flex", flexDirection: "column",
-								alignItems:"center"}}>
+								alignItems:"center", border: '3px solid black'}}>
 			<Typography component="h2" variant="h5">
 				Upload Income Statement
 			</Typography>
@@ -38,14 +48,19 @@ function AddStatementForm() {
 				<TextField fullWidth id="select_statement" name="upload" type="file"/>	
 			</Grid>
 			<Grid item xs={12}>
-				<FormControl fullWidth>
-				<InputLabel>Statement Source</InputLabel>
-				<Select name="source_statement"> 
-		          <MenuItem value={10} id='bandcamp'>Bandcamp</MenuItem>
-		          <MenuItem value={10}>SD</MenuItem>
-		          <MenuItem value={10}>SD Digital</MenuItem>
-				</Select>
-				</FormControl>
+				<select id="source_statement">
+				<option id="bandcamp">Bandcamp</option>
+				<option>SD Digital</option>
+				</select>
+		{	// <FormControl fullWidth>
+				// <InputLabel>Statement Source</InputLabel>
+				// <Select name="source_statement"> 
+		          // <MenuItem value={10} id='bandcamp'>Bandcamp</MenuItem>
+		          // <MenuItem value={10}>SD</MenuItem>
+		          // <MenuItem value={10}>SD Digital</MenuItem>
+				// </Select>
+				// </FormControl>
+			}
 			</Grid>
 			<Grid item xs={12}>
 				<Button
