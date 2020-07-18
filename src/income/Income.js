@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react'
 
 import { Redirect } from 'react-router-dom'
 import { useHistory } from "react-router-dom";
@@ -15,19 +15,27 @@ function Income() {
 
 	const history = useHistory()
 
-	// function handleImportCatalog() {
-	// 	history.push('/catalog/import')
-	// }
+	const [ matchingErrors, setMatchingErrors ] = useState(0)
+	const [ matchingErrorsMsg, setMatchingErrorsMsg ] = useState('')
 
-	// function handleClick() {
-	// 	history.push('/catalog/add')
-	// }
+	useEffect(() => { 
+			fetch(`http://localhost:5000/income/matching-errors`)
+			.then(res => res.json())
+			.then(json => setMatchingErrors(json['errors']))
+			.catch(error => setMatchingErrorsMsg('Error!'))
+	}, [])
 
-		return (
+	function getMatchingErrors() {
+		fetch(`http://localhost:5000/income/matching-errors`)
+		.then(res => res.json())
+		.then(json => setMatchingErrors(json['errors']))
+	}
+
+	return (
 			<Container>
 				<Header name='Income'/>
-				<AddStatementForm />
-				<DisplayMatchingErrors />
+				<AddStatementForm getMatchingErrors={getMatchingErrors}/>
+				<DisplayMatchingErrors matchingErrors={matchingErrors}/>
 			</Container>
 		)
 	}

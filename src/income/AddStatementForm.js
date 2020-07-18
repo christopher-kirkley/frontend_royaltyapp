@@ -14,7 +14,7 @@ import MenuItem from '@material-ui/core/MenuItem'
 import InputLabel from '@material-ui/core/InputLabel'
 import FormControl from '@material-ui/core/FormControl'
 
-function AddStatementForm() {
+function AddStatementForm(props) {
 
 	const { register, setValue, control, reset, handleSubmit } = useForm()
 
@@ -30,6 +30,7 @@ function AddStatementForm() {
 			})
 		.then(resp => resp.json())
 		.then(res => setMsg('Uploaded!'))
+		.then(res => {props.getMatchingErrors()})
 		.catch(error => setMsg('Error uploading'))
 	}
 

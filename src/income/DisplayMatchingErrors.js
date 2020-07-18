@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 
 import { useForm, Controller, useFieldArray } from 'react-hook-form'
+import { useHistory } from "react-router-dom";
 
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField'
@@ -12,31 +13,16 @@ import MenuItem from '@material-ui/core/MenuItem'
 import InputLabel from '@material-ui/core/InputLabel'
 import FormControl from '@material-ui/core/FormControl'
 
-function DisplayMatchingErrors() {
+function DisplayMatchingErrors(props) {
 
 	const { register, setValue, control, reset, handleSubmit } = useForm()
 
-	const [ matchingErrors, setMatchingErrors ] = useState(0)
 
-	useEffect(() => { 
-			fetch(`http://localhost:5000/income/matching-errors`)
-			.then(res => res.json())
-			.then(json => setMatchingErrors(json))
-	}, [])
+	const history = useHistory()
 
-	function handleUpload(e) {
-		e.preventDefault()
-		// const file = e.target.upload.files
-		// const formData = new FormData()
-		// formData.append('file', file[0])
-		// formData.append('statement_source', 'bandcamp')
-		// fetch('http://localhost:5000/income/import-sales', {
-		// 		method: 'POST',
-		// 		body: formData
-		// 	})
-		// .then(resp => resp.json())
-		// .then(res => setMsg('Uploaded!'))
-		// .catch(error => setMsg('Error uploading'))
+
+	function handleFix() {		
+		history.push('/income/matching-errors')
 	}
 
 	return (
@@ -44,8 +30,8 @@ function DisplayMatchingErrors() {
 		<div style={{marginTop: 10, display: "flex", flexDirection: "column",
 								alignItems:"center", border: '3px solid black'}}>
 			<Typography component="h2" variant="h5">Matching Errors</Typography>
-			<Typography component="p" variant="p">You have {matchingErrors} matching errors.</Typography>
-			<form onSubmit={handleUpload} id="form" style={{marginTop: 10, width: '100%'}}>
+			<Typography component="p" variant="p" id="matching_errors">You have <span id="error_number">{props.matchingErrors}</span> matching errors.</Typography>
+			<Typography component="p" variant="p" id="error_msg">{props.matchingErrorsMsg}</Typography>
 			<Grid item xs={2}>
 				<Button
 					variant="contained"
@@ -53,6 +39,7 @@ function DisplayMatchingErrors() {
 					id="fix_errors"
 					name="submit"
 					type="submit"
+					onClick={handleFix}	
 				>Fix</Button>
 		</Grid>
 			<Grid item xs={2}>
@@ -64,7 +51,6 @@ function DisplayMatchingErrors() {
 					type="submit"
 				>Process</Button>
 		</Grid>
-		</form>
 		</div>
 		</Container>
 	)
