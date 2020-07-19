@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { Redirect } from 'react-router-dom'
 import { useHistory } from "react-router-dom";
@@ -24,18 +24,63 @@ function MatchingErrors() {
 
 	const history = useHistory()
 
-	// function handleImportCatalog() {
-	// 	history.push('/catalog/import')
-	// }
+	const columns = React.useMemo(
+	() => [
+			{
+			Header: 'Distributor',
+			accessor: 'firstName',
+			},
+			{
+			Header: 'UPC',
+			accessor: 'lastName',
+			},
+			{
+			Header: 'ISRC',
+			accessor: 'age',
+			},
+			{
+			Header: 'Version',
+			accessor: 'version',
+			},
+			{
+			Header: 'Catalog',
+			accessor: 'catalog',
+			},
+			{
+			Header: 'Album Name',
+			accessor: 'albumName',
+			},
+			{
+			Header: 'Track Name',
+			accessor: 'trackName',
+			},
+			{
+			Header: 'Type',
+			accessor: 'type',
+			},
+			{
+			Header: 'Medium',
+			accessor: 'medium',
+			},
+		]
+		)
 
-	// function handleClick() {
-	// 	history.push('/catalog/add')
-	// }
+	const [ matchingErrors, setMatchingErrors ] = useState([])
+	const [ msg, setMsg ] = useState('')
+
+	useEffect(() => {
+		fetch('http://localhost:5000/income/matching-errors')
+		.then(res => res.json())
+		.then(json => setMatchingErrors(json))
+		.catch(res => setMsg('Error fetching data'))
+	}, [])
+	
+	const data = []
 
 		return (
 			<Container>
 				<Header name='Matching Errors'/>
-				<MatchingTable />
+				<MatchingTable columns={columns} data={matchingErrors} msg={msg}/>
 			</Container>
 		)
 	}
