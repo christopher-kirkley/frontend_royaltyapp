@@ -6,110 +6,157 @@ import { useHistory } from "react-router-dom";
 
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
+import Table from '@material-ui/core/Table';
+import TableRow from '@material-ui/core/TableRow';
+import TableCell from '@material-ui/core/TableCell';
+
 import { makeStyles } from '@material-ui/core/styles';
 
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
 
+function MatchingTable() {
 
-function MatchingTable({ columns, data }, props) {
+	const [ msg, setMsg ] = useState('')
+	const [rows, setRows] = useState([])
+	const [upcs, setUpcs] = useState([])
 
-	const {
-		getTableProps, // table props from react-table
-		getTableBodyProps, // table body props from react-table
-		headers, // headerGroups, if your table has groupings
-		rows, // rows for the table based on the data passed
-		prepareRow // Prepare the row (this function needs to be called for each row before getting the row props)
-		} = useTable({
-			columns,
-				data,
-		})
+	useEffect(() => {
+		fetch('http://localhost:5000/income/matching-errors')
+		.then(res => res.json())
+		.then(json => setRows(json))
+		.catch(res => setMsg('Error fetching data'))
+	}, [])
+
+	useEffect(() => {
+		fetch('http://localhost:5000/version')
+		.then(res => res.json())
+		.then(json => setUpcs(json))
+		.catch(res => setMsg('Error fetching data'))
+	}, [])
+
+	const upcChoices = upcs.map((upc) =>
+		{
+			return (
+				<option
+					id={upc.version_number}
+					value={upc.upc}
+				>{upc.version_number} : {upc.upc}
+				</option>
+			)
+	})
 
 	const history = useHistory()
 
-	const useStyles = makeStyles({
-		  table: {
-				    minWidth: 650,
-				  },
-	});
-
-	const classes = useStyles();
-
-
-	function handleUpdate(data) {
-		console.log(data)
+	function handleUpdate(e) {
+		e.preventDefault()
+		// select which elements to update on
+		console.log(e.target.entry_id.value)
+		console.log(e.target.new_upc.value)
+		fetch('http://localhost:5000/income/update-errors', {
+			method: 'PUT',
+			body: JSON.stringify(
+				{'id': e.target.entry_id.value,
+				'upc_id': e.target.new_upc.value
+		})}
+		)
+		.then(res => fetch('http://localhost:5000/income/matching-errors'))
+		.then(res => res.json())
+		.then(json => setRows(json))
+		.catch(res => setMsg('Error fetching data'))
 	}
 
+	const [columns] = useState([
+		{ name: 'distributor', title: 'Distributor'},
+		{ name: 'upc_id', title: 'UPC'},
+		{ name: 'version_number', title: 'Version'},
+		{ name: 'catalog_id', title: 'Catalog'},
+		{ name: 'medium', title: 'Medium'},
+		{ name: 'type', title: 'Type'},
+	])
+
+
 	return (
-		<TableContainer component={Paper}>
-		<Table className={classes.table} size="small"
-			id="matching_error_table"
-			{...getTableProps()}>
-		<TableHead>
-			<TableRow>
-				{headers.map(column => (
-					<TableCell {...column.getHeaderProps()}>
-						{column.render('Header')}
-					</TableCell>
-				))}
-			</TableRow>
-			))}
-		</TableHead>
-		<TableBody>
-			{
-			// 	matchingErrors.map((row) => (
-			// 							<TableRow key={row.id}>
-			// 								<TableCell align="right">{row.distributor}</TableCell>
-			// 								<TableCell align="right">{row.upc_id}</TableCell>
-			// 								<TableCell align="right">{row.isrc_id}</TableCell>
-			// 								<TableCell align="right">{row.version_id}</TableCell>
-			// 								<TableCell align="right">{row.catalog_id}</TableCell>
-			// 								<TableCell align="right">{row.album_name}</TableCell>
-			// 								<TableCell align="right">{row.track_name}</TableCell>
-			// 								<TableCell align="right">{row.type}</TableCell>
-			// 								<TableCell align="right">{row.medium}</TableCell>
-			// 								<TableCell align="right">{row.description}</TableCell>
-			// 								<TableCell align="right">{row.amount}</TableCell>
-			// 								<TableCell align="right">
-			// 									<select>
-			// 										<option>Version1</option>
-			// 										<option>Version2</option>
-			// 									</select>
-			// 								</TableCell>
-			// 								<TableCell align="right">
-			// 									<Button
-			// 										variant="contained"
-			// 										color="primary"
-			// 										id={row.id}
-			// 										type="submit"
-			// 										name="update"
-			// 										onClick={handleUpdate}
-			// 										>
-			// 										Update
-			// 									</Button>
-			// 								</TableCell>
-			// 								<TableCell align="right">
-			// 									<Button
-			// 										variant="contained"
-			// 										color="secondary"
-			// 										id={row.id}
-			// 										name="delete"
-			// 										>
-			// 										Delete
-			// 									</Button>
-			// 								</TableCell>
-			// 							</TableRow>
-			// 	))
-			}
-		</TableBody>
-		{ props.msg }
-		</Table>
-		</TableContainer>
+		<Container component={Paper}>
+			<Table id="matching_error_table">
+				<TableRow>
+				{ columns.map((column) => 
+						<TableCell>
+						{ column.name }
+						</TableCell>
+				)}
+				</TableRow>
+			{ rows.map((row) => 
+				<TableRow>
+						<input type="hidden"
+							form={`form${row.id}`}
+							id="entry_id"
+							value={row.id}
+							/>
+						<TableCell>
+							<input
+								type="checkbox"
+								form={`form${row.id}`}
+								id="distributor"/>
+							{ row.distributor }
+						</TableCell>
+						<TableCell>
+							<input
+								type="checkbox"
+								form={`form${row.id}`}
+								id="upc_id"/>
+						{ row.upc_id }
+						</TableCell>
+						<TableCell>
+							<input
+								type="checkbox"
+								form={`form${row.id}`}
+								id="version_number"/>
+						{ row.version_number }
+						</TableCell>
+						<TableCell>
+							<input
+								type="checkbox"
+								form={`form${row.id}`}
+								id="catalog_id"/>
+						{ row.catalog_id }
+						</TableCell>
+						<TableCell>
+							<input
+								type="checkbox"
+								form={`form${row.id}`}
+								id="medium"/>
+						{ row.medium }
+						</TableCell>
+						<TableCell>
+							<input
+								type="checkbox"
+								form={`form${row.id}`}
+								id="type"/>
+						{ row.type }
+						</TableCell>
+						<TableCell>
+							<select
+								form={`form${row.id}`}
+								id="new_upc">
+								{upcChoices}
+							</select>
+						</TableCell>
+						<TableCell>
+							<form
+								id={`form${row.id}`}
+								onSubmit={handleUpdate}>
+								<Button
+									type="submit"
+									id="update">
+								Update
+								</Button>
+							</form>
+						</TableCell>
+				</TableRow>
+			)}
+			</Table>
+		</Container>
 		);
 }
 
