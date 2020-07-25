@@ -51,12 +51,12 @@ function MatchingTable() {
 	function handleUpdate(e) {
 		e.preventDefault()
 		// select which elements to update on
-		console.log(e.target.entry_id.value)
+		console.log(e.target.version_number)
 		console.log(e.target.new_upc.value)
 		fetch('http://localhost:5000/income/update-errors', {
 			method: 'PUT',
 			body: JSON.stringify(
-				{'id': e.target.entry_id.value,
+				{'version_number': e.target.version_number.value,
 				'upc_id': e.target.new_upc.value
 		})}
 		)
@@ -111,7 +111,8 @@ function MatchingTable() {
 							<input
 								type="checkbox"
 								form={`form${row.id}`}
-								id="version_number"/>
+								id="version_number"
+								value={row.version_number}/>
 						{ row.version_number }
 						</TableCell>
 						<TableCell>
