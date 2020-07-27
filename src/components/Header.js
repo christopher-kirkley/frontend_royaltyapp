@@ -8,7 +8,7 @@ function Header(props) {
 	return (
 				<AppBar position="static">
 						<Toolbar variant="dense">
-							<Typography variant="h6" color="inherit">
+							<Typography id="header" variant="h6" color="inherit">
 						{props.name}
 						</Typography>
 						</Toolbar>

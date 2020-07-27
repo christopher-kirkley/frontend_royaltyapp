@@ -15,6 +15,7 @@ import CatalogItem from "./catalog/CatalogItem"
 import Import from "./catalog/Import"
 
 import Income from "./income/Income"
+import MatchingErrors from "./income/MatchingErrors"
 
 
 import { makeStyles } from "@material-ui/core/styles"
@@ -104,6 +105,7 @@ function Main() {
 				<Route exact path="/catalog/import" component={Import}/>
 				<Route exact path="/catalog/:id" component={CatalogItem}/>
 				<Route exact path="/income" component={Income}/>
+				<Route exact path="/income/matching-errors" component={MatchingErrors}/>
 			</Switch>
 		</div>
 		{

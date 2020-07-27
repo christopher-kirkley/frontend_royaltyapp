@@ -51,13 +51,13 @@ function MatchingTable() {
 	function handleUpdate(e) {
 		e.preventDefault()
 		// select which elements to update on
-		console.log(e.target.version_number)
-		console.log(e.target.new_upc.value)
 		fetch('http://localhost:5000/income/update-errors', {
 			method: 'PUT',
 			body: JSON.stringify(
-				{'version_number': e.target.version_number.value,
-				'upc_id': e.target.new_upc.value
+				{
+					'upc_id': e.target.new_upc.value,
+					'data_to_match' : 
+						[{'version_number': e.target.version_number.value }]
 		})}
 		)
 		.then(res => fetch('http://localhost:5000/income/matching-errors'))
