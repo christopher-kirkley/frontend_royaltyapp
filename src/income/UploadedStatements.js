@@ -47,7 +47,7 @@ function UploadedStatements(props) {
 			<Button
 				variant="contained"
 				color="primary"
-				id="process_errors"
+				id="process_statements"
 				name="submit"
 				type="submit"
 			>Process</Button>
