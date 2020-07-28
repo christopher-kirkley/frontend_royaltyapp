@@ -10,6 +10,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Header from '../components/Header'
 import AddStatementForm from './AddStatementForm'
 import DisplayMatchingErrors from './DisplayMatchingErrors'
+import UploadedStatements from './UploadedStatements'
 
 function Income() {
 
@@ -38,6 +39,7 @@ function Income() {
 				<Header name='Income'/>
 				<AddStatementForm getMatchingErrors={getMatchingErrors}/>
 				<DisplayMatchingErrors matchingErrors={matchingErrors}/>
+				<UploadedStatements/>
 			</Container>
 		)
 	}

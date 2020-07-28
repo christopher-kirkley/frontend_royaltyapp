@@ -50,6 +50,12 @@ function MatchingTable() {
 
 	function handleUpdate(e) {
 		e.preventDefault()
+		if (e.target.version_number.checked)
+			{var version_number = e.target.version_number.value}
+		if (e.target.medium.checked)
+			{var medium = e.target.medium.value}
+		if (e.target.description.checked)
+			{var description = e.target.description.value}
 		// select which elements to update on
 		fetch('http://localhost:5000/income/update-errors', {
 			method: 'PUT',
@@ -57,7 +63,13 @@ function MatchingTable() {
 				{
 					'upc_id': e.target.new_upc.value,
 					'data_to_match' : 
-						[{'version_number': e.target.version_number.value }]
+						[
+							{
+							'version_number': version_number,
+							'medium': medium,
+							'description': description,
+							}
+						]
 		})}
 		)
 		.then(res => fetch('http://localhost:5000/income/matching-errors'))
@@ -73,8 +85,8 @@ function MatchingTable() {
 		{ name: 'catalog_id', title: 'Catalog'},
 		{ name: 'medium', title: 'Medium'},
 		{ name: 'type', title: 'Type'},
+		{ name: 'description	', title: 'Description'},
 	])
-
 
 	return (
 		<Container component={Paper}>
@@ -126,7 +138,8 @@ function MatchingTable() {
 							<input
 								type="checkbox"
 								form={`form${row.id}`}
-								id="medium"/>
+								id="medium"
+								value={row.medium}/>
 						{ row.medium }
 						</TableCell>
 						<TableCell>
@@ -135,6 +148,14 @@ function MatchingTable() {
 								form={`form${row.id}`}
 								id="type"/>
 						{ row.type }
+						</TableCell>
+						<TableCell>
+							<input
+								type="checkbox"
+								form={`form${row.id}`}
+								id="description"
+								value={row.description}/>
+						{ row.description }
 						</TableCell>
 						<TableCell>
 							<select
