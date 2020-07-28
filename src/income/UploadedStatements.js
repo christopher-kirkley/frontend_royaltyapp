@@ -22,20 +22,13 @@ function UploadedStatements(props) {
 
 	const history = useHistory()
 
-	const [ pendingStatements, setPendingStatements ] = useState([])
 
-	// useEffect(() => {
-	// 	fetch('http://localhost:5000/income/pending-statements/')
-	// 	.then(res => res.json())
-	// 	.then(json => setPendingStatements(json))
-	// }, [])
-
-	const pendingList = pendingStatements.map((pendingStatement) =>
+	const pendingList = props.pendingStatements.map((pendingStatement) =>
 		{
 			return (
 				<ListItem
 					id="pending_statement"
-				>{pendingStatement}
+				>{pendingStatement.statement}
 				</ListItem>
 			)
 	})

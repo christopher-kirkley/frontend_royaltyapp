@@ -18,6 +18,19 @@ function Income() {
 
 	const [ matchingErrors, setMatchingErrors ] = useState(0)
 	const [ matchingErrorsMsg, setMatchingErrorsMsg ] = useState('')
+	const [ pendingStatements, setPendingStatements ] = useState([])
+
+	useEffect(() => {
+		fetch('http://localhost:5000/income/pending-statements')
+		.then(res => res.json())
+		.then(json => setPendingStatements(json))
+	}, [])
+
+	function getPendingStatements() {
+		fetch(`http://localhost:5000/income/pending-statements`)
+		.then(res => res.json())
+		.then(res => setPendingStatements(res))
+	}
 
 	useEffect(() => { 
 			fetch(`http://localhost:5000/income/matching-errors`)
@@ -37,9 +50,11 @@ function Income() {
 	return (
 			<Container>
 				<Header name='Income'/>
-				<AddStatementForm getMatchingErrors={getMatchingErrors}/>
+				<AddStatementForm
+					getMatchingErrors={getMatchingErrors}
+					getPendingStatements={getPendingStatements}/>
 				<DisplayMatchingErrors matchingErrors={matchingErrors}/>
-				<UploadedStatements/>
+				<UploadedStatements pendingStatements={pendingStatements}/>
 			</Container>
 		)
 	}
