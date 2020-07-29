@@ -31,6 +31,7 @@ function ImportedIncomeTable(props) {
 			{ props.importedIncome.map((row) => 
 				<TableRow>
 						<TableCell>
+							{row.statement_name}
 						</TableCell>
 						<TableCell>
 							<Button>

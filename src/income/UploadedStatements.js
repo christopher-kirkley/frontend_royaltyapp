@@ -19,9 +19,13 @@ function UploadedStatements(props) {
 
 	const { register, setValue, control, reset, handleSubmit } = useForm()
 
-
 	const history = useHistory()
 
+	function handleClick() {
+		fetch('http://localhost:5000/income/process-pending', {
+				method: 'POST'}
+		)
+	}
 
 	const pendingList = props.pendingStatements.map((pendingStatement) =>
 		{
@@ -50,6 +54,7 @@ function UploadedStatements(props) {
 				id="process_statements"
 				name="submit"
 				type="submit"
+				onClick={handleClick}
 			>Process</Button>
 		</Grid>
 		</div>
