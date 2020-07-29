@@ -16,6 +16,7 @@ import Import from "./catalog/Import"
 
 import Income from "./income/Income"
 import MatchingErrors from "./income/MatchingErrors"
+import ImportedIncome from "./income/ImportedIncome"
 
 
 import { makeStyles } from "@material-ui/core/styles"
@@ -33,13 +34,22 @@ import HomeIcon from "@material-ui/icons/Home"
 import PeopleIcon from "@material-ui/icons/People"
 import CatalogIcon from '@material-ui/icons/Album'
 import IncomeIcon from '@material-ui/icons/AttachMoney'
+import ViewAgendaIcon from '@material-ui/icons/ViewAgenda';
 
 const useStyles = makeStyles((theme) => ({
 		drawerPaper: { width: 'inherit' },
 		link: {
 						textDecoration: 'none',
 						color: theme.palette.text.primary
-					}
+					},
+		root: {
+			width: '100%',
+			maxWidth: 360,
+			backgroundColor: theme.palette.background.paper,
+		},
+		nested: {
+			paddingLeft: theme.spacing(4),
+		},
 }))
 
 
@@ -55,7 +65,7 @@ function Main() {
 				open={true}
 				classes={{ paper: classes.drawerPaper}}
 			>
-				<List>
+				<List className={classes.root}>
 					<ListItem>
 						<Typography variant="h6" align='center'>
 							RoyaltyApp V4.0
@@ -93,6 +103,16 @@ function Main() {
 							</ListItemIcon>
 							<ListItemText primary={"Income"}/>
 						</ListItem>
+							<List component="div" disablePadding>
+							<Link to="/income/view-imported" className={classes.link}>
+								<ListItem button id="view_imported_income" className={classes.nested}>
+									<ListItemIcon>
+										<ViewAgendaIcon />
+									</ListItemIcon>
+									<ListItemText primary={"View Imported"}/>
+								</ListItem>
+							</Link>
+							</List>
 					</Link>
 				</List>
 			</Drawer>
@@ -106,6 +126,7 @@ function Main() {
 				<Route exact path="/catalog/:id" component={CatalogItem}/>
 				<Route exact path="/income" component={Income}/>
 				<Route exact path="/income/matching-errors" component={MatchingErrors}/>
+				<Route exact path="/income/view-imported" component={ImportedIncome}/>
 			</Switch>
 		</div>
 		{
