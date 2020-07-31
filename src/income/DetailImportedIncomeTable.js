@@ -15,49 +15,29 @@ import TableCell from '@material-ui/core/TableCell';
 import { makeStyles } from '@material-ui/core/styles';
 
 
-function ImportedIncomeTable(props) {
+function DetailImportedIncomeTable() {
 
 	const history = useHistory()
 
-	function handleClick(e) {
-		const id = e.target.value
-		history.push(`/income/${id}`)
-	}
-
 	return (
 		<Container component={Paper}>
-			<Table id="imported_income_table">
+			<Table id="imported_statement_table">
 				<TableRow>
 					<TableCell>
 					Statement Name
 					</TableCell>
 					<TableCell/>
 				</TableRow>
-			{ props.importedIncome.map((row) => 
 				<TableRow>
 						<TableCell>
-							{row.statement_name}
 						</TableCell>
 						<TableCell>
-						<Button
-							variant="contained"
-							color="primary"
-							id={row.id}
-							value={row.id}
-							name="submit"
-							type="submit"
-							fullWidth
-							onClick={handleClick}
-							>
-							View
-							</Button>
 						</TableCell>
 				</TableRow>
-			)}
 			</Table>
 		</Container>
 		);
 }
 
 
-export default ImportedIncomeTable
+export default DetailImportedIncomeTable
