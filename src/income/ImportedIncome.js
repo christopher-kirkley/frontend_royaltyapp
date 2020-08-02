@@ -31,7 +31,8 @@ function ImportedIncome() {
 	return (
 			<Container>
 				<Header name='View Imported Income'/>
-				<ImportedIncomeTable importedIncome={importedIncome}/>
+				<ImportedIncomeTable importedIncome={importedIncome}
+					getImportedIncome={getImportedIncome}/>
 			</Container>
 		)
 	}

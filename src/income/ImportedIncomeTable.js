@@ -24,6 +24,15 @@ function ImportedIncomeTable(props) {
 		history.push(`/income/${id}`)
 	}
 
+	function handleDelete(e) {
+		const id = e.currentTarget.value
+		fetch(`http://localhost:5000/income/statements/${id}`, {
+			method: 'DELETE'
+		})
+		.then(res => {props.getImportedIncome()})
+		}
+
+
 	return (
 		<Container component={Paper}>
 			<Table id="imported_income_table">
@@ -50,6 +59,18 @@ function ImportedIncomeTable(props) {
 							onClick={handleClick}
 							>
 							View
+							</Button>
+						</TableCell>
+						<TableCell>
+						<Button
+							variant="contained"
+							color="secondary"
+							id="delete"
+							value={row.id}
+							onClick={handleDelete}
+							fullWidth
+							>
+							Delete
 							</Button>
 						</TableCell>
 				</TableRow>
