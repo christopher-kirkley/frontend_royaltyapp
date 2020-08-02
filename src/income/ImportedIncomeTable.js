@@ -20,7 +20,7 @@ function ImportedIncomeTable(props) {
 	const history = useHistory()
 
 	function handleClick(e) {
-		const id = e.target.value
+		const id = e.currentTarget.value
 		history.push(`/income/${id}`)
 	}
 
