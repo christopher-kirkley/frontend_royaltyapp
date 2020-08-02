@@ -15,21 +15,9 @@ import TableCell from '@material-ui/core/TableCell';
 import { makeStyles } from '@material-ui/core/styles';
 
 
-function DetailImportedIncomeTable() {
+function DetailImportedIncomeTable(props) {
 
 	const history = useHistory()
-
-	const { id } = useParams()
-
-	const [statement, setStatement] = useState([])
-	
-	useEffect(() => { 
-		if (id) {
-		fetch(`http://localhost:5000/income/statements/${id}`)
-		.then(res => res.json())
-		.then(json => setStatement(json))
-		}
-	}, [])
 
 	return (
 		<Container component={Paper}>
@@ -48,7 +36,7 @@ function DetailImportedIncomeTable() {
 					Potatoes
 					</TableCell>
 				</TableRow>
-			{ statement.map((row) => 
+			{ props.statement.map((row) => 
 				<TableRow>
 						<TableCell>
 							{row.date}
