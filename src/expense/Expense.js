@@ -10,7 +10,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Header from '../components/Header'
 import AddExpenseStatementForm from './AddExpenseStatementForm'
 // import DisplayMatchingErrors from './DisplayMatchingErrors'
-// import UploadedStatements from './UploadedStatements'
+import UploadedStatements from '../income/UploadedStatements'
 
 function Expense() {
 
@@ -21,13 +21,13 @@ function Expense() {
 	const [ pendingStatements, setPendingStatements ] = useState([])
 
 	useEffect(() => {
-		fetch('http://localhost:5000/income/pending-statements')
+		fetch('http://localhost:5000/expense/pending-statements')
 		.then(res => res.json())
 		.then(json => setPendingStatements(json))
 	}, [])
 
 	function getPendingStatements() {
-		fetch(`http://localhost:5000/income/pending-statements`)
+		fetch(`http://localhost:5000/expense/pending-statements`)
 		.then(res => res.json())
 		.then(res => setPendingStatements(res))
 	}
@@ -50,14 +50,14 @@ function Expense() {
 	return (
 			<Container>
 				<Header name='Expense'/>
-				<AddExpenseStatementForm/>
+				<AddExpenseStatementForm getPendingStatements={getPendingStatements}/>
 		{
 				// <AddStatementForm
 				// 	getMatchingErrors={getMatchingErrors}
 				// 	getPendingStatements={getPendingStatements}/>
 				// <DisplayMatchingErrors matchingErrors={matchingErrors}/>
-				// <UploadedStatements pendingStatements={pendingStatements}/>
 			}
+				<UploadedStatements pendingStatements={pendingStatements}/>
 			</Container>
 		)
 	}
