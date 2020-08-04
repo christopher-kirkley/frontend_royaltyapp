@@ -17,9 +17,7 @@ function DisplayMatchingErrors(props) {
 
 	const { register, setValue, control, reset, handleSubmit } = useForm()
 
-
 	const history = useHistory()
-
 
 	function handleFix() {		
 		history.push('/income/matching-errors')
