@@ -19,7 +19,7 @@ function ExpenseMatchingTable() {
 
 	const [ msg, setMsg ] = useState('')
 	const [rows, setRows] = useState([])
-	const [upcs, setUpcs] = useState([])
+	const [artists, setArtists] = useState([])
 
 	const history = useHistory()
 
@@ -30,54 +30,47 @@ function ExpenseMatchingTable() {
 		.catch(res => setMsg('Error fetching data'))
 	}, [])
 
-	// useEffect(() => {
-	// 	fetch('http://localhost:5000/version')
-	// 	.then(res => res.json())
-	// 	.then(json => setUpcs(json))
-	// 	.catch(res => setMsg('Error fetching data'))
-	// }, [])
+	useEffect(() => {
+		fetch('http://localhost:5000/artists')
+		.then(res => res.json())
+		.then(json => setArtists(json))
+		.catch(res => setMsg('Error fetching data'))
+	}, [])
 
-	// const upcChoices = upcs.map((upc) =>
-	// 	{
-	// 		return (
-	// 			<option
-	// 				id={upc.version_number}
-	// 				value={upc.upc}
-	// 			>{upc.version_number} : {upc.upc}
-	// 			</option>
-	// 		)
-	// })
+	const artistChoices = artists.map((artist) =>
+		{
+			return (
+				<option
+					id={artist.artist_name}
+					value={artist.artist_id}
+				>{artist.artist_name}
+				</option>
+			)
+	})
 
 
-	// function handleUpdate(e) {
-	// 	e.preventDefault()
-	// 	if (e.target.version_number.checked)
-	// 		{var version_number = e.target.version_number.value}
-	// 	if (e.target.medium.checked)
-	// 		{var medium = e.target.medium.value}
-	// 	if (e.target.description.checked)
-	// 		{var description = e.target.description.value}
-	// 	// select which elements to update on
-	// 	fetch('http://localhost:5000/income/update-errors', {
-	// 		method: 'PUT',
-	// 		body: JSON.stringify(
-	// 			{
-	// 				'upc_id': e.target.new_upc.value,
-	// 				'data_to_match' : 
-	// 					[
-	// 						{
-	// 						'version_number': version_number,
-	// 						'medium': medium,
-	// 						'description': description,
-	// 						}
-	// 					]
-	// 	})}
-	// 	)
-	// 	.then(res => fetch('http://localhost:5000/income/matching-errors'))
-	// 	.then(res => res.json())
-	// 	.then(json => setRows(json))
-	// 	.catch(res => setMsg('Error fetching data'))
-	// }
+	function handleUpdate(e) {
+		e.preventDefault()
+		var artist_name = e.target.artist_name_old.value
+		// select which elements to update on
+		fetch('http://localhost:5000/expense/update-errors', {
+			method: 'PUT',
+			body: JSON.stringify(
+				{
+					'artist_name': e.target.new_artist.value,
+					'data_to_match' : 
+						[
+							{
+							'artist_name': artist_name
+							}
+						]
+		})}
+		)
+		.then(res => fetch('http://localhost:5000/expense/matching-errors'))
+		.then(res => res.json())
+		.then(json => setRows(json))
+		.catch(res => setMsg('Error fetching data'))
+	}
 
 
 	const [columns] = useState([
@@ -104,62 +97,46 @@ function ExpenseMatchingTable() {
 				<TableRow>
 						<input type="hidden"
 							form={`form${row.id}`}
-							id="entry_id"
-							value={row.id}
+							id="artist_name_old"
+							value={row.artist_name}
 							/>
-						<TableCell>
-							<input
-								type="checkbox"
-								form={`form${row.id}`}
-								id="artist_name"/>
+						<TableCell
+							id="artist_name">
 							{ row.artist_name }
 						</TableCell>
-						<TableCell>
-							<input
-								type="checkbox"
-								form={`form${row.id}`}
-								id="catalog_number"/>
+						<TableCell
+							id="catalog_number">
 						{ row.catalog_number }
 						</TableCell>
-						<TableCell>
-							<input
-								type="checkbox"
-								form={`form${row.id}`}
+						<TableCell
 								id="description"
-								value={row.description}/>
+								value={row.description}>
 						{ row.description }
 						</TableCell>
-						<TableCell>
-							<input
-								type="checkbox"
-								form={`form${row.id}`}
-								id="item_type"/>
+						<TableCell
+								id="item_type">
 						{ row.item_type }
 						</TableCell>
-						<TableCell>
-							<input
-								type="checkbox"
-								form={`form${row.id}`}
+						<TableCell
 								id="expense_type"
-								value={row.expense_type}/>
+								value={row.expense_type}>
 						{ row.expense_type }
 						</TableCell>
-						<TableCell>
-							<input
-								type="checkbox"
-								form={`form${row.id}`}
-								id="vendor"/>
+						<TableCell
+								id="vendor">
 						{ row.vendor }
 						</TableCell>
 						<TableCell>
 							<select
 								form={`form${row.id}`}
-								id="new_upc">
+								id="new_artist">
+							{artistChoices}
 							</select>
 						</TableCell>
 						<TableCell>
 							<form
 								id={`form${row.id}`}
+								onSubmit={handleUpdate}
 								>
 								<Button
 									type="submit"
