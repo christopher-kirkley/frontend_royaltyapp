@@ -9,7 +9,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import Header from '../components/Header'
 import AddExpenseStatementForm from './AddExpenseStatementForm'
-// import DisplayMatchingErrors from './DisplayMatchingErrors'
+import DisplayMatchingErrors from '../income/DisplayMatchingErrors'
 import UploadedStatements from '../income/UploadedStatements'
 
 function Expense() {
@@ -33,7 +33,7 @@ function Expense() {
 	}
 
 	useEffect(() => { 
-			fetch(`http://localhost:5000/income/matching-errors`)
+			fetch(`http://localhost:5000/expense/matching-errors`)
 			.then(res => res.json())
 			.then(res => res.length)
 			.then(res => setMatchingErrors(res))
@@ -41,23 +41,31 @@ function Expense() {
 	}, [])
 
 	function getMatchingErrors() {
-		fetch(`http://localhost:5000/income/matching-errors`)
+		fetch(`http://localhost:5000/expense/matching-errors`)
 		.then(res => res.json())
 		.then(res => res.length)
 		.then(res => setMatchingErrors(res))
 	}
 
+	function goToMatchingErrorPage() {
+		history.push('/expense/matching-errors')
+	}
+
 	return (
 			<Container>
 				<Header name='Expense'/>
-				<AddExpenseStatementForm getPendingStatements={getPendingStatements}/>
+				<AddExpenseStatementForm
+					getMatchingErrors={getMatchingErrors}
+					getPendingStatements={getPendingStatements}/>
 		{
 				// <AddStatementForm
 				// 	getMatchingErrors={getMatchingErrors}
 				// 	getPendingStatements={getPendingStatements}/>
-				// <DisplayMatchingErrors matchingErrors={matchingErrors}/>
 			}
 				<UploadedStatements pendingStatements={pendingStatements}/>
+				<DisplayMatchingErrors
+					matchingErrors={matchingErrors}
+					goToMatchingErrorPage={goToMatchingErrorPage}/>
 			</Container>
 		)
 	}
