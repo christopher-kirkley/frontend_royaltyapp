@@ -51,6 +51,12 @@ function Expense() {
 		history.push('/expense/matching-errors')
 	}
 
+	function processPending() {
+		fetch('http://localhost:5000/expense/process-pending', {
+				method: 'POST'}
+		)
+	}
+
 	return (
 			<Container>
 				<Header name='Expense'/>
@@ -62,7 +68,10 @@ function Expense() {
 				// 	getMatchingErrors={getMatchingErrors}
 				// 	getPendingStatements={getPendingStatements}/>
 			}
-				<UploadedStatements pendingStatements={pendingStatements}/>
+				<UploadedStatements
+					pendingStatements={pendingStatements}
+					processPending={processPending}
+				/>
 				<DisplayMatchingErrors
 					matchingErrors={matchingErrors}
 					goToMatchingErrorPage={goToMatchingErrorPage}/>
