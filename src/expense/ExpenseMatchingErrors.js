@@ -11,6 +11,7 @@ import Header from '../components/Header'
 import AddStatementForm from '../income/AddStatementForm'
 import DisplayMatchingErrors from '../income/DisplayMatchingErrors'
 import ExpenseMatchingTable from './ExpenseMatchingTable'
+import ExpenseTable from './ExpenseTable'
 
 import Paper from '@material-ui/core/Paper';
 
@@ -34,7 +35,6 @@ function ExpenseMatchingErrors() {
 			<Container>
 				<Header name='Expense Matching Errors'/>
 				<ExpenseTable/>
-				<ExpenseMatchingTable />
 			</Container>
 		)
 	}

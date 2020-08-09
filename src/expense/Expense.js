@@ -35,15 +35,15 @@ function Expense() {
 	useEffect(() => { 
 			fetch(`http://localhost:5000/expense/matching-errors`)
 			.then(res => res.json())
-			.then(res => res.length)
-			.then(res => setMatchingErrors(res))
+			.then(res => res[0]['total_matching_errors'])
+			.then(res => setMatchingErrors(1))
 			.catch(error => setMatchingErrorsMsg('Error!'))
 	}, [])
 
 	function getMatchingErrors() {
 		fetch(`http://localhost:5000/expense/matching-errors`)
 		.then(res => res.json())
-		.then(res => res.length)
+		.then(res => res[0]['total_matching_errors'])
 		.then(res => setMatchingErrors(res))
 	}
 
