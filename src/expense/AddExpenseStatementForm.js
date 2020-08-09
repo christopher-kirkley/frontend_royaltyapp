@@ -16,8 +16,6 @@ import FormControl from '@material-ui/core/FormControl'
 
 function AddExpenseStatementForm(props) {
 
-	const { register, setValue, control, reset, handleSubmit } = useForm()
-
 	function handleUpload(e) {
 		e.preventDefault()
 		const file = e.target.upload.files
@@ -47,6 +45,12 @@ function AddExpenseStatementForm(props) {
 			<Grid container spacing={4}> 
 			<Grid item xs={12}>
 				<TextField fullWidth id="select_statement" name="upload" type="file"/>	
+			</Grid>
+			<Grid item xs={12}>
+				<select id="source_statement">
+				<option id="artist_source">Artist</option>
+				<option id="catalog_source">Catalog</option>
+				</select>
 			</Grid>
 			<Grid item xs={12}>
 				<Button

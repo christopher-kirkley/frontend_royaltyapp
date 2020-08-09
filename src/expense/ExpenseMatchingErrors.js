@@ -33,6 +33,7 @@ function ExpenseMatchingErrors() {
 		return (
 			<Container>
 				<Header name='Expense Matching Errors'/>
+				<ExpenseTable/>
 				<ExpenseMatchingTable />
 			</Container>
 		)
