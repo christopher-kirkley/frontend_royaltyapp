@@ -5,6 +5,7 @@ import { useHistory } from "react-router-dom";
 
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
+import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 
 import Grid from '@material-ui/core/Grid';
@@ -39,16 +40,18 @@ function StatementGenerate() {
 
 	function handleSubmit(e) {
 		e.preventDefault()
-		var statement_name = e.target.statement.value
+		var previous_balance_id = e.target.previous_balance_id.value
 		var startDateSQL = startDate.toISOString().split('T')[0] 
 		var endDateSQL = endDate.toISOString().split('T')[0] 
 		fetch('http://localhost:5000/statements/generate', {
 				method: 'POST',
-				body: {
-					'statement_name': statement_name,
+				body: JSON.stringify(
+					{
+					'previous_balance_id': 1,
 					'start_date': startDateSQL,
-					'end_date': endDateSQL,
+					'end_date': endDateSQL
 				}
+				)
 			})
 		.then(resp => resp.json())
 		.then(res => setMsg('Uploaded!'))
@@ -61,7 +64,9 @@ function StatementGenerate() {
 		{
 			return (
 				<option
-				>{previousBalance.previous_balance}
+					id={previousBalance.statement_balance_name}
+					value={previousBalance.id}
+				>{previousBalance.statement_balance_name}
 				</option>
 			)
 	})
@@ -69,14 +74,7 @@ function StatementGenerate() {
 	useEffect(() => {
 		fetch('http://localhost:5000/statements/view')
 		.then(res => res.json())
-		.then(json =>
-			{
-				if (json.length == 0) (
-					setPreviousBalances([{'previous_balance': 'None'}])
-				)
-				else (
-					setPreviousBalances(json))
-			})
+		.then(json => setPreviousBalances(json))
 		.catch(res => setMsg('Error fetching data'))
 	}, [])
 
@@ -118,8 +116,8 @@ function StatementGenerate() {
 						</MuiPickersUtilsProvider>
 						<Grid item xs={12}>
 							<select
+								id="previous_balance_id"
 								form="form"
-								id="statement"
 								>
 							{previousBalanceChoices}
 							</select>
@@ -139,6 +137,9 @@ function StatementGenerate() {
 						Submit
 						</Button>
 					</form>
+					<Grid item>
+					<Typography id="message">{msg}</Typography>
+					</Grid>
 					</Grid>
 			</Container>
 		)
