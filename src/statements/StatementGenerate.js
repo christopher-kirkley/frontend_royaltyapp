@@ -39,7 +39,20 @@ function StatementGenerate() {
 
 	function handleSubmit(e) {
 		e.preventDefault()
+		var statement_name = e.target.statement.value
+		fetch('http://localhost:5000/statements/generate', {
+				method: 'POST',
+				body: {
+					'statement_name': statement_name,
+					'start_date': startDate,
+					'end_date': endDate,
+				}
+			})
+		.then(resp => resp.json())
+		.then(res => setMsg('Uploaded!'))
+		.catch(error => setMsg('Error uploading'))
 	}
+
 
 
 	const previousBalanceChoices = previousBalances.map((previousBalance) =>
@@ -91,19 +104,21 @@ function StatementGenerate() {
 		          variant="inline"
 		          format="MM/dd/yyyy"
 		          margin="normal"
-		          id="start-date"
+		          id="end-date"
 		          label="End Date"
 		          value={endDate}
 		          onChange={handleEndDateChange}
 		          KeyboardButtonProps={{
 								            'aria-label': 'change date',
 									          }}
-							form="form"
 		        />
 						</Grid>
 						</MuiPickersUtilsProvider>
 						<Grid item xs={12}>
-							<select>
+							<select
+								form="form"
+								id="statement"
+								>
 							{previousBalanceChoices}
 							</select>
 						</Grid>
