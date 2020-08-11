@@ -17,7 +17,21 @@ import Import from "./catalog/Import"
 import Income from "./income/Income"
 import MatchingErrors from "./income/MatchingErrors"
 import ImportedIncome from "./income/ImportedIncome"
+import DetailImportedIncome from "./income/DetailImportedIncome"
+import StatementGenerate from "./statements/StatementGenerate"
+import StatementView from "./statements/StatementView"
+import StatementDetail from "./statements/StatementDetail"
 
+import MoneyOffIcon from '@material-ui/icons/MoneyOff';
+import DescriptionIcon from '@material-ui/icons/Description';
+import FindInPageIcon from '@material-ui/icons/FindInPage';
+import AddCircleIcon from '@material-ui/icons/AddCircle';
+
+import Expense from "./expense/Expense"
+import ExpenseMatchingErrors from "./expense/ExpenseMatchingErrors"
+import ImportedExpense from "./expense/ImportedExpense"
+import DetailImportedExpense from "./expense/DetailImportedExpense"
+import ImportedExpenseTable from "./expense/DetailImportedExpenseTable"
 
 import { makeStyles } from "@material-ui/core/styles"
 import { 
@@ -114,6 +128,48 @@ function Main() {
 							</Link>
 							</List>
 					</Link>
+					<Link to="/expense" className={classes.link}>
+						<ListItem button id="expense">
+							<ListItemIcon>
+								<MoneyOffIcon />
+							</ListItemIcon>
+							<ListItemText primary={"Expense"}/>
+						</ListItem>
+							<List component="div" disablePadding>
+							<Link to="/expense/view-imported-expense" className={classes.link}>
+								<ListItem button id="view_imported_expense" className={classes.nested}>
+									<ListItemIcon>
+										<ViewAgendaIcon />
+									</ListItemIcon>
+									<ListItemText primary={"View Imported"}/>
+								</ListItem>
+							</Link>
+							</List>
+					</Link>
+						<ListItem button id="statement">
+							<ListItemIcon>
+								<DescriptionIcon />
+							</ListItemIcon>
+							<ListItemText primary={"Statement"}/>
+						</ListItem>
+							<List component="div" disablePadding>
+							<Link to="/statements/generate" className={classes.link}>
+								<ListItem button id="statements_generate" className={classes.nested}>
+									<ListItemIcon>
+										<AddCircleIcon />
+									</ListItemIcon>
+									<ListItemText primary={"Generate"}/>
+								</ListItem>
+							</Link>
+							<Link to="/statements/view" className={classes.link}>
+								<ListItem button id="statements_view" className={classes.nested}>
+									<ListItemIcon>
+										<FindInPageIcon />
+									</ListItemIcon>
+									<ListItemText primary={"View"}/>
+								</ListItem>
+							</Link>
+							</List>
 				</List>
 			</Drawer>
 			<Switch>
@@ -127,6 +183,14 @@ function Main() {
 				<Route exact path="/income" component={Income}/>
 				<Route exact path="/income/matching-errors" component={MatchingErrors}/>
 				<Route exact path="/income/view-imported" component={ImportedIncome}/>
+				<Route exact path="/income/:id" component={DetailImportedIncome}/>
+				<Route exact path="/expense" component={Expense}/>
+				<Route exact path="/expense/matching-errors" component={ExpenseMatchingErrors}/>
+				<Route exact path="/expense/view-imported-expense" component={ImportedExpense}/>
+				<Route exact path="/expense/:id" component={DetailImportedExpense}/>
+				<Route exact path="/statements/generate" component={StatementGenerate}/>
+				<Route exact path="/statements/view" component={StatementView}/>
+				<Route exact path="/statements/:id" component={StatementDetail}/>
 			</Switch>
 		</div>
 		{

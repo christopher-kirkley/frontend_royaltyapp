@@ -17,11 +17,6 @@ function DisplayMatchingErrors(props) {
 
 	const { register, setValue, control, reset, handleSubmit } = useForm()
 
-	const history = useHistory()
-
-	function handleFix() {		
-		history.push('/income/matching-errors')
-	}
 
 	return (
 		<Container component="main" maxWidth="xs" spacing={4}>
@@ -37,7 +32,7 @@ function DisplayMatchingErrors(props) {
 					id="fix_errors"
 					name="submit"
 					type="submit"
-					onClick={handleFix}	
+					onClick={props.goToMatchingErrorPage}	
 				>Fix</Button>
 		</Grid>
 		</div>

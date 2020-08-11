@@ -47,14 +47,29 @@ function Income() {
 		.then(res => setMatchingErrors(res))
 	}
 
+	function goToMatchingErrorPage() {
+		history.push('/expense/matching-errors')
+	}
+
+	function processPending() {
+		fetch('http://localhost:5000/income/process-pending', {
+				method: 'POST'}
+		)
+	}
+	
 	return (
 			<Container>
 				<Header name='Income'/>
 				<AddStatementForm
 					getMatchingErrors={getMatchingErrors}
 					getPendingStatements={getPendingStatements}/>
-				<DisplayMatchingErrors matchingErrors={matchingErrors}/>
-				<UploadedStatements pendingStatements={pendingStatements}/>
+				<DisplayMatchingErrors
+					matchingErrors={matchingErrors}
+					goToMatchingErrorPage={goToMatchingErrorPage}/>
+				<UploadedStatements
+					pendingStatements={pendingStatements}
+					processPending={processPending}
+				/>
 			</Container>
 		)
 	}

@@ -38,12 +38,12 @@ function StatementView() {
 
 	function handleClick(e) {
 		const id = e.currentTarget.value
-		history.push(`/expense/${id}`)
+		history.push(`/statements/${id}`)
 	}
 
 	function handleDelete(e) {
 		const id = e.currentTarget.value
-		fetch(`http://localhost:5000/expense/statements/${id}`, {
+		fetch(`http://localhost:5000/statements/${id}`, {
 			method: 'DELETE'
 		})
 		}
