@@ -72,7 +72,7 @@ function StatementGenerate() {
 	})
 
 	useEffect(() => {
-		fetch('http://localhost:5000/statements/view')
+		fetch('http://localhost:5000/statements/view-balances')
 		.then(res => res.json())
 		.then(json => setPreviousBalances(json))
 		.catch(res => setMsg('Error fetching data'))
