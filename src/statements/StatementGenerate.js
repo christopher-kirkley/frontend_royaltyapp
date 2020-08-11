@@ -21,8 +21,8 @@ function StatementGenerate() {
 
 	const history = useHistory()
 
-	const [startDate, setStartDate] = useState(new Date('2020-01-01T21:11:54'));
-	const [endDate, setEndDate] = useState(new Date('2020-01-31T21:11:54'));
+	const [startDate, setStartDate] = useState(new Date(2020, 0, 1));
+	const [endDate, setEndDate] = useState(new Date(2020, 0, 31));
 
 	const [previousBalances, setPreviousBalances] = useState([]);
 
@@ -40,12 +40,14 @@ function StatementGenerate() {
 	function handleSubmit(e) {
 		e.preventDefault()
 		var statement_name = e.target.statement.value
+		var startDateSQL = startDate.toISOString().split('T')[0] 
+		var endDateSQL = endDate.toISOString().split('T')[0] 
 		fetch('http://localhost:5000/statements/generate', {
 				method: 'POST',
 				body: {
 					'statement_name': statement_name,
-					'start_date': startDate,
-					'end_date': endDate,
+					'start_date': startDateSQL,
+					'end_date': endDateSQL,
 				}
 			})
 		.then(resp => resp.json())
