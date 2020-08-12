@@ -20,7 +20,8 @@ function StatementView() {
 	const { id } = useParams()
 
 	const [statement, setStatement] = useState([])
-	const [data, setData] = useState([])
+	const [detail, setDetail] = useState([])
+	const [summary, setSummary] = useState({})
 
 	useEffect(() => { 
 		if (id) {
@@ -28,81 +29,55 @@ function StatementView() {
 		.then(res => res.json())
 		.then(json =>
 			{
-				setStatement(json[0]['data'])
-				setData(json[0]['data'])
+				console.log(json)
+				setDetail(json['detail'])
+				setSummary(json['summary'])
 			})
 		}
 	}, [])
 
-	const [columns] = useState([
-		{ name: 'Date', title: 'data'},
-		{ name: 'Catalog', title: 'catalog'},
-		{ name: 'Artist', title: 'artist'},
-		{ name: 'Vendor', title: 'vendor'},
-		{ name: 'Description', title: 'description'},
-		{ name: 'Net', title: 'net'},
-		{ name: 'Item Type', title: 'item_type'},
-		{ name: 'Transaction Type', title: 'transaction_type'},
-	])
 
-	const dataRows = data.map((row) =>
+	const detailRows = detail.map((row) =>
 		{
 			return (
 				<TableRow>
-						<input type="hidden"
-							id="id"
-							value={row.id}
-							/>
-							<TableCell
-							id="date">
-							{ row.date }
-							</TableCell>
-							<TableCell
-								id="catalog_number">
-							{ row.catalog ? row.catalog.catalog_number : ''}
-							</TableCell>
-							<TableCell
-									id="artist_name"
-							>
-							{ row.artist ? row.artist.artist_name : ''}
-							</TableCell>
-							<TableCell
-									id="vendor">
-							{ row.vendor }
-							</TableCell>
-							<TableCell
-									id="description"
-									value={row.description}>
-							{ row.description }
-							</TableCell>
-							<TableCell
-									id="net">
-							{ row.net }
-							</TableCell>
-							<TableCell
-									id="item_type">
-							{ row.item_type }
-							</TableCell>
-							<TableCell
-									id="transaction_type">
-							{ row.transaction_type }
-							</TableCell>
-					</TableRow>
+					<TableCell
+						id="artist_name">
+					{ row.artist_name }
+					</TableCell>
+					<TableCell
+						id="balance_forward">
+					{ row.balance_forward }
+					</TableCell>
+					<TableCell>
+						<Button
+							id="view">
+							View
+						</Button>
+					</TableCell>
+				</TableRow>
 				)
 		})
 
 	return (
 			<Container>
-				<Header name='Statement'/>
-				<Table id="imported_expense_table">
+				<Header name='Statement Summary'/>
+				<Grid>
+					<Grid item>
+						<Typography>Current Owed:
+						{summary['statement_total']}
+						</Typography>
+						<Typography>Previous Balance Statement: </Typography>
+					</Grid>
+				</Grid>
+				<Table id="statement_summary_table">
 					<TableRow>
-					{ columns.map((column) => 
-							<TableCell>
-							{ column.name }
-							</TableCell>
-					)}
+						<TableCell>Artist</TableCell>
+						<TableCell>Open Balance</TableCell>
+						<TableCell></TableCell>
+						<TableCell></TableCell>
 					</TableRow>
-					{dataRows}
+					{detailRows}
 				</Table>
 			</Container>
 		)
