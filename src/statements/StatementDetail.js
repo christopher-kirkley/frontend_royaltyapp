@@ -25,6 +25,7 @@ function StatementDetail() {
 	const [expense, setExpense] = useState([])
 	const [advance, setAdvance] = useState([])
 	const [albumSales, setAlbumSales] = useState([])
+	const [trackSales, setTrackSales] = useState([])
 	const [msg, setMsg] = useState('')
 
 	useEffect(() => {
@@ -36,6 +37,7 @@ function StatementDetail() {
 			setExpense(json['expense'])
 			setAdvance(json['advance'])
 			setAlbumSales(json['album_sales'])
+			setTrackSales(json['track_sales'])
 		}
 		)
 		.catch(res => setMsg('Error fetching data'))
@@ -151,6 +153,26 @@ function StatementDetail() {
 				)
 		})
 
+	const trackSalesRows = trackSales.map((row) =>
+		{
+			return (
+				<TableRow>
+					<TableCell
+						id="track_name">
+					{ row.track_name }
+					</TableCell>
+					<TableCell
+						id="quantity">
+					{ row.quantity }
+					</TableCell>
+					<TableCell
+						id="net">
+					{ row.net }
+					</TableCell>
+				</TableRow>
+				)
+		})
+
 	return (
 			<Container>
 				<Header name='Statement Detail'/>
@@ -215,7 +237,11 @@ function StatementDetail() {
 
 				<Table id="track-sales">
 					<TableRow>
+						<TableCell>Track</TableCell>
+						<TableCell>Streams/Download</TableCell>
+						<TableCell>Sum</TableCell>
 					</TableRow>
+					{trackSalesRows}
 				</Table>
 			
 
