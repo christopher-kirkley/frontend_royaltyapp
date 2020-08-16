@@ -15,45 +15,43 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import Header from '../components/Header'
 
-function StatementView() {
+function StatementDetail() {
 
-	const { id } = useParams()
+	const history = useHistory()
 
-	const [statement, setStatement] = useState([])
-	const [detail, setDetail] = useState([])
-	const [summary, setSummary] = useState({})
+	const { id, artistId } = useParams()
 
-	useEffect(() => { 
-		if (id) {
-		fetch(`http://localhost:5000/statements/${id}`)
+	const [income, setIncome] = useState([])
+	const [msg, setMsg] = useState('')
+
+	useEffect(() => {
+		fetch(`http://localhost:5000/statements/${id}/artist/${artistId}`)
 		.then(res => res.json())
-		.then(json =>
-			{
-				console.log(json)
-				setDetail(json['detail'])
-				setSummary(json['summary'])
-			})
-		}
+		.then(json => setIncome(json['income']))
+		.catch(res => setMsg('Error fetching data'))
 	}, [])
 
 
-	const detailRows = detail.map((row) =>
+
+	const incomeRows = income.map((row) =>
 		{
 			return (
 				<TableRow>
 					<TableCell
-						id="artist_name">
-					{ row.artist_name }
+						id="catalog_name">
+					{ row.catalog_name }
 					</TableCell>
 					<TableCell
-						id="balance_forward">
-					{ row.balance_forward }
+						id="digital_net">
+					{ row.digital_net }
 					</TableCell>
-					<TableCell>
-						<Button
-							id="view">
-							View
-						</Button>
+					<TableCell
+						id="physical_net">
+					{ row.physical_net }
+					</TableCell>
+					<TableCell
+						id="combined_net">
+					{ row.combined_net }
 					</TableCell>
 				</TableRow>
 				)
@@ -61,27 +59,56 @@ function StatementView() {
 
 	return (
 			<Container>
-				<Header name='Statement Summary'/>
+				<Header name='Statement Detail'/>
 				<Grid>
 					<Grid item>
-						<Typography>Current Owed:
-						{summary['statement_total']}
-						</Typography>
-						<Typography>Previous Balance Statement: </Typography>
+						<Typography>Detail for ___</Typography>
 					</Grid>
 				</Grid>
-				<Table id="statement_summary_table">
+
+				<Table id="artist-statement-summary">
 					<TableRow>
-						<TableCell>Artist</TableCell>
-						<TableCell>Open Balance</TableCell>
-						<TableCell></TableCell>
-						<TableCell></TableCell>
 					</TableRow>
-					{detailRows}
 				</Table>
+
+				<Typography>Income</Typography>
+				<Table id="artist-statement-income">
+					<TableRow>
+						<TableCell>Release</TableCell>
+						<TableCell>Digital</TableCell>
+						<TableCell>Physical</TableCell>
+						<TableCell>Total</TableCell>
+					</TableRow>
+					{incomeRows}
+				</Table>
+
+				<Typography>Expenses</Typography>
+				<Table id="artist-statement-expense">
+					<TableRow>
+					</TableRow>
+				</Table>
+		
+				<Table id="artist-statement-advance">
+					<TableRow>
+					</TableRow>
+				</Table>
+				
+				<Typography>Sales Details</Typography>
+
+				<Table id="albums">
+					<TableRow>
+					</TableRow>
+				</Table>
+
+				<Table id="tracks">
+					<TableRow>
+					</TableRow>
+				</Table>
+			
+
 			</Container>
 		)
 	}
 
 
-export default StatementView
+export default StatementDetail
