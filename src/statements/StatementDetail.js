@@ -7,6 +7,7 @@ import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
+import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 import Container from '@material-ui/core/Container';
@@ -176,74 +177,100 @@ function StatementDetail() {
 	return (
 			<Container>
 				<Header name='Statement Detail'/>
-				<Grid>
-					<Grid item>
-						<Typography>Detail for ___</Typography>
+				<Grid container spacing={3}>
+					<Grid item xs={12} align="center">
+						<Typography component="h4" variant="h4">Artist Detail Statement</Typography>
 					</Grid>
-				</Grid>
-
-				<Table id="artist-statement-summary">
-					<TableRow>
-					</TableRow>
-				</Table>
-
-				<Typography>Income</Typography>
-				<Table id="artist-statement-income">
-					<TableRow>
-						<TableCell>Release</TableCell>
-						<TableCell>Digital</TableCell>
-						<TableCell>Physical</TableCell>
-						<TableCell>Total</TableCell>
-					</TableRow>
-					{incomeRows}
-				</Table>
-
-				<Typography>Expenses (50% Recoupable)</Typography>
-				<Table id="artist-statement-expense">
-					<TableRow>
-						<TableCell>Date</TableCell>
-						<TableCell>Item</TableCell>
-						<TableCell>Vendor</TableCell>
-						<TableCell>Detail</TableCell>
-						<TableCell>Expense</TableCell>
-					</TableRow>
-					{expenseRows}
-				</Table>
-		
-				<Typography>Advance (100% Recoupable)</Typography>
-				<Table id="artist-statement-advance">
-					<TableRow>
-						<TableCell>Date</TableCell>
-						<TableCell>Item</TableCell>
-						<TableCell>Vendor</TableCell>
-						<TableCell>Detail</TableCell>
-						<TableCell>Expense</TableCell>
-					</TableRow>
-					{advanceRows}
-				</Table>
-				
-				<Typography>Sales Details</Typography>
-
-				<Table id="album-sales">
-					<TableRow>
-						<TableCell>Release</TableCell>
-						<TableCell>Version</TableCell>
-						<TableCell>Format</TableCell>
-						<TableCell>Quantity</TableCell>
-						<TableCell>Sum</TableCell>
-					</TableRow>
-					{albumSalesRows}
-				</Table>
-
-				<Table id="track-sales">
-					<TableRow>
-						<TableCell>Track</TableCell>
-						<TableCell>Streams/Download</TableCell>
-						<TableCell>Sum</TableCell>
-					</TableRow>
-					{trackSalesRows}
-				</Table>
-			
+					<Grid item xs={12} align="center">
+					<Table id="artist-statement-summary">
+						<TableRow>
+						</TableRow>
+					</Table>
+					</Grid>
+					<Grid item xs={12} align="center">
+					<Typography component="h5" variant="h5">Income</Typography>
+					</Grid>
+					<Grid item xs={12} align="center">
+					<Table id="artist-statement-income">
+						<TableHead style={{backgroundColor: "grey"}}>
+						<TableRow>
+							<TableCell>Release</TableCell>
+							<TableCell>Digital</TableCell>
+							<TableCell>Physical</TableCell>
+							<TableCell>Total</TableCell>
+						</TableRow>
+						</TableHead>
+						{incomeRows}
+					</Table>
+					</Grid>
+					<Grid item xs={12} align="center">
+					<Typography component="h5" variant="h5">Expenses (50% Recoupable)</Typography>
+					<Table id="artist-statement-expense">
+						<TableHead style={{backgroundColor: "grey"}}>
+						<TableRow>
+							<TableCell>Date</TableCell>
+							<TableCell>Item</TableCell>
+							<TableCell>Vendor</TableCell>
+							<TableCell>Detail</TableCell>
+							<TableCell>Expense</TableCell>
+						</TableRow>
+						</TableHead>
+						{expenseRows}
+					</Table>
+					</Grid>
+					<Grid item xs={12} align="center">
+					<Typography component="h5" variant="h5">Advance (100% Recoupable)</Typography>
+					</Grid>
+					<Grid item xs={12} align="center">
+					<Table id="artist-statement-advance">
+						<TableHead style={{backgroundColor: "grey"}}>
+						<TableRow>
+							<TableCell>Date</TableCell>
+							<TableCell>Item</TableCell>
+							<TableCell>Vendor</TableCell>
+							<TableCell>Detail</TableCell>
+							<TableCell>Expense</TableCell>
+						</TableRow>
+						</TableHead>
+						{advanceRows}
+					</Table>
+					</Grid>
+					<Grid item xs={12} align="center">
+					<Typography variant="h4" component="h4">Sales Details</Typography>
+					</Grid>
+					<Grid item xs={12} align="center">
+					<Typography variant="h5" component="h5">Album Sales</Typography>
+					</Grid>
+					<Grid item xs={12}>
+					<Table id="album-sales">
+						<TableHead style={{backgroundColor: "grey"}}>
+						<TableRow>
+							<TableCell>Release</TableCell>
+							<TableCell>Version</TableCell>
+							<TableCell>Format</TableCell>
+							<TableCell>Quantity</TableCell>
+							<TableCell>Sum</TableCell>
+						</TableRow>
+						</TableHead>
+						{albumSalesRows}
+					</Table>
+					</Grid>
+					<Grid item xs={12} align="center">
+					<Typography variant="h5" component="h5">Track Sales</Typography>
+					</Grid>
+					<Grid item xs={12}>
+					<Table id="track-sales">
+						<TableHead style={{backgroundColor: "grey"}}>
+						<TableRow>
+							<TableCell>Track</TableCell>
+							<TableCell>Streams/Download</TableCell>
+							<TableCell>Sum</TableCell>
+						</TableRow>
+						</TableHead>
+						{trackSalesRows}
+					</Table>
+					</Grid>
+					</Grid>
 
 			</Container>
 		)
