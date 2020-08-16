@@ -22,12 +22,22 @@ function StatementDetail() {
 	const { id, artistId } = useParams()
 
 	const [income, setIncome] = useState([])
+	const [expense, setExpense] = useState([])
+	const [advance, setAdvance] = useState([])
+	const [albumSales, setAlbumSales] = useState([])
 	const [msg, setMsg] = useState('')
 
 	useEffect(() => {
 		fetch(`http://localhost:5000/statements/${id}/artist/${artistId}`)
 		.then(res => res.json())
-		.then(json => setIncome(json['income']))
+		.then(json => {
+			console.log(json)
+			setIncome(json['income'])
+			setExpense(json['expense'])
+			setAdvance(json['advance'])
+			setAlbumSales(json['album_sales'])
+		}
+		)
 		.catch(res => setMsg('Error fetching data'))
 	}, [])
 
@@ -52,6 +62,90 @@ function StatementDetail() {
 					<TableCell
 						id="combined_net">
 					{ row.combined_net }
+					</TableCell>
+				</TableRow>
+				)
+		})
+
+	const expenseRows = expense.map((row) =>
+		{
+			return (
+				<TableRow>
+					<TableCell
+						id="date">
+					{ row.date }
+					</TableCell>
+					<TableCell
+						id="detail">
+					{ row.detail }
+					</TableCell>
+					<TableCell
+						id="expense">
+					{ row.expense }
+					</TableCell>
+					<TableCell
+						id="item">
+					{ row.item }
+					</TableCell>
+					<TableCell
+						id="vendor">
+					{ row.vendor }
+					</TableCell>
+				</TableRow>
+				)
+		})
+	
+	const advanceRows = advance.map((row) =>
+		{
+			return (
+				<TableRow>
+					<TableCell
+						id="date">
+					{ row.date }
+					</TableCell>
+					<TableCell
+						id="detail">
+					{ row.detail }
+					</TableCell>
+					<TableCell
+						id="expense">
+					{ row.expense }
+					</TableCell>
+					<TableCell
+						id="item">
+					{ row.item }
+					</TableCell>
+					<TableCell
+						id="vendor">
+					{ row.vendor }
+					</TableCell>
+				</TableRow>
+				)
+		})
+
+	const albumSalesRows = albumSales.map((row) =>
+		{
+			return (
+				<TableRow>
+					<TableCell
+						id="catalog_name">
+					{ row.catalog_name }
+					</TableCell>
+					<TableCell
+						id="version_number">
+					{ row.version_number }
+					</TableCell>
+					<TableCell
+						id="format">
+					{ row.format }
+					</TableCell>
+					<TableCell
+						id="quantity">
+					{ row.quantity }
+					</TableCell>
+					<TableCell
+						id="net">
+					{ row.net }
 					</TableCell>
 				</TableRow>
 				)
@@ -82,25 +176,44 @@ function StatementDetail() {
 					{incomeRows}
 				</Table>
 
-				<Typography>Expenses</Typography>
+				<Typography>Expenses (50% Recoupable)</Typography>
 				<Table id="artist-statement-expense">
 					<TableRow>
+						<TableCell>Date</TableCell>
+						<TableCell>Item</TableCell>
+						<TableCell>Vendor</TableCell>
+						<TableCell>Detail</TableCell>
+						<TableCell>Expense</TableCell>
 					</TableRow>
+					{expenseRows}
 				</Table>
 		
+				<Typography>Advance (100% Recoupable)</Typography>
 				<Table id="artist-statement-advance">
 					<TableRow>
+						<TableCell>Date</TableCell>
+						<TableCell>Item</TableCell>
+						<TableCell>Vendor</TableCell>
+						<TableCell>Detail</TableCell>
+						<TableCell>Expense</TableCell>
 					</TableRow>
+					{advanceRows}
 				</Table>
 				
 				<Typography>Sales Details</Typography>
 
-				<Table id="albums">
+				<Table id="album-sales">
 					<TableRow>
+						<TableCell>Release</TableCell>
+						<TableCell>Version</TableCell>
+						<TableCell>Format</TableCell>
+						<TableCell>Quantity</TableCell>
+						<TableCell>Sum</TableCell>
 					</TableRow>
+					{albumSalesRows}
 				</Table>
 
-				<Table id="tracks">
+				<Table id="track-sales">
 					<TableRow>
 					</TableRow>
 				</Table>
