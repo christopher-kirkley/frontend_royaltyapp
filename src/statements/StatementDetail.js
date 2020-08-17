@@ -24,6 +24,7 @@ function StatementDetail() {
 
 	const [artistName, setArtistName] = useState('')
 	const [statementName, setStatementName] = useState('')
+	const [summary, setSummary] = useState([])
 	const [income, setIncome] = useState([])
 	const [expense, setExpense] = useState([])
 	const [advance, setAdvance] = useState([])
@@ -38,6 +39,7 @@ function StatementDetail() {
 			console.log(json)
 			setArtistName(json['artist'])
 			setStatementName(json['statement'])
+			setSummary(json['summary'][0])
 			setIncome(json['income'])
 			setExpense(json['expense'])
 			setAdvance(json['advance'])
@@ -47,7 +49,6 @@ function StatementDetail() {
 		)
 		.catch(res => setMsg('Error fetching data'))
 	}, [])
-
 
 
 	const incomeRows = income.map((row) =>
@@ -185,6 +186,41 @@ function StatementDetail() {
 					<Grid item xs={12} align="center">
 						<Typography component="h5" variant="h5" color="primary">{ artistName }</Typography>
 						<Typography component="h5" variant="h5" color="primary">{ statementName }</Typography>
+					</Grid>
+					<Grid item xs={12} align="left">
+					<Paper style={{padding: 15}} elevation={3}>
+						<Typography component="h6" variant="h6" color="primary" align="center" gutterBottom>Summary</Typography>
+						<Table size="small" id="artist-statement-summary">
+							<TableRow>
+								<TableCell>Income</TableCell>
+								<TableCell id="sales">{summary['sales']}</TableCell>
+							</TableRow>
+							<TableRow>
+								<TableCell>Expenses</TableCell>
+								<TableCell id="sales">{summary['recoupables']}</TableCell>
+							</TableRow>
+							<TableRow>
+								<TableCell>Total to be Split</TableCell>
+								<TableCell id="sales">{summary['total_to_split']}</TableCell>
+							</TableRow>
+							<TableRow>
+								<TableCell>50% of Total</TableCell>
+								<TableCell id="sales">{summary['split']}</TableCell>
+							</TableRow>
+							<TableRow>
+								<TableCell>Less Advances</TableCell>
+								<TableCell id="sales">{summary['advances']}</TableCell>
+							</TableRow>
+							<TableRow>
+								<TableCell>Balance from Previous Statement</TableCell>
+								<TableCell id="sales">{summary['previous_balance']}</TableCell>
+							</TableRow>
+							<TableRow>
+								<TableCell>Artist Balance Forward</TableCell>
+								<TableCell id="sales">{summary['balance_forward']}</TableCell>
+							</TableRow>
+						</Table>
+					</Paper>
 					</Grid>
 					<Grid item xs={12} align="left">
 					<Paper style={{padding: 15}} elevation={3}>
