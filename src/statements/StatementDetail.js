@@ -22,6 +22,8 @@ function StatementDetail() {
 
 	const { id, artistId } = useParams()
 
+	const [artistName, setArtistName] = useState('')
+	const [statementName, setStatementName] = useState('')
 	const [income, setIncome] = useState([])
 	const [expense, setExpense] = useState([])
 	const [advance, setAdvance] = useState([])
@@ -34,6 +36,8 @@ function StatementDetail() {
 		.then(res => res.json())
 		.then(json => {
 			console.log(json)
+			setArtistName(json['artist'])
+			setStatementName(json['statement'])
 			setIncome(json['income'])
 			setExpense(json['expense'])
 			setAdvance(json['advance'])
@@ -177,36 +181,32 @@ function StatementDetail() {
 	return (
 			<Container>
 				<Header name='Statement Detail'/>
-				<Grid container spacing={3}>
+				<Grid container spacing={3} style={{padding: 12}}>
 					<Grid item xs={12} align="center">
-						<Typography component="h4" variant="h4">Artist Detail Statement</Typography>
+						<Typography component="h5" variant="h5" color="primary">{ artistName }</Typography>
+						<Typography component="h5" variant="h5" color="primary">{ statementName }</Typography>
+					</Grid>
+					<Grid item xs={12} align="left">
+					<Paper style={{padding: 15}} elevation={3}>
+						<Typography component="h6" variant="h6" color="primary" align="center" gutterBottom>Income</Typography>
+						<Table size="small" id="artist-statement-income">
+							<TableHead> 
+							<TableRow>
+								<TableCell>Release</TableCell>
+								<TableCell>Digital</TableCell>
+								<TableCell>Physical</TableCell>
+								<TableCell>Total</TableCell>
+							</TableRow>
+							</TableHead>
+							{incomeRows}
+						</Table>
+					</Paper>
 					</Grid>
 					<Grid item xs={12} align="center">
-					<Table id="artist-statement-summary">
-						<TableRow>
-						</TableRow>
-					</Table>
-					</Grid>
-					<Grid item xs={12} align="center">
-					<Typography component="h5" variant="h5">Income</Typography>
-					</Grid>
-					<Grid item xs={12} align="center">
-					<Table id="artist-statement-income">
-						<TableHead style={{backgroundColor: "grey"}}>
-						<TableRow>
-							<TableCell>Release</TableCell>
-							<TableCell>Digital</TableCell>
-							<TableCell>Physical</TableCell>
-							<TableCell>Total</TableCell>
-						</TableRow>
-						</TableHead>
-						{incomeRows}
-					</Table>
-					</Grid>
-					<Grid item xs={12} align="center">
-					<Typography component="h5" variant="h5">Expenses (50% Recoupable)</Typography>
-					<Table id="artist-statement-expense">
-						<TableHead style={{backgroundColor: "grey"}}>
+					<Paper style={{padding: 15}} elevation={3}>
+					<Typography component="h6" variant="h6" color="primary" gutterBottom>Expenses (50% Recoupable)</Typography>
+					<Table size="small" id="artist-statement-expense">
+						<TableHead>
 						<TableRow>
 							<TableCell>Date</TableCell>
 							<TableCell>Item</TableCell>
@@ -217,13 +217,13 @@ function StatementDetail() {
 						</TableHead>
 						{expenseRows}
 					</Table>
+					</Paper>
 					</Grid>
 					<Grid item xs={12} align="center">
-					<Typography component="h5" variant="h5">Advance (100% Recoupable)</Typography>
-					</Grid>
-					<Grid item xs={12} align="center">
-					<Table id="artist-statement-advance">
-						<TableHead style={{backgroundColor: "grey"}}>
+					<Paper style={{padding: 15}} elevation={3}>
+					<Typography component="h6" variant="h6" color="primary" gutterBottom>Advance (100% Recoupable)</Typography>
+					<Table size="small" id="artist-statement-advance">
+						<TableHead>
 						<TableRow>
 							<TableCell>Date</TableCell>
 							<TableCell>Item</TableCell>
@@ -234,41 +234,42 @@ function StatementDetail() {
 						</TableHead>
 						{advanceRows}
 					</Table>
+					</Paper>
 					</Grid>
 					<Grid item xs={12} align="center">
-					<Typography variant="h4" component="h4">Sales Details</Typography>
+					<Typography variant="h5" component="h5">Sales Details</Typography>
 					</Grid>
 					<Grid item xs={12} align="center">
-					<Typography variant="h5" component="h5">Album Sales</Typography>
-					</Grid>
-					<Grid item xs={12}>
-					<Table id="album-sales">
-						<TableHead style={{backgroundColor: "grey"}}>
-						<TableRow>
-							<TableCell>Release</TableCell>
-							<TableCell>Version</TableCell>
-							<TableCell>Format</TableCell>
-							<TableCell>Quantity</TableCell>
-							<TableCell>Sum</TableCell>
-						</TableRow>
-						</TableHead>
-						{albumSalesRows}
-					</Table>
+						<Paper style={{padding: 15}} elevation={3}>
+						<Typography variant="h6" component="h6" color="primary">Album Sales</Typography>
+						<Table size="small" id="album-sales">
+							<TableHead> 
+							<TableRow>
+								<TableCell>Release</TableCell>
+								<TableCell>Version</TableCell>
+								<TableCell>Format</TableCell>
+								<TableCell>Quantity</TableCell>
+								<TableCell>Sum</TableCell>
+							</TableRow>
+							</TableHead>
+							{albumSalesRows}
+						</Table>
+						</Paper>
 					</Grid>
 					<Grid item xs={12} align="center">
-					<Typography variant="h5" component="h5">Track Sales</Typography>
-					</Grid>
-					<Grid item xs={12}>
-					<Table id="track-sales">
-						<TableHead style={{backgroundColor: "grey"}}>
-						<TableRow>
-							<TableCell>Track</TableCell>
-							<TableCell>Streams/Download</TableCell>
-							<TableCell>Sum</TableCell>
-						</TableRow>
-						</TableHead>
-						{trackSalesRows}
-					</Table>
+						<Paper style={{padding: 15}} elevation={3}>
+						<Typography variant="h6" component="h6" color="primary">Track Sales</Typography>
+						<Table size="small" id="track-sales">
+							<TableHead>
+							<TableRow>
+								<TableCell>Track</TableCell>
+								<TableCell>Streams/Download</TableCell>
+								<TableCell>Sum</TableCell>
+							</TableRow>
+							</TableHead>
+							{trackSalesRows}
+						</Table>
+						</Paper>
 					</Grid>
 					</Grid>
 
