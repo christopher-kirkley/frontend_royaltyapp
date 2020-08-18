@@ -20,22 +20,20 @@ function DisplayMatchingErrors(props) {
 
 	return (
 		<Container component="main" maxWidth="xs" spacing={4}>
-		<div style={{marginTop: 10, display: "flex", flexDirection: "column",
-								alignItems:"center", border: '3px solid black'}}>
-			<Typography component="h2" variant="h5">Matching Errors</Typography>
-			<Typography component="p" variant="p" id="matching_errors">You have <span id="error_number">{props.matchingErrors}</span> matching errors.</Typography>
+			<Typography component="h2" variant="h5" gutterBottom>Matching Errors</Typography>
+			<Typography component="p" variant="p" id="matching_errors" gutterBottom>You have <span id="error_number">{props.matchingErrors}</span> matching errors.</Typography>
 			<Typography component="p" variant="p" id="error_msg">{props.matchingErrorsMsg}</Typography>
-			<Grid item xs={2}>
+			<Grid item xs={12}>
 				<Button
 					variant="contained"
 					color="primary"
 					id="fix_errors"
 					name="submit"
 					type="submit"
+					fullWidth
 					onClick={props.goToMatchingErrorPage}	
 				>Fix</Button>
 		</Grid>
-		</div>
 		</Container>
 	)
 }

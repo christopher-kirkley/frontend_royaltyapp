@@ -33,26 +33,24 @@ function UploadedStatements(props) {
 	})
 
 	return (
-		<Container component="main" maxWidth="xs" spacing={4}>
-		<div style={{marginTop: 10, display: "flex", flexDirection: "column",
-								alignItems:"center", border: '3px solid black'}}>
-			<Typography component="h2" variant="h5">Uploaded Statements</Typography>
-		<Grid item xs={2}>
+		<Container spacing={4}>
+			<Typography component="h2" variant="h5" gutterBottom>Uploaded Statements</Typography>
+		<Grid item xs={12}>
 			<List>
 				{pendingList}
 			</List>
 		</Grid>
-		<Grid item xs={2}>
+		<Grid item xs={12}>
 			<Button
 				variant="contained"
 				color="primary"
 				id="process_statements"
 				name="submit"
 				type="submit"
+				fullWidth
 				onClick={props.processPending}
 			>Process</Button>
 		</Grid>
-		</div>
 		</Container>
 	)
 }

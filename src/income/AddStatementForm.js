@@ -39,8 +39,6 @@ function AddStatementForm(props) {
 		
 	return (
 		<Container component="main" maxWidth="xs" spacing={4}>
-		<div style={{marginTop: 10, display: "flex", flexDirection: "column",
-								alignItems:"center", border: '3px solid black'}}>
 			<Typography component="h2" variant="h5">
 				Upload Income Statement
 			</Typography>
@@ -76,7 +74,6 @@ function AddStatementForm(props) {
 			</Grid>
 		</Grid>
 		</form>
-		</div>
 		<Typography id="statement_message">{msg}</Typography>
 		</Container>
 	)

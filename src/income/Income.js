@@ -5,6 +5,8 @@ import { useHistory } from "react-router-dom";
 
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 
 import Header from '../components/Header'
@@ -59,17 +61,36 @@ function Income() {
 	
 	return (
 			<Container>
-				<Header name='Income'/>
-				<AddStatementForm
-					getMatchingErrors={getMatchingErrors}
-					getPendingStatements={getPendingStatements}/>
-				<DisplayMatchingErrors
-					matchingErrors={matchingErrors}
-					goToMatchingErrorPage={goToMatchingErrorPage}/>
-				<UploadedStatements
-					pendingStatements={pendingStatements}
-					processPending={processPending}
-				/>
+				<Header name='Income' />
+				<Grid container 
+					style={{marginTop: 10}}
+					spacing={4} direction="column"
+					justify="space-evenly"
+					alignItems="center">
+					<Grid item>
+						<Paper elevation={3}>
+						<AddStatementForm
+							getMatchingErrors={getMatchingErrors}
+							getPendingStatements={getPendingStatements}/>
+						</Paper>
+					</Grid>
+					<Grid item>
+						<Paper elevation={3}
+						style={{padding: 10}}>
+						<DisplayMatchingErrors
+							matchingErrors={matchingErrors}
+							goToMatchingErrorPage={goToMatchingErrorPage}/>
+						</Paper>
+					</Grid>
+					<Grid item>
+						<Paper elevation={3}>
+						<UploadedStatements
+							pendingStatements={pendingStatements}
+							processPending={processPending}
+						/>
+						</Paper>
+					</Grid>
+			</Grid>
 			</Container>
 		)
 	}
