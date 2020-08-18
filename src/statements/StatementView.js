@@ -48,6 +48,11 @@ function StatementView() {
 		})
 		}
 
+	function handleEdit(e) {
+		const id = e.currentTarget.value
+		history.push(`/statements/${id}/edit`)
+		}
+
 	return (
 			<Container>
 				<Header name='View Statements'/>
@@ -61,7 +66,7 @@ function StatementView() {
 				{ statements.map((row) => 
 					<TableRow>
 							<TableCell>
-								{row.statement_name}
+								{row.statement_detail_table}
 							</TableCell>
 							<TableCell>
 							<Button
@@ -75,6 +80,17 @@ function StatementView() {
 								onClick={handleClick}
 								>
 								View
+								</Button>
+							</TableCell>
+							<TableCell>
+							<Button
+								variant="contained"
+								id="edit"
+								value={row.id}
+								onClick={handleEdit}
+								fullWidth
+								>
+								Edit
 								</Button>
 							</TableCell>
 							<TableCell>
