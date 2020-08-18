@@ -21,7 +21,7 @@ function StatementSummary() {
 
 	const { id } = useParams()
 
-	const [statement, setStatement] = useState([])
+	const [statementName, setStatementName] = useState([])
 	const [detail, setDetail] = useState([])
 	const [summary, setSummary] = useState({})
 
@@ -36,9 +36,9 @@ function StatementSummary() {
 		.then(res => res.json())
 		.then(json =>
 			{
-				console.log(json)
 				setDetail(json['detail'])
 				setSummary(json['summary'])
+				setStatementName(json['summary']['statement'])
 			})
 		}
 	}, [])
@@ -58,6 +58,8 @@ function StatementSummary() {
 					</TableCell>
 					<TableCell>
 						<Button
+							color="primary"
+							variant="contained"
 							onClick={handleClick}
 							value={ row.id }
 							id={ row.id }
@@ -72,23 +74,29 @@ function StatementSummary() {
 	return (
 			<Container>
 				<Header name='Statement Summary'/>
-				<Grid>
-					<Grid item>
-						<Typography>Current Owed:
-						{summary['statement_total']}
-						</Typography>
-						<Typography>Previous Balance Statement: </Typography>
+				<Grid container
+					style={{marginTop: 10}}
+					spacing={3}>
+						<Grid item xs={12}>
+						<Paper style={{padding: 15}}>
+							<Typography id="statement-name" component="h5" variant="h5">{statementName}</Typography>
+							<Typography id="current-owed" component="h6" variant="h6">Current Owed: {summary['statement_total']}</Typography>
+							<Typography id="current-owed" component="h6" variant="h6">Previous Balance: {summary['previous_balance']}</Typography>
+						</Paper>
+					</Grid>
+					<Grid item xs={12}>
+						<Paper style={{padding: 15}}>
+						<Table id="statement_summary_table">
+							<TableRow>
+								<TableCell>Artist</TableCell>
+								<TableCell>Open Balance</TableCell>
+								<TableCell></TableCell>
+							</TableRow>
+							{detailRows}
+						</Table>
+						</Paper>
 					</Grid>
 				</Grid>
-				<Table id="statement_summary_table">
-					<TableRow>
-						<TableCell>Artist</TableCell>
-						<TableCell>Open Balance</TableCell>
-						<TableCell></TableCell>
-						<TableCell></TableCell>
-					</TableRow>
-					{detailRows}
-				</Table>
 			</Container>
 		)
 	}

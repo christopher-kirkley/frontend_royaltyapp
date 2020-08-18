@@ -54,6 +54,12 @@ function StatementGenerate() {
 				)
 			})
 		.then(resp => resp.json())
+		.then(json => {
+			var statementIndex = json['statement_index']
+			fetch(`http://localhost:5000/statements/${statementIndex}/generate-summary`, {
+				method: 'POST'
+			})
+		})
 		.then(res => setMsg('Uploaded!'))
 		.catch(error => setMsg('Error uploading'))
 	}
