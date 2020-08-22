@@ -30,6 +30,8 @@ function StatementEdit() {
 
 	const [msg, setMsg] = useState([]);
 	const [versions, setVersions] = useState([]);
+	const [summary, setSummary] = useState([]);
+	const [previousBalances, setPreviousBalances] = useState([]);
 
 	useEffect(() => {
 		fetch(`http://localhost:5000/statements/${id}/versions`)
@@ -38,6 +40,23 @@ function StatementEdit() {
 			setVersions(json['versions'])
 		})
 		.catch(res => setMsg('Error fetching data'))
+	}, [])
+
+	
+	useEffect(() => {
+		fetch('http://localhost:5000/statements/view-balances')
+		.then(res => res.json())
+		.then(json => setPreviousBalances(json))
+		.catch(res => setMsg('Error fetching data'))
+	}, [])
+
+	useEffect(() => { 
+		fetch(`http://localhost:5000/statements/${id}`)
+		.then(res => res.json())
+		.then(json =>
+			{
+				setSummary(json['summary'])
+			})
 	}, [])
 
 	function getVersions() {
@@ -80,11 +99,28 @@ function StatementEdit() {
 				)
 		})
 
-	function handleClick() {
+	function handleSubmit(e) {
+		e.preventDefault()
+
+		var previousStatement = e.target.previousStatement.value
+
+		fetch(`http://localhost:5000/statements/${id}`, {
+				method: 'PUT',
+				body: JSON.stringify(
+					{
+					'previous_balance_id': previousStatement,
+				})
+			})
+		.catch(error => setMsg('Error uploading'))
+
 		fetch(`http://localhost:5000/statements/${id}/generate-summary`, {
 				method: 'POST'
 			})
 		.catch(error => setMsg('Error uploading'))
+
+		console.log(previousStatement)
+
+
 	}
 	
 
@@ -100,6 +136,18 @@ function StatementEdit() {
 		})
 		.catch(res => setMsg('Error fetching data'))
 		}
+
+	const previousBalanceChoices = previousBalances.map((previousBalance) =>
+		{
+			return (
+				<option
+					value={previousBalance.id}
+				>{previousBalance.statement_balance_table}
+				</option>
+			)
+	})
+
+	console.log(summary)
 
 	return (
 			<Container>
@@ -120,14 +168,33 @@ function StatementEdit() {
 					</Paper>
 					</Grid>
 					<Grid item xs={12}>
+					<Paper style={{padding: 10}}>
+					<Typography component="h6" variant="h6" gutterBottom>Previous Statement</Typography>
+						<select
+							id="previousStatement"
+							form="update"
+							value={summary['previous_balance_id']}>
+							<option
+								id='none'
+								value='none'>
+							None
+							</option>
+							{previousBalanceChoices}
+						</select>
+					</Paper>
+					</Grid>
+					<Grid item xs={12}>
+					<form
+						id="update"
+						onSubmit={handleSubmit}>
 						<Button
-							id="update"
+							type="submit"
 							variant="contained"
 							color="primary"
-							onClick={handleClick}
 						>
 						Save Changes
 						</Button>
+					</form>
 					</Grid>
 				</Grid>
 			</Container>

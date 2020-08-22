@@ -125,6 +125,11 @@ function StatementGenerate() {
 								id="previous_balance_id"
 								form="form"
 								>
+							<option
+								id='none'
+								value='none'>
+							None
+							</option>
 							{previousBalanceChoices}
 							</select>
 						</Grid>
