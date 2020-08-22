@@ -173,7 +173,7 @@ function StatementEdit() {
 						<select
 							id="previousStatement"
 							form="update"
-							value={summary['previous_balance_id']}>
+							value={summary['previous_balance']}>
 							<option
 								id='none'
 								value='none'>
