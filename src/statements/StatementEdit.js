@@ -103,6 +103,7 @@ function StatementEdit() {
 		e.preventDefault()
 
 		var previousStatement = e.target.previousStatement.value
+		console.log(previousStatement)
 
 		fetch(`http://localhost:5000/statements/${id}`, {
 				method: 'PUT',
@@ -111,11 +112,10 @@ function StatementEdit() {
 					'previous_balance_id': previousStatement,
 				})
 			})
-		.catch(error => setMsg('Error uploading'))
-
-		fetch(`http://localhost:5000/statements/${id}/generate-summary`, {
-				method: 'POST'
-			})
+		.then(res =>
+			fetch(`http://localhost:5000/statements/${id}/generate-summary`, {
+					method: 'POST'
+				}))
 		.catch(error => setMsg('Error uploading'))
 
 		console.log(previousStatement)
@@ -142,7 +142,7 @@ function StatementEdit() {
 			return (
 				<option
 					value={previousBalance.id}
-				>{previousBalance.statement_balance_table}
+				>{previousBalance.id}
 				</option>
 			)
 	})
@@ -173,10 +173,11 @@ function StatementEdit() {
 						<select
 							id="previousStatement"
 							form="update"
-							value={summary['previous_balance']}>
+							defaultValue={summary['previous_balance']}>
 							<option
-								id='none'
-								value='none'>
+								id='None'
+								value='0'
+								>
 							None
 							</option>
 							{previousBalanceChoices}

@@ -47,7 +47,7 @@ function StatementGenerate() {
 				method: 'POST',
 				body: JSON.stringify(
 					{
-					'previous_balance_id': 1,
+					'previous_balance_id': previous_balance_id,
 					'start_date': startDateSQL,
 					'end_date': endDateSQL
 				}
@@ -127,7 +127,7 @@ function StatementGenerate() {
 								>
 							<option
 								id='none'
-								value='none'>
+								value='0'>
 							None
 							</option>
 							{previousBalanceChoices}
