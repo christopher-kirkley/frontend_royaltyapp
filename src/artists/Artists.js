@@ -11,6 +11,7 @@ import {
 import { useHistory } from "react-router-dom";
 
 import Grid from '@material-ui/core/Grid'
+import Paper from '@material-ui/core/Paper'
 import Button from '@material-ui/core/Button'
 import Container from '@material-ui/core/Container'
 
@@ -28,12 +29,18 @@ function Artist() {
 			<Container>
 				<Header name="Artists"/>
 				<div>
-						<Grid container spacing={3}>
-							<Grid item xs={8}>
+						<Grid container spacing={2} direction="row"
+							alignItems="center"
+							
+							style={{marginTop: 1}}>
+							<Grid item xs={7} container> 
+								<Grid item xs={12}>
+								<Paper elevation={10}>
 								<ArtistTable/>
+								</Paper>
 							</Grid>
-							<Grid item xs={4} align="right">
-								<br/>
+							</Grid>
+							<Grid item>
 								<Button variant="contained" color="primary" id="add_artist" onClick={handleClick}>
 								Add Artist
 								</Button>

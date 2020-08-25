@@ -6,6 +6,7 @@ import { useForm, Controller } from 'react-hook-form'
 
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
+import Grid from '@material-ui/core/Grid'
 import Container from '@material-ui/core/Container'
 
 import Header from '../components/Header'
@@ -19,8 +20,6 @@ function ArtistDetail () {
 	
 	const history = useHistory();
 
-	// post if new, put if edit
-	
 	useEffect(() => { 
 		if (id) {
 		fetch(`http://localhost:5000/artists/${id}`)
@@ -39,7 +38,6 @@ function ArtistDetail () {
 		])
 	}, [artist])
 
-		
 	function addArtist(data) {
 		const artist_name = data.artist_name
 		const prenom = data.prenom
@@ -57,7 +55,6 @@ function ArtistDetail () {
 		const artist_name = data.artist_name
 		const prenom = data.prenom
 		const surnom = data.surnom
-		// send json to update
 		fetch(`http://localhost:5000/artists/${id}`, {
 			method: 'PUT',
 			body: JSON.stringify({ artist_name, prenom, surnom }),
@@ -76,34 +73,55 @@ function ArtistDetail () {
 	}
 
 	return (
-			<div>
+			<Container>
 			<Header name='Artist Detail'/>
-			<form onSubmit={handleSubmit(onSubmit)} id="form">
-				<Controller
-					as={TextField}
-					name="artist_name"
-					id="artist_name"
-					control={control}
-					label="Artist Name"
-				/>
-				<Controller
-					as={TextField}
-					name="prenom"
-					id="prenom"
-					control={control}
-					label="Prenom"
-				/>	
-				<Controller
-					as={TextField}
-					name="surnom"
-					id="surnom"
-					control={control}
-					label="Surnom"
-				/>	
-				<br/>
-				<Button type="submit" variant="contained" color="primary" id="submit">Submit</Button>
-			</form>
-		</div>
+			<Grid container
+					style={{marginTop: 10}}
+					spacing={4}
+					direction="column"
+					justify="space-evenly"
+					alignItems="center">
+				<form onSubmit={handleSubmit(onSubmit)} id="form">
+				<Grid item xs={12}>
+					<Controller
+						as={TextField}
+						name="artist_name"
+						id="artist_name"
+						control={control}
+						label="Artist Name"
+					/>
+				</Grid>
+				<Grid item xs={12}>
+					<Controller
+						as={TextField}
+						name="prenom"
+						id="prenom"
+						control={control}
+						label="Prenom"
+					/>	
+				</Grid>
+				<Grid item xs={12}>
+					<Controller
+						as={TextField}
+						name="surnom"
+						id="surnom"
+						control={control}
+						label="Surnom"
+					/>	
+				</Grid>
+				<Grid item xs={12}>
+					<Button 
+						type="submit"
+						variant="contained"
+						color="primary"
+						id="submit"
+						>
+						Submit
+					</Button>
+				</Grid>
+				</form>
+		</Grid>
+		</Container>
 	)}
 
 
