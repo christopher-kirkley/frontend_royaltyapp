@@ -66,24 +66,24 @@ function Income() {
 					style={{marginTop: 10}}
 					spacing={4} direction="column"
 					justify="space-evenly"
-					alignItems="center">
-					<Grid item>
-						<Paper elevation={3}>
+					alignItems="center"
+					>
+					<Grid item xs={8}>
+						<Paper elevation={3} style={{padding: 30}}>
 						<AddStatementForm
 							getMatchingErrors={getMatchingErrors}
 							getPendingStatements={getPendingStatements}/>
 						</Paper>
 					</Grid>
-					<Grid item>
-						<Paper elevation={3}
-						style={{padding: 10}}>
+					<Grid item xs={8}>
+						<Paper elevation={3} style={{padding: 30}}>
 						<DisplayMatchingErrors
 							matchingErrors={matchingErrors}
 							goToMatchingErrorPage={goToMatchingErrorPage}/>
 						</Paper>
 					</Grid>
-					<Grid item>
-						<Paper elevation={3}>
+					<Grid item xs={8}>
+						<Paper elevation={3} style={{padding: 30}}>
 						<UploadedStatements
 							pendingStatements={pendingStatements}
 							processPending={processPending}
