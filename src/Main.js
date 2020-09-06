@@ -32,6 +32,8 @@ import AddCircleIcon from '@material-ui/icons/AddCircle';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import AddIcon from '@material-ui/icons/Add';
+import ViewListIcon from '@material-ui/icons/ViewList';
+import ImportExportIcon from '@material-ui/icons/ImportExport';
 
 import Expense from "./expense/Expense"
 import ExpenseMatchingErrors from "./expense/ExpenseMatchingErrors"
@@ -77,10 +79,25 @@ const useStyles = makeStyles((theme) => ({
 function Main() {
 	const classes = useStyles()
 
-	const [open, setOpen] = useState(false)
+	const [openCatalog, setOpenCatalog] = useState(false)
+	const [openIncome, setOpenIncome] = useState(false)
+	const [openExpense, setOpenExpense] = useState(false)
+	const [openStatement, setOpenStatement] = useState(false)
 
-	function handleClick() {
-		setOpen(!open)
+	function handleOpenCatalog() {
+		setOpenCatalog(!openCatalog)
+	}
+
+	function handleOpenIncome() {
+		setOpenIncome(!openIncome)
+	}
+
+	function handleOpenExpense() {
+		setOpenExpense(!openExpense)
+	}
+
+	function handleOpenStatement() {
+		setOpenStatement(!openStatement)
 	}
 
 	return (
@@ -114,31 +131,58 @@ function Main() {
 							<PeopleIcon />
 						</ListItemIcon>
 						<ListItemText primary={"Artists"}/>
-							{ open ? <ExpandLess /> : <ExpandMore />}
 					</ListItem>
 					</Link>
-					<Link to="/catalog" className={classes.link}>
-						<ListItem button id="catalog">
-							<ListItemIcon>
-								<CatalogIcon />
-							</ListItemIcon>
-							<ListItemText primary={"Catalog"}/>
-						</ListItem>
-					</Link>
 
-					<ListItem button id="income" onClick={handleClick}>
+					<ListItem button id="catalog" onClick={handleOpenCatalog}>
+						<ListItemIcon>
+							<CatalogIcon />
+						</ListItemIcon>
+						<ListItemText primary={"Catalog"}/>
+						{ openCatalog ? <ExpandLess /> : <ExpandMore />}
+					</ListItem>
+					<Collapse in={openCatalog} timeout="auto" unmountOnExit>
+						<List component="div" disablePadding>
+							<Link to="/catalog/add" className={classes.link}>
+								<ListItem button id="catalog" className={classes.nested}>
+								<ListItemIcon>
+									<AddCircleIcon />
+								</ListItemIcon>
+								<ListItemText primary={"Add"}/>
+							</ListItem>
+							</Link>
+							<Link to="/catalog" className={classes.link}>
+								<ListItem button id="catalog" className={classes.nested}>
+								<ListItemIcon>
+									<ViewListIcon />
+								</ListItemIcon>
+								<ListItemText primary={"View"}/>
+							</ListItem>
+							</Link>
+							<Link to="/catalog/import" className={classes.link}>
+								<ListItem button id="catalog" className={classes.nested}>
+								<ListItemIcon>
+									<ImportExportIcon />
+								</ListItemIcon>
+								<ListItemText primary={"Import"}/>
+							</ListItem>
+							</Link>
+						</List>
+					</Collapse>
+
+					<ListItem button id="income" onClick={handleOpenIncome}>
 						<ListItemIcon>
 							<IncomeIcon />
 						</ListItemIcon>
 						<ListItemText primary={"Income"}/>
-						{ open ? <ExpandLess /> : <ExpandMore />}
+						{ openIncome ? <ExpandLess /> : <ExpandMore />}
 					</ListItem>
-					<Collapse in={open} timeout="auto" unmountOnExit>
+					<Collapse in={openIncome} timeout="auto" unmountOnExit>
 						<List component="div" disablePadding>
 						<Link to="/income" className={classes.link}>
 							<ListItem button id="import_income" className={classes.nested}>
 								<ListItemIcon>
-									<AddIcon />
+									<AddCircleIcon />
 								</ListItemIcon>
 								<ListItemText primary={"Import Income"}/>
 							</ListItem>
@@ -146,7 +190,7 @@ function Main() {
 						<Link to="/income/view-imported" className={classes.link}>
 							<ListItem button id="view_imported_income" className={classes.nested}>
 								<ListItemIcon>
-									<ViewAgendaIcon />
+									<ViewListIcon />
 								</ListItemIcon>
 								<ListItemText primary={"View Imported"}/>
 							</ListItem>
@@ -154,19 +198,19 @@ function Main() {
 						</List>
 					</Collapse>
 
-					<ListItem button id="expense" onClick={handleClick}>
+					<ListItem button id="expense" onClick={handleOpenExpense}>
 						<ListItemIcon>
 							<MoneyOffIcon />
 						</ListItemIcon>
 						<ListItemText primary={"Expense"}/>
-						{ open ? <ExpandLess /> : <ExpandMore />}
+						{ openExpense ? <ExpandLess /> : <ExpandMore />}
 					</ListItem>
-					<Collapse in={open} timeout="auto" unmountOnExit>
+					<Collapse in={openExpense} timeout="auto" unmountOnExit>
 						<List component="div" disablePadding>
 						<Link to="/expense" className={classes.link}>
 							<ListItem button id="import_expense" className={classes.nested}>
 								<ListItemIcon>
-									<AddIcon />
+									<AddCircleIcon />
 								</ListItemIcon>
 								<ListItemText primary={"Import Expense"}/>
 							</ListItem>
@@ -174,7 +218,7 @@ function Main() {
 						<Link to="/expense/view-imported-expense" className={classes.link}>
 							<ListItem button id="view_imported_expense" className={classes.nested}>
 								<ListItemIcon>
-									<ViewAgendaIcon />
+									<ViewListIcon />
 								</ListItemIcon>
 								<ListItemText primary={"View Imported"}/>
 							</ListItem>
@@ -182,14 +226,14 @@ function Main() {
 						</List>
 					</Collapse>
 
-					<ListItem button id="statement" onClick={handleClick}>
+					<ListItem button id="statement" onClick={handleOpenStatement}>
 						<ListItemIcon>
 							<DescriptionIcon />
 						</ListItemIcon>
 						<ListItemText primary={"Statement"}/>
-						{ open ? <ExpandLess /> : <ExpandMore />}
+						{ openStatement ? <ExpandLess /> : <ExpandMore />}
 						</ListItem>
-		      <Collapse in={open} timeout="auto" unmountOnExit>
+		      <Collapse in={openStatement} timeout="auto" unmountOnExit>
 						<List component="div" disablePadding>
 						<Link to="/statements/generate" className={classes.link}>
 							<ListItem button id="statements_generate" className={classes.nested}>
@@ -202,7 +246,7 @@ function Main() {
 						<Link to="/statements/view" className={classes.link}>
 							<ListItem button id="statements_view" className={classes.nested}>
 								<ListItemIcon>
-									<FindInPageIcon />
+									<ViewListIcon />
 								</ListItemIcon>
 								<ListItemText primary={"View"}/>
 							</ListItem>
