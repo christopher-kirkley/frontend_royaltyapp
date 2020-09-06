@@ -28,21 +28,15 @@ function Artist() {
 			<Container>
 				<Header name="Artists"/>
 				<div>
-						<Grid container spacing={2} direction="row"
+						<Grid container
+							spacing={2}
+							direction="row"
 							alignItems="center"
-							
 							style={{marginTop: 1}}>
-							<Grid item xs={7} container> 
-								<Grid item xs={12}>
+							<Grid item xs={12}>
 								<Paper elevation={10}>
 								<ArtistTable/>
 								</Paper>
-							</Grid>
-							</Grid>
-							<Grid item>
-								<Button variant="contained" color="primary" id="add_artist" onClick={handleClick}>
-								Add Artist
-								</Button>
 							</Grid>
 						</Grid>
 				</div>

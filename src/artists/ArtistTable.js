@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 
 import { useHistory } from "react-router-dom";
 
-import Button from 'react-bootstrap/Button'
+import Button from '@material-ui/core/Button';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -22,10 +22,8 @@ function ArtistTable() {
 		.then(json => setArtists(json))
 	}, [])
 
-	function handleArtistDetail(e) {
-		const id = e.target.value
+	function handleArtistDetail(id) {
 		history.push(`/artist/${id}`)
-
 	}
 
 	return (
@@ -48,7 +46,15 @@ function ArtistTable() {
 							<TableCell>{artists.prenom}</TableCell>
 							<TableCell>{artists.surnom}</TableCell>
 							<TableCell>
-								<Button id="artist-detail" value={artists.id} onClick={handleArtistDetail}>Detail</Button></TableCell>
+								<Button
+									variant="contained"
+									color="primary"
+									id="artist-detail"
+									value={artists.id}
+									onClick={()=>handleArtistDetail(artists.id)}>
+								Detail
+								</Button>
+							</TableCell>
 						</TableRow>
 					)
 				})}

@@ -90,6 +90,7 @@ function ArtistDetail () {
 						as={TextField}
 						name="artist_name"
 						id="artist_name"
+						defaultValue=""
 						control={control}
 						label="Artist Name"
 					/>
@@ -101,6 +102,7 @@ function ArtistDetail () {
 						id="prenom"
 						control={control}
 						label="Prenom"
+						defaultValue=""
 					/>	
 				</Grid>
 				<Grid item xs={12}>
@@ -110,6 +112,7 @@ function ArtistDetail () {
 						id="surnom"
 						control={control}
 						label="Surnom"
+						defaultValue=""
 					/>	
 				</Grid>
 				<Grid item xs={12} style={{marginTop: 15, marginBottom: 15}}>
