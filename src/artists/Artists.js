@@ -1,6 +1,5 @@
 import React from 'react';
 
-import AddArtist from "./AddArtist";
 import ArtistTable from "./ArtistTable";
 import Header from "../components/Header";
 

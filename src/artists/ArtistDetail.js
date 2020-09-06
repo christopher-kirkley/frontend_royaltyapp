@@ -8,6 +8,7 @@ import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid'
 import Container from '@material-ui/core/Container'
+import Paper from '@material-ui/core/Paper'
 
 import Header from '../components/Header'
 
@@ -75,9 +76,10 @@ function ArtistDetail () {
 	return (
 			<Container>
 			<Header name='Artist Detail'/>
+			<Paper elevation={10}>
 			<Grid container
-					style={{marginTop: 10}}
-					spacing={4}
+					style={{marginTop: 20}}
+					spacing={10}
 					direction="column"
 					justify="space-evenly"
 					alignItems="center">
@@ -121,6 +123,7 @@ function ArtistDetail () {
 				</Grid>
 				</form>
 		</Grid>
+		</Paper>
 		</Container>
 	)}
 
