@@ -13,6 +13,7 @@ import Paper from '@material-ui/core/Paper'
 import Header from '../components/Header'
 
 function ArtistDetail () {
+
 	const { id } = useParams()
 
 	const [artist, setArtist] = useState([])
@@ -79,7 +80,7 @@ function ArtistDetail () {
 			<Paper elevation={10}>
 			<Grid container
 					style={{marginTop: 20}}
-					spacing={10}
+					spacing={20}
 					direction="column"
 					justify="space-evenly"
 					alignItems="center">
@@ -111,7 +112,7 @@ function ArtistDetail () {
 						label="Surnom"
 					/>	
 				</Grid>
-				<Grid item xs={12}>
+				<Grid item xs={12} style={{marginTop: 15, marginBottom: 15}}>
 					<Button 
 						type="submit"
 						variant="contained"
