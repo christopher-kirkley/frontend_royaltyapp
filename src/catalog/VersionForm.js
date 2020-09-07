@@ -25,11 +25,13 @@ function VersionForm(props) {
 	const [length, setLength] = useState(0)
 
 	useEffect(() => { 
-		fetch(`http://localhost:5000/catalog/${id}`)
-		.then(res => res.json())
-		.then((json) => {
-			json['version'].sort((a, b) => a.id - b.id);
-			setVersion(json['version'])})
+		if (id) {
+			fetch(`http://localhost:5000/catalog/${id}`)
+			.then(res => res.json())
+			.then((json) => {
+				json['version'].sort((a, b) => a.id - b.id);
+				setVersion(json['version'])})
+		}
 	}, [])
 
 	// useEffect(() => { 

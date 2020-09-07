@@ -40,13 +40,14 @@ function TrackForm() {
 	}
 
 	useEffect(() => { 
-		fetch(`http://localhost:5000/catalog/${id}`)
-		.then(res => res.json())
-		.then((json) => 
-			 {
-				 getTracks(json)
-		})
-
+		if (id) {
+			fetch(`http://localhost:5000/catalog/${id}`)
+			.then(res => res.json())
+			.then((json) => 
+				 {
+					 getTracks(json)
+			})
+		}
 	}, [])
 
 	const { fields, append, remove } = useFieldArray(
