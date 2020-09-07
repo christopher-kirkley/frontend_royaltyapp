@@ -28,8 +28,6 @@ function Catalog() {
 			<Container>
 				<Header name='Catalog'/>
 				<CatalogTable/>
-				<Button variant="contained" color="primary" id="add-catalog-item" onClick={handleClick}>Add Catalog Item</Button>
-				<Button variant="contained" color="primary" id="import_catalog" onClick={handleImportCatalog}>Import Catalog</Button>
 			</Container>
 		)
 	}

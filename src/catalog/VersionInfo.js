@@ -6,6 +6,7 @@ import VersionForm from './VersionForm'
 
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
+import Typography from '@material-ui/core/Typography';
 
 
 function VersionInfo() {
@@ -13,8 +14,8 @@ function VersionInfo() {
 	const { id } = useParams()
 
 	return (
-		<Container style={{border: '3px solid black'}}>
-			<h2>Version Info</h2>
+		<Container>
+			<Typography variant="h6" color="textSecondary" align="center">Versions</Typography>
 				<VersionForm id={id}/>
 		</Container>
 	)

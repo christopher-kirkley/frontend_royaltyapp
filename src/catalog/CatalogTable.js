@@ -50,6 +50,8 @@ function CatalogTable() {
 							<TableCell>
 								<Button
 									id="catalog_detail"
+									variant="contained"
+									color="primary"
 									onClick={()=>handleCatalogDetail(catalogitem.id)}>
 										Detail
 								</Button>
