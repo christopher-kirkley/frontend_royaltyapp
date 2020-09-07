@@ -22,7 +22,7 @@ function CatalogItem() {
 				direction="column"
 				justify="space-evenly"
 				>
-				<Grid item xs={8}>
+				<Grid item xs={10}>
 				<Paper
 					elevation={3}
 					style={{padding: 10}}

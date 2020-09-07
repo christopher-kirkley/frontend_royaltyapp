@@ -58,7 +58,7 @@ function CatalogInfo() {
 	}, [])
 
 	const artistChoices = artists.map((artist, i) =>
-		<option value={artist.id}>{artist.artist_name}</option>
+		<option id={artist.id} value={artist.id}>{artist.artist_name}</option>
 	)
 
 	function onSubmit(data) {
@@ -125,9 +125,9 @@ function CatalogInfo() {
 			<InputLabel htmlFor="catalog_artist">Catalog Artist</InputLabel>
 			<Controller
 				name='artist_id'
+				id="artist_name"
 				as={<NativeSelect>
-						<option value="1">Amanar</option>
-						<option value="2">Bob</option>
+						{artistChoices}
 						</NativeSelect>}
 				control={control}
 				fullWidth

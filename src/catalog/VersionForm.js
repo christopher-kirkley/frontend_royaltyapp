@@ -5,6 +5,8 @@ import { useParams } from 'react-router-dom'
 
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField'
+import Container from '@material-ui/core/Container'
+import Grid from '@material-ui/core/Grid'
 
 function VersionForm(props) {
 
@@ -82,127 +84,169 @@ function VersionForm(props) {
 	}
 		
 	return (
-		<div>
+		<Container>
+		<Grid container style={{marginTop: 5}}>
 		<form onSubmit={handleSubmit(onSubmit)}>
 		{ version.map((version, index) => (
-			<div name='child' key={index}>
-			<Controller
-				type="hidden"
-				as={TextField}
-				control={control}
-				name={`version[${index}].id`}
-				defaultValue={`${version.id}`}
-			/>
-			<Controller
-				as={TextField}
-				control={control}
-				name={`version[${index}].upc`}
-				defaultValue={`${version.upc}`}
-				label='UPC'
-			/>
-			<Controller
-				as={TextField}
-				control={control}
-				name={`version[${index}].version_number`}
-				defaultValue={`${version.version_number}`}
-				label='Version Number'
-			/>
-			<Controller
-				as={TextField}
-				control={control}
-				name={`version[${index}].version_name`}
-				defaultValue={`${version.version_name}`}
-				label='Version Name'
-			/>
-			<Controller
-				as={TextField}
-				control={control}
-				name={`version[${index}].format`}
-				defaultValue={`${version.format}`}
-				label='Format'
-			/>
-			<Button
-				variant="contained"
-				color="secondary"
-				id="delete_version"
-				name="delete_version"
-			>Delete
-			</Button>
-			</div>
-			)
-		)}
-		</form>
-		<form onSubmit={handleSubmit(onSubmit)}>
-		{ fields.map((addVersion, index) => (
-			<div name='child' key={index}>
-			<Controller
-				type="hidden"
-				as={TextField}
-				control={control}
-				name={`addVersion[${index}].id`}
-				defaultValue={`${addVersion.id}`}
-			/>
-			<Controller
-				as={TextField}
-				control={control}
-				name={`addVersion[${index}].upc`}
-				defaultValue={`${addVersion.upc}`}
-				label='UPC'
-			/>
-			<Controller
-				as={TextField}
-				control={control}
-				id={`addVersion[${index}].version_number`}
-				name={`addVersion[${index}].version_number`}
-				defaultValue={`${addVersion.version_number}`}
-				label='Version Number'
-			/>
-			<Controller
-				as={TextField}
-				control={control}
-				name={`addVersion[${index}].version_name`}
-				defaultValue={`${addVersion.version_name}`}
-				label='Version Name'
-			/>
-			<Controller
-				as={TextField}
-				control={control}
-				name={`addVersion[${index}].format`}
-				defaultValue={`${addVersion.format}`}
-				label='Format'
-			/>
-			<Button
-				variant="contained"
-				color="secondary"
-				id="add_version"
-				name="add_version"
-			>Delete
-			</Button>
-			</div>
-			)
-		)}
+		<Grid item container spacing={2} style={{marginBottom: 2}} alignItems="center" justify="center">
+			<Grid item>
+				<Controller
+					type="hidden"
+					as={TextField}
+					control={control}
+					name={`version[${index}].id`}
+					defaultValue={`${version.id}`}
+				/>
+			</Grid>
+			<Grid item xs={3}>
+				<Controller
+					as={TextField}
+					control={control}
+					name={`version[${index}].upc`}
+					defaultValue={`${version.upc}`}
+					variant="outlined"
+					label='UPC'
+				/>
+			</Grid>
+			<Grid item xs={2}>
+				<Controller
+					as={TextField}
+					control={control}
+					name={`version[${index}].version_number`}
+					defaultValue={`${version.version_number}`}
+					variant="outlined"
+					label='Version Number'
+				/>
+			</Grid>
+			<Grid item xs={3}>
+				<Controller
+					as={TextField}
+					control={control}
+					name={`version[${index}].version_name`}
+					defaultValue={`${version.version_name}`}
+					variant="outlined"
+					label='Version Name'
+				/>
+			</Grid>
+			<Grid item xs={1}>
+				<Controller
+					as={TextField}
+					control={control}
+					name={`version[${index}].format`}
+					defaultValue={`${version.format}`}
+					variant="outlined"
+					label='Format'
+				/>
+			</Grid>
+			<Grid item xs={2} align="center">
 				<Button
 					variant="contained"
-					color="primary"
-					id="version_submit"
-					name="submit"
-					type="submit"
-				>Submit
+					color="secondary"
+					id="delete_version"
+					name="delete_version"
+				>Delete
 				</Button>
+			</Grid>
+		</Grid>
+		)
+		)}
+
+		{ fields.map((addVersion, index) => (
+			<Grid item container spacing={2} alignItems="center" justify="center">
+				<Grid item>
+					<Controller
+						type="hidden"
+						as={TextField}
+						control={control}
+						name={`addVersion[${index}].id`}
+						defaultValue={`${addVersion.id}`}
+					/>
+				</Grid>
+				<Grid item xs={3}>
+					<Controller
+						as={TextField}
+						control={control}
+						name={`addVersion[${index}].upc`}
+						defaultValue={`${addVersion.upc}`}
+						variant="outlined"
+						label='UPC'
+					/>
+				</Grid>
+				<Grid item xs={2}>
+					<Controller
+						as={TextField}
+						control={control}
+						id={`addVersion[${index}].version_number`}
+						name={`addVersion[${index}].version_number`}
+						defaultValue={`${addVersion.version_number}`}
+						variant="outlined"
+						label='Version Number'
+					/>
+				</Grid>
+				<Grid item xs={3}>
+					<Controller
+						as={TextField}
+						control={control}
+						name={`addVersion[${index}].version_name`}
+						defaultValue={`${addVersion.version_name}`}
+						variant="outlined"
+						label='Version Number'
+					/>
+				</Grid>
+				<Grid item xs={1}>
+					<Controller
+						as={TextField}
+						control={control}
+						name={`addVersion[${index}].format`}
+						defaultValue={`${addVersion.format}`}
+						variant="outlined"
+						label='Format'
+					/>
+				</Grid>
+				<Grid item xs={2} align="center">
+					<Button
+						variant="contained"
+						color="secondary"
+						id="delete"
+						name="delete"
+					>Delete
+					</Button>
+				</Grid>
+			</Grid>
+			)
+		)}
+
+		<Grid item container spacing={2} style={{marginTop: 6}} alignItems="center" justify="center">
+			<Grid item xs={3}>
 				<Button
 					variant="contained"
 					color="primary"
 					id="add_version"
+					fullWidth	
 					name="add_version"
 					onClick={() =>
 						append(emptyRow)
 					}
-
 				>Add Version
 				</Button>
+			</Grid>
+			<Grid item xs={3}>
+				<Button
+					variant="contained"
+					color="primary"
+					id="version_submit"
+					fullWidth
+					name="submit"
+					type="submit"
+				>Submit
+				</Button>
+			</Grid>
+		</Grid>
 		</form>
+		</Grid>
+		</Container>
+
 		
-		</div>
 	)
 }
 
