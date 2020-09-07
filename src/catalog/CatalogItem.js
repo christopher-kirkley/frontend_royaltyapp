@@ -38,7 +38,7 @@ function CatalogItem() {
 					<VersionInfo/>
 				</Paper>
 				</Grid>
-				<Grid item xs={8}>
+				<Grid item xs={10}>
 				<Paper
 					elevation={3}
 					style={{padding: 10}}

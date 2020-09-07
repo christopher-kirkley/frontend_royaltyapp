@@ -8,6 +8,9 @@ import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
 import TextField from '@material-ui/core/TextField'
+import NativeSelect from '@material-ui/core/NativeSelect'
+import InputLabel from '@material-ui/core/InputLabel'
+import FormControl from '@material-ui/core/FormControl'
 
 function TrackForm() {
 
@@ -98,95 +101,120 @@ function TrackForm() {
 										track_name: ''}
 
 	return (
-		<div>
-		<form>
+		<Container>
+		<Grid container style={{marginTop: 5}}>
+		<form onSubmit={handleSubmit(onSubmit)}>
 		{ tracks.map((track, index) => (
-			<div name='child' key={index}>
-			<Controller
-				type="hidden"
-				as={TextField}
-				control={control}
-				name={`tracks[${index}].id`}
-				defaultValue={`${track.id}`}
-			/>
-			<Controller
-				as={TextField}
-				control={control}
-				name={`tracks[${index}].track_number`}
-				defaultValue={`${track.track_number}`}
-				label='Track Number'
-			/>
-			<Controller
-				as={TextField}
-				control={control}
-				name={`tracks[${index}].isrc`}
-				defaultValue={`${track.isrc}`}
-				label='ISRC'
-			/>
+			<Grid item container spacing={2} style={{marginBottom: 2}} alignItems="center" justify="center">
+			<Grid item>
 				<Controller
-				as={
-					<select>
-						{artistChoices}
-					</select>
-				}
+					type="hidden"
+					as={TextField}
+					control={control}
+					name={`tracks[${index}].id`}
+					defaultValue={`${track.id}`}
+				/>
+			</Grid>
+			<Grid item xs={1}>
+				<Controller
+					as={TextField}
+					control={control}
+					name={`tracks[${index}].track_number`}
+					defaultValue={`${track.track_number}`}
+					variant="outlined"
+					label='Track Number'
+				/>
+			</Grid>
+			<Grid item xs={3}>
+				<Controller
+					as={TextField}
+					control={control}
+					name={`tracks[${index}].isrc`}
+					defaultValue={`${track.isrc}`}
+					variant="outlined"
+					label='ISRC'
+				/>
+			</Grid>
+			<Grid item xs={2}>
+				<FormControl variant="outlined">
+				<InputLabel shrink>Artist</InputLabel>
+				<Controller
+					as={<NativeSelect>
+							{artistChoices}
+							</NativeSelect>
+							}
 					name={`tracks[${index}].artist_id`}
 					defaultValue={`${track.artist_id}`}
 					control={control}
 				/>
-			<Controller
-				as={TextField}
-				control={control}
-				name={`tracks[${index}].track_name`}
-				defaultValue={`${track.track_name}`}
-				label='Track Name'
-			/>
-			</div>
-		))}
-		</form>
-
-		<form onSubmit={handleSubmit(onSubmit)}>
-		{ fields.map((addTrack, index) => (
-			<div name='child' key={index}>
-			<Grid container xs={12} spacing={2}>
-				<Grid item xs={2}>
+				</FormControl>
+			</Grid>
+			<Grid item xs={3}>
 				<Controller
 					as={TextField}
 					control={control}
-					id={`addTrack[${index}].track_number`}
-					name={`addTrack[${index}].track_number`}
-					defaultValue={`${index + numberOfTracks + 1}`}
-					label='Track Number'
-				/>
-				</Grid>
-				<Grid item>
-				<Controller
-					as={TextField}
-					control={control}
-					name={`addTrack[${index}].isrc`}
-					defaultValue={`${addTrack.isrc}`}
-					label='ISRC'
-				/>
-				</Grid>
-				<Grid item xs={3}>
-				<Controller
-				as={
-					<select>
-						{artistChoices}
-					</select>
-				}
-					name={`addTrack[${index}].artist_id`}
-					defaultValue={`${addTrack.artist_id}`}
-					control={control}
-				/>
-				</Grid>
-				<Grid Item xs={2}>
-				<Controller
-					as={TextField}
-					control={control}
-					name={`addTrack[${index}].track_name`}
-					defaultValue={`${addTrack.track_name}`}
+					name={`tracks[${index}].track_name`}
+					defaultValue={`${track.track_name}`}
+					variant="outlined"
 					label='Track Name'
 				/>
+			</Grid>
+			<Grid item xs={2} align="center">
+				<Button
+					variant="contained"
+					color="secondary"
+					id="delete_version"
+					name="delete_version"
+				>Delete
+				</Button>
+			</Grid>
+		</Grid>
+		))}
+
+		{ fields.map((addTrack, index) => (
+			<Grid item container spacing={2} style={{marginBottom: 2}} alignItems="center" justify="center">
+				<Grid item xs={1}>
+					<Controller
+						as={TextField}
+						control={control}
+						id={`addTrack[${index}].track_number`}
+						name={`addTrack[${index}].track_number`}
+						defaultValue={`${index + numberOfTracks + 1}`}
+						variant="outlined"
+						label='Track Number'
+					/>
+				</Grid>
+				<Grid item xs={3}>
+					<Controller
+						as={TextField}
+						control={control}
+						name={`addTrack[${index}].isrc`}
+						defaultValue={`${addTrack.isrc}`}
+						variant="outlined"
+						label='ISRC'
+					/>
+				</Grid>
+				<Grid item xs={2}>
+					<Controller
+					as={
+						<NativeSelect>
+							{artistChoices}
+						</NativeSelect>
+					}
+						name={`addTrack[${index}].artist_id`}
+						defaultValue={`${addTrack.artist_id}`}
+						control={control}
+					/>
+				</Grid>
+				<Grid Item xs={3}>
+					<Controller
+						as={TextField}
+						control={control}
+						name={`addTrack[${index}].track_name`}
+						variant="outlined"
+						defaultValue={`${addTrack.track_name}`}
+						label='Track Name'
+					/>
 				</Grid>
 				<Grid item xs={2}>
 				<Button
@@ -198,30 +226,40 @@ function TrackForm() {
 				</Button>
 				</Grid>
 			</Grid>
-			</div>
 			)
 		)}
-				<Button
-					variant="contained"
-					color="primary"
-					id="track_submit"
-					name="submit"
-					type="submit"
-				>Submit
-				</Button>
+
+		<Grid item container spacing={2} style={{marginTop: 6}} alignItems="center" justify="center">
+			<Grid item xs={3}>
 				<Button
 					variant="contained"
 					color="primary"
 					id="add_track"
+					fullWidth
 					name="add_track"
 					onClick={() =>
 						append(emptyRow)
 					}
-
 				>Add Track
 				</Button>
+			</Grid>
+			<Grid item xs={3}>
+				<Button
+					variant="contained"
+					color="primary"
+					id="track_submit"
+					fullWidth
+					name="submit"
+					type="submit"
+				>Submit
+				</Button>
+			</Grid>
+		</Grid>
+
+
 		</form>
-		</div>
+		</Grid>
+		</Container>
 		
 	)
 }

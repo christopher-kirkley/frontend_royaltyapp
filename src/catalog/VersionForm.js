@@ -36,12 +36,6 @@ function VersionForm(props) {
 		}
 	}, [])
 
-	// useEffect(() => { 
-	// 	fetch(`http://localhost:5000/catalog/${id}`)
-	// 	.then(res => res.json())
-	// 	.then(json => setVersion(json['version']))
-	// }, [version])
-	
 	const { fields, append, remove } = useFieldArray(
 		{ control,
 			name: 'version'
@@ -242,6 +236,7 @@ function VersionForm(props) {
 				</Button>
 			</Grid>
 		</Grid>
+
 		</form>
 		</Grid>
 		</Container>
