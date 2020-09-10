@@ -93,56 +93,64 @@ function CatalogInfo() {
 		<Container>
 		<Typography variant="h6" color="textSecondary" align="center">Catalog Info</Typography>
 		<form onSubmit={handleSubmit(onSubmit)} id="form">
-			<Controller
-				as={TextField}
-				control={control}
-				name="catalog_number"
-				variant="outlined"
-				margin="normal"
-				required
-				fullWidth
-				label="Catalog Number"
-				id="catalog_number"
-				autoComplete="catalog number"
-				autoFocus
-				defaultValue=""
-			/>
-			<Controller
-				as={TextField}
-				control={control}
-				name="catalog_name"
-				variant="outlined"
-				margin="normal"
-				required
-				fullWidth
-				label="Catalog Name"
-				id="catalog_name"
-				autoComplete="catalog name"
-				autoFocus
-				defaultValue=""
-			/>
-
-			<InputLabel htmlFor="catalog_artist">Catalog Artist</InputLabel>
-			<Controller
-				name='artist_id'
-				id="artist_name"
-				as={<NativeSelect>
-						{artistChoices}
-						</NativeSelect>}
-				control={control}
-				fullWidth
-			/>
-
-			<Button
-				style={{marginTop: 4}}
-				variant="contained"
-				fullWidth
-				color="primary"
-				type="submit"
-				id="submit"
-				name="submit">
-			Submit
-			</Button>
+			<Grid container alignItems="center" justify="center">
+				<Grid item xs={8}>
+					<Controller
+						as={TextField}
+						control={control}
+						name="catalog_number"
+						variant="outlined"
+						margin="normal"
+						required
+						fullWidth
+						label="Catalog Number"
+						id="catalog_number"
+						autoComplete="catalog number"
+						autoFocus
+						defaultValue=""
+					/>
+				</Grid>
+				<Grid item xs={8}>
+					<Controller
+						as={TextField}
+						control={control}
+						name="catalog_name"
+						variant="outlined"
+						margin="normal"
+						required
+						fullWidth
+						label="Catalog Name"
+						id="catalog_name"
+						autoComplete="catalog name"
+						autoFocus
+						defaultValue=""
+					/>
+				</Grid>
+				<Grid item xs={8}>
+					<InputLabel htmlFor="catalog_artist">Catalog Artist</InputLabel>
+					<Controller
+						name='artist_id'
+						id="artist_name"
+						as={<NativeSelect>
+								{artistChoices}
+								</NativeSelect>}
+						control={control}
+						fullWidth
+					/>
+				</Grid>
+				<Grid item xs={6} justify="center" style={{marginTop: 5}}>
+						<Button
+							style={{marginTop: 4}}
+							variant="contained"
+							fullWidth
+							color="primary"
+							type="submit"
+							id="submit"
+							name="submit">
+						Submit
+					</Button>
+					</Grid>
+		</Grid>
 		</form>
 		</Container>
 	)
