@@ -101,10 +101,10 @@ function TrackForm() {
 										track_name: ''}
 
 	return (
-		<Container>
-		<Grid container style={{marginTop: 5}}>
 		<form onSubmit={handleSubmit(onSubmit)}>
-		{ tracks.map((track, index) => (
+		<Grid container style={{marginTop: 5}}> 
+		{ 
+			tracks.map((track, index) => (
 			<Grid item container spacing={2} style={{marginBottom: 2}} alignItems="center" justify="center">
 			<Grid item>
 				<Controller
@@ -169,11 +169,13 @@ function TrackForm() {
 				</Button>
 			</Grid>
 		</Grid>
-		))}
+		))
+		}
 
-		{ fields.map((addTrack, index) => (
+		{ 
+			fields.map((addTrack, index) => (
 			<Grid item container spacing={2} style={{marginBottom: 2}} alignItems="center" justify="center">
-				<Grid item xs={1}>
+				<Grid item xs={2}>
 					<Controller
 						as={TextField}
 						control={control}
@@ -227,9 +229,10 @@ function TrackForm() {
 				</Grid>
 			</Grid>
 			)
-		)}
+		)
+		}
 
-		<Grid item container spacing={2} style={{marginTop: 6}} alignItems="center" justify="center">
+			<Grid item container spacing={2} style={{marginTop: 6}} alignItems="center" justify="center">
 			<Grid item xs={3}>
 				<Button
 					variant="contained"
@@ -257,9 +260,8 @@ function TrackForm() {
 		</Grid>
 
 
-		</form>
 		</Grid>
-		</Container>
+		</form>
 		
 	)
 }

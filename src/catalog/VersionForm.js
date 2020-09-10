@@ -78,9 +78,8 @@ function VersionForm(props) {
 	}
 		
 	return (
-		<Container>
-		<Grid container style={{marginTop: 5}}>
 		<form onSubmit={handleSubmit(onSubmit)}>
+		<Grid container style={{marginTop: 5}}>
 		{ version.map((version, index) => (
 		<Grid item container spacing={2} style={{marginBottom: 2}} alignItems="center" justify="center">
 			<Grid item>
@@ -147,15 +146,13 @@ function VersionForm(props) {
 
 		{ fields.map((addVersion, index) => (
 			<Grid item container spacing={2} alignItems="center" justify="center">
-				<Grid item>
-					<Controller
-						type="hidden"
-						as={TextField}
-						control={control}
-						name={`addVersion[${index}].id`}
-						defaultValue={`${addVersion.id}`}
-					/>
-				</Grid>
+				<Controller
+					type="hidden"
+					as={TextField}
+					control={control}
+					name={`addVersion[${index}].id`}
+					defaultValue={`${addVersion.id}`}
+				/>
 				<Grid item xs={3}>
 					<Controller
 						as={TextField}
@@ -166,7 +163,7 @@ function VersionForm(props) {
 						label='UPC'
 					/>
 				</Grid>
-				<Grid item xs={2}>
+				<Grid item xs={3}>
 					<Controller
 						as={TextField}
 						control={control}
@@ -197,9 +194,10 @@ function VersionForm(props) {
 						label='Format'
 					/>
 				</Grid>
-				<Grid item xs={2} align="center">
+				<Grid item xs={2} >
 					<Button
 						variant="contained"
+						fullWidth
 						color="secondary"
 						id="delete"
 						name="delete"
@@ -236,10 +234,9 @@ function VersionForm(props) {
 				</Button>
 			</Grid>
 		</Grid>
+		</Grid>
 
 		</form>
-		</Grid>
-		</Container>
 
 		
 	)
