@@ -13,17 +13,22 @@ import Typography from '@material-ui/core/Typography'
 import MenuItem from '@material-ui/core/MenuItem'
 import InputLabel from '@material-ui/core/InputLabel'
 import FormControl from '@material-ui/core/FormControl'
+import NativeSelect from '@material-ui/core/NativeSelect'
+import Fab from "@material-ui/core/Fab";
+
+import AddIcon from "@material-ui/icons/Add";
+
 
 function AddStatementForm(props) {
 
-	const { register, setValue, control, reset, handleSubmit } = useForm()
+	const { register, control, handleSubmit } = useForm()
 
-	function handleUpload(e) {
-		e.preventDefault()
-		const file = e.target.upload.files
+	function onSubmit(data) {
+	
 		const formData = new FormData()
-		formData.append('file', file[0])
-		formData.append('statement_source', 'bandcamp')
+
+		formData.append('file', data.file_upload[0])
+		formData.append('statement_source', data.source_statement)
 		fetch('http://localhost:5000/income/import-sales', {
 				method: 'POST',
 				body: formData
@@ -36,43 +41,52 @@ function AddStatementForm(props) {
 	}
 
 	const [msg, setMsg] = useState('')
+
 		
 	return (
 		<Container component="main" maxWidth="xs" spacing={4}>
-			<Typography component="h2" variant="h5">
+			<Typography color="textSecondary" component="h2" variant="h5" align="center">
 				Upload Income Statement
 			</Typography>
-			<form onSubmit={handleUpload} id="form" style={{marginTop: 10, width: '100%'}}>
-			<Grid container  spacing={4}> 
-			<Grid item xs={12}>
-				<TextField fullWidth id="select_statement" name="upload" type="file"/>	
+			<form onSubmit={handleSubmit(onSubmit)} id="form" style={{marginTop: 10, width: '100%'}}>
+			<Grid container style={{marginTop: 20}} spacing={4} direction="column" alignItems="center"> 
+				<Grid item xs={12} style={{ textAlign: "center" }}>
+						<input
+						name="file_upload"
+						required
+						id="file_upload"
+						autoComplete="select statement"
+						autoFocus
+						ref={register}
+						type="file"
+						defaultValue=""
+					/>
+				</Grid>
+				<Grid item xs={4}>
+					<Controller
+						as={
+							<NativeSelect>
+								<option id="bandcamp" value="bandcamp">Bandcamp</option>
+								<option id="sd" value="sd">SD Digital</option>
+							</NativeSelect>
+							}
+						name="source_statement"
+						control={control}
+						defaultValue="bandcamp"
+						fullWidth
+					/>
+				</Grid>
+				<Grid item xs={4}>
+					<Button
+						variant="contained"
+						color="primary"
+						id="upload_statement"
+						name="submit"
+						type="submit"
+						fullWidth
+					>Upload</Button>
+				</Grid>
 			</Grid>
-			<Grid item xs={12}>
-				<select id="source_statement">
-				<option id="bandcamp">Bandcamp</option>
-				<option>SD Digital</option>
-				</select>
-		{	// <FormControl fullWidth>
-				// <InputLabel>Statement Source</InputLabel>
-				// <Select name="source_statement"> 
-		          // <MenuItem value={10} id='bandcamp'>Bandcamp</MenuItem>
-		          // <MenuItem value={10}>SD</MenuItem>
-		          // <MenuItem value={10}>SD Digital</MenuItem>
-				// </Select>
-				// </FormControl>
-			}
-			</Grid>
-			<Grid item xs={12}>
-				<Button
-					variant="contained"
-					color="primary"
-					id="upload_statement"
-					name="submit"
-					type="submit"
-					fullWidth
-				>Upload</Button>
-			</Grid>
-		</Grid>
 		</form>
 		<Typography id="statement_message">{msg}</Typography>
 		</Container>

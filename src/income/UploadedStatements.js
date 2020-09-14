@@ -33,14 +33,14 @@ function UploadedStatements(props) {
 	})
 
 	return (
-		<Container spacing={4}>
-			<Typography component="h2" variant="h5" gutterBottom>Uploaded Statements</Typography>
+		<Grid container alignItems="center" justify="center">
+			<Typography color="textSecondary" component="h2" variant="h5" gutterBottom align="center">Uploaded Statements</Typography>
 		<Grid item xs={12}>
 			<List>
 				{pendingList}
 			</List>
 		</Grid>
-		<Grid item xs={12}>
+		<Grid item xs={4}>
 			<Button
 				variant="contained"
 				color="primary"
@@ -51,7 +51,7 @@ function UploadedStatements(props) {
 				onClick={props.processPending}
 			>Process</Button>
 		</Grid>
-		</Container>
+		</Grid>
 	)
 }
 

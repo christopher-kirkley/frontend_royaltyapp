@@ -50,7 +50,7 @@ function Income() {
 	}
 
 	function goToMatchingErrorPage() {
-		history.push('/expense/matching-errors')
+		history.push('/income/matching-errors')
 	}
 
 	function processPending() {
@@ -64,26 +64,25 @@ function Income() {
 				<Header name='Income' />
 				<Grid container 
 					style={{marginTop: 10}}
-					spacing={4} direction="column"
-					justify="space-evenly"
-					alignItems="center"
+					spacing={2}
+					direction="column"
 					>
-					<Grid item xs={8}>
-						<Paper elevation={3} style={{padding: 30}}>
+					<Grid item xs={12}>
+						<Paper elevation={3} style={{padding: 20}}>
 						<AddStatementForm
 							getMatchingErrors={getMatchingErrors}
 							getPendingStatements={getPendingStatements}/>
 						</Paper>
 					</Grid>
-					<Grid item xs={8}>
-						<Paper elevation={3} style={{padding: 30}}>
+					<Grid item xs={12}>
+						<Paper elevation={3} style={{padding: 20}}>
 						<DisplayMatchingErrors
 							matchingErrors={matchingErrors}
 							goToMatchingErrorPage={goToMatchingErrorPage}/>
 						</Paper>
 					</Grid>
-					<Grid item xs={8}>
-						<Paper elevation={3} style={{padding: 30}}>
+					<Grid item xs={12}>
+						<Paper elevation={3} style={{padding: 20}}>
 						<UploadedStatements
 							pendingStatements={pendingStatements}
 							processPending={processPending}
