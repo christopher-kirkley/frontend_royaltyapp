@@ -9,7 +9,7 @@ function TrackInfo() {
 	return (
 		<Container>
 			<Typography variant="h6" color="textSecondary" align="center">Tracks</Typography>
-		<TrackForm/>
+			<TrackForm/>
 		</Container>
 	)
 }

@@ -13,6 +13,9 @@ import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
 import Button from '@material-ui/core/Button'
 import Container from '@material-ui/core/Container'
+import Typography from '@material-ui/core/Typography'
+import List from '@material-ui/core/List'
+import ListItem from '@material-ui/core/ListItem'
 
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -27,19 +30,17 @@ function Artist() {
 		return (
 			<Container>
 				<Header name="Artists"/>
-				<div>
-						<Grid container
-							spacing={2}
-							direction="row"
-							alignItems="center"
-							style={{marginTop: 1}}>
-							<Grid item xs={12}>
-								<Paper elevation={10}>
-								<ArtistTable/>
-								</Paper>
-							</Grid>
+					<Grid container
+						spacing={2}
+						direction="row"
+						alignItems="center"
+						style={{marginTop: 1}}>
+						<Grid item xs={12}>
+							<Paper elevation={10} style={{ padding: 20 }}>
+							<ArtistTable/>
+							</Paper>
 						</Grid>
-				</div>
+					</Grid>
 			</Container>
 		)
 	}

@@ -41,6 +41,10 @@ import ImportedExpense from "./expense/ImportedExpense"
 import DetailImportedExpense from "./expense/DetailImportedExpense"
 import ImportedExpenseTable from "./expense/DetailImportedExpenseTable"
 
+import { ThemeProvider } from '@material-ui/core/styles';
+import theme from "./Theme"
+
+
 
 import { makeStyles } from "@material-ui/core/styles"
 import { 
@@ -59,30 +63,37 @@ import CatalogIcon from '@material-ui/icons/Album'
 import IncomeIcon from '@material-ui/icons/AttachMoney'
 import ViewAgendaIcon from '@material-ui/icons/ViewAgenda';
 
-const useStyles = makeStyles((theme) => ({
-		drawerPaper: { width: 'inherit' },
-		link: {
-						textDecoration: 'none',
-						color: theme.palette.text.primary
-					},
-		root: {
-			width: '100%',
-			maxWidth: 360,
-			backgroundColor: theme.palette.background.paper,
-		},
-		nested: {
-			paddingLeft: theme.spacing(4),
-		},
-}))
 
 
 function Main() {
+	const useStyles = makeStyles((theme) => ({
+			drawerPaper: { width: 'inherit' },
+			link: {
+							textDecoration: 'none',
+							color: theme.palette.text.primary
+						},
+			root: {
+				width: '100%',
+				maxWidth: 360,
+				backgroundColor: theme.palette.background.paper,
+			},
+			nested: {
+				paddingLeft: theme.spacing(4),
+			},
+	}))
+
 	const classes = useStyles()
 
+	const [openArtist, setOpenArtist] = useState(false)
 	const [openCatalog, setOpenCatalog] = useState(false)
 	const [openIncome, setOpenIncome] = useState(false)
 	const [openExpense, setOpenExpense] = useState(false)
 	const [openStatement, setOpenStatement] = useState(false)
+
+
+	function handleOpenArtist() {
+		setOpenArtist(!openArtist)
+	}
 
 	function handleOpenCatalog() {
 		setOpenCatalog(!openCatalog)
@@ -100,7 +111,9 @@ function Main() {
 		setOpenStatement(!openStatement)
 	}
 
+
 	return (
+		<ThemeProvider theme={theme}>
 		<Router >
 		<div style={{ display: 'flex' }}>
 			<Drawer
@@ -125,14 +138,34 @@ function Main() {
 						<ListItemText primary={"Dashboard"}/>
 					</ListItem>
 					</Link>
-					<Link to="/artists" className={classes.link}>
-					<ListItem button id="artists">
+
+					<ListItem button id="artists" onClick={handleOpenArtist}>
 						<ListItemIcon>
 							<PeopleIcon />
 						</ListItemIcon>
 						<ListItemText primary={"Artists"}/>
+						{ openCatalog ? <ExpandLess /> : <ExpandMore />}
 					</ListItem>
-					</Link>
+					<Collapse in={openArtist} timeout="auto" unmountOnExit>
+						<List component="div" disablePadding>
+							<Link to="/artist/add" className={classes.link}>
+								<ListItem button id="add_artist" className={classes.nested}>
+								<ListItemIcon>
+									<AddCircleIcon />
+								</ListItemIcon>
+								<ListItemText primary={"Add Artist"}/>
+							</ListItem>
+							</Link>
+							<Link to="/artists" className={classes.link}>
+								<ListItem button id="view_artists" className={classes.nested}>
+								<ListItemIcon>
+									<ViewListIcon />
+								</ListItemIcon>
+								<ListItemText primary={"View Artists"}/>
+							</ListItem>
+							</Link>
+						</List>
+					</Collapse>
 
 					<ListItem button id="catalog" onClick={handleOpenCatalog}>
 						<ListItemIcon>
@@ -144,7 +177,7 @@ function Main() {
 					<Collapse in={openCatalog} timeout="auto" unmountOnExit>
 						<List component="div" disablePadding>
 							<Link to="/catalog/add" className={classes.link}>
-								<ListItem button id="catalog" className={classes.nested}>
+								<ListItem button id="add_catalog" className={classes.nested}>
 								<ListItemIcon>
 									<AddCircleIcon />
 								</ListItemIcon>
@@ -152,7 +185,7 @@ function Main() {
 							</ListItem>
 							</Link>
 							<Link to="/catalog" className={classes.link}>
-								<ListItem button id="catalog" className={classes.nested}>
+								<ListItem button id="view_catalog" className={classes.nested}>
 								<ListItemIcon>
 									<ViewListIcon />
 								</ListItemIcon>
@@ -279,15 +312,10 @@ function Main() {
 				<Route exact path="/statements/:id/artist/:artistId" component={StatementDetail}/>
 			</Switch>
 		</div>
-		{
-			// <ul className="header">
-			// 	<li><Link to="/">Dashboard</NavLink></li>
-			// 	<li><Link to="/artist" id="artist">Artist</NavLink></li>
-			// </ul>
-		}
 		<div className="content">
 		</div>
 	</Router>
+		</ThemeProvider>
 	)
 }
 

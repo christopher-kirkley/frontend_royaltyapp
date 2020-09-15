@@ -9,6 +9,7 @@ import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid'
 import Container from '@material-ui/core/Container'
 import Paper from '@material-ui/core/Paper'
+import Typography from '@material-ui/core/Typography'
 
 import Header from '../components/Header'
 
@@ -77,14 +78,14 @@ function ArtistDetail () {
 	return (
 			<Container>
 			<Header name='Artist Detail'/>
-			<Paper elevation={10}>
+				<Paper elevation={3} style={{marginTop: 20, padding: 20}}>
+				<Typography color="textSecondary" component="h2" variant="h5" align="center">Artist Info</Typography>	
+				<form onSubmit={handleSubmit(onSubmit)} id="form">
 			<Grid container
 					style={{marginTop: 20}}
 					spacing={20}
 					direction="column"
-					justify="space-evenly"
 					alignItems="center">
-				<form onSubmit={handleSubmit(onSubmit)} id="form">
 				<Grid item xs={12}>
 					<Controller
 						as={TextField}
@@ -115,18 +116,19 @@ function ArtistDetail () {
 						defaultValue=""
 					/>	
 				</Grid>
-				<Grid item xs={12} style={{marginTop: 15, marginBottom: 15}}>
+				<Grid item xs={3} style={{marginTop: 15, marginBottom: 15}}>
 					<Button 
 						type="submit"
 						variant="contained"
 						color="primary"
 						id="submit"
+						fullWidth
 						>
 						Submit
 					</Button>
 				</Grid>
-				</form>
 		</Grid>
+				</form>
 		</Paper>
 		</Container>
 	)}

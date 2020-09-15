@@ -29,7 +29,6 @@ function CatalogTable() {
 	}
 
 	return (
-		<div>
 		<TableContainer>
 		<Table id="catalog_table">
 			<TableHead>
@@ -62,7 +61,6 @@ function CatalogTable() {
 			</TableBody>
 			</Table>
 			</TableContainer>
-		</div>
 	)
 }
 

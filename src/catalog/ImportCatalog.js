@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom'
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 
 
@@ -27,25 +28,39 @@ function ImportCatalog () {
 	}
 
 	return (
-		<Container style={{border: '3px solid black'}}>
-		<h2>Upload Catalog CSV</h2>
-		<Grid container xs={12} spacing={4}>
-			<Grid item>
-			<form onSubmit={handleUpload} id="form">
-				<div>
-				<TextField id="catalog_to_upload" name="upload" type="file"/>	
-				</div>
+		<Container>
+		<Typography variant="h6" color="textSecondary" align="center">Upload Catalog CSV</Typography>
+		<form onSubmit={handleUpload} id="form">
+		<Grid 
+			container xs={12}
+			spacing={4}
+			alignContent="center"
+			justify="center"
+			style={{marginTop: 10}}
+		>
+			<Grid item xs={9} alignContent="center" style={{textAlign: "center"}}>
+				<TextField
+					id="catalog_to_upload"
+					name="upload"
+					type="file"/>	
+			</Grid>
+			<Grid item xs={4}>
 				<Button
 					variant="contained"
 					color="primary"
 					id="catalog_upload"
 					name="submit"
 					type="submit"
-				>Upload</Button>
+					fullWidth
+				>
+				Upload
+				</Button>
+			</Grid>
+		</Grid>
+
 			</form>
 			<h3 id='msg'>{ msg }</h3>
-		</Grid>
-		</Grid>
+			
 		</Container>
 	)}
 

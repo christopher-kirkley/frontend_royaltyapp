@@ -4,6 +4,7 @@ import { useForm, Controller, useFieldArray } from 'react-hook-form'
 import { useParams } from 'react-router-dom'
 
 import MenuItem from '@material-ui/core/MenuItem';
+import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
@@ -102,11 +103,13 @@ function TrackForm() {
 
 	return (
 		<form onSubmit={handleSubmit(onSubmit)}>
+
+		{fields.length == 0 && tracks.length == 0 ? <Typography variant="h6" align="center">No data</Typography> : <p></p>}
+
 		<Grid container style={{marginTop: 5}}> 
 		{ 
 			tracks.map((track, index) => (
 			<Grid item container spacing={2} style={{marginBottom: 2}} alignItems="center" justify="center">
-			<Grid item>
 				<Controller
 					type="hidden"
 					as={TextField}
@@ -114,8 +117,7 @@ function TrackForm() {
 					name={`tracks[${index}].id`}
 					defaultValue={`${track.id}`}
 				/>
-			</Grid>
-			<Grid item xs={1}>
+			<Grid item xs={2}>
 				<Controller
 					as={TextField}
 					control={control}
@@ -165,6 +167,7 @@ function TrackForm() {
 					color="secondary"
 					id="delete_version"
 					name="delete_version"
+					fullWidth
 				>Delete
 				</Button>
 			</Grid>
@@ -197,6 +200,8 @@ function TrackForm() {
 					/>
 				</Grid>
 				<Grid item xs={2}>
+					<FormControl variant="outlined">
+					<InputLabel shrink>Artist</InputLabel>
 					<Controller
 					as={
 						<NativeSelect>
@@ -207,6 +212,7 @@ function TrackForm() {
 						defaultValue={`${addTrack.artist_id}`}
 						control={control}
 					/>
+					</FormControl>
 				</Grid>
 				<Grid Item xs={3}>
 					<Controller
@@ -224,6 +230,7 @@ function TrackForm() {
 					color="secondary"
 					id="delete_track"
 					name="delete_track"
+					fullWidth
 				>Delete
 				</Button>
 				</Grid>

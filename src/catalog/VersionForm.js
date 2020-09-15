@@ -7,6 +7,7 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField'
 import Container from '@material-ui/core/Container'
 import Grid from '@material-ui/core/Grid'
+import Typography from '@material-ui/core/Typography'
 
 function VersionForm(props) {
 
@@ -79,10 +80,13 @@ function VersionForm(props) {
 		
 	return (
 		<form onSubmit={handleSubmit(onSubmit)}>
+
+		{fields.length == 0 && version.length == 0 ? <Typography variant="h6" align="center">No data</Typography> : <p></p>}
+		
 		<Grid container style={{marginTop: 5}}>
 
 		{ version.map((version, index) => (
-		<Grid item container spacing={2} style={{marginBottom: 2}} alignItems="center" justify="center">
+		<Grid item container spacing={3} style={{marginBottom: 2}} alignItems="center">
 				<Controller
 					type="hidden"
 					as={TextField}

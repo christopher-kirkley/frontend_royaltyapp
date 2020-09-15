@@ -11,7 +11,9 @@ import Grid from '@material-ui/core/Grid';
 
 import Header from '../components/Header'
 
+
 function CatalogItem() {
+
 
 	return (
 		<Container>
@@ -22,26 +24,20 @@ function CatalogItem() {
 				direction="column"
 				justify="space-evenly"
 				>
-				<Grid item xs={10}>
+				<Grid item xs={12}>
 				<Paper
-					elevation={3}
-					style={{padding: 10}}
 				>
 					<CatalogInfo/>
 				</Paper>
 				</Grid>
-				<Grid item xs={10}>
+				<Grid item xs={12}>
 				<Paper
-					elevation={3}
-					style={{padding: 10}}
 				>
 					<VersionInfo/>
 				</Paper>
 				</Grid>
-				<Grid item xs={10}>
+				<Grid item xs={12}>
 				<Paper
-					elevation={3}
-					style={{padding: 10}}
 				>
 					<TrackInfo/>
 				</Paper>

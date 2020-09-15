@@ -12,6 +12,8 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import Header from '../components/Header'
 
+import Paper from '@material-ui/core/Paper';
+
 function Catalog() {
 
 	const history = useHistory()
@@ -26,8 +28,10 @@ function Catalog() {
 
 		return (
 			<Container>
-				<Header name='Catalog'/>
-				<CatalogTable/>
+				<Header name='Catalog Items'/>
+				<Paper elevation={3} style={{marginTop: 20, padding: 20}}>
+					<CatalogTable/>
+				</Paper>
 			</Container>
 		)
 	}
