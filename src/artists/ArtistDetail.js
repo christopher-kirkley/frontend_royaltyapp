@@ -10,14 +10,27 @@ import Grid from '@material-ui/core/Grid'
 import Container from '@material-ui/core/Container'
 import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
+import { makeStyles } from '@material-ui/core/styles'
 
 import Header from '../components/Header'
+ 
+const useStyles = makeStyles(theme => ({
+	paper: {
+		padding: 20,
+	},
+	content: {
+		backgroundColor: "grey"
+	}
+}))
 
 function ArtistDetail () {
+
+	const classes = useStyles()
 
 	const { id } = useParams()
 
 	const [artist, setArtist] = useState([])
+	const [edit, setEdit] = useState(true)
 	
 	const { register, handleSubmit, control, error, setValue } = useForm()
 	
@@ -28,6 +41,7 @@ function ArtistDetail () {
 		fetch(`http://localhost:5000/artists/${id}`)
 		.then(res => res.json())
 		.then(json => setArtist(json))
+		.then(res => setEdit(false))
 		}
 	}, [])
 
@@ -53,7 +67,6 @@ function ArtistDetail () {
 		.then(json => history.push('/artists/'))
 	}
 	
-
 	function editArtist(data) {
 		const artist_name = data.artist_name
 		const prenom = data.prenom
@@ -64,6 +77,33 @@ function ArtistDetail () {
 		})
 		.then(res => res.json())
 		.then(json => history.push('/artists/'))
+	}
+
+	function handleClick() {
+		setEdit(true)
+	}
+
+	function EditButton() {
+		if (edit == false) {
+			return <Button 
+						onClick={handleClick}
+						variant="contained"
+						color="primary"
+						id="submit"
+						fullWidth
+						>
+						Edit
+					</Button>
+		}
+		return <Button 
+						type="submit"
+						variant="contained"
+						color="secondary"
+						id="submit"
+						fullWidth
+						>
+						Save
+					</Button>
 	}
 
 	function onSubmit(data) {
@@ -78,9 +118,12 @@ function ArtistDetail () {
 	return (
 			<Container>
 			<Header name='Artist Detail'/>
-				<Paper elevation={3} style={{marginTop: 20, padding: 20}}>
-				<Typography color="textSecondary" component="h2" variant="h5" align="center">Artist Info</Typography>	
-				<form onSubmit={handleSubmit(onSubmit)} id="form">
+				<Paper elevation={3} className={ classes.paper }>
+				{ id ?
+					<Typography color="textSecondary" component="h2" variant="h5" align="center">Artist Info</Typography> :
+					<Typography color="textSecondary" component="h2" variant="h5" align="center">Add Artist</Typography>
+				}
+			<form onSubmit={handleSubmit(onSubmit)} id="form">
 			<Grid container
 					style={{marginTop: 20}}
 					spacing={20}
@@ -89,6 +132,7 @@ function ArtistDetail () {
 				<Grid item xs={12}>
 					<Controller
 						as={TextField}
+						disabled={edit ? false: true}
 						name="artist_name"
 						id="artist_name"
 						defaultValue=""
@@ -104,6 +148,7 @@ function ArtistDetail () {
 						control={control}
 						label="Prenom"
 						defaultValue=""
+						disabled={edit ? false: true}
 					/>	
 				</Grid>
 				<Grid item xs={12}>
@@ -114,18 +159,11 @@ function ArtistDetail () {
 						control={control}
 						label="Surnom"
 						defaultValue=""
+						disabled={edit ? false: true}
 					/>	
 				</Grid>
 				<Grid item xs={3} style={{marginTop: 15, marginBottom: 15}}>
-					<Button 
-						type="submit"
-						variant="contained"
-						color="primary"
-						id="submit"
-						fullWidth
-						>
-						Submit
-					</Button>
+					<EditButton/>
 				</Grid>
 		</Grid>
 				</form>

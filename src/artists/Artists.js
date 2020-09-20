@@ -19,7 +19,18 @@ import ListItem from '@material-ui/core/ListItem'
 
 import { makeStyles } from '@material-ui/core/styles';
 
+const useStyles = makeStyles(theme => ({
+	paper: {
+		padding: 20,
+	},
+	content: {
+		backgroundColor: "grey"
+	}
+}))
+
 function Artist() {
+
+	const classes = useStyles()
 
 	const history = useHistory();
 
@@ -27,23 +38,19 @@ function Artist() {
 		history.push('/artist/add')
 	}
 
-		return (
-			<Container>
-				<Header name="Artists"/>
-					<Grid container
-						spacing={2}
-						direction="row"
-						alignItems="center"
-						style={{marginTop: 1}}>
-						<Grid item xs={12}>
-							<Paper elevation={10} style={{ padding: 20 }}>
-							<ArtistTable/>
-							</Paper>
-						</Grid>
-					</Grid>
-			</Container>
-		)
-	}
+	return (
+		<Container>
+		<Header name="Artists"/>
+		<Grid container spacing={2} direction="row" alignItems="center">
+			<Grid item xs={12}>
+				<Paper className={classes.paper}> 
+				<ArtistTable/>
+				</Paper>
+			</Grid>
+		</Grid>
+		</Container>
+	)
+}
 
 
 export default Artist;
