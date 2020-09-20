@@ -14,7 +14,15 @@ import Header from '../components/Header'
 
 import Paper from '@material-ui/core/Paper';
 
-function Catalog() {
+const useStyles = makeStyles(theme => ({
+	paper: {
+		padding: 20,
+	},
+}))
+
+function ViewCatalog() {
+
+	const classes = useStyles()
 
 	const history = useHistory()
 
@@ -29,7 +37,7 @@ function Catalog() {
 		return (
 			<Container>
 				<Header name='Catalog Items'/>
-				<Paper elevation={3} style={{marginTop: 20, padding: 20}}>
+				<Paper elevation={4} className={classes.paper}>
 					<CatalogTable/>
 				</Paper>
 			</Container>
@@ -37,4 +45,4 @@ function Catalog() {
 	}
 
 
-export default Catalog
+export default ViewCatalog

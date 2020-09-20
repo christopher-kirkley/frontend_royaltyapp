@@ -11,34 +11,38 @@ import Grid from '@material-ui/core/Grid';
 
 import Header from '../components/Header'
 
+import { makeStyles } from '@material-ui/core/styles'
+
+const useStyles = makeStyles(theme => ({
+	paper: {
+		padding: 20,
+	},
+}))
 
 function CatalogItem() {
 
+	const classes = useStyles()
 
 	return (
 		<Container>
 			<Header name='Catalog Item'/>
 			<Grid container 
-				style={{marginTop: 10}}
 				spacing={4}
 				direction="column"
 				justify="space-evenly"
 				>
 				<Grid item xs={12}>
-				<Paper
-				>
+				<Paper elevation={4} className={classes.paper}>
 					<CatalogInfo/>
 				</Paper>
 				</Grid>
 				<Grid item xs={12}>
-				<Paper
-				>
+				<Paper elevation={4} className={classes.paper}>
 					<VersionInfo/>
 				</Paper>
 				</Grid>
 				<Grid item xs={12}>
-				<Paper
-				>
+				<Paper elevation={4} className={classes.paper}>
 					<TrackInfo/>
 				</Paper>
 				</Grid>

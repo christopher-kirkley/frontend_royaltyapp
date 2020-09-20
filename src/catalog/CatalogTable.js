@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 
 import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -29,6 +30,10 @@ function CatalogTable() {
 	}
 
 	return (
+		<div>
+		<Typography color="textSecondary" component="h2" variant="h5" align="center">Catalog Items</Typography>
+		{catalog.length == 0 ?
+			<Typography id="artists-data" variant="h6" align="center">No data</Typography> :
 		<TableContainer>
 		<Table id="catalog_table">
 			<TableHead>
@@ -61,6 +66,8 @@ function CatalogTable() {
 			</TableBody>
 			</Table>
 			</TableContainer>
+		}
+		</div>
 	)
 }
 

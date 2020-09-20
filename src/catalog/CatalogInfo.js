@@ -4,7 +4,6 @@ import { useForm, Controller, defaultValue } from 'react-hook-form'
 
 import { useParams } from 'react-router-dom'
 
-
 import Button from '@material-ui/core/Button';
 import NativeSelect from '@material-ui/core/NativeSelect';
 import Typography from '@material-ui/core/Typography';
@@ -20,11 +19,14 @@ import TextField from '@material-ui/core/TextField'
 import Select from '@material-ui/core/Select'
 
 import Header from '../components/Header'
+import ConditionalButton from '../components/ConditionalButton'
 
 function CatalogInfo() {
 
 	const [catalog, setCatalog ] = useState('')
 	const [artistId, setArtistId] = useState('1')
+
+	const [edit, setEdit] = useState(false)
 
 	const { id } = useParams()
 
@@ -62,12 +64,12 @@ function CatalogInfo() {
 	)
 
 	function onSubmit(data) {
+		setEdit(!edit)
 
 		if (id) {
 			const catalog_number = data.catalog_number
 			const catalog_name = data.catalog_name
 			const artist_id = data.artist_id
-			console.log(artist_id)
 			// send json to update
 			fetch(`http://localhost:5000/catalog/${id}`, {
 				method: 'PUT',
@@ -75,6 +77,7 @@ function CatalogInfo() {
 			})
 			.then(res => res.json())
 		}
+
 		else {
 		const catalog_number = data.catalog_number
 		const catalog_name = data.catalog_name
@@ -88,13 +91,16 @@ function CatalogInfo() {
 	}
 	}
 	
+	function handleClick() {
+		setEdit(!edit)
+	}
 
 	return (
 		<Container>
 		<Typography variant="h6" color="textSecondary" align="center">Catalog Info</Typography>
 		<form onSubmit={handleSubmit(onSubmit)} id="form">
-			<Grid container alignItems="center" justify="center">
-				<Grid item xs={8}>
+			<Grid container spacing={1} alignItems="center" justify="center">
+				<Grid item xs={7}>
 					<Controller
 						as={TextField}
 						control={control}
@@ -108,9 +114,10 @@ function CatalogInfo() {
 						autoComplete="catalog number"
 						autoFocus
 						defaultValue=""
+						disabled={edit ? false: true}
 					/>
 				</Grid>
-				<Grid item xs={8}>
+				<Grid item xs={7}>
 					<Controller
 						as={TextField}
 						control={control}
@@ -124,9 +131,10 @@ function CatalogInfo() {
 						autoComplete="catalog name"
 						autoFocus
 						defaultValue=""
+						disabled={edit ? false: true}
 					/>
 				</Grid>
-				<Grid item xs={8}>
+				<Grid item xs={7}>
 					<InputLabel htmlFor="catalog_artist">Catalog Artist</InputLabel>
 					<Controller
 						name='artist_id'
@@ -136,22 +144,16 @@ function CatalogInfo() {
 								</NativeSelect>}
 						control={control}
 						fullWidth
+						disabled={edit ? false: true}
 					/>
 				</Grid>
-				<Grid item xs={6} justify="center" style={{marginTop: 5}}>
-						<Button
-							style={{marginTop: 4}}
-							variant="contained"
-							fullWidth
-							color="primary"
-							type="submit"
-							id="submit"
-							name="submit">
-						Submit
-					</Button>
-					</Grid>
 		</Grid>
 		</form>
+		<Grid container justify="center">
+				<Grid item xs={4} justify="center" style={{marginTop: 5}}>
+					<ConditionalButton edit={edit} handleClick={handleClick}/>
+				</Grid>
+		</Grid>
 		</Container>
 	)
 }
