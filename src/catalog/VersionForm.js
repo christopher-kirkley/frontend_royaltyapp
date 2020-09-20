@@ -9,7 +9,15 @@ import Container from '@material-ui/core/Container'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 
+import ConditionalButton from '../components/ConditionalButton'
+
 function VersionForm(props) {
+
+	const [edit, setEdit] = useState(false)
+
+	function handleClick() {
+		setEdit(!edit)
+	}
 
 	let id = props.id
 
@@ -58,6 +66,7 @@ function VersionForm(props) {
 			setVersion(json['version'])
 		})
 		.then(res => reset(version))
+		.then(res => setEdit(!edit))
 	}
 
 	function addVersion(data) {
@@ -78,8 +87,10 @@ function VersionForm(props) {
 		data['addVersion'] ? addVersion(data) : updateVersion(data)
 	}
 		
+
 	return (
-		<form onSubmit={handleSubmit(onSubmit)}>
+		<React.Fragment>
+		<form onSubmit={handleSubmit(onSubmit)} id="version-form">
 
 		{fields.length == 0 && version.length == 0 ? <Typography variant="h6" align="center">No data</Typography> : <p></p>}
 		
@@ -93,6 +104,7 @@ function VersionForm(props) {
 					control={control}
 					name={`version[${index}].id`}
 					defaultValue={`${version.id}`}
+						disabled={edit ? false: true}
 				/>
 			<Grid item xs={3}>
 				<Controller
@@ -102,6 +114,7 @@ function VersionForm(props) {
 					defaultValue={`${version.upc}`}
 					variant="outlined"
 					label='UPC'
+						disabled={edit ? false: true}
 				/>
 			</Grid>
 			<Grid item xs={2}>
@@ -112,6 +125,7 @@ function VersionForm(props) {
 					defaultValue={`${version.version_number}`}
 					variant="outlined"
 					label='Version Number'
+						disabled={edit ? false: true}
 				/>
 			</Grid>
 			<Grid item xs={3}>
@@ -122,6 +136,7 @@ function VersionForm(props) {
 					defaultValue={`${version.version_name}`}
 					variant="outlined"
 					label='Version Name'
+						disabled={edit ? false: true}
 				/>
 			</Grid>
 			<Grid item xs={2}>
@@ -132,6 +147,7 @@ function VersionForm(props) {
 					defaultValue={`${version.format}`}
 					variant="outlined"
 					label='Format'
+						disabled={edit ? false: true}
 				/>
 			</Grid>
 			<Grid item xs={2} align="center">
@@ -141,6 +157,7 @@ function VersionForm(props) {
 					id="delete_version"
 					name="delete_version"
 					fullWidth
+						disabled={edit ? false: true}
 				>Delete
 				</Button>
 			</Grid>
@@ -212,8 +229,8 @@ function VersionForm(props) {
 			)
 		)}
 
-		<Grid item container spacing={2} style={{marginTop: 6}} alignItems="center" justify="center">
-			<Grid item xs={3}>
+		<Grid item container spacing={2} style={{marginTop: 6}} alignItems="left">
+			<Grid item xs={1}>
 				<Button
 					variant="contained"
 					color="primary"
@@ -223,24 +240,20 @@ function VersionForm(props) {
 					onClick={() =>
 						append(emptyRow)
 					}
-				>Add Version
-				</Button>
-			</Grid>
-			<Grid item xs={3}>
-				<Button
-					variant="contained"
-					color="primary"
-					id="version_submit"
-					fullWidth
-					name="submit"
-					type="submit"
-				>Submit
+						disabled={edit ? false: true}
+				>+
 				</Button>
 			</Grid>
 		</Grid>
 		</Grid>
 
 		</form>
+		<Grid container justify="center">
+				<Grid item xs={4} justify="center" style={{marginTop: 5}}>
+					<ConditionalButton edit={edit} handleClick={handleClick} form={"version-form"}/>
+				</Grid>
+		</Grid>
+		</React.Fragment>
 
 		
 	)
