@@ -7,6 +7,8 @@ import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+
 import { makeStyles } from '@material-ui/core/styles';
 
 import Header from '../components/Header'
@@ -14,7 +16,15 @@ import AddStatementForm from './AddStatementForm'
 import DisplayMatchingErrors from './DisplayMatchingErrors'
 import UploadedStatements from './UploadedStatements'
 
+const useStyles = makeStyles(theme => ({
+	paper: {
+		padding: 20,
+	},
+}))
+
 function Income() {
+
+	const classes = makeStyles()
 
 	const history = useHistory()
 
@@ -62,31 +72,21 @@ function Income() {
 	return (
 			<Container>
 				<Header name='Income' />
-				<Grid container 
-					style={{marginTop: 10}}
-					spacing={2}
-					direction="column"
-					>
+				<Grid container spacing={4} direction="column">
 					<Grid item xs={12}>
-						<Paper elevation={3} style={{padding: 20}}>
+						<Paper elevation={3} className={classes.paper}>
 						<AddStatementForm
 							getMatchingErrors={getMatchingErrors}
 							getPendingStatements={getPendingStatements}/>
 						</Paper>
 					</Grid>
 					<Grid item xs={12}>
-						<Paper elevation={3} style={{padding: 20}}>
-						<DisplayMatchingErrors
-							matchingErrors={matchingErrors}
-							goToMatchingErrorPage={goToMatchingErrorPage}/>
-						</Paper>
-					</Grid>
-					<Grid item xs={12}>
-						<Paper elevation={3} style={{padding: 20}}>
-						<UploadedStatements
-							pendingStatements={pendingStatements}
-							processPending={processPending}
-						/>
+						<Paper elevation={3} className={classes.paper}>
+								<UploadedStatements
+									pendingStatements={pendingStatements}
+									processPending={processPending}
+									matchingErrors={matchingErrors}
+									goToMatchingErrorPage={goToMatchingErrorPage}/>
 						</Paper>
 					</Grid>
 			</Grid>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import { useForm, Controller, useFieldArray } from 'react-hook-form'
 import { useHistory } from "react-router-dom";
@@ -19,11 +19,13 @@ function DisplayMatchingErrors(props) {
 
 
 	return (
-		<Fragment>
+		<React.Fragment>
+		<Grid container xs={12}>
+			<Grid item xs={6}>
 		<Typography color="textSecondary" component="h2" variant="h5" align="center" gutterBottom>
 				Matching Errors
 				</Typography>
-		<Grid container style={{ marginTop: 10 }} direction="column" alignItems="center">
+		<Grid container direction="column" alignItems="center">
 				<Typography component="p" variant="p" id="matching_errors" >You have <span id="error_number">{props.matchingErrors}</span> matching errors.</Typography>
 				<Typography component="p" variant="p" id="error_msg">{props.matchingErrorsMsg}</Typography>
 			<Grid item xs={12}>
@@ -38,7 +40,9 @@ function DisplayMatchingErrors(props) {
 				>Fix</Button>
 		</Grid>
 		</Grid>
-		</Fragment>
+		</Grid>
+		</Grid>
+		</React.Fragment>
 	)
 }
 
