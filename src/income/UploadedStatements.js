@@ -47,14 +47,33 @@ function UploadedStatements(props) {
 						id="pending_statement"
 					  primary={pendingStatement.statement}
 					/>
-					<ListItemSecondaryAction>
 						<IconButton edge="end" aria-label="delete">
 							<DeleteIcon />
 						</IconButton>
-					</ListItemSecondaryAction>
 				</ListItem>
 			)
 	})
+
+	function DisplayMatchingErrors() {
+		if (props.matchingErrors > 0 && props.pendingStatements.length > 0) {
+			return (
+				<Alert severity="warning">
+					<AlertTitle>Matching Errors</AlertTitle>
+				  You have <strong id="error_number">{props.matchingErrors}</strong> matching errors.
+				<Typography component="p" variant="p" id="error_msg">{props.matchingErrorsMsg}</Typography>
+				</Alert>
+			)
+		}
+		if (props.matchingErrors == 0 && props.pendingStatements.length > 0) {
+			return (
+				<Alert severity="success">
+					<AlertTitle>Ready to Process!</AlertTitle>
+				</Alert>
+			)
+		}
+		return null
+	}
+
 
 	return (
 		<React.Fragment>
@@ -63,32 +82,32 @@ function UploadedStatements(props) {
 		</Typography>
 		<Grid container alignItems="center" justify="center" spacing={2}>
 			<Grid item xs={7}>
-				<Paper style={{paddingLeft: 80, paddingRight: 80, paddingTop: 10, paddingBottom: 10}}>
+			
+			{ props.pendingStatements.length > 0 ?
 				<List>
 					{pendingList}
 				</List>
-				</Paper>
+				:
+				<Typography align="center">No data</Typography>
+			}
 			</Grid>
 			<Grid item xs={7}>
-				<Alert severity="warning">
-					<AlertTitle>Matching Errors</AlertTitle>
-				  You have <strong id="error_number">{props.matchingErrors}</strong> matching errors.
-				<Typography component="p" variant="p" id="error_msg">{props.matchingErrorsMsg}</Typography>
-				</Alert>
+				<DisplayMatchingErrors/>
 			</Grid>
 		</Grid>
 		<Grid container justify="center" spacing={2}>
 			<Grid item xs={2}>
-			<Button
-				variant="contained"
-				color="primary"
-				id="process_statements"
-				name="submit"
-				type="submit"
-				fullWidth
-				onClick={props.processPending}
-			>Process</Button>
-		</Grid>
+				<Button
+					variant="contained"
+					color="primary"
+					id="process_statements"
+					name="submit"
+					type="submit"
+					fullWidth
+					onClick={props.processPending}
+					disabled={ props.matchingErrors > 0 ? true : false }
+				>Process</Button>
+			</Grid>
 			<Grid item xs={2}>
 				<Button
 					variant="contained"
@@ -98,8 +117,9 @@ function UploadedStatements(props) {
 					type="submit"
 					fullWidth
 					onClick={props.goToMatchingErrorPage}	
+					disabled={ props.matchingErrors > 0 ? false : true }
 				>Fix</Button>
-		</Grid>
+			</Grid>
 		</Grid>
 		</React.Fragment>
 	)
