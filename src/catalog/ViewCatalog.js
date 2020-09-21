@@ -1,6 +1,5 @@
 import React from 'react';
 
-import AddCatalogItem from "./AddCatalogItem";
 import CatalogTable from "./CatalogTable";
 
 import { Redirect } from 'react-router-dom'

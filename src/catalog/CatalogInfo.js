@@ -98,7 +98,7 @@ function CatalogInfo() {
 	return (
 		<Container>
 		<Typography variant="h6" color="textSecondary" align="center">Catalog Info</Typography>
-		<form onSubmit={handleSubmit(onSubmit)} id="form">
+		<form onSubmit={handleSubmit(onSubmit)} id="catalog-form">
 			<Grid container spacing={1} alignItems="center" justify="center">
 				<Grid item xs={7}>
 					<Controller
@@ -151,7 +151,8 @@ function CatalogInfo() {
 		</form>
 		<Grid container justify="center">
 				<Grid item xs={4} justify="center" style={{marginTop: 5}}>
-					<ConditionalButton edit={edit} handleClick={handleClick}/>
+					<ConditionalButton edit={edit} handleClick={handleClick}
+						form={"catalog-form"}/>
 				</Grid>
 		</Grid>
 		</Container>

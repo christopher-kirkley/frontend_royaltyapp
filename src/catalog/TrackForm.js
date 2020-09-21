@@ -13,7 +13,15 @@ import NativeSelect from '@material-ui/core/NativeSelect'
 import InputLabel from '@material-ui/core/InputLabel'
 import FormControl from '@material-ui/core/FormControl'
 
+import ConditionalButton from '../components/ConditionalButton'
+
 function TrackForm() {
+
+	const [edit, setEdit] = useState(false)
+
+	function handleClick() {
+		setEdit(!edit)
+	}
 
 	const data = {}
 
@@ -102,7 +110,8 @@ function TrackForm() {
 										track_name: ''}
 
 	return (
-		<form onSubmit={handleSubmit(onSubmit)}>
+		<React.Fragment>
+		<form onSubmit={handleSubmit(onSubmit)} id="track-form">
 
 		{fields.length == 0 && tracks.length == 0 ? <Typography variant="h6" align="center">No data</Typography> : <p></p>}
 
@@ -125,6 +134,7 @@ function TrackForm() {
 					defaultValue={`${track.track_number}`}
 					variant="outlined"
 					label='Track Number'
+						disabled={edit ? false: true}
 				/>
 			</Grid>
 			<Grid item xs={3}>
@@ -135,6 +145,7 @@ function TrackForm() {
 					defaultValue={`${track.isrc}`}
 					variant="outlined"
 					label='ISRC'
+						disabled={edit ? false: true}
 				/>
 			</Grid>
 			<Grid item xs={2}>
@@ -148,6 +159,7 @@ function TrackForm() {
 					name={`tracks[${index}].artist_id`}
 					defaultValue={`${track.artist_id}`}
 					control={control}
+						disabled={edit ? false: true}
 				/>
 				</FormControl>
 			</Grid>
@@ -159,6 +171,7 @@ function TrackForm() {
 					defaultValue={`${track.track_name}`}
 					variant="outlined"
 					label='Track Name'
+						disabled={edit ? false: true}
 				/>
 			</Grid>
 			<Grid item xs={2} align="center">
@@ -168,6 +181,7 @@ function TrackForm() {
 					id="delete_version"
 					name="delete_version"
 					fullWidth
+						disabled={edit ? false: true}
 				>Delete
 				</Button>
 			</Grid>
@@ -239,8 +253,8 @@ function TrackForm() {
 		)
 		}
 
-			<Grid item container spacing={2} style={{marginTop: 6}} alignItems="center" justify="center">
-			<Grid item xs={3}>
+			<Grid item container spacing={2} alignItems="center" justify="left">
+			<Grid item xs={1}>
 				<Button
 					variant="contained"
 					color="primary"
@@ -250,25 +264,23 @@ function TrackForm() {
 					onClick={() =>
 						append(emptyRow)
 					}
-				>Add Track
-				</Button>
-			</Grid>
-			<Grid item xs={3}>
-				<Button
-					variant="contained"
-					color="primary"
-					id="track_submit"
-					fullWidth
-					name="submit"
-					type="submit"
-				>Submit
+						disabled={edit ? false: true}
+				>+
 				</Button>
 			</Grid>
 		</Grid>
-
-
 		</Grid>
 		</form>
+		<Grid container justify="center">
+				<Grid item xs={4} justify="center" style={{marginTop: 5}}>
+					<ConditionalButton edit={edit} handleClick={handleClick}
+						form={"track-form"}/>
+				</Grid>
+		</Grid>
+		</React.Fragment>
+		
+
+
 		
 	)
 }
