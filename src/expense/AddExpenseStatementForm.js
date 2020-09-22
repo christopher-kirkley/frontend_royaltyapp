@@ -36,9 +36,7 @@ function AddExpenseStatementForm(props) {
 		
 	return (
 		<Container component="main" maxWidth="xs" spacing={4}>
-		<div style={{marginTop: 10, display: "flex", flexDirection: "column",
-								alignItems:"center", border: '3px solid black'}}>
-			<Typography component="h2" variant="h5">
+			<Typography color="textSecondary" component="h2" variant="h5" align="center">
 				Upload Expense Statement
 			</Typography>
 			<form onSubmit={handleUpload} id="form" style={{marginTop: 10, width: '100%'}}>
@@ -64,8 +62,6 @@ function AddExpenseStatementForm(props) {
 			</Grid>
 		</Grid>
 		</form>
-		</div>
-		<Typography id="statement_message">{msg}</Typography>
 		</Container>
 	)
 }

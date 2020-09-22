@@ -9,7 +9,6 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import Header from '../components/Header'
 import AddStatementForm from '../income/AddStatementForm'
-import DisplayMatchingErrors from '../income/DisplayMatchingErrors'
 import ExpenseMatchingTable from './ExpenseMatchingTable'
 import ExpenseTable from './ExpenseTable'
 

@@ -19,7 +19,7 @@ function ImportedExpense() {
 	useEffect(() => {
 		fetch('http://localhost:5000/expense/imported-statements')
 		.then(res => res.json())
-		.then(json => setImportedExpense(json))
+		.then(json => (setImportedExpense(json), console.log(json)))
 	}, [])
 
 	function getImportedExpense() {
@@ -31,7 +31,8 @@ function ImportedExpense() {
 	return (
 			<Container>
 				<Header name='View Imported Expense'/>
-				<ImportedStatementTable importedExpense={importedExpense}
+				<ImportedStatementTable
+					importedExpense={importedExpense}
 					getImportedExpense={getImportedExpense}/>
 			</Container>
 		)
