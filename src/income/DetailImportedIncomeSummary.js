@@ -21,54 +21,59 @@ function DetailImportedIncomeSummary(props) {
 	const history = useHistory()
 
 	return (
-		<Container component={Paper}>
-		<div style={{marginTop: 20,
-								padding: 10,
-								display: "flex", flexDirection: "column",
-								alignItems:"center", border: '3px solid black'}}>
-			<Grid container spacing={4} id="statement_summary"> 
-				<Grid item xs={12}>
-				<Typography component="h2" variant="h5">
-					Income Statement Summary
-				</Typography>
-				</Grid>
-				<Grid item xs={6}>
-					<Typography component="p" variant="p">
-					Number of Records
-					</Typography>
-				</Grid>
-				<Grid item xs={6}>
+		<Paper>
+			<Typography color="textSecondary" align="center" component="h2" variant="h5" gutterBottom>
+				Income Statement Summary
+			</Typography>
+			<Grid container alignItems="center" justify="center">
+			<Grid item xs={8}>
+			<Table>
+				<TableRow>
+					<TableCell>
+						<Typography component="p" variant="p">
+						Number of Records
+						</Typography>
+					</TableCell>
+					<TableCell>
 					<Typography component="p" variant="p" id="number_of_records">
 					{props.summary.number_of_records}
 					</Typography>
-				</Grid>
-				<Grid item xs={6}>
-					<Typography component="p" variant="p">Total Amount</Typography>
-				</Grid>
-				<Grid item xs={6}>
-					<Typography component="p" variant="p">
-					{props.summary.amount}
+					</TableCell>
+				</TableRow>
+				<TableRow>
+					<TableCell>
+						<Typography component="p" variant="p">Total Amount</Typography>
+					</TableCell>
+					<TableCell>
+						<Typography component="p" variant="p">
+						{props.summary.amount}
 					</Typography>
-				</Grid>
-				<Grid item xs={6}>
-					<Typography component="p" variant="p">Label Fees</Typography>
-				</Grid>
-				<Grid item xs={6}>
-					<Typography component="p" variant="p">
-					{props.summary.label_fee}
-					</Typography>
-				</Grid>
-				<Grid item xs={6}>
-					<Typography component="p" variant="p">Label Net</Typography>
-				</Grid>
-				<Grid item xs={6}>
-					<Typography component="p" variant="p">
-					{props.summary.label_net}
-					</Typography>
-				</Grid>
+					</TableCell>
+				</TableRow>
+				<TableRow>
+					<TableCell>
+						<Typography component="p" variant="p">Label Fees</Typography>
+					</TableCell>
+					<TableCell>
+						<Typography component="p" variant="p">
+						{props.summary.label_fee}
+						</Typography>
+					</TableCell>
+				</TableRow>
+				<TableRow>
+					<TableCell>
+						<Typography component="p" variant="p">Label Net</Typography>
+					</TableCell>
+					<TableCell>
+						<Typography component="p" variant="p">
+						{props.summary.label_net}
+						</Typography>
+					</TableCell>
+				</TableRow>
+			</Table>
 			</Grid>
-		</div>
-		</Container>
+			</Grid>
+		</Paper>
 		);
 }
 
