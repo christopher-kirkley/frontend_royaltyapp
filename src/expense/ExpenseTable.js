@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
+import Alert from '@material-ui/lab/Alert';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
 import TableRow from '@material-ui/core/TableRow';
@@ -154,12 +155,12 @@ function ExpenseTable() {
 							id="artist_name_old"
 							value={row.artist_name}
 							/>
-						<Box border={1}>
 							<TableCell
 							id="artist_name">
+						<Alert severity="error">
 							{ row.artist_name }
+						</Alert>
 							</TableCell>
-						</Box>
 							<TableCell
 								id="catalog_number">
 							{ row.catalog_number }
@@ -195,6 +196,8 @@ function ExpenseTable() {
 									onSubmit={updateArtist}
 									>
 									<Button
+										variant="contained"
+										color="primary"
 										type="submit"
 										id="artist_update">
 									Update
@@ -218,12 +221,12 @@ function ExpenseTable() {
 								id="artist_name">
 								{ row.artist_name }
 							</TableCell>
-							<Box border={1}>
 							<TableCell
 								id="catalog_number">
+							<Alert severity="error">
 							{ row.catalog_number }
+								</Alert>
 							</TableCell>
-							</Box>
 							<TableCell
 									id="description"
 									value={row.description}>
@@ -255,6 +258,8 @@ function ExpenseTable() {
 									onSubmit={updateCatalog}
 									>
 									<Button
+										variant="contained"
+										color="primary"
 										type="submit"
 										id="catalog_update">
 									Update
@@ -291,13 +296,13 @@ function ExpenseTable() {
 									id="item_type">
 							{ row.item_type }
 							</TableCell>
-						<Box border={1}>
 							<TableCell
 									id="expense_type"
 									value={row.expense_type}>
+							<Alert severity="error">
 							{ row.expense_type }
+							</Alert>
 							</TableCell>
-						</Box>
 						<TableCell
 								id="vendor">
 						{ row.vendor }
@@ -324,6 +329,8 @@ function ExpenseTable() {
 								onSubmit={updateExpenseType}
 								>
 								<Button
+									variant="contained"
+									color="primary"
 									type="submit"
 									id="type_update">
 								Update
