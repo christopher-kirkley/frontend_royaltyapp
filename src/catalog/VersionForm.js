@@ -97,7 +97,7 @@ function VersionForm(props) {
 		<Grid container style={{marginTop: 5}}>
 
 		{ version.map((version, index) => (
-		<Grid item container spacing={3} style={{marginBottom: 2}} alignItems="center">
+		<Grid item container spacing={2} alignItems="center">
 				<Controller
 					type="hidden"
 					as={TextField}
@@ -112,7 +112,6 @@ function VersionForm(props) {
 					control={control}
 					name={`version[${index}].upc`}
 					defaultValue={`${version.upc}`}
-					variant="outlined"
 					label='UPC'
 						disabled={edit ? false: true}
 				/>
@@ -123,7 +122,6 @@ function VersionForm(props) {
 					control={control}
 					name={`version[${index}].version_number`}
 					defaultValue={`${version.version_number}`}
-					variant="outlined"
 					label='Version Number'
 						disabled={edit ? false: true}
 				/>
@@ -134,7 +132,6 @@ function VersionForm(props) {
 					control={control}
 					name={`version[${index}].version_name`}
 					defaultValue={`${version.version_name}`}
-					variant="outlined"
 					label='Version Name'
 						disabled={edit ? false: true}
 				/>
@@ -145,7 +142,6 @@ function VersionForm(props) {
 					control={control}
 					name={`version[${index}].format`}
 					defaultValue={`${version.format}`}
-					variant="outlined"
 					label='Format'
 						disabled={edit ? false: true}
 				/>
@@ -180,7 +176,6 @@ function VersionForm(props) {
 						control={control}
 						name={`addVersion[${index}].upc`}
 						defaultValue={`${addVersion.upc}`}
-						variant="outlined"
 						label='UPC'
 					/>
 				</Grid>
@@ -191,7 +186,6 @@ function VersionForm(props) {
 						id={`addVersion[${index}].version_number`}
 						name={`addVersion[${index}].version_number`}
 						defaultValue={`${addVersion.version_number}`}
-						variant="outlined"
 						label='Version Number'
 					/>
 				</Grid>
@@ -201,7 +195,6 @@ function VersionForm(props) {
 						control={control}
 						name={`addVersion[${index}].version_name`}
 						defaultValue={`${addVersion.version_name}`}
-						variant="outlined"
 						label='Version Number'
 					/>
 				</Grid>
@@ -211,7 +204,6 @@ function VersionForm(props) {
 						control={control}
 						name={`addVersion[${index}].format`}
 						defaultValue={`${addVersion.format}`}
-						variant="outlined"
 						label='Format'
 					/>
 				</Grid>

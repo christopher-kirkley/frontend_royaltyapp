@@ -105,8 +105,6 @@ function CatalogInfo() {
 						as={TextField}
 						control={control}
 						name="catalog_number"
-						variant="outlined"
-						margin="normal"
 						required
 						fullWidth
 						label="Catalog Number"
@@ -122,8 +120,6 @@ function CatalogInfo() {
 						as={TextField}
 						control={control}
 						name="catalog_name"
-						variant="outlined"
-						margin="normal"
 						required
 						fullWidth
 						label="Title"
