@@ -4,13 +4,22 @@ import { Redirect } from 'react-router-dom'
 import { useHistory } from "react-router-dom";
 
 import Button from '@material-ui/core/Button';
+import Paper from '@material-ui/core/Paper';
 import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
 
 import Header from '../components/Header'
 import ImportedStatementTable from './ImportedStatementTable'
 
+const useStyles = makeStyles(theme => ({
+	paper: {
+		padding: 20,
+	},
+}))
+
 function ImportedExpense() {
+
+	const classes = useStyles()
 
 	const history = useHistory()
 
@@ -31,9 +40,11 @@ function ImportedExpense() {
 	return (
 			<Container>
 				<Header name='View Imported Expense'/>
-				<ImportedStatementTable
-					importedExpense={importedExpense}
-					getImportedExpense={getImportedExpense}/>
+				<Paper elevation={4} className={classes.paper}>
+					<ImportedStatementTable
+						importedExpense={importedExpense}
+						getImportedExpense={getImportedExpense}/>
+				</Paper>
 			</Container>
 		)
 	}

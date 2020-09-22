@@ -11,6 +11,7 @@ import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
+import Typography from '@material-ui/core/Typography';
 
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -34,12 +35,14 @@ function ImportedStatementTable(props) {
 
 
 	return (
-		<Container component={Paper}>
+		<React.Fragment>
+			<Typography color="textSecondary" component="h2" variant="h5" align="center">Expense Statements</Typography>
 			<Table id="imported_expense_table">
 				<TableRow>
 					<TableCell>
 					Statement Name
 					</TableCell>
+					<TableCell/>
 					<TableCell/>
 				</TableRow>
 			{ props.importedExpense.map((row) => 
@@ -76,7 +79,7 @@ function ImportedStatementTable(props) {
 				</TableRow>
 			)}
 			</Table>
-		</Container>
+		</React.Fragment>
 		);
 }
 
