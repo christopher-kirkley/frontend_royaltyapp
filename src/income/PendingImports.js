@@ -28,7 +28,7 @@ import AlertTitle from '@material-ui/lab/AlertTitle';
 import DescriptionIcon from '@material-ui/icons/Description';
 import DeleteIcon from '@material-ui/icons/Delete';
 
-function UploadedStatements(props) {
+function PendingImports(props) {
 
 	const { register, setValue, control, reset, handleSubmit } = useForm()
 
@@ -124,5 +124,5 @@ function UploadedStatements(props) {
 	)
 }
 
-export default UploadedStatements
+export default PendingImports
 

@@ -13,7 +13,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import Header from '../components/Header'
 import AddStatementForm from './AddStatementForm'
-import UploadedStatements from './UploadedStatements'
+import PendingImports from './PendingImports'
 
 const useStyles = makeStyles(theme => ({
 	paper: {
@@ -81,7 +81,7 @@ function Income() {
 					</Grid>
 					<Grid item xs={12}>
 						<Paper elevation={3} className={classes.paper}>
-								<UploadedStatements
+								<PendingImports
 									pendingStatements={pendingStatements}
 									processPending={processPending}
 									matchingErrors={matchingErrors}
