@@ -30,9 +30,10 @@ function ArtistDetail () {
 	const { id } = useParams()
 
 	const [artist, setArtist] = useState([])
+	
 	const [edit, setEdit] = useState(true)
 	
-	const { register, handleSubmit, control, error, setValue } = useForm()
+	const { handleSubmit, control, setValue } = useForm()
 	
 	const history = useHistory();
 
@@ -84,12 +85,12 @@ function ArtistDetail () {
 	}
 
 	function EditButton() {
-		if (edit == false) {
+		if (edit === false) {
 			return <Button 
 						onClick={handleClick}
 						variant="contained"
 						color="primary"
-						id="submit"
+						id="edit"
 						fullWidth
 						>
 						Edit
@@ -114,6 +115,7 @@ function ArtistDetail () {
 			addArtist(data)
 		}
 	}
+
 
 	return (
 			<Container>

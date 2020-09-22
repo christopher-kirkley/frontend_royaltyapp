@@ -1,26 +1,17 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 
-import { useForm, Controller, useFieldArray } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 import { useHistory } from "react-router-dom";
 
 import Button from '@material-ui/core/Button';
-import Paper from '@material-ui/core/Paper';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import IconButton from '@material-ui/core/IconButton'
-import TextField from '@material-ui/core/TextField'
-import Container from '@material-ui/core/Container'
 import Grid from '@material-ui/core/Grid'
-import Select from '@material-ui/core/Select'
 import Typography from '@material-ui/core/Typography'
-import MenuItem from '@material-ui/core/MenuItem'
-import InputLabel from '@material-ui/core/InputLabel'
-import FormControl from '@material-ui/core/FormControl'
 
 import Alert from '@material-ui/lab/Alert';
 import AlertTitle from '@material-ui/lab/AlertTitle';
@@ -29,8 +20,6 @@ import DescriptionIcon from '@material-ui/icons/Description';
 import DeleteIcon from '@material-ui/icons/Delete';
 
 function PendingImports(props) {
-
-	const { register, setValue, control, reset, handleSubmit } = useForm()
 
 	const history = useHistory()
 

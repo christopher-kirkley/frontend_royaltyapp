@@ -126,7 +126,7 @@ function CatalogInfo() {
 						margin="normal"
 						required
 						fullWidth
-						label="Catalog Name"
+						label="Title"
 						id="catalog_name"
 						autoComplete="catalog name"
 						autoFocus
@@ -135,7 +135,7 @@ function CatalogInfo() {
 					/>
 				</Grid>
 				<Grid item xs={7}>
-					<InputLabel htmlFor="catalog_artist">Catalog Artist</InputLabel>
+					<InputLabel htmlFor="catalog_artist">Primary Artist</InputLabel>
 					<Controller
 						name='artist_id'
 						id="artist_name"

@@ -23,9 +23,6 @@ const useStyles = makeStyles(theme => ({
 	paper: {
 		padding: 20,
 	},
-	content: {
-		backgroundColor: "grey"
-	}
 }))
 
 function Artist() {

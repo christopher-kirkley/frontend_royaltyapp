@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react'
 import { useHistory } from "react-router-dom";
 
 import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -27,41 +28,45 @@ function ArtistTable() {
 	}
 
 	return (
-		<div>
-		<TableContainer>
-		<Table id="artist-table">
-			<TableHead>
-				<TableRow>
-					<TableCell>Artist Name</TableCell>
-					<TableCell>Prenom</TableCell>
-					<TableCell>Surnom</TableCell>
-					<TableCell></TableCell>
-				</TableRow>
-			</TableHead>
-			<TableBody>
-				{artists.map((artists, i) => {
-					return (
-						<TableRow key={i}>
-							<TableCell>{artists.artist_name}</TableCell>
-							<TableCell>{artists.prenom}</TableCell>
-							<TableCell>{artists.surnom}</TableCell>
-							<TableCell>
-								<Button
-									variant="contained"
-									color="primary"
-									id="artist-detail"
-									value={artists.id}
-									onClick={()=>handleArtistDetail(artists.id)}>
-								Detail
-								</Button>
-							</TableCell>
-						</TableRow>
-					)
-				})}
-			</TableBody>
-			</Table>
-			</TableContainer>
-		</div>
+		<React.Fragment>
+		<Typography color="textSecondary" component="h2" variant="h5" align="center">Artists</Typography>
+		{artists.length === 0 ?
+			<Typography id="artists-data" variant="h6" align="center">No data</Typography> :
+			<TableContainer>
+			<Table id="artist-table">
+				<TableHead>
+					<TableRow>
+						<TableCell>Artist Name</TableCell>
+						<TableCell>Prenom</TableCell>
+						<TableCell>Surnom</TableCell>
+						<TableCell></TableCell>
+					</TableRow>
+				</TableHead>
+				<TableBody>
+					{artists.map((artists, i) => {
+						return (
+							<TableRow key={i}>
+								<TableCell>{artists.artist_name}</TableCell>
+								<TableCell>{artists.prenom}</TableCell>
+								<TableCell>{artists.surnom}</TableCell>
+								<TableCell>
+									<Button
+										variant="contained"
+										color="primary"
+										id="artist-detail"
+										value={artists.id}
+										onClick={()=>handleArtistDetail(artists.id)}>
+									Detail
+									</Button>
+								</TableCell>
+							</TableRow>
+						)
+					})}
+				</TableBody>
+				</Table>
+				</TableContainer>
+		}
+		</React.Fragment>
 	)
 }
 

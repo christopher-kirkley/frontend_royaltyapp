@@ -10,7 +10,7 @@ import {
 import Artists from "./artists/Artists"
 import ArtistDetail from "./artists/ArtistDetail"
 
-import Catalog from "./catalog/Catalog"
+import ViewCatalog from "./catalog/ViewCatalog"
 import CatalogItem from "./catalog/CatalogItem"
 import Import from "./catalog/Import"
 
@@ -27,11 +27,9 @@ import StatementDetail from "./statements/StatementDetail"
 import Collapse from '@material-ui/core/Collapse';
 import MoneyOffIcon from '@material-ui/icons/MoneyOff';
 import DescriptionIcon from '@material-ui/icons/Description';
-import FindInPageIcon from '@material-ui/icons/FindInPage';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
-import AddIcon from '@material-ui/icons/Add';
 import ViewListIcon from '@material-ui/icons/ViewList';
 import ImportExportIcon from '@material-ui/icons/ImportExport';
 
@@ -124,7 +122,7 @@ function Main() {
 				classes={{ paper: classes.drawerPaper}}
 			>
 				<List className={classes.root}>
-					<ListItem>
+					<ListItem> 
 						<Typography variant="h6" align='center'>
 							RoyaltyApp V4.0
 						</Typography>
@@ -293,7 +291,7 @@ function Main() {
 				<Route exact path="/artists" component={Artists}/>
 				<Route exact path="/artist/add" component={ArtistDetail}/>
 				<Route exact path="/artist/:id" component={ArtistDetail}/>
-				<Route exact path="/catalog" component={Catalog}/>
+				<Route exact path="/catalog" component={ViewCatalog}/>
 				<Route exact path="/catalog/add" component={CatalogItem}/>
 				<Route exact path="/catalog/import" component={Import}/>
 				<Route exact path="/catalog/:id" component={CatalogItem}/>
