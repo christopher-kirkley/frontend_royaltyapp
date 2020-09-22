@@ -44,15 +44,17 @@ function Expense() {
 	useEffect(() => { 
 			fetch(`http://localhost:5000/expense/matching-errors`)
 			.then(res => res.json())
-			.then(res => res[0]['total_matching_errors'])
-			.then(res => setMatchingErrors(res))
+			.then(res => res[0]['total_matching_errors'].length)
+			.then(res => (
+				setMatchingErrors(res)
+				))
 			.catch(error => setMatchingErrorsMsg('Error!'))
 	}, [])
 
 	function getMatchingErrors() {
 		fetch(`http://localhost:5000/expense/matching-errors`)
 		.then(res => res.json())
-		.then(res => res[0]['total_matching_errors'])
+		.then(res => res[0]['total_matching_errors'].length)
 		.then(res => setMatchingErrors(res))
 	}
 
@@ -73,8 +75,9 @@ function Expense() {
 					<Grid item xs={12}>
 						<Paper elevation={3} className={classes.paper}>
 							<AddExpenseStatementForm
-							getMatchingErrors={getMatchingErrors}
-							getPendingStatements={getPendingStatements}/>
+								getMatchingErrors={getMatchingErrors}
+								getPendingStatements={getPendingStatements}
+							/>
 						</Paper>
 					</Grid>
 					<Grid item xs={12}>
