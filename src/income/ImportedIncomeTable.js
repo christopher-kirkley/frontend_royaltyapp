@@ -11,6 +11,7 @@ import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
+import Typography from '@material-ui/core/Typography';
 
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -34,7 +35,9 @@ function ImportedIncomeTable(props) {
 
 
 	return (
-		<Container component={Paper}>
+		<React.Fragment>
+			<Typography color="textSecondary" component="h2" variant="h5" align="center">Income Statements</Typography>
+		{ props.importedIncome.length > 0 ?
 			<Table id="imported_income_table">
 				<TableRow>
 					<TableCell>
@@ -76,7 +79,10 @@ function ImportedIncomeTable(props) {
 				</TableRow>
 			)}
 			</Table>
-		</Container>
+			:
+			<Typography align="center">No data</Typography>
+		}
+		</React.Fragment>
 		);
 }
 

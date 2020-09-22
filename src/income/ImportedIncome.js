@@ -5,12 +5,22 @@ import { useHistory } from "react-router-dom";
 
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
+import Paper from '@material-ui/core/Paper';
+
 import { makeStyles } from '@material-ui/core/styles';
 
 import Header from '../components/Header'
 import ImportedIncomeTable from './ImportedIncomeTable'
 
+const useStyles = makeStyles(theme => ({
+	paper: {
+		padding: 20,
+	},
+}))
+
 function ImportedIncome() {
+
+	const classes = useStyles()
 
 	const history = useHistory()
 
@@ -28,11 +38,14 @@ function ImportedIncome() {
 		.then(json => setImportedIncome(json))
 	}
 
+
 	return (
 			<Container>
 				<Header name='View Imported Income'/>
+				<Paper elevation={4} className={classes.paper}>
 				<ImportedIncomeTable importedIncome={importedIncome}
 					getImportedIncome={getImportedIncome}/>
+				</Paper>
 			</Container>
 		)
 	}

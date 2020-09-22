@@ -82,7 +82,6 @@ function UploadedStatements(props) {
 		</Typography>
 		<Grid container alignItems="center" justify="center" spacing={2}>
 			<Grid item xs={7}>
-			
 			{ props.pendingStatements.length > 0 ?
 				<List>
 					{pendingList}

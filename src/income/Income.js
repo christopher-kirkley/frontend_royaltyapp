@@ -13,7 +13,6 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import Header from '../components/Header'
 import AddStatementForm from './AddStatementForm'
-import DisplayMatchingErrors from './DisplayMatchingErrors'
 import UploadedStatements from './UploadedStatements'
 
 const useStyles = makeStyles(theme => ({
@@ -24,7 +23,7 @@ const useStyles = makeStyles(theme => ({
 
 function Income() {
 
-	const classes = makeStyles()
+	const classes = useStyles()
 
 	const history = useHistory()
 
