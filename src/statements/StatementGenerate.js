@@ -40,51 +40,35 @@ function StatementGenerate() {
 
 	const { register, handleSubmit, control, errors, setValue } = useForm()
 
-	const [startDate, setStartDate] = useState(new Date(2020, 0, 1));
-	const [endDate, setEndDate] = useState(new Date(2020, 0, 31));
-
 	const [previousBalances, setPreviousBalances] = useState([]);
 
 	const [msg, setMsg] = useState([]);
 
 
 	function onSubmit(data) {
-		console.log(data)
+		var startDateSQL = data.start_date.toISOString().split('T')[0] 
+		var endDateSQL = data.end_date.toISOString().split('T')[0] 
+
+		fetch('http://localhost:5000/statements/generate', {
+				method: 'POST',
+				body: JSON.stringify(
+					{
+					'previous_balance_id': data.previous_balance_id,
+					'start_date': startDateSQL,
+					'end_date': endDateSQL
+				}
+				)
+			})
+		.then(resp => resp.json())
+		.then(json => {
+			var statementIndex = json['statement_index']
+			fetch(`http://localhost:5000/statements/${statementIndex}/generate-summary`, {
+				method: 'POST'
+			})
+		})
+		.then(res => setMsg('Uploaded!'))
+		.catch(error => setMsg('Error uploading'))
 	}
-
-	const handleStartDateChange = (date) => {
-				setStartDate(date);
-			};
-
-	const handleEndDateChange = (date) => {
-				setEndDate(date);
-			};
-
-	// function handleSubmit(e) {
-	// 	e.preventDefault()
-	// 	var previous_balance_id = e.target.previous_balance_id.value
-	// 	var startDateSQL = startDate.toISOString().split('T')[0] 
-	// 	var endDateSQL = endDate.toISOString().split('T')[0] 
-	// 	fetch('http://localhost:5000/statements/generate', {
-	// 			method: 'POST',
-	// 			body: JSON.stringify(
-	// 				{
-	// 				'previous_balance_id': previous_balance_id,
-	// 				'start_date': startDateSQL,
-	// 				'end_date': endDateSQL
-	// 			}
-	// 			)
-	// 		})
-	// 	.then(resp => resp.json())
-	// 	.then(json => {
-	// 		var statementIndex = json['statement_index']
-	// 		fetch(`http://localhost:5000/statements/${statementIndex}/generate-summary`, {
-	// 			method: 'POST'
-	// 		})
-	// 	})
-	// 	.then(res => setMsg('Uploaded!'))
-	// 	.catch(error => setMsg('Error uploading'))
-	// }
 
 	const previousBalanceChoices = previousBalances.map((previousBalance) =>
 		{
@@ -92,7 +76,7 @@ function StatementGenerate() {
 				<option
 					id={previousBalance.statement_balance_name}
 					value={previousBalance.id}
-				>{previousBalance.statement_balance_name}
+				>{previousBalance.statement_balance_table}
 				</option>
 			)
 	})
@@ -100,20 +84,20 @@ function StatementGenerate() {
 	useEffect(() => {
 		fetch('http://localhost:5000/statements/view-balances')
 		.then(res => res.json())
-		.then(json => setPreviousBalances(json))
+		.then(json => (setPreviousBalances(json), console.log(json)))
 		.catch(res => setMsg('Error fetching data'))
 	}, [])
 
 	return (
 			<Container>
 				<Header name='Generate Statement'/>
-					<Paper>
+					<Paper elevation={3} className={classes.paper}>
 						<Typography variant="h6" color="textSecondary" align="center" gutterBottom>Generate Statement</Typography>
 						<Grid container spacing={1} alignItems="center" direction="column">
 							<MuiPickersUtilsProvider utils={DateFnsUtils}>
 							<Grid item xs={7}>
 								<Controller
-									name="start-date"
+									name="start_date"
 									control={control}
 									rules={{ required: true }}
 									defaultValue={null}
@@ -134,7 +118,7 @@ function StatementGenerate() {
 							</Grid>
 							<Grid item xs={7}>
 								<Controller
-									name="end-date"
+									name="end_date"
 									control={control}
 									defaultValue={null}
 									rules={{ required: true }}
