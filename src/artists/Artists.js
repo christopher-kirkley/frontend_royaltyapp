@@ -48,6 +48,7 @@ function Artist() {
 						</Grid>
 						<Grid item xs={1} >
 							<Button
+								id="add_artist"
 								size="small"
 								variant="contained"
 								color="secondary"

@@ -107,11 +107,13 @@ function ArtistDetail () {
 							onChange={handleEdit}
 						>
 							<ToggleButton
+								id="view"
 								value={false}
 							>
 							View
 							</ToggleButton>
 							<ToggleButton
+								id="edit"
 								value={true}
 							>
 							Edit
