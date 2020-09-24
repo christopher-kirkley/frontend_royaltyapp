@@ -39,14 +39,14 @@ function Artist() {
 	return (
 		<Container>
 		<Header name="Artists"/>
-		<Grid container spacing={2} direction="row" alignItems="center">
+		<Grid container direction="row" >
 			<Grid item xs={12}>
 				<Paper className={classes.paper}> 
-					<Grid container>
-						<Grid item xs={11}>
-							<Typography color="textSecondary" component="h2" variant="h5" align="center">Artists</Typography>
+					<Grid container justify="space-between">
+						<Grid item xs={1} >
+							<Typography color="textSecondary" component="h6" variant="caption" align="center">ARTISTS</Typography>
 						</Grid>
-						<Grid item xs={1}>
+						<Grid item xs={1} >
 							<Button
 								size="small"
 								variant="contained"

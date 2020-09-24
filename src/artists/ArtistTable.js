@@ -32,7 +32,7 @@ function ArtistTable() {
 		{artists.length === 0 ?
 			<Typography id="artists-data" variant="h6" align="center">No data</Typography> :
 			<TableContainer>
-			<Table id="artist-table">
+			<Table id="artist-table" size="small">
 				<TableHead>
 					<TableRow>
 						<TableCell>Artist Name</TableCell>
@@ -50,7 +50,8 @@ function ArtistTable() {
 								<TableCell>{artists.surnom}</TableCell>
 								<TableCell>
 									<Button
-										variant="contained"
+										size="small"
+										variant="outlined"
 										color="primary"
 										id="artist-detail"
 										value={artists.id}

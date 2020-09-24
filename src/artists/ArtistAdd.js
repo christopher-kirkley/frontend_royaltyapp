@@ -10,14 +10,11 @@ import Grid from '@material-ui/core/Grid'
 import Container from '@material-ui/core/Container'
 import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
-import ToggleButton from '@material-ui/lab/ToggleButton';
-import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 import { makeStyles } from '@material-ui/core/styles'
 
 import Header from '../components/Header'
-import EditButton from './EditButton'
-
 import ArtistForm from './ArtistForm'
+import EditButton from './EditButton'
  
 const useStyles = makeStyles(theme => ({
 	paper: {
@@ -25,15 +22,13 @@ const useStyles = makeStyles(theme => ({
 	}
 }))
 
-function ArtistDetail () {
+function ArtistAdd () {
 
 	const classes = useStyles()
 
 	const { id } = useParams()
 
 	const [artist, setArtist] = useState([])
-
-	const [edit, setEdit] = useState(false)
 	
 	const { handleSubmit, control, setValue } = useForm()
 	
@@ -80,6 +75,7 @@ function ArtistDetail () {
 		.then(res => res.json())
 		.then(json => history.push('/artists/'))
 	}
+	
 
 
 	function onSubmit(data) {
@@ -91,44 +87,24 @@ function ArtistDetail () {
 		}
 	}
 
-	function handleEdit() {
-		setEdit(!edit)
-	}
-
 
 	return (
 			<Container>
-			<Header name='Artist Detail'/>
-				<Grid container justify="space-between">
-					<Grid item xs={2}>
-						<ToggleButtonGroup
-							value={edit}
-							exclusive
-							onChange={handleEdit}
-						>
-							<ToggleButton
-								value={false}
-							>
-							View
-							</ToggleButton>
-							<ToggleButton
-								value={true}
-							>
-							Edit
-							</ToggleButton>
-						</ToggleButtonGroup>
-					</Grid>
-					<Grid item xs={2} >
-					{ edit ? <EditButton edit={edit} handleEdit={handleEdit}/> : null }
+			<Header name='New Artist'/>
+				<Grid container justify="flex-end">
+					<Grid item xs={2} style={{marginBottom: 20}}>
+						<EditButton/>
 					</Grid>
 				</Grid>
 				<Grid item={12}>
 					<Paper elevation={3} className={classes.paper}>
-					<ArtistForm onSubmit={onSubmit} id={id} />
+					<ArtistForm onSubmit={onSubmit} />
 					</Paper>
 				</Grid>
-		</Container>
+			</Container>
+
 	)}
 
 
-export default ArtistDetail;
+
+export default ArtistAdd;
