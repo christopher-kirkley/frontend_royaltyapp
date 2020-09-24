@@ -126,7 +126,7 @@ function ArtistDetail () {
 				</Grid>
 				<Grid item={12}>
 					<Paper elevation={3} className={classes.paper}>
-					<ArtistForm onSubmit={onSubmit} id={id} />
+					<ArtistForm onSubmit={onSubmit} id={id} edit={edit} />
 					</Paper>
 				</Grid>
 		</Container>

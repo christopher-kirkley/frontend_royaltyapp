@@ -17,7 +17,13 @@ import Header from '../components/Header'
 const useStyles = makeStyles(theme => ({
 	paper: {
 		padding: 20,
-	}
+	},
+	textField: {
+		'& input:disabled': { 
+			backgroundColor: '#D3D3D3',
+			color: 'black'
+		}
+	},
 }))
 
 function ArtistForm (props) {
@@ -50,38 +56,6 @@ function ArtistForm (props) {
 		])
 	}, [artist])
 
-
-	function EditButton() {
-		return (
-			<Grid container spacing={2}>
-				<Grid item xs={6}>
-					<Button 
-						size="small"
-						type="submit"
-						variant="contained"
-						color="primary"
-						id="submit"
-						fullWidth
-						form="form"
-						>
-						Save
-					</Button>
-				</Grid>
-				<Grid item xs={2}>
-					<Button 
-						size="small"
-						variant="contained"
-						color="secondary"
-						id="cancel"
-						fullWidth
-						>
-						Cancel
-					</Button>
-				</Grid>
-			</Grid>
-		)
-	}
-
 	return (
 				<form onSubmit={handleSubmit(props.onSubmit)} id="form">
 				<Grid container
@@ -95,6 +69,10 @@ function ArtistForm (props) {
 							defaultValue=""
 							control={control}
 							label="Artist Name"
+							InputProps={{
+								className: classes.textField,
+							}}
+							disabled={props.edit ? false : true }
 						/>
 					</Grid>
 					<Grid item xs={12}>
@@ -105,6 +83,7 @@ function ArtistForm (props) {
 							control={control}
 							label="Prenom"
 							defaultValue=""
+							disabled={props.edit ? false : true }
 						/>	
 					</Grid>
 					<Grid item xs={12}>
@@ -116,6 +95,7 @@ function ArtistForm (props) {
 							label="Surnom"
 							defaultValue=""
 							style={{marginBottom: 20}}
+							disabled={props.edit ? false : true }
 						/>	
 					</Grid>
 			</Grid>
