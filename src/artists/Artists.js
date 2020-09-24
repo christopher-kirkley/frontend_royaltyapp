@@ -7,6 +7,7 @@ import { Redirect } from 'react-router-dom'
 import {
 	NavLink
 } from "react-router-dom";
+
 import { useHistory } from "react-router-dom";
 
 import Grid from '@material-ui/core/Grid'
@@ -41,9 +42,24 @@ function Artist() {
 		<Grid container spacing={2} direction="row" alignItems="center">
 			<Grid item xs={12}>
 				<Paper className={classes.paper}> 
-				<ArtistTable/>
-				</Paper>
-			</Grid>
+					<Grid container>
+						<Grid item xs={11}>
+							<Typography color="textSecondary" component="h2" variant="h5" align="center">Artists</Typography>
+						</Grid>
+						<Grid item xs={1}>
+							<Button
+								size="small"
+								variant="contained"
+								color="secondary"
+								onClick={handleClick}
+								>
+							Add
+							</Button>
+								</Grid>
+							</Grid>
+							<ArtistTable/>
+							</Paper>
+						</Grid>
 		</Grid>
 		</Container>
 	)

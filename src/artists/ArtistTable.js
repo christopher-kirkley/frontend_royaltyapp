@@ -29,7 +29,6 @@ function ArtistTable() {
 
 	return (
 		<React.Fragment>
-		<Typography color="textSecondary" component="h2" variant="h5" align="center">Artists</Typography>
 		{artists.length === 0 ?
 			<Typography id="artists-data" variant="h6" align="center">No data</Typography> :
 			<TableContainer>

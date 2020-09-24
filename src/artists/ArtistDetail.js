@@ -17,9 +17,6 @@ import Header from '../components/Header'
 const useStyles = makeStyles(theme => ({
 	paper: {
 		padding: 20,
-	},
-	content: {
-		backgroundColor: "grey"
 	}
 }))
 
@@ -31,8 +28,6 @@ function ArtistDetail () {
 
 	const [artist, setArtist] = useState([])
 	
-	const [edit, setEdit] = useState(true)
-	
 	const { handleSubmit, control, setValue } = useForm()
 	
 	const history = useHistory();
@@ -42,7 +37,6 @@ function ArtistDetail () {
 		fetch(`http://localhost:5000/artists/${id}`)
 		.then(res => res.json())
 		.then(json => setArtist(json))
-		.then(res => setEdit(false))
 		}
 	}, [])
 
@@ -80,31 +74,32 @@ function ArtistDetail () {
 		.then(json => history.push('/artists/'))
 	}
 
-	function handleClick() {
-		setEdit(true)
-	}
-
 	function EditButton() {
-		if (edit === false) {
-			return <Button 
-						onClick={handleClick}
-						variant="contained"
-						color="primary"
-						id="edit"
-						fullWidth
-						>
-						Edit
-					</Button>
-		}
-		return <Button 
+		return (
+			<Grid container spacing={4}>
+				<Grid item xs={4}>
+					<Button 
 						type="submit"
 						variant="contained"
-						color="secondary"
+						color="primary"
 						id="submit"
 						fullWidth
 						>
 						Save
 					</Button>
+				</Grid>
+				<Grid item xs={4}>
+					<Button 
+						variant="contained"
+						color="secondary"
+						id="cancel"
+						fullWidth
+						>
+						Cancel
+					</Button>
+				</Grid>
+			</Grid>
+		)
 	}
 
 	function onSubmit(data) {
@@ -134,7 +129,6 @@ function ArtistDetail () {
 				<Grid item xs={12}>
 					<Controller
 						as={TextField}
-						disabled={edit ? false: true}
 						name="artist_name"
 						id="artist_name"
 						defaultValue=""
@@ -150,7 +144,6 @@ function ArtistDetail () {
 						control={control}
 						label="Prenom"
 						defaultValue=""
-						disabled={edit ? false: true}
 					/>	
 				</Grid>
 				<Grid item xs={12}>
@@ -161,10 +154,9 @@ function ArtistDetail () {
 						control={control}
 						label="Surnom"
 						defaultValue=""
-						disabled={edit ? false: true}
 					/>	
 				</Grid>
-				<Grid item xs={3} style={{marginTop: 15, marginBottom: 15}}>
+				<Grid item xs={8} style={{marginTop: 15, marginBottom: 15}}>
 					<EditButton/>
 				</Grid>
 		</Grid>
