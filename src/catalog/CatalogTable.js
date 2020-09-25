@@ -31,11 +31,10 @@ function CatalogTable() {
 
 	return (
 		<div>
-		<Typography color="textSecondary" component="h2" variant="h5" align="center">Catalog Items</Typography>
 		{catalog.length == 0 ?
 			<Typography id="artists-data" variant="h6" align="center">No data</Typography> :
 		<TableContainer>
-		<Table id="catalog_table">
+		<Table id="catalog_table" size="small">
 			<TableHead>
 				<TableRow>
 					<TableCell>Catalog Number</TableCell>
@@ -53,8 +52,9 @@ function CatalogTable() {
 							<TableCell>{catalogitem.catalog_name}</TableCell>
 							<TableCell>
 								<Button
+									size="small"
 									id="catalog_detail"
-									variant="contained"
+									variant="outlined"
 									color="primary"
 									onClick={()=>handleCatalogDetail(catalogitem.id)}>
 										Detail
