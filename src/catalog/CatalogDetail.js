@@ -1,66 +1,101 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react'
 
 import { useParams } from 'react-router-dom'
 
-import { useForm } from 'react-hook-form'
+import CatalogForm from './CatalogForm'
+import VersionInfo from './VersionInfo'
+import TrackInfo from './TrackInfo'
 
-function CatalogDetail () {
+import Button from '@material-ui/core/Button';
+import Container from '@material-ui/core/Container';
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
 
-	const [catalog, setCatalog] = useState([])
-	
-	const { register, handleSubmit, error, setValue } = useForm()
-	
+import Header from '../components/Header'
+import EditButton from '../components/EditButton'
+import Toggle from '../components/Toggle'
+
+import { makeStyles } from '@material-ui/core/styles'
+
+const useStyles = makeStyles(theme => ({
+	paper: {
+		padding: 20,
+	},
+}))
+
+function CatalogDetail() {
+
 	const { id } = useParams()
 
-	useEffect(() => { 
-		fetch(`http://localhost:5000/catalog/${id}`)
-		.then(res => res.json())
-		.then(json => setCatalog(json))
-	}, [])
+	const classes = useStyles()
 
-	useEffect(() => {
-		const artist_name = catalog && catalog.artist ? catalog.artist.artist_name : null;
-		setValue([
-			{catalog_number: catalog.catalog_number},
-			{catalog_name: catalog.catalog_name},
-			{artist_name: artist_name}
-		])
-	}, [catalog])
+	const [edit, setEdit] = useState(false)
 
-		
+	function handleEdit() {
+		setEdit(!edit)
+	}
+
+	function handleCancel() {
+		handleEdit()
+	}
 
 	function onSubmit(data) {
-		// const artist_name = data.artist_name
-		// const prenom = data.prenom
-		// const surnom = data.surnom
-		// // send json to update
-		// fetch(`http://localhost:5000/artists/${id}`, {
-		// 	method: 'PUT',
-		// 	body: JSON.stringify({ artist_name, prenom, surnom }),
-		// })
-		// .then(res => res.json())
-		// .then(json => console.log(json))
+		setEdit(!edit)
+
+		const catalog_number = data.catalog_number
+		const catalog_name = data.catalog_name
+		const artist_id = data.artist_id
+		// send json to update
+		fetch(`http://localhost:5000/catalog/${id}`, {
+			method: 'PUT',
+			body: JSON.stringify({ catalog_number, catalog_name, artist_id }),
+		})
+		.then(res => res.json())
+
 	}
 
 	return (
-			<div>
-				<Header name='Catalog Item'.>
-				<form onSubmit={handleSubmit(onSubmit)}>
-					<input type="hidden" name="id" id="id" ref={register}/>
-					<label>Catalog Number:  
-					<input type="text" name="catalog_number" id="catalog_number" ref={register}/>
-					</label><br/>
-					<label>Catalog Name:
-					<input type="text" name="catalog_name" id="catalog_name" ref={register} />
-					</label><br/>
-					<label>Artist
-					<input type="text" name="artist_name" id="artist_name" ref={register}/>
-					</label><br/>
-					<input id="update" value="Update" type="submit"/>
-				</form>
-		</div>
-	)}
-
-
+		<Container>
+			<Header name='Catalog Item'/>
+			<Grid container justify="space-between" style={{marginBottom: 20}}>
+				<Grid item xs={2}>
+					<Toggle
+						edit={edit}
+						handleEdit={handleEdit}
+						/>
+				</Grid>
+				<Grid item xs={2} >
+				{ edit ?
+					<EditButton
+						edit={edit}
+						handleEdit={handleEdit}
+						handleCancel={handleCancel}
+						/> : null }
+				</Grid>
+			</Grid>
+			<Grid container 
+				spacing={4}
+				direction="column"
+				justify="space-evenly"
+				>
+				<Grid item xs={12}>
+				<Paper elevation={4} className={classes.paper}>
+					<CatalogForm onSubmit={onSubmit} id={id} edit={edit} />
+				</Paper>
+				</Grid>
+				<Grid item xs={12}>
+				<Paper elevation={4} className={classes.paper}>
+					<VersionInfo/>
+				</Paper>
+				</Grid>
+				<Grid item xs={12}>
+				<Paper elevation={4} className={classes.paper}>
+					<TrackInfo/>
+				</Paper>
+				</Grid>
+			</Grid>
+		</Container>
+	)
+}
 
 export default CatalogDetail;

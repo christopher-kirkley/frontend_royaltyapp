@@ -21,12 +21,10 @@ import Select from '@material-ui/core/Select'
 import Header from '../components/Header'
 import ConditionalButton from '../components/ConditionalButton'
 
-function CatalogInfo() {
+function CatalogForm(props) {
 
 	const [catalog, setCatalog ] = useState('')
 	const [artistId, setArtistId] = useState('1')
-
-	const [edit, setEdit] = useState(false)
 
 	const { id } = useParams()
 
@@ -63,42 +61,38 @@ function CatalogInfo() {
 		<option id={artist.id} value={artist.id}>{artist.artist_name}</option>
 	)
 
-	function onSubmit(data) {
-		setEdit(!edit)
+	// function onSubmit(data) {
+	// 	setEdit(!edit)
 
-		if (id) {
-			const catalog_number = data.catalog_number
-			const catalog_name = data.catalog_name
-			const artist_id = data.artist_id
-			// send json to update
-			fetch(`http://localhost:5000/catalog/${id}`, {
-				method: 'PUT',
-				body: JSON.stringify({ catalog_number, catalog_name, artist_id }),
-			})
-			.then(res => res.json())
-		}
+	// 	if (id) {
+	// 		const catalog_number = data.catalog_number
+	// 		const catalog_name = data.catalog_name
+	// 		const artist_id = data.artist_id
+	// 		// send json to update
+	// 		fetch(`http://localhost:5000/catalog/${id}`, {
+	// 			method: 'PUT',
+	// 			body: JSON.stringify({ catalog_number, catalog_name, artist_id }),
+	// 		})
+	// 		.then(res => res.json())
+	// 	}
 
-		else {
-		const catalog_number = data.catalog_number
-		const catalog_name = data.catalog_name
-		const artist_id = data.artist_id
+	// 	else {
+	// 	const catalog_number = data.catalog_number
+	// 	const catalog_name = data.catalog_name
+	// 	const artist_id = data.artist_id
 		
-		fetch('http://localhost:5000/catalog', {
-			method: 'POST',
-			body: JSON.stringify({ catalog_number, catalog_name, artist_id })
-		})
-		.then(res => res.json())
-	}
-	}
+	// 	fetch('http://localhost:5000/catalog', {
+	// 		method: 'POST',
+	// 		body: JSON.stringify({ catalog_number, catalog_name, artist_id })
+	// 	})
+	// 	.then(res => res.json())
+	// }
+	// }
 	
-	function handleClick() {
-		setEdit(!edit)
-	}
-
 	return (
 		<Container>
 		<Typography variant="h6" color="textSecondary" align="center">Catalog Info</Typography>
-		<form onSubmit={handleSubmit(onSubmit)} id="catalog-form">
+		<form onSubmit={handleSubmit(props.onSubmit)} id="form">
 			<Grid container spacing={1} alignItems="center" justify="center">
 				<Grid item xs={7}>
 					<Controller
@@ -112,7 +106,7 @@ function CatalogInfo() {
 						autoComplete="catalog number"
 						autoFocus
 						defaultValue=""
-						disabled={edit ? false: true}
+						disabled={props.edit ? false: true}
 					/>
 				</Grid>
 				<Grid item xs={7}>
@@ -127,7 +121,7 @@ function CatalogInfo() {
 						autoComplete="catalog name"
 						autoFocus
 						defaultValue=""
-						disabled={edit ? false: true}
+						disabled={props.edit ? false: true}
 					/>
 				</Grid>
 				<Grid item xs={7}>
@@ -140,19 +134,13 @@ function CatalogInfo() {
 								</NativeSelect>}
 						control={control}
 						fullWidth
-						disabled={edit ? false: true}
+						disabled={props.edit ? false: true}
 					/>
 				</Grid>
 		</Grid>
 		</form>
-		<Grid container justify="center">
-				<Grid item xs={4} justify="center" style={{marginTop: 5}}>
-					<ConditionalButton edit={edit} handleClick={handleClick}
-						form={"catalog-form"}/>
-				</Grid>
-		</Grid>
 		</Container>
 	)
 }
 
-export default CatalogInfo
+export default CatalogForm
