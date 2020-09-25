@@ -10,14 +10,13 @@ import Grid from '@material-ui/core/Grid'
 import Container from '@material-ui/core/Container'
 import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
-import ToggleButton from '@material-ui/lab/ToggleButton';
-import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 import { makeStyles } from '@material-ui/core/styles'
 
 import Header from '../components/Header'
 import EditButton from '../components/EditButton'
 
 import ArtistForm from './ArtistForm'
+import Toggle from '../components/Toggle'
  
 const useStyles = makeStyles(theme => ({
 	paper: {
@@ -104,24 +103,10 @@ function ArtistDetail () {
 			<Header name='Artist Detail'/>
 				<Grid container justify="space-between">
 					<Grid item xs={2}>
-						<ToggleButtonGroup
-							value={edit}
-							exclusive
-							onChange={handleEdit}
-						>
-							<ToggleButton
-								id="view"
-								value={false}
-							>
-							View
-							</ToggleButton>
-							<ToggleButton
-								id="edit"
-								value={true}
-							>
-							Edit
-							</ToggleButton>
-						</ToggleButtonGroup>
+						<Toggle
+							edit={edit}
+							handleEdit={handleEdit}
+							/>
 					</Grid>
 					<Grid item xs={2} >
 					{ edit ?
