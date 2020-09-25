@@ -24,20 +24,21 @@ import ConditionalButton from '../components/ConditionalButton'
 function CatalogForm(props) {
 
 	const [catalog, setCatalog ] = useState('')
+
 	const [artistId, setArtistId] = useState('1')
 
-	const { id } = useParams()
-
 	useEffect(() => { 
-		if (id) {
-			fetch(`http://localhost:5000/catalog/${id}`)
+		if (props.id) {
+			fetch(`http://localhost:5000/catalog/${props.id}`)
 			.then(res => res.json())
 			.then(json => setCatalog(json))
+
+
 	}}, [])
 
 	useEffect(() => {
 		const artist_name = catalog && catalog.artist ? catalog.artist.artist_name : null;
-		const artist_id = catalog && catalog.artist ? catalog.artist.id : null;
+		const artist_id = catalog && catalog.artist ? catalog.artist.id : 1;
 		
 		setValue([
 			{catalog_number: catalog.catalog_number},
@@ -61,33 +62,6 @@ function CatalogForm(props) {
 		<option id={artist.id} value={artist.id}>{artist.artist_name}</option>
 	)
 
-	// function onSubmit(data) {
-	// 	setEdit(!edit)
-
-	// 	if (id) {
-	// 		const catalog_number = data.catalog_number
-	// 		const catalog_name = data.catalog_name
-	// 		const artist_id = data.artist_id
-	// 		// send json to update
-	// 		fetch(`http://localhost:5000/catalog/${id}`, {
-	// 			method: 'PUT',
-	// 			body: JSON.stringify({ catalog_number, catalog_name, artist_id }),
-	// 		})
-	// 		.then(res => res.json())
-	// 	}
-
-	// 	else {
-	// 	const catalog_number = data.catalog_number
-	// 	const catalog_name = data.catalog_name
-	// 	const artist_id = data.artist_id
-		
-	// 	fetch('http://localhost:5000/catalog', {
-	// 		method: 'POST',
-	// 		body: JSON.stringify({ catalog_number, catalog_name, artist_id })
-	// 	})
-	// 	.then(res => res.json())
-	// }
-	// }
 	
 	return (
 		<Container>
@@ -127,7 +101,8 @@ function CatalogForm(props) {
 				<Grid item xs={7}>
 					<InputLabel htmlFor="catalog_artist">Primary Artist</InputLabel>
 					<Controller
-						name='artist_id'
+						name="artist_id"
+						required
 						id="artist_name"
 						as={<NativeSelect>
 								{artistChoices}

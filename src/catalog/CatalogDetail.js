@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { useParams } from 'react-router-dom'
 
 import CatalogForm from './CatalogForm'
-import VersionInfo from './VersionInfo'
+import VersionForm from './VersionForm'
 import TrackInfo from './TrackInfo'
 
 import Button from '@material-ui/core/Button';
@@ -39,18 +39,44 @@ function CatalogDetail() {
 		handleEdit()
 	}
 
-	function onSubmit(data) {
-		setEdit(!edit)
+	function updateVersion(data) {
+				fetch('http://localhost:5000/version', {
+								method: 'PUT',
+								body: JSON.stringify(
+													{'catalog': id,
+																		'version': data['version']})
+							})
+				// .then(res => res.json())
+				// .then(res => fetch(`http://localhost:5000/catalog/${id}`))
+				// .then(res => res.json())
+				// .then((json) => {
+				// 				json['version'].sort((a, b) => a.id - b.id);
+				// 				setVersion(json['version'])
+				// 			})
+				// .then(res => reset(version))
+				// .then(res => setEdit(!edit))
+			}
 
-		const catalog_number = data.catalog_number
-		const catalog_name = data.catalog_name
-		const artist_id = data.artist_id
-		// send json to update
-		fetch(`http://localhost:5000/catalog/${id}`, {
-			method: 'PUT',
-			body: JSON.stringify({ catalog_number, catalog_name, artist_id }),
-		})
-		.then(res => res.json())
+	function catalogSubmit(data) {
+		console.log(data)	
+	}
+
+
+	function versionSubmit(data) {
+		setEdit(!edit)
+		console.log(data)
+		
+		updateVersion(data)
+
+		// const catalog_number = data.catalog_number
+		// const catalog_name = data.catalog_name
+		// const artist_id = data.artist_id
+		// // send json to update
+		// fetch(`http://localhost:5000/catalog/${id}`, {
+		// 	method: 'PUT',
+		// 	body: JSON.stringify({ catalog_number, catalog_name, artist_id }),
+		// })
+		// .then(res => res.json())
 
 	}
 
@@ -80,12 +106,12 @@ function CatalogDetail() {
 				>
 				<Grid item xs={12}>
 				<Paper elevation={4} className={classes.paper}>
-					<CatalogForm onSubmit={onSubmit} id={id} edit={edit} />
+					<CatalogForm onSubmit={catalogSubmit} id={id} edit={edit} />
 				</Paper>
 				</Grid>
 				<Grid item xs={12}>
 				<Paper elevation={4} className={classes.paper}>
-					<VersionInfo/>
+					<VersionForm onSubmit={versionSubmit} id={id} edit={edit} />
 				</Paper>
 				</Grid>
 				<Grid item xs={12}>
