@@ -15,7 +15,7 @@ import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 import { makeStyles } from '@material-ui/core/styles'
 
 import Header from '../components/Header'
-import EditButton from './EditButton'
+import EditButton from '../components/EditButton'
 
 import ArtistForm from './ArtistForm'
  
@@ -95,6 +95,9 @@ function ArtistDetail () {
 		setEdit(!edit)
 	}
 
+	function handleCancel() {
+		handleEdit()
+	}
 
 	return (
 			<Container>
@@ -121,7 +124,12 @@ function ArtistDetail () {
 						</ToggleButtonGroup>
 					</Grid>
 					<Grid item xs={2} >
-					{ edit ? <EditButton edit={edit} handleEdit={handleEdit}/> : null }
+					{ edit ?
+						<EditButton
+							edit={edit}
+							handleEdit={handleEdit}
+							handleCancel={handleCancel}
+							/> : null }
 					</Grid>
 				</Grid>
 				<Grid item={12}>

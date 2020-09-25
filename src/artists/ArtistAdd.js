@@ -14,7 +14,7 @@ import { makeStyles } from '@material-ui/core/styles'
 
 import Header from '../components/Header'
 import ArtistForm from './ArtistForm'
-import EditButton from './EditButton'
+import EditButton from '../components/EditButton'
  
 const useStyles = makeStyles(theme => ({
 	paper: {
@@ -87,13 +87,16 @@ function ArtistAdd () {
 		}
 	}
 
+	function handleCancel(props) {
+			history.push('/artists/')
+	}
 
 	return (
 			<Container>
 			<Header name='New Artist'/>
 				<Grid container justify="flex-end">
 					<Grid item xs={2} style={{marginBottom: 20}}>
-						<EditButton/>
+						<EditButton handleCancel={handleCancel}/>
 					</Grid>
 				</Grid>
 				<Grid item={12}>
