@@ -20,8 +20,8 @@ const useStyles = makeStyles(theme => ({
 	},
 	textField: {
 		'& input:disabled': { 
-			backgroundColor: '#D3D3D3',
-			color: 'black'
+			color: 'black',
+
 		}
 	},
 }))
@@ -83,6 +83,9 @@ function ArtistForm (props) {
 							control={control}
 							label="Prenom"
 							defaultValue=""
+							InputProps={{
+								className: classes.textField,
+							}}
 							disabled={props.edit ? false : true }
 						/>	
 					</Grid>
@@ -95,6 +98,9 @@ function ArtistForm (props) {
 							label="Surnom"
 							defaultValue=""
 							style={{marginBottom: 20}}
+							InputProps={{
+								className: classes.textField,
+							}}
 							disabled={props.edit ? false : true }
 						/>	
 					</Grid>

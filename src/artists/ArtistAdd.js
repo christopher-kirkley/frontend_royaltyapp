@@ -98,7 +98,7 @@ function ArtistAdd () {
 				</Grid>
 				<Grid item={12}>
 					<Paper elevation={3} className={classes.paper}>
-					<ArtistForm onSubmit={onSubmit} />
+					<ArtistForm onSubmit={onSubmit} edit={true}/>
 					</Paper>
 				</Grid>
 			</Container>
