@@ -14,8 +14,6 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Modal from '@material-ui/core/Modal';
 
-import VersionAddForm from './VersionAddForm'
-
 const useStyles = makeStyles(theme => ({
 	paper: {
 		padding: 20,
@@ -58,7 +56,6 @@ function VersionDisplay(props) {
 
 	const body = (
 		<div style={modalStyle} className={classes.modal}>
-		<VersionAddForm edit={true}/>
 		<Button>Close</Button>
 		</div>
 	)

@@ -21,26 +21,27 @@ import Select from '@material-ui/core/Select'
 import Header from '../components/Header'
 import ConditionalButton from '../components/ConditionalButton'
 
-import CatalogFields from './CatalogFields'
-import VersionFields from './VersionFields'
-
 import { makeStyles } from '@material-ui/core/styles'
 
 const useStyles = makeStyles(theme => ({
 	paper: {
 		padding: 20,
 	},
+	modal: {
+		position: "absolute",
+		width: 900,
+		backgroundColor: "white",
+		border: '2px solid #000',
+		boxShadow: theme.shadows[5],
+
+	}
 }))
 
-function CatalogForm(props) {
+function CatalogFields(props) {
 
 	const classes = useStyles()
 
 	const [catalog, setCatalog ] = useState('')
-
-	const [artistId, setArtistId] = useState('1')
-
-	const [version, setVersion] = useState([])
 
 	useEffect(() => { 
 		if (props.id) {
@@ -53,7 +54,7 @@ function CatalogForm(props) {
 		const artist_name = catalog && catalog.artist ? catalog.artist.artist_name : null;
 		const artist_id = catalog && catalog.artist ? catalog.artist.id : 1;
 		
-		setValue([
+		props.setValue([
 			{catalog_number: catalog.catalog_number},
 			{catalog_name: catalog.catalog_name},
 			{artist_name: artist_name},
@@ -61,8 +62,6 @@ function CatalogForm(props) {
 		])
 	}, [catalog])
 	
-	const { register, handleSubmit, setValue, control } = useForm()
-
 	const [artists, setArtists] = useState([])
 
 	useEffect(() => { 
@@ -75,61 +74,55 @@ function CatalogForm(props) {
 		<option id={artist.id} value={artist.id}>{artist.artist_name}</option>
 	)
 
-	const emptyRow = {format: '',
-										catalog_id: '',
-										id: '',
-										upc: '',
-										version_name: '',
-										version_number: ''}
-
-	const { fields, append, remove } = useFieldArray(
-				{ control,
-					name: 'version'
-						}
-				)
-
-	function handleAdd() {
-		append(emptyRow)
-	}
-
 	return (
-		<React.Fragment>
-			<form onSubmit={handleSubmit(props.onSubmit)} id="form">
-			<Grid container spacing={2}>
-				<Grid item xs={12}>
-					<Paper className={classes.paper}>
-					<Typography variant="h6" color="textSecondary" align="center">Catalog Info</Typography>
-					<CatalogFields
-						setValue={setValue}
-						control={control}
-						edit={props.edit}/>
-					</Paper>
-				</Grid>
-	{/*----------- Versions ---------- */}
-				<Grid item xs={12}>
-					<Paper className={classes.paper}>
-					<Grid container justify="space-between">
-						<Grid item xs={1} >
-							<Typography color="textSecondary" component="h6" variant="caption" align="center">VERSIONS</Typography>
-						</Grid>
-						<VersionFields
-							setValue={setValue}
-							control={control}
-							edit={props.edit}
-							fields={fields}
-							append={append}
-							remove={remove}
-						/>
-					</Grid>
-				</Paper>
+		<Grid container spacing={1} alignItems="center" justify="center">
+			<Grid item xs={7}>
+				<Controller
+					as={TextField}
+					control={props.control}
+					name="catalog_number"
+					required
+					fullWidth
+					label="Catalog Number"
+					id="catalog_number"
+					autoComplete="catalog number"
+					autoFocus
+					defaultValue=""
+					disabled={props.edit ? false: true}
+				/>
+			</Grid>
+			<Grid item xs={7}>
+				<Controller
+					as={TextField}
+					control={props.control}
+					name="catalog_name"
+					required
+					fullWidth
+					label="Title"
+					id="catalog_name"
+					autoComplete="catalog name"
+					autoFocus
+					defaultValue=""
+					disabled={props.edit ? false: true}
+				/>
+			</Grid>
+			<Grid item xs={7}>
+				<InputLabel htmlFor="catalog_artist">Primary Artist</InputLabel>
+					<Controller
+						name="artist_id"
+						required
+						id="artist_name"
+						as={<NativeSelect>
+								{artistChoices}
+								</NativeSelect>}
+						control={props.control}
+						fullWidth
+						disabled={props.edit ? false: true}
+					/>
 			</Grid>
 		</Grid>
-
-
-
-		</form>
-		</React.Fragment>
 	)
+	
 }
 
-export default CatalogForm
+export default CatalogFields

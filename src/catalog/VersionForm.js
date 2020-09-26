@@ -15,14 +15,20 @@ function VersionForm(props) {
 
 		let id = props.id
 		
-		const { register, setValue, control, reset, handleSubmit } = useForm()
+		const {
+			register,
+			setValue,
+			control,
+			reset,
+			handleSubmit: handleSubmit1
+		} = useForm()
 
 		const emptyRow = {format: '',
-													catalog_id: '',
-													id: '',
-													upc: '',
-													version_name: '',
-													version_number: ''}
+											catalog_id: '',
+											id: '',
+											upc: '',
+											version_name: '',
+											version_number: ''}
 		
 		const [version, setVersion] = useState([])
 
@@ -66,7 +72,7 @@ function VersionForm(props) {
 
 		return (
 					<React.Fragment>
-					<form onSubmit={handleSubmit(props.onSubmit)} id="form">
+					<form onSubmit={handleSubmit1(props.onSubmitVersion)} id="form">
 
 					{fields.length == 0 && version.length == 0 ? <Typography variant="h6" align="center">No data</Typography> : <p></p>}
 					
@@ -208,7 +214,7 @@ function VersionForm(props) {
 								onClick={() =>
 															append(emptyRow)
 														}
-									disabled={props.edit ? false: true}
+									disabled={props.edit ? true: false}
 							>+
 							</Button>
 						</Grid>

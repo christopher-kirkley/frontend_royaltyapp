@@ -6,6 +6,7 @@ import { useHistory } from 'react-router-dom'
 
 import CatalogForm from './CatalogForm'
 import VersionInfo from './VersionInfo'
+import VersionForm from './VersionForm'
 import TrackInfo from './TrackInfo'
 
 import Button from '@material-ui/core/Button';
@@ -44,6 +45,10 @@ function CatalogAdd() {
 			history.push('/catalog/')
 	}
 
+	function onSubmitVersion(data) {
+		console.log(data)
+	}
+
 	function onSubmit(data) {
 		setEdit(!edit)
 		
@@ -74,19 +79,7 @@ function CatalogAdd() {
 				justify="space-evenly"
 				>
 				<Grid item xs={12}>
-				<Paper elevation={4} className={classes.paper}>
 					<CatalogForm onSubmit={onSubmit} edit={edit} />
-				</Paper>
-				</Grid>
-				<Grid item xs={12}>
-				<Paper elevation={4} className={classes.paper}>
-					<VersionDisplay onSubmit={onSubmit} edit={edit}/>
-				</Paper>
-				</Grid>
-				<Grid item xs={12}>
-				<Paper elevation={4} className={classes.paper}>
-					<TrackInfo/>
-				</Paper>
 				</Grid>
 			</Grid>
 		</Container>
