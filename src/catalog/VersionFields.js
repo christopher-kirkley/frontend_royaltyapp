@@ -82,7 +82,7 @@ function VersionFields(props) {
 									as={TextField}
 									control={props.control}
 									name={`version[${index}].id`}
-									defaultValue={`${version.id}`}
+									defaultValue={"1"}
 										disabled={props.edit ? false: true}
 								/>
 							<Grid item xs={3}>
@@ -147,14 +147,14 @@ function VersionFields(props) {
 								as={TextField}
 								control={props.control}
 								name={`addVersion[${index}].id`}
-								defaultValue={`${addVersion.id}`}
+								defaultValue={index}
 							/>
 							<Grid item xs={3}>
 								<Controller
 									as={TextField}
 									control={props.control}
 									name={`addVersion[${index}].upc`}
-									defaultValue={`${addVersion.upc}`}
+									defaultValue={''}
 									label='UPC'
 								/>
 							</Grid>
@@ -164,7 +164,7 @@ function VersionFields(props) {
 									control={props.control}
 									id={`addVersion[${index}].version_number`}
 									name={`addVersion[${index}].version_number`}
-									defaultValue={`${addVersion.version_number}`}
+									defaultValue={''}
 									label='Version Number'
 								/>
 							</Grid>
@@ -173,7 +173,7 @@ function VersionFields(props) {
 									as={TextField}
 									control={props.control}
 									name={`addVersion[${index}].version_name`}
-									defaultValue={`${addVersion.version_name}`}
+									defaultValue={''}
 									label='Version Number'
 								/>
 							</Grid>
@@ -182,7 +182,7 @@ function VersionFields(props) {
 									as={TextField}
 									control={props.control}
 									name={`addVersion[${index}].format`}
-									defaultValue={`${addVersion.format}`}
+									defaultValue={''}
 									label='Format'
 								/>
 							</Grid>
@@ -190,7 +190,6 @@ function VersionFields(props) {
 								<IconButton
 									id="delete"
 									name="delete"
-								
 								>
 									<ClearIcon/>
 								</IconButton>

@@ -48,7 +48,7 @@ function PendingImports(props) {
 			return (
 				<Alert severity="warning">
 					<AlertTitle>Matching Errors</AlertTitle>
-				  You have <strong id="error_number">{props.matchingErrors}</strong> matching errors.
+				  <span id="matching_errors">You have <strong id="error_number">{props.matchingErrors}</strong> matching errors.</span>
 				<Typography component="p" variant="p" id="error_msg">{props.matchingErrorsMsg}</Typography>
 				</Alert>
 			)

@@ -93,7 +93,7 @@ function StatementGenerate() {
 				<Header name='Generate Statement'/>
 					<Paper elevation={3} className={classes.paper}>
 						<Typography variant="h6" color="textSecondary" align="center" gutterBottom>Generate Statement</Typography>
-						<Grid container spacing={1} alignItems="center" direction="column">
+						<Grid container spacing={2} alignItems="center" direction="column">
 							<MuiPickersUtilsProvider utils={DateFnsUtils}>
 							<Grid item xs={7}>
 								<Controller
@@ -106,7 +106,6 @@ function StatementGenerate() {
 											disableToolbar
 											variant="inline"
 											format="MM/dd/yyyy"
-											margin="normal"
 											id="start-date"
 											label="Start Date"
 											KeyboardButtonProps={{
@@ -127,7 +126,6 @@ function StatementGenerate() {
 											disableToolbar
 											variant="inline"
 											format="MM/dd/yyyy"
-											margin="normal"
 											id="end-date"
 											label="End Date"
 											KeyboardButtonProps={{
@@ -147,7 +145,6 @@ function StatementGenerate() {
 									as={
 										<NativeSelect
 											id="previous_balance_id"
-											fullWidth
 											>
 											{previousBalanceChoices}
 											<option id="none" value="0">None</option>

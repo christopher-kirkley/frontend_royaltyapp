@@ -14,9 +14,9 @@ import { makeStyles } from '@material-ui/core/styles'
 
 import Header from '../components/Header'
 import EditButton from '../components/EditButton'
+import Toggle from '../components/Toggle'
 
 import ArtistForm from './ArtistForm'
-import Toggle from '../components/Toggle'
  
 const useStyles = makeStyles(theme => ({
 	paper: {
@@ -46,28 +46,6 @@ function ArtistDetail () {
 		}
 	}, [])
 
-	useEffect(() => {
-		
-		setValue([
-			{artist_name: artist.artist_name},
-			{prenom: artist.prenom},
-			{surnom: artist.surnom},
-			{id: artist.id},
-		])
-	}, [artist])
-
-	function addArtist(data) {
-		const artist_name = data.artist_name
-		const prenom = data.prenom
-		const surnom = data.surnom
-		fetch('http://localhost:5000/artists', {
-			method: 'POST',
-			body: JSON.stringify({ artist_name, prenom, surnom }),
-		})
-		.then(res => res.json())
-		.then(json => history.push('/artists/'))
-	}
-	
 	function editArtist(data) {
 		const artist_name = data.artist_name
 		const prenom = data.prenom
@@ -80,14 +58,8 @@ function ArtistDetail () {
 		.then(json => history.push('/artists/'))
 	}
 
-
 	function onSubmit(data) {
-		if (id) {
 			editArtist(data)
-		}
-		else {
-			addArtist(data)
-		}
 	}
 
 	function handleEdit() {

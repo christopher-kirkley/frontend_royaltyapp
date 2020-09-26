@@ -8,10 +8,12 @@ import {
 } from "react-router-dom";
 
 import Artists from "./artists/Artists"
+import ArtistAdd from "./artists/ArtistAdd"
 import ArtistDetail from "./artists/ArtistDetail"
 
-import ViewCatalog from "./catalog/ViewCatalog"
-import CatalogItem from "./catalog/CatalogItem"
+import Catalog from "./catalog/Catalog"
+import CatalogAdd from "./catalog/CatalogAdd"
+import CatalogDetail from "./catalog/CatalogDetail"
 import Import from "./catalog/Import"
 
 import Income from "./income/Income"
@@ -45,6 +47,7 @@ import theme from "./Theme"
 
 
 import { makeStyles } from "@material-ui/core/styles"
+
 import { 
 	Drawer,
 	List,
@@ -128,6 +131,7 @@ function Main() {
 						</Typography>
 					</ListItem>
 					<hr/>
+
 					<Link to="/" className={classes.link}>
 					<ListItem button>
 						<ListItemIcon>
@@ -137,69 +141,24 @@ function Main() {
 					</ListItem>
 					</Link>
 
-					<ListItem button id="artists" onClick={handleOpenArtist}>
+				<Link to="/artists" className={classes.link}>
+					<ListItem button id="artists">
 						<ListItemIcon>
 							<PeopleIcon />
 						</ListItemIcon>
 						<ListItemText primary={"Artists"}/>
-						{ openCatalog ? <ExpandLess /> : <ExpandMore />}
 					</ListItem>
-					<Collapse in={openArtist} timeout="auto" unmountOnExit>
-						<List component="div" disablePadding>
-							<Link to="/artist/add" className={classes.link}>
-								<ListItem button id="add_artist" className={classes.nested}>
-								<ListItemIcon>
-									<AddCircleIcon />
-								</ListItemIcon>
-								<ListItemText primary={"Add Artist"}/>
-							</ListItem>
-							</Link>
-							<Link to="/artists" className={classes.link}>
-								<ListItem button id="view_artists" className={classes.nested}>
-								<ListItemIcon>
-									<ViewListIcon />
-								</ListItemIcon>
-								<ListItemText primary={"View Artists"}/>
-							</ListItem>
-							</Link>
-						</List>
-					</Collapse>
+				</Link>
 
-					<ListItem button id="catalog" onClick={handleOpenCatalog}>
+				<Link to="/catalog" className={classes.link}>
+					<ListItem button id="catalog">
 						<ListItemIcon>
 							<CatalogIcon />
 						</ListItemIcon>
 						<ListItemText primary={"Catalog"}/>
-						{ openCatalog ? <ExpandLess /> : <ExpandMore />}
 					</ListItem>
-					<Collapse in={openCatalog} timeout="auto" unmountOnExit>
-						<List component="div" disablePadding>
-							<Link to="/catalog/add" className={classes.link}>
-								<ListItem button id="add_catalog" className={classes.nested}>
-								<ListItemIcon>
-									<AddCircleIcon />
-								</ListItemIcon>
-								<ListItemText primary={"Add"}/>
-							</ListItem>
-							</Link>
-							<Link to="/catalog" className={classes.link}>
-								<ListItem button id="view_catalog" className={classes.nested}>
-								<ListItemIcon>
-									<ViewListIcon />
-								</ListItemIcon>
-								<ListItemText primary={"View"}/>
-							</ListItem>
-							</Link>
-							<Link to="/catalog/import" className={classes.link}>
-								<ListItem button id="catalog" className={classes.nested}>
-								<ListItemIcon>
-									<ImportExportIcon />
-								</ListItemIcon>
-								<ListItemText primary={"Import"}/>
-							</ListItem>
-							</Link>
-						</List>
-					</Collapse>
+				</Link>
+
 
 					<ListItem button id="income" onClick={handleOpenIncome}>
 						<ListItemIcon>
@@ -289,12 +248,12 @@ function Main() {
 			</Drawer>
 			<Switch>
 				<Route exact path="/artists" component={Artists}/>
-				<Route exact path="/artist/add" component={ArtistDetail}/>
+				<Route exact path="/artist/add" component={ArtistAdd}/>
 				<Route exact path="/artist/:id" component={ArtistDetail}/>
-				<Route exact path="/catalog" component={ViewCatalog}/>
-				<Route exact path="/catalog/add" component={CatalogItem}/>
+				<Route exact path="/catalog" component={Catalog}/>
+				<Route exact path="/catalog/add" component={CatalogAdd}/>
 				<Route exact path="/catalog/import" component={Import}/>
-				<Route exact path="/catalog/:id" component={CatalogItem}/>
+				<Route exact path="/catalog/:id" component={CatalogDetail}/>
 				<Route exact path="/income" component={Income}/>
 				<Route exact path="/income/matching-errors" component={MatchingErrors}/>
 				<Route exact path="/income/view-imported" component={ImportedIncome}/>

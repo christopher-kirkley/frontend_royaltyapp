@@ -29,7 +29,7 @@ const useStyles = makeStyles(theme => ({
 
 function CatalogAdd() {
 
-	const { id } = useParams()
+	const [catalogId, setCatalogId] = useState(1)
 
 	const [edit, setEdit] = useState(true)
 
@@ -45,9 +45,20 @@ function CatalogAdd() {
 			history.push('/catalog/')
 	}
 
-	function onSubmitVersion(data) {
-		console.log(data)
-	}
+	function addVersion(data, id) {
+		fetch('http://localhost:5000/version', {
+			method: 'POST',
+			body: JSON.stringify(
+				{'catalog': id,
+					'version': data['addVersion']})
+							})
+				.then(res => res.json())
+				.then(res => console.log(res))
+				// .then(res => fetch(`http://localhost:5000/catalog/${id}`))
+				// .then(res => res.json())
+				// .then(json => setVersion(json['version']))
+				// .then(res => reset(version))
+			}
 
 	function onSubmit(data) {
 		setEdit(!edit)
@@ -63,6 +74,9 @@ function CatalogAdd() {
 			body: JSON.stringify({ catalog_number, catalog_name, artist_id })
 		})
 		.then(res => res.json())
+		.then(res => res['id'])
+		.then(id => addVersion(data, id))
+
 	}
 
 	return (

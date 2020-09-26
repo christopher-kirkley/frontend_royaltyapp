@@ -46,7 +46,12 @@ function CatalogForm(props) {
 		if (props.id) {
 			fetch(`http://localhost:5000/catalog/${props.id}`)
 			.then(res => res.json())
-			.then(json => setCatalog(json))
+			.then(json => (
+				setCatalog(json),
+				json['version'].sort((a, b) => a.id - b.id),
+				setVersion(json['version']),
+				console.log(json)
+			))
 	}}, [])
 
 	useEffect(() => {
@@ -119,6 +124,7 @@ function CatalogForm(props) {
 							fields={fields}
 							append={append}
 							remove={remove}
+							version={version}
 						/>
 					</Grid>
 				</Paper>

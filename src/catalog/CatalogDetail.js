@@ -110,9 +110,6 @@ function CatalogDetail() {
 				</Paper>
 				</Grid>
 				<Grid item xs={12}>
-				<Paper elevation={4} className={classes.paper}>
-					<VersionForm onSubmit={versionSubmit} id={id} edit={edit} />
-				</Paper>
 				</Grid>
 				<Grid item xs={12}>
 				<Paper elevation={4} className={classes.paper}>
