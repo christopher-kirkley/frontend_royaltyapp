@@ -64,7 +64,6 @@ function CatalogDetail() {
 
 	function versionSubmit(data) {
 		setEdit(!edit)
-		console.log(data)
 		
 		updateVersion(data)
 

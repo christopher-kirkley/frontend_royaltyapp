@@ -39,8 +39,6 @@ function VersionFields(props) {
 
 	const [catalog, setCatalog ] = useState('')
 
-	const [version, setVersion] = useState([])
-
 	useEffect(() => { 
 		if (props.id) {
 			fetch(`http://localhost:5000/catalog/${props.id}`)
@@ -75,7 +73,7 @@ function VersionFields(props) {
 
 	return (
 		<Grid container style={{marginTop: 5}}>
-				{ version.map((version, index) => (
+				{ props.version.map((version, index) => (
 						<Grid item container spacing={2} alignItems="center">
 								<Controller
 									type="hidden"
