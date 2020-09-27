@@ -72,14 +72,8 @@ function VersionFields(props) {
 
 	function removeVersion(index) {
 		const cloneVersion = [...props.version]
-		console.log(cloneVersion.length)
-		if (cloneVersion.length > 1) {
-			cloneVersion.splice(cloneVersion, index) 
-			props.setVersion(cloneVersion)
-			console.log(props.version.length)
-		}
-		else
-			props.setVersion([])
+		cloneVersion.splice(index, 1) 
+		props.setVersion(cloneVersion)
 	}
 
 	return (
