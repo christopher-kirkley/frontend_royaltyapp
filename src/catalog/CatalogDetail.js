@@ -23,7 +23,7 @@ const useStyles = makeStyles(theme => ({
 	},
 }))
 
-function CatalogDetail() {
+function CatalogDetail(props) {
 
 	const { id } = useParams()
 
@@ -39,13 +39,28 @@ function CatalogDetail() {
 		handleEdit()
 	}
 
+	function addVersion(data) {
+		fetch('http://localhost:5000/version', {
+			method: 'POST',
+			body: JSON.stringify(
+				{'catalog': id,
+					'version': data['newVersion']})
+							})
+
+	}
+
 	function updateVersion(data) {
-				fetch('http://localhost:5000/version', {
+		fetch('http://localhost:5000/version', {
 								method: 'PUT',
 								body: JSON.stringify(
 													{'catalog': id,
-																		'version': data['version']})
+														'version': data['version']})
 							})
+		.then(res => data['newVersion'])
+		.then(res => res ? addVersion(data) : console.log('jones'))
+
+		
+
 				// .then(res => res.json())
 				// .then(res => fetch(`http://localhost:5000/catalog/${id}`))
 				// .then(res => res.json())
@@ -57,25 +72,20 @@ function CatalogDetail() {
 				// .then(res => setEdit(!edit))
 			}
 
-	function catalogSubmit(data) {
-		console.log(data)	
-	}
-
-
-	function versionSubmit(data) {
+	function onSubmit(data) {
 		setEdit(!edit)
 		
-		updateVersion(data)
+		const catalog_number = data.catalog_number
+		const catalog_name = data.catalog_name
+		const artist_id = data.artist_id
+		// send json to update
+		fetch(`http://localhost:5000/catalog/${id}`, {
+			method: 'PUT',
+			body: JSON.stringify({ catalog_number, catalog_name, artist_id }),
+		})
+		.then(res => res.json())
+		.then(res => updateVersion(data))
 
-		// const catalog_number = data.catalog_number
-		// const catalog_name = data.catalog_name
-		// const artist_id = data.artist_id
-		// // send json to update
-		// fetch(`http://localhost:5000/catalog/${id}`, {
-		// 	method: 'PUT',
-		// 	body: JSON.stringify({ catalog_number, catalog_name, artist_id }),
-		// })
-		// .then(res => res.json())
 
 	}
 
@@ -104,13 +114,12 @@ function CatalogDetail() {
 				justify="space-evenly"
 				>
 				<Grid item xs={12}>
-					<CatalogForm onSubmit={catalogSubmit} id={id} edit={edit} />
+					<CatalogForm onSubmit={onSubmit} id={id} edit={edit} />
 				</Grid>
 				<Grid item xs={12}>
 				</Grid>
 				<Grid item xs={12}>
 				<Paper elevation={4} className={classes.paper}>
-					<TrackInfo/>
 				</Paper>
 				</Grid>
 			</Grid>

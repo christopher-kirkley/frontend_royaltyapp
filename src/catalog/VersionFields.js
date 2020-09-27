@@ -93,7 +93,7 @@ function VersionFields(props) {
 									as={TextField}
 									control={props.control}
 									name={`version[${index}].id`}
-									defaultValue={index}
+									defaultValue={`${version.id}`}
 									disabled={props.edit ? false: true}
 								/>
 							<Grid item xs={3}>
@@ -153,19 +153,19 @@ function VersionFields(props) {
 				}
 
 				{ 
-					props.fields.map((version, index) => (
-						<Grid item container spacing={2} alignItems="center" justify="center" key={version.id}>
+					props.fields.map((newVersion, index) => (
+						<Grid item container spacing={2} alignItems="center" justify="center" key={newVersion.id}>
 							<Controller
 								type="hidden"
 								as={TextField}
 								control={props.control}
-								name={`version[${index}].id`}
+								name={`newVersion[${index}].id`}
 							/>
 							<Grid item xs={3}>
 								<Controller
 									as={TextField}
 									control={props.control}
-									name={`version[${index}].upc`}
+									name={`newVersion[${index}].upc`}
 									defaultValue={''}
 									label='UPC'
 								/>
@@ -174,8 +174,8 @@ function VersionFields(props) {
 								<Controller
 									as={TextField}
 									control={props.control}
-									id={`version[${index}].version_number`}
-									name={`version[${index}].version_number`}
+									id={`newVersion[${index}].version_number`}
+									name={`newVersion[${index}].version_number`}
 									defaultValue={''}
 									label='Version Number'
 								/>
@@ -184,7 +184,7 @@ function VersionFields(props) {
 								<Controller
 									as={TextField}
 									control={props.control}
-									name={`version[${index}].version_name`}
+									name={`newVersion[${index}].version_name`}
 									defaultValue={''}
 									label='Version Number'
 								/>
@@ -193,7 +193,7 @@ function VersionFields(props) {
 								<Controller
 									as={TextField}
 									control={props.control}
-									name={`version[${index}].format`}
+									name={`newVersion[${index}].format`}
 									defaultValue={''}
 									label='Format'
 								/>

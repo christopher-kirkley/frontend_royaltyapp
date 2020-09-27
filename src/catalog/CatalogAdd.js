@@ -46,11 +46,12 @@ function CatalogAdd() {
 	}
 
 	function addVersion(data, id) {
+		console.log(id)
 		fetch('http://localhost:5000/version', {
 			method: 'POST',
 			body: JSON.stringify(
 				{'catalog': id,
-					'version': data['version']})
+					'version': data['newVersion']})
 							})
 				.then(res => res.json())
 				.then(res => console.log(res))
@@ -63,8 +64,6 @@ function CatalogAdd() {
 	function onSubmit(data) {
 		setEdit(!edit)
 		
-		console.log(data)
-
 		const catalog_number = data.catalog_number
 		const catalog_name = data.catalog_name
 		const artist_id = data.artist_id

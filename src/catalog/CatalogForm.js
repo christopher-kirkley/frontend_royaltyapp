@@ -88,7 +88,8 @@ function CatalogForm(props) {
 
 	const { fields, append, remove } = useFieldArray(
 				{ control,
-					name: 'version'
+					name: 'version',
+					name: 'newVersion'
 						}
 				)
 
