@@ -70,12 +70,24 @@ function VersionFields(props) {
 		<option id={artist.id} value={artist.id}>{artist.artist_name}</option>
 	)
 
+	function removeVersion(index) {
+		const cloneVersion = [...props.version]
+		console.log(cloneVersion.length)
+		if (cloneVersion.length > 1) {
+			cloneVersion.splice(cloneVersion, index) 
+			props.setVersion(cloneVersion)
+			console.log(props.version.length)
+		}
+		else
+			props.setVersion([])
+	}
 
 	return (
 		<Grid container style={{marginTop: 5}}>
 
-				{ props.version.map((version, index) => (
-						<Grid item container spacing={2} alignItems="center">
+				{
+					props.version.map((version, index) => (
+						<Grid item container spacing={2} alignItems="center" key={version.id}>
 								<Controller
 									type="hidden"
 									as={TextField}
@@ -125,21 +137,23 @@ function VersionFields(props) {
 								/>
 							</Grid>
 							<Grid item xs={2} align="center">
-								<Button
-									size="small"
-									variant="outlined"
-									color="secondary"
-									id="delete_version"
-									name="delete_version"
-										disabled={props.edit ? false: true}
-								>Delete
-								</Button>
+								<IconButton
+									id="delete"
+									name="delete"
+									onClick={() =>
+										removeVersion(index)
+										}
+								>
+									<ClearIcon/>
+								</IconButton>
 							</Grid>
 						</Grid>
 							)
-							)}
+							)
+				}
 
-				{ props.fields.map((version, index) => (
+				{ 
+					props.fields.map((version, index) => (
 						<Grid item container spacing={2} alignItems="center" justify="center" key={version.id}>
 							<Controller
 								type="hidden"
@@ -196,8 +210,8 @@ function VersionFields(props) {
 								</IconButton>
 							</Grid>
 						</Grid>
-						)
-					)}
+						))
+				}
 
 					<Grid item container spacing={2} style={{marginTop: 6}}
 						alignItems="center" justify="center">

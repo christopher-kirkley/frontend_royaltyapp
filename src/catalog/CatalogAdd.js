@@ -50,7 +50,7 @@ function CatalogAdd() {
 			method: 'POST',
 			body: JSON.stringify(
 				{'catalog': id,
-					'version': data['addVersion']})
+					'version': data['version']})
 							})
 				.then(res => res.json())
 				.then(res => console.log(res))

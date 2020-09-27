@@ -98,7 +98,7 @@ function CatalogForm(props) {
 			<form onSubmit={handleSubmit(props.onSubmit)} id="form">
 			<Grid container spacing={2}>
 				<Grid item xs={12}>
-					<Paper className={classes.paper}>
+					<Paper elevation={3} className={classes.paper}>
 					<Typography variant="h6" color="textSecondary" align="center">Catalog Info</Typography>
 					<CatalogFields
 						setValue={setValue}
@@ -108,13 +108,14 @@ function CatalogForm(props) {
 				</Grid>
 	{/*----------- Versions ---------- */}
 				<Grid item xs={12}>
-					<Paper className={classes.paper}>
+					<Paper elevation={3} className={classes.paper}>
 					<Grid container justify="space-between">
 						<Grid item xs={1} >
 							<Typography color="textSecondary" component="h6" variant="caption" align="center">VERSIONS</Typography>
 						</Grid>
 						<VersionFields
 							setValue={setValue}
+							setVersion={setVersion}
 							control={control}
 							edit={props.edit}
 							version={version}

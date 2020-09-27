@@ -104,9 +104,7 @@ function CatalogDetail() {
 				justify="space-evenly"
 				>
 				<Grid item xs={12}>
-				<Paper elevation={4} className={classes.paper}>
 					<CatalogForm onSubmit={catalogSubmit} id={id} edit={edit} />
-				</Paper>
 				</Grid>
 				<Grid item xs={12}>
 				</Grid>
