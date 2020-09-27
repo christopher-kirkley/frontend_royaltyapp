@@ -66,7 +66,7 @@ function CatalogForm(props) {
 		])
 	}, [catalog])
 	
-	const { register, handleSubmit, setValue, control } = useForm()
+	const { handleSubmit, setValue, control } = useForm()
 
 	const [artists, setArtists] = useState([])
 
@@ -82,7 +82,6 @@ function CatalogForm(props) {
 
 	const emptyRow = {format: '',
 										catalog_id: '',
-										id: '',
 										upc: '',
 										version_name: '',
 										version_number: ''}
@@ -93,9 +92,6 @@ function CatalogForm(props) {
 						}
 				)
 
-	function handleAdd() {
-		append(emptyRow)
-	}
 
 	return (
 		<React.Fragment>
@@ -121,10 +117,10 @@ function CatalogForm(props) {
 							setValue={setValue}
 							control={control}
 							edit={props.edit}
-							fields={fields}
+							version={version}
 							append={append}
 							remove={remove}
-							version={version}
+							fields={fields}
 						/>
 					</Grid>
 				</Paper>

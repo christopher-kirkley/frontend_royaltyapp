@@ -73,6 +73,7 @@ function VersionFields(props) {
 
 	return (
 		<Grid container style={{marginTop: 5}}>
+
 				{ props.version.map((version, index) => (
 						<Grid item container spacing={2} alignItems="center">
 								<Controller
@@ -80,8 +81,8 @@ function VersionFields(props) {
 									as={TextField}
 									control={props.control}
 									name={`version[${index}].id`}
-									defaultValue={"1"}
-										disabled={props.edit ? false: true}
+									defaultValue={index}
+									disabled={props.edit ? false: true}
 								/>
 							<Grid item xs={3}>
 								<Controller
@@ -138,20 +139,19 @@ function VersionFields(props) {
 							)
 							)}
 
-				{ props.fields.map((addVersion, index) => (
-						<Grid item container spacing={2} alignItems="center" justify="center">
+				{ props.fields.map((version, index) => (
+						<Grid item container spacing={2} alignItems="center" justify="center" key={version.id}>
 							<Controller
 								type="hidden"
 								as={TextField}
 								control={props.control}
-								name={`addVersion[${index}].id`}
-								defaultValue={index}
+								name={`version[${index}].id`}
 							/>
 							<Grid item xs={3}>
 								<Controller
 									as={TextField}
 									control={props.control}
-									name={`addVersion[${index}].upc`}
+									name={`version[${index}].upc`}
 									defaultValue={''}
 									label='UPC'
 								/>
@@ -160,8 +160,8 @@ function VersionFields(props) {
 								<Controller
 									as={TextField}
 									control={props.control}
-									id={`addVersion[${index}].version_number`}
-									name={`addVersion[${index}].version_number`}
+									id={`version[${index}].version_number`}
+									name={`version[${index}].version_number`}
 									defaultValue={''}
 									label='Version Number'
 								/>
@@ -170,7 +170,7 @@ function VersionFields(props) {
 								<Controller
 									as={TextField}
 									control={props.control}
-									name={`addVersion[${index}].version_name`}
+									name={`version[${index}].version_name`}
 									defaultValue={''}
 									label='Version Number'
 								/>
@@ -179,7 +179,7 @@ function VersionFields(props) {
 								<Controller
 									as={TextField}
 									control={props.control}
-									name={`addVersion[${index}].format`}
+									name={`version[${index}].format`}
 									defaultValue={''}
 									label='Format'
 								/>
@@ -188,6 +188,9 @@ function VersionFields(props) {
 								<IconButton
 									id="delete"
 									name="delete"
+									onClick={() =>
+										props.remove(index)
+										}
 								>
 									<ClearIcon/>
 								</IconButton>
@@ -195,6 +198,7 @@ function VersionFields(props) {
 						</Grid>
 						)
 					)}
+
 					<Grid item container spacing={2} style={{marginTop: 6}}
 						alignItems="center" justify="center">
 						<Grid item xs={12}>
@@ -202,8 +206,8 @@ function VersionFields(props) {
 								id="add_version"
 								name="add_version"
 								onClick={() =>
-															props.append(props.emptyRow)
-														}
+									props.append(props.emptyRow)
+									}
 							>Click to add version
 								<AddCircleIcon/>
 							</IconButton>
