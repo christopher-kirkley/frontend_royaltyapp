@@ -40,25 +40,31 @@ function CatalogDetail(props) {
 	}
 
 	function addVersion(data) {
-		fetch('http://localhost:5000/version', {
-			method: 'POST',
-			body: JSON.stringify(
-				{'catalog': id,
-					'version': data['newVersion']})
-							})
+		if (data['newVersion'])
+		{
+			fetch('http://localhost:5000/version', {
+				method: 'POST',
+				body: JSON.stringify(
+					{'catalog': id,
+						'version': data['newVersion']})
+								})
+		}
 
 	}
 
+
 	function updateVersion(data) {
-		fetch('http://localhost:5000/version', {
+		if (data['version'])
+		{
+			fetch('http://localhost:5000/version', {
 								method: 'PUT',
 								body: JSON.stringify(
 													{'catalog': id,
 														'version': data['version']})
 							})
-		.then(res => data['newVersion'])
-		.then(res => res ? addVersion(data) : console.log('jones'))
 
+			}
+	}
 		
 
 				// .then(res => res.json())
@@ -70,7 +76,7 @@ function CatalogDetail(props) {
 				// 			})
 				// .then(res => reset(version))
 				// .then(res => setEdit(!edit))
-			}
+
 
 	function onSubmit(data) {
 		setEdit(!edit)
@@ -78,14 +84,32 @@ function CatalogDetail(props) {
 		const catalog_number = data.catalog_number
 		const catalog_name = data.catalog_name
 		const artist_id = data.artist_id
+
+		const versions = data['version'] ? data['version'] : ''
+		const newVersions = data['newVersion'] ? data['newVersion'] : ''
+
 		// send json to update
 		fetch(`http://localhost:5000/catalog/${id}`, {
 			method: 'PUT',
 			body: JSON.stringify({ catalog_number, catalog_name, artist_id }),
 		})
 		.then(res => res.json())
-		.then(res => updateVersion(data))
-
+		.then(res => 
+							fetch('http://localhost:5000/version', {
+												method: 'PUT',
+												body: JSON.stringify(
+																	{'catalog': id,
+																		'version': versions})
+											}))
+		.then(res => res.json())
+		.then(res => 
+							fetch('http://localhost:5000/version', {
+								method: 'POST',
+								body: JSON.stringify(
+									{'catalog': id,
+										'version': newVersions})
+												})
+		)
 
 	}
 
