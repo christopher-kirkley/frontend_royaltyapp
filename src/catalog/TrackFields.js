@@ -116,7 +116,6 @@ function TrackFields(props) {
 					control={props.control}
 					name={`track[${index}].isrc`}
 					defaultValue={`${track.isrc}`}
-					variant="outlined"
 					label='ISRC'
 					disabled={props.edit ? false: true}
 				/>
@@ -142,7 +141,6 @@ function TrackFields(props) {
 					control={props.control}
 					name={`track[${index}].track_name`}
 					defaultValue={`${track.track_name}`}
-					variant="outlined"
 					label='Track Name'
 					disabled={props.edit ? false: true}
 				/>

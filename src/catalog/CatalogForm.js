@@ -43,6 +43,8 @@ function CatalogForm(props) {
 
 	const [version, setVersion] = useState([])
 
+	const [tracks, setTracks] = useState([])
+
 	useEffect(() => { 
 		if (props.id) {
 			fetch(`http://localhost:5000/catalog/${props.id}`)
@@ -52,6 +54,22 @@ function CatalogForm(props) {
 				json['version'].sort((a, b) => a.id - b.id),
 				setVersion(json['version'])
 			))
+	}}, [])
+
+	function getTracks(json) {
+			json['tracks'].sort((a, b) => a.track_number - b.track_number);
+			setTracks(json['tracks']);
+		
+	}
+
+	useEffect(() => { 
+		if (props.id) {
+			fetch(`http://localhost:5000/catalog/${props.id}`)
+			.then(res => res.json())
+			.then((json) => 
+				 {
+					 getTracks(json)
+			})
 	}}, [])
 
 	useEffect(() => {
@@ -98,7 +116,6 @@ function CatalogForm(props) {
 													artist_id: 1,
 													track_name: ''}
 
-	const [tracks, setTracks] = useState([])
 
 	return (
 		<React.Fragment>
