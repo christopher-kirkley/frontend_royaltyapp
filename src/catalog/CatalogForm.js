@@ -23,6 +23,7 @@ import ConditionalButton from '../components/ConditionalButton'
 
 import CatalogFields from './CatalogFields'
 import VersionFields from './VersionFields'
+import TrackFields from './TrackFields'
 
 import { makeStyles } from '@material-ui/core/styles'
 
@@ -89,10 +90,16 @@ function CatalogForm(props) {
 	const { fields, append, remove } = useFieldArray(
 				{ control,
 					name: 'version',
-					name: 'newVersion'
+					name: 'newVersion',
 						}
 				)
 
+	const emptyTrackRow = { track_number: '',
+													isrc: '',
+													artist_id: 1,
+													track_name: ''}
+
+	const [tracks, setTracks] = useState([])
 
 	return (
 		<React.Fragment>
@@ -127,10 +134,29 @@ function CatalogForm(props) {
 					</Grid>
 				</Paper>
 			</Grid>
-		</Grid>
-
-
-
+	{/*----------- Tracks ---------- */}
+			<Grid item xs={12}>
+				<Paper elevation={3} className={classes.paper}>
+				<Grid container justify="space-between">
+					<Grid item xs={1} >
+						<Typography color="textSecondary" component="h6" variant="caption" align="center">TRACKS</Typography>
+					</Grid>
+					<TrackFields
+						emptyTrackRow={emptyTrackRow}
+						setValue={setValue}
+						setTracks={setTracks}
+						tracks={tracks}
+						control={control}
+						edit={props.edit}
+						version={version}
+						append={append}
+						remove={remove}
+						fields={fields}
+					/>
+					</Grid>
+				</Paper>
+			</Grid>
+			</Grid>
 		</form>
 		</React.Fragment>
 	)

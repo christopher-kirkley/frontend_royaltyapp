@@ -17,6 +17,7 @@ import ConditionalButton from '../components/ConditionalButton'
 
 function TrackForm() {
 
+	const fields = []
 	const [edit, setEdit] = useState(false)
 
 	function handleClick() {
@@ -61,12 +62,6 @@ function TrackForm() {
 			})
 		}
 	}, [])
-
-	const { fields, append, remove } = useFieldArray(
-		{ control,
-			name: 'track'
-		}
-		)
 
 	function updateTrack(data) {
 		fetch('http://localhost:5000/track', {
@@ -113,7 +108,7 @@ function TrackForm() {
 		<React.Fragment>
 		<form onSubmit={handleSubmit(onSubmit)} id="track-form">
 
-		{fields.length == 0 && tracks.length == 0 ? <Typography variant="h6" align="center">No data</Typography> : <p></p>}
+
 
 		<Grid container style={{marginTop: 5}}> 
 		{ 
@@ -261,9 +256,6 @@ function TrackForm() {
 					id="add_track"
 					fullWidth
 					name="add_track"
-					onClick={() =>
-						append(emptyRow)
-					}
 						disabled={edit ? false: true}
 				>+
 				</Button>

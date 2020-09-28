@@ -64,6 +64,8 @@ function CatalogAdd() {
 	function onSubmit(data) {
 		setEdit(!edit)
 		
+		console.log(data)
+
 		const catalog_number = data.catalog_number
 		const catalog_name = data.catalog_name
 		const artist_id = data.artist_id
