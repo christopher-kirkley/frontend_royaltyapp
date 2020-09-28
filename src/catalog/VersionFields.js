@@ -162,6 +162,7 @@ function VersionFields(props) {
 									name={`newVersion[${index}].upc`}
 									defaultValue={''}
 									label='UPC'
+									disabled={props.edit ? false: true}
 								/>
 							</Grid>
 							<Grid item xs={2}>
@@ -172,6 +173,7 @@ function VersionFields(props) {
 									name={`newVersion[${index}].version_number`}
 									defaultValue={''}
 									label='Version Number'
+									disabled={props.edit ? false: true}
 								/>
 							</Grid>
 							<Grid item xs={3}>
@@ -181,6 +183,7 @@ function VersionFields(props) {
 									name={`newVersion[${index}].version_name`}
 									defaultValue={''}
 									label='Version Number'
+									disabled={props.edit ? false: true}
 								/>
 							</Grid>
 							<Grid item xs={2}>
@@ -190,12 +193,14 @@ function VersionFields(props) {
 									name={`newVersion[${index}].format`}
 									defaultValue={''}
 									label='Format'
+									disabled={props.edit ? false: true}
 								/>
 							</Grid>
 							<Grid item xs={2} >
 								<IconButton
 									id="delete"
 									name="delete"
+									disabled={props.edit ? false: true}
 									onClick={() =>
 										props.remove(index)
 										}
@@ -213,6 +218,7 @@ function VersionFields(props) {
 							<IconButton
 								id="add_version"
 								name="add_version"
+								disabled={props.edit ? false: true}
 								onClick={() =>
 									props.append(props.emptyRow)
 									}
