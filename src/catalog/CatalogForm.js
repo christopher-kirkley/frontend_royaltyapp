@@ -50,8 +50,7 @@ function CatalogForm(props) {
 			.then(json => (
 				setCatalog(json),
 				json['version'].sort((a, b) => a.id - b.id),
-				setVersion(json['version']),
-				console.log(json)
+				setVersion(json['version'])
 			))
 	}}, [])
 
@@ -148,10 +147,8 @@ function CatalogForm(props) {
 						tracks={tracks}
 						control={control}
 						edit={props.edit}
-						version={version}
 						append={append}
 						remove={remove}
-						fields={fields}
 					/>
 					</Grid>
 				</Paper>

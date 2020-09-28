@@ -46,12 +46,12 @@ function CatalogAdd() {
 	}
 
 	function addVersion(data, id) {
-		console.log(id)
+		const newVersion = data['newVersion'] ? data['newVersion'] : ''
 		fetch('http://localhost:5000/version', {
 			method: 'POST',
 			body: JSON.stringify(
 				{'catalog': id,
-					'version': data['newVersion']})
+					'version': newVersion })
 							})
 				.then(res => res.json())
 				.then(res => console.log(res))
@@ -61,11 +61,24 @@ function CatalogAdd() {
 				// .then(res => reset(version))
 			}
 
+	function addTracks(data, id) {
+		const newTrack = data['newTrack'] ? data['newTrack'] : ''
+
+		fetch('http://localhost:5000/track', {
+			method: 'POST',
+			body: JSON.stringify(
+				{'catalog': id,
+				'track': newTrack })
+		})
+		// .then(res => fetch(`http://localhost:5000/catalog/${id}`))
+		// .then(res => res.json())
+		// .then(json => setTrack(json['track']))
+		// .then(res => reset(track))
+	}
+
 	function onSubmit(data) {
 		setEdit(!edit)
 		
-		console.log(data)
-
 		const catalog_number = data.catalog_number
 		const catalog_name = data.catalog_name
 		const artist_id = data.artist_id
@@ -76,7 +89,10 @@ function CatalogAdd() {
 		})
 		.then(res => res.json())
 		.then(res => res['id'])
-		.then(id => addVersion(data, id))
+		.then(id => (
+			addVersion(data, id),
+			addTracks(data, id))
+		)
 
 	}
 
