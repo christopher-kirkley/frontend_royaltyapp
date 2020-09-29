@@ -81,12 +81,16 @@ function CatalogDetail(props) {
 	function onSubmit(data) {
 		setEdit(!edit)
 		
+		console.log(data)
+
 		const catalog_number = data.catalog_number
 		const catalog_name = data.catalog_name
 		const artist_id = data.artist_id
 
 		const versions = data['version'] ? data['version'] : ''
 		const newVersions = data['newVersion'] ? data['newVersion'] : ''
+		const track = data['track'] ? data['track'] : ''
+		const newTrack = data['newTrack'] ? data['newTrack'] : ''
 
 		// send json to update
 		fetch(`http://localhost:5000/catalog/${id}`, {
@@ -103,13 +107,31 @@ function CatalogDetail(props) {
 											}))
 		.then(res => res.json())
 		.then(res => 
-							fetch('http://localhost:5000/version', {
-								method: 'POST',
-								body: JSON.stringify(
-									{'catalog': id,
-										'version': newVersions})
-												})
+			fetch('http://localhost:5000/version', {
+				method: 'POST',
+				body: JSON.stringify(
+					{'catalog': id,
+						'version': newVersions})
+								})
 		)
+		.then(res => res.json())
+		.then(res => 
+			fetch('http://localhost:5000/track', {
+				method: 'PUT',
+				body: JSON.stringify(
+					{'catalog': id,
+					'tracks': track}
+				)})
+		)
+		.then(res =>
+			fetch('http://localhost:5000/track', {
+				method: 'POST',
+				body: JSON.stringify(
+					{'catalog': id,
+					'track': newTrack })
+		}))
+
+
 
 	}
 

@@ -82,7 +82,6 @@ function TrackForm() {
 	}
 
 	function addTrack(data) {
-		console.log(data)
 		fetch('http://localhost:5000/track', {
 			method: 'POST',
 			body: JSON.stringify(
