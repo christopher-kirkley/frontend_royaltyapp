@@ -3,12 +3,13 @@ import React from 'react';
 import { useHistory } from "react-router-dom";
 
 import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
 import Table from '@material-ui/core/Table';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 import Typography from '@material-ui/core/Typography';
 
-function ImportedIncomeTable(props) {
+function IncomeTable(props) {
 
 	const history = useHistory()
 
@@ -28,9 +29,8 @@ function ImportedIncomeTable(props) {
 
 	return (
 		<React.Fragment>
-			<Typography color="textSecondary" component="h2" variant="h5" align="center">Income Statements</Typography>
 		{ props.importedIncome.length > 0 ?
-			<Table id="imported_income_table">
+			<Table id="income_table">
 				<TableRow>
 					<TableCell>
 					Statement Name
@@ -44,30 +44,32 @@ function ImportedIncomeTable(props) {
 							{row.statement_name}
 						</TableCell>
 						<TableCell>
-						<Button
-							variant="contained"
-							color="primary"
-							id={row.id}
-							value={row.id}
-							name="submit"
-							type="submit"
-							fullWidth
-							onClick={handleClick}
-							>
-							View
-							</Button>
-						</TableCell>
-						<TableCell>
-						<Button
-							variant="contained"
-							color="secondary"
-							id="delete"
-							value={row.id}
-							onClick={handleDelete}
-							fullWidth
-							>
-							Delete
-							</Button>
+							<Grid container spacing={1} justify="flex-end">
+								<Grid item xs={2}>
+									<Button
+										variant="outlined"
+										color="primary"
+										id={row.id}
+										value={row.id}
+										name="submit"
+										type="submit"
+										onClick={handleClick}
+										>
+										View
+									</Button>
+								</Grid>
+								<Grid item xs={2}>
+									<Button
+										variant="outlined"
+										color="secondary"
+										id="delete"
+										value={row.id}
+										onClick={handleDelete}
+										>
+										Delete
+										</Button>
+								</Grid>
+							</Grid>
 						</TableCell>
 				</TableRow>
 			)}
@@ -80,4 +82,4 @@ function ImportedIncomeTable(props) {
 }
 
 
-export default ImportedIncomeTable
+export default IncomeTable

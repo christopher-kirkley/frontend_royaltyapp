@@ -7,7 +7,7 @@ import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
 
 import Header from '../components/Header'
-import ImportedIncomeTable from './ImportedIncomeTable'
+import IncomeTable from './IncomeTable'
 import DetailImportedIncomeTable from './DetailImportedIncomeTable'
 import DetailImportedIncomeSummary from './DetailImportedIncomeSummary'
 import DetailImportedIncomeVersions from './DetailImportedIncomeVersions'

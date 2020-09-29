@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
 
-import IncomeTable from './IncomeTable'
-
 import { Redirect } from 'react-router-dom'
 import { useHistory } from "react-router-dom";
 
@@ -21,7 +19,7 @@ const useStyles = makeStyles(theme => ({
 	},
 }))
 
-function Income() {
+function IncomeAdd() {
 
 	const classes = useStyles()
 
@@ -41,14 +39,17 @@ function Income() {
 		.then(json => setImportedIncome(json))
 	}
 
+	function handleImportCatalog() {
+		history.push('/catalog/import')
+	}
+
+	function handleClick() {
+		history.push('/catalog/add')
+	}
+
 	function handleImport() {
-		history.push('/income/import')
+		history.push('/catalog/import')
 	}
-
-	function handleAdd() {
-		history.push('/income/add')
-	}
-
 
 		return (
 			<Container>
@@ -63,11 +64,11 @@ function Income() {
 								<Grid container spacing={1} item xs={3} >
 									<Grid item>
 									<Button
-										id="add_income"
+										id="new_income"
 										size="small"
 										variant="contained"
 										color="secondary"
-										onClick={handleAdd}
+										onClick={handleClick}
 										>
 									Add
 									</Button>
@@ -84,8 +85,6 @@ function Income() {
 								</Grid>
 								</Grid>
 							</Grid>
-							<IncomeTable
-								importedIncome={importedIncome}
 							/>
 							</Paper>
 					</Grid>
@@ -95,4 +94,4 @@ function Income() {
 	}
 
 
-export default Income
+export default IncomeAdd;

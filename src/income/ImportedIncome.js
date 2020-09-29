@@ -10,7 +10,7 @@ import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
 
 import Header from '../components/Header'
-import ImportedIncomeTable from './ImportedIncomeTable'
+import IncomeTable from './IncomeTable'
 
 const useStyles = makeStyles(theme => ({
 	paper: {
@@ -43,7 +43,7 @@ function ImportedIncome() {
 			<Container>
 				<Header name='View Imported Income'/>
 				<Paper elevation={4} className={classes.paper}>
-				<ImportedIncomeTable importedIncome={importedIncome}
+				<IncomeTable importedIncome={importedIncome}
 					getImportedIncome={getImportedIncome}/>
 				</Paper>
 			</Container>
