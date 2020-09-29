@@ -40,6 +40,7 @@ function TrackFields(props) {
 
 	const [catalog, setCatalog ] = useState('')
 
+
 	useEffect(() => { 
 		if (props.id) {
 			fetch(`http://localhost:5000/catalog/${props.id}`)
@@ -171,6 +172,7 @@ function TrackFields(props) {
 						id={`newTrack[${index}].track_number`}
 						name={`newTrack[${index}].track_number`}
 						label='Track Number'
+						defaultValue={`${index + props.numberOfTracks + 1}`}
 					/>
 				</Grid>
 				<Grid item xs={3}>

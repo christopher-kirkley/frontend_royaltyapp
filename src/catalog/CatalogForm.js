@@ -45,6 +45,8 @@ function CatalogForm(props) {
 
 	const [tracks, setTracks] = useState([])
 
+	const [numberOfTracks, setNumberOfTracks] = useState(0)
+
 	useEffect(() => { 
 		if (props.id) {
 			fetch(`http://localhost:5000/catalog/${props.id}`)
@@ -59,7 +61,7 @@ function CatalogForm(props) {
 	function getTracks(json) {
 			json['tracks'].sort((a, b) => a.track_number - b.track_number);
 			setTracks(json['tracks']);
-		
+			setNumberOfTracks(json['tracks'].length)
 	}
 
 	useEffect(() => { 
@@ -165,6 +167,7 @@ function CatalogForm(props) {
 						control={control}
 						edit={props.edit}
 						append={append}
+						numberOfTracks={numberOfTracks}
 						remove={remove}
 					/>
 					</Grid>
