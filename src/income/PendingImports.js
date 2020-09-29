@@ -63,6 +63,8 @@ function PendingImports(props) {
 		return null
 	}
 
+	console.log(props.pendingStatements)
+
 
 	return (
 		<React.Fragment>
@@ -89,11 +91,11 @@ function PendingImports(props) {
 					variant="contained"
 					color="primary"
 					id="process_statements"
-					name="submit"
+					name="process_statement"
 					type="submit"
 					fullWidth
 					onClick={props.processPending}
-					disabled={ props.matchingErrors > 0 ? true : false }
+					disabled={ props.matchingErrors > 0 || props.pendingStatements.length === 0 ? true : false }
 				>Process</Button>
 			</Grid>
 			<Grid item xs={2}>

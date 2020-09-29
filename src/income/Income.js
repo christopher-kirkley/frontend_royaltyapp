@@ -62,26 +62,26 @@ function Income() {
 								</Grid>
 								<Grid container spacing={1} item xs={3} >
 									<Grid item>
-									<Button
-										id="add_income"
-										size="small"
-										variant="contained"
-										color="secondary"
-										onClick={handleAdd}
-										>
-									Add
-									</Button>
-								</Grid>
-								<Grid item xs={1} >
-									<Button
-										id="import_income"
-										size="small"
-										variant="contained"
-										onClick={handleImport}
-										>
-									Import
-									</Button>
-								</Grid>
+										<Button
+											id="import_income"
+											size="small"
+											variant="contained"
+											onClick={handleImport}
+											>
+										Import
+										</Button>
+									</Grid>
+									<Grid item xs={1} >
+										<Button
+											id="add_income"
+											size="small"
+											variant="contained"
+											color="secondary"
+											onClick={handleAdd}
+											>
+										Add
+										</Button>
+									</Grid>
 								</Grid>
 							</Grid>
 							<IncomeTable
