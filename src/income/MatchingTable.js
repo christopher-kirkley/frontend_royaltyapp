@@ -86,8 +86,8 @@ function MatchingTable() {
 						[
 							{
 							'distributor': distributor,
-							'upc': upc,
-							'catalog': catalog,
+							'upc_id': upc,
+							'catalog_id': catalog,
 							'type': type,
 							'version_number': version_number,
 							'medium': medium,
@@ -105,8 +105,8 @@ function MatchingTable() {
 						[
 							{
 							'distributor': distributor,
-							'upc': upc,
-							'catalog': catalog,
+							'upc_id': upc,
+							'catalog_id': catalog,
 							'type': type,
 							'version_number': version_number,
 							'medium': medium,
