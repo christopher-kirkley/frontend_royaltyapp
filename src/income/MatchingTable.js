@@ -1,17 +1,32 @@
 import React, { useState, useEffect } from 'react';
 
 import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles(theme => ({
+	paper: {
+		padding: 20,
+	},
+	active: {
+		backgroundColor: "green"
+	}
+}))
+
 function MatchingTable() {
+
+	const classes = useStyles()
 
 	const [ msg, setMsg ] = useState('')
 	const [rows, setRows] = useState([])
 	const [upcs, setUpcs] = useState([])
+
 
 	useEffect(() => {
 		fetch('http://localhost:5000/income/matching-errors')
@@ -79,8 +94,25 @@ function MatchingTable() {
 		{ name: 'description	', title: 'Description'},
 	])
 
+	const [distributor, setDistributor] = useState(false)
+	const [upc, setUpc] = useState(false)
+	const [versionNumber, setVersionNumber] = useState(false)
+
+	function changeColor(item) {
+		if (item == 'distributor') {
+			setDistributor(!distributor)
+		}
+		if (item == 'upc') {
+			setUpc(!upc)
+		}
+		if (item == 'version_number') {
+			setVersionNumber(!versionNumber)
+		}
+	}
+
 	return (
 		<Container component={Paper}>
+			<Typography variant="caption">Select which column to update.</Typography>
 			<Table id="matching_error_table">
 				<TableRow>
 				{ columns.map((column) => 
@@ -96,26 +128,32 @@ function MatchingTable() {
 							id="entry_id"
 							value={row.id}
 							/>
-						<TableCell>
+						<TableCell className={ distributor ? classes.active : null }>
 							<input
 								type="checkbox"
 								form={`form${row.id}`}
-								id="distributor"/>
+								id="distributor"
+								onClick={()=>changeColor('distributor')}
+							/>
 							{ row.distributor }
 						</TableCell>
-						<TableCell>
+						<TableCell className={ upc ? classes.active : null }>
 							<input
 								type="checkbox"
 								form={`form${row.id}`}
-								id="upc_id"/>
+								id="upc_id"
+								onClick={()=>changeColor('upc')}
+							/>
 						{ row.upc_id }
 						</TableCell>
-						<TableCell>
+						<TableCell className={ versionNumber ? classes.active : null }>
 							<input
 								type="checkbox"
 								form={`form${row.id}`}
 								id="version_number"
-								value={row.version_number}/>
+								value={row.version_number}
+								onClick={()=>changeColor('version_number')}
+							/>
 						{ row.version_number }
 						</TableCell>
 						<TableCell>
