@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from "react-router-dom";
 
 import PropTypes from 'prop-types';
 
@@ -94,6 +95,8 @@ TablePaginationActions.propTypes = {
 
 function MatchingTable(props) {
 
+	const history = useHistory()
+	
 	const classes = useStyles()
 
 	const [ msg, setMsg ] = useState('')
@@ -197,27 +200,33 @@ function MatchingTable(props) {
 				fetch('http://localhost:5000/income/update-errors', {
 					method: 'PUT',
 					body: JSON.stringify(
-					{
-					'upc_id': e.target.new_upc.value,
-					'data_to_match' : 
-					[
-					{
-					'distributor': distributor,
-					'upc_id': upc,
-					'catalog_id': catalog,
-					'type': type,
-					'version_number': version_number,
-					'medium': medium,
-					'description': description,
-					}
-					]
-						})}
-								)
-					.then(res => fetch('http://localhost:5000/income/matching-errors'))
-							.then(res => res.json())
-									.then(json => props.setRows(json))
-											.catch(res => setMsg('Error fetching data'))
-												}
+						{
+							'upc_id': e.target.new_upc.value,
+							'data_to_match' : 
+								[
+									{
+										'distributor': distributor,
+										'upc_id': upc,
+										'catalog_id': catalog,
+										'type': type,
+										'version_number': version_number,
+										'medium': medium,
+										'description': description,
+									}
+								]
+							}
+					)
+				})
+			.then(res => fetch('http://localhost:5000/income/matching-errors'))
+			.then(res => res.json())
+			.then(json => 
+				{ props.setRows(json)
+					if (json.length === 0)
+												{history.push('/income/import')}
+										})
+	
+			.catch(res => setMsg('Error fetching data'))
+						}
 
 	return (
 		<Container component={Paper}>
