@@ -60,6 +60,7 @@ function AddStatementForm(props) {
 							</NativeSelect>
 							}
 						name="source_statement"
+						id="source_statement"
 						control={control}
 						defaultValue="bandcamp"
 						fullWidth

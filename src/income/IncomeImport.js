@@ -63,6 +63,8 @@ function IncomeImport() {
 		fetch('http://localhost:5000/income/process-pending', {
 				method: 'POST'}
 		)
+		.then(res => res.json())
+		.then(res => history.push('/income'))
 	}
 	
 	return (

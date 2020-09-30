@@ -86,6 +86,7 @@ function Income() {
 							</Grid>
 							<IncomeTable
 								importedIncome={importedIncome}
+								getImportedIncome={getImportedIncome}
 							/>
 							</Paper>
 					</Grid>

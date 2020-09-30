@@ -254,6 +254,7 @@ function MatchingTable(props) {
 							id="distributor"
 							/>
 						<TableCell
+							id={`distributor${row.id}`}
 							className={ distributorChecked ? classes.active : null }
 							onClick={()=>changeColor('distributor')}
 						>
@@ -265,6 +266,7 @@ function MatchingTable(props) {
 							id="upc"
 							/>
 						<TableCell
+							id={`upc${row.id}`}
 							className={ upcChecked ? classes.active : null }
 							onClick={()=>changeColor('upc')}
 						>
@@ -276,6 +278,7 @@ function MatchingTable(props) {
 							id="version_number"
 							/>
 						<TableCell
+							id={`version_number${row.id}`}
 							className={ versionNumberChecked ? classes.active : null }
 							onClick={()=>changeColor('version_number')}
 						>
@@ -287,6 +290,7 @@ function MatchingTable(props) {
 							id="catalog"
 							/>
 						<TableCell
+							id={`catalog${row.id}`}
 							className={ catalogChecked ? classes.active : null }
 							onClick={()=>changeColor('catalog')}
 						>
@@ -298,6 +302,7 @@ function MatchingTable(props) {
 							id="medium"
 							/>
 						<TableCell
+							id={`medium${row.id}`}
 							className={ mediumChecked ? classes.active : null }
 							onClick={()=>changeColor('medium')}
 						>
@@ -320,6 +325,7 @@ function MatchingTable(props) {
 							id="description"
 							/>
 						<TableCell
+							id={`description${row.id}`}
 							className={ descriptionChecked ? classes.active : null }
 							onClick={()=>changeColor('description')}
 						>

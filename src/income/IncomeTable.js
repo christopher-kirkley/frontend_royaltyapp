@@ -49,9 +49,9 @@ function IncomeTable(props) {
 									<Button
 										variant="outlined"
 										color="primary"
-										id={row.id}
+										id={`view${row.id}`}
 										value={row.id}
-										name="submit"
+										name="view"
 										type="submit"
 										onClick={handleClick}
 										>
@@ -62,7 +62,7 @@ function IncomeTable(props) {
 									<Button
 										variant="outlined"
 										color="secondary"
-										id="delete"
+										id={`delete${row.id}`}
 										value={row.id}
 										onClick={handleDelete}
 										>
