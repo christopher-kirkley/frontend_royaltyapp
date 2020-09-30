@@ -86,17 +86,22 @@ function IncomeImport() {
 							getPendingStatements={getPendingStatements}/>
 						</Paper>
 					</Grid>
-					<Grid item xs={12}>
-						<Paper elevation={3} className={classes.paper}>
-								<PendingImports
-									pendingStatements={pendingStatements}
-									processPending={processPending}
-									matchingErrors={matchingErrors}
-									goToMatchingErrorPage={goToMatchingErrorPage}
-									handleDelete={handleDelete}
-						/>
-						</Paper>
-					</Grid>
+					{ pendingStatements.length > 0
+						?
+						<Grid item xs={12}>
+							<Paper elevation={3} className={classes.paper}>
+									<PendingImports
+										pendingStatements={pendingStatements}
+										processPending={processPending}
+										matchingErrors={matchingErrors}
+										goToMatchingErrorPage={goToMatchingErrorPage}
+										handleDelete={handleDelete}
+									/>
+							</Paper>
+						</Grid>
+						:
+						null
+					}
 			</Grid>
 			</Container>
 		)
