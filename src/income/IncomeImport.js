@@ -67,6 +67,14 @@ function IncomeImport() {
 		.then(res => history.push('/income'))
 	}
 	
+	function handleDelete(id) {
+		fetch(`http://localhost:5000/income/pending-statements/${id}`, {
+			  method: 'DELETE'
+		})
+		.then(res => getPendingStatements())
+		.then(res => getMatchingErrors())
+	}
+
 	return (
 			<Container>
 				<Header name='Import Income' />
@@ -84,7 +92,9 @@ function IncomeImport() {
 									pendingStatements={pendingStatements}
 									processPending={processPending}
 									matchingErrors={matchingErrors}
-									goToMatchingErrorPage={goToMatchingErrorPage}/>
+									goToMatchingErrorPage={goToMatchingErrorPage}
+									handleDelete={handleDelete}
+						/>
 						</Paper>
 					</Grid>
 			</Grid>

@@ -23,7 +23,7 @@ function PendingImports(props) {
 
 	const history = useHistory()
 
-	const pendingList = props.pendingStatements.map((pendingStatement) =>
+	const pendingList = props.pendingStatements.map((pendingStatement, index) =>
 		{
 			return (
 				<ListItem>
@@ -33,11 +33,18 @@ function PendingImports(props) {
 						</Avatar>
 					</ListItemAvatar>
 					<ListItemText
-						id="pending_statement"
 					  primary={pendingStatement.statement}
+						id="pending_statement"
 					/>
-						<IconButton edge="end" aria-label="delete">
-							<DeleteIcon />
+						<IconButton
+							id={`delete-${index}`}
+							name="pending_statement"
+							value={pendingStatement.statement}
+							edge="end"
+							aria-label="delete"
+							onClick={() => props.handleDelete(pendingStatement.statement)}
+						>
+							<DeleteIcon/>
 						</IconButton>
 				</ListItem>
 			)
@@ -88,8 +95,8 @@ function PendingImports(props) {
 				<Button
 					variant="contained"
 					color="primary"
-					id="process_statements"
-					name="process_statement"
+					id="process_errors"
+					name="process_errors"
 					type="submit"
 					fullWidth
 					onClick={props.processPending}
@@ -105,7 +112,7 @@ function PendingImports(props) {
 					type="submit"
 					fullWidth
 					onClick={props.goToMatchingErrorPage}	
-					disabled={ false }
+					disabled={ props.matchingErrors > 0 || props.pendingStatements.length === 0 ? false : true }
 				>Fix</Button>
 			</Grid>
 		</Grid>
