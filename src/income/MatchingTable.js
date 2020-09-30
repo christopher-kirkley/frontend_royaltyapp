@@ -15,7 +15,7 @@ const useStyles = makeStyles(theme => ({
 		padding: 20,
 	},
 	active: {
-		backgroundColor: "green"
+		backgroundColor: "#ff6700"
 	}
 }))
 
@@ -163,7 +163,7 @@ function MatchingTable() {
 				<TableRow>
 				{ columns.map((column) => 
 						<TableCell>
-						{ column.name }
+						{ column.title }
 						</TableCell>
 				)}
 				</TableRow>
