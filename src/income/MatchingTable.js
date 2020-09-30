@@ -53,15 +53,48 @@ function MatchingTable() {
 			)
 	})
 
+	const [distributorChecked, setDistributorChecked] = useState(false)
+	const [upcChecked, setUpcChecked] = useState(false)
+	const [versionNumberChecked, setVersionNumberChecked] = useState(false)
+	const [descriptionChecked, setDescriptionChecked] = useState(false)
+	const [catalogChecked, setCatalogChecked] = useState(false)
+	const [mediumChecked, setMediumChecked] = useState(false)
+	const [typeChecked, setTypeChecked] = useState(false)
 
 	function handleUpdate(e) {
 		e.preventDefault()
-		if (e.target.version_number.checked)
+		if (versionNumberChecked)
 			{var version_number = e.target.version_number.value}
-		if (e.target.medium.checked)
+		if (catalogChecked)
+			{var catalog = e.target.catalog.value}
+		if (mediumChecked)
 			{var medium = e.target.medium.value}
-		if (e.target.description.checked)
+		if (typeChecked)
+			{var type = e.target.type.value}
+		if (distributorChecked)
+			{var distributor = e.target.distributor.value}
+		if (upcChecked)
+			{var upc = e.target.upc.value}
+		if (descriptionChecked)
 			{var description = e.target.description.value}
+		
+		console.log(
+			JSON.stringify(
+				{
+					'upc_id': e.target.new_upc.value,
+					'data_to_match' : 
+						[
+							{
+							'distributor': distributor,
+							'upc': upc,
+							'catalog': catalog,
+							'type': type,
+							'version_number': version_number,
+							'medium': medium,
+							'description': description,
+							}
+						]
+		}))
 		// select which elements to update on
 		fetch('http://localhost:5000/income/update-errors', {
 			method: 'PUT',
@@ -71,6 +104,10 @@ function MatchingTable() {
 					'data_to_match' : 
 						[
 							{
+							'distributor': distributor,
+							'upc': upc,
+							'catalog': catalog,
+							'type': type,
 							'version_number': version_number,
 							'medium': medium,
 							'description': description,
@@ -94,19 +131,28 @@ function MatchingTable() {
 		{ name: 'description	', title: 'Description'},
 	])
 
-	const [distributor, setDistributor] = useState(false)
-	const [upc, setUpc] = useState(false)
-	const [versionNumber, setVersionNumber] = useState(false)
 
 	function changeColor(item) {
 		if (item == 'distributor') {
-			setDistributor(!distributor)
+			setDistributorChecked(!distributorChecked)
 		}
 		if (item == 'upc') {
-			setUpc(!upc)
+			setUpcChecked(!upcChecked)
 		}
 		if (item == 'version_number') {
-			setVersionNumber(!versionNumber)
+			setVersionNumberChecked(!versionNumberChecked)
+		}
+		if (item == 'medium') {
+			setMediumChecked(!mediumChecked)
+		}
+		if (item == 'catalog') {
+			setCatalogChecked(!catalogChecked)
+		}
+		if (item == 'description') {
+			setDescriptionChecked(!descriptionChecked)
+		}
+		if (item == 'type') {
+			setTypeChecked(!typeChecked)
 		}
 	}
 
@@ -128,62 +174,81 @@ function MatchingTable() {
 							id="entry_id"
 							value={row.id}
 							/>
-						<TableCell className={ distributor ? classes.active : null }>
-							<input
-								type="checkbox"
-								form={`form${row.id}`}
-								id="distributor"
-								onClick={()=>changeColor('distributor')}
+						<input type="hidden"
+							form={`form${row.id}`}
+							value={row.distributor}
+							id="distributor"
 							/>
+						<TableCell
+							className={ distributorChecked ? classes.active : null }
+							onClick={()=>changeColor('distributor')}
+						>
 							{ row.distributor }
 						</TableCell>
-						<TableCell className={ upc ? classes.active : null }>
-							<input
-								type="checkbox"
-								form={`form${row.id}`}
-								id="upc_id"
-								onClick={()=>changeColor('upc')}
+						<input type="hidden"
+							form={`form${row.id}`}
+							value={row.upc_id}
+							id="upc"
 							/>
+						<TableCell
+							className={ upcChecked ? classes.active : null }
+							onClick={()=>changeColor('upc')}
+						>
 						{ row.upc_id }
 						</TableCell>
-						<TableCell className={ versionNumber ? classes.active : null }>
-							<input
-								type="checkbox"
-								form={`form${row.id}`}
-								id="version_number"
-								value={row.version_number}
-								onClick={()=>changeColor('version_number')}
+						<input type="hidden"
+							form={`form${row.id}`}
+							value={row.version_number}
+							id="version_number"
 							/>
+						<TableCell
+							className={ versionNumberChecked ? classes.active : null }
+							onClick={()=>changeColor('version_number')}
+						>
 						{ row.version_number }
 						</TableCell>
-						<TableCell>
-							<input
-								type="checkbox"
-								form={`form${row.id}`}
-								id="catalog_id"/>
+						<input type="hidden"
+							form={`form${row.id}`}
+							value={row.catalog}
+							id="catalog"
+							/>
+						<TableCell
+							className={ catalogChecked ? classes.active : null }
+							onClick={()=>changeColor('catalog')}
+						>
 						{ row.catalog_id }
 						</TableCell>
-						<TableCell>
-							<input
-								type="checkbox"
-								form={`form${row.id}`}
-								id="medium"
-								value={row.medium}/>
+						<input type="hidden"
+							form={`form${row.id}`}
+							value={row.medium}
+							id="medium"
+							/>
+						<TableCell
+							className={ mediumChecked ? classes.active : null }
+							onClick={()=>changeColor('medium')}
+						>
 						{ row.medium }
 						</TableCell>
-						<TableCell>
-							<input
-								type="checkbox"
-								form={`form${row.id}`}
-								id="type"/>
+						<input type="hidden"
+							form={`form${row.id}`}
+							value={row.type}
+							id="type"
+							/>
+						<TableCell
+							className={ typeChecked ? classes.active : null }
+							onClick={()=>changeColor('type')}
+						>
 						{ row.type }
 						</TableCell>
-						<TableCell>
-							<input
-								type="checkbox"
-								form={`form${row.id}`}
-								id="description"
-								value={row.description}/>
+						<input type="hidden"
+							form={`form${row.id}`}
+							value={row.description}
+							id="description"
+							/>
+						<TableCell
+							className={ descriptionChecked ? classes.active : null }
+							onClick={()=>changeColor('description')}
+						>
 						{ row.description }
 						</TableCell>
 						<TableCell>
