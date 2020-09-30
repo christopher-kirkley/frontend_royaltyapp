@@ -92,22 +92,13 @@ TablePaginationActions.propTypes = {
   rowsPerPage: PropTypes.number.isRequired,
 };
 
-
-function MatchingTable() {
+function MatchingTable(props) {
 
 	const classes = useStyles()
 
 	const [ msg, setMsg ] = useState('')
-	const [rows, setRows] = useState([])
 	const [upcs, setUpcs] = useState([])
 
-
-	useEffect(() => {
-		fetch('http://localhost:5000/income/matching-errors')
-		.then(res => res.json())
-		.then(json => setRows(json))
-		.catch(res => setMsg('Error fetching data'))
-	}, [])
 
 	useEffect(() => {
 		fetch('http://localhost:5000/version')
@@ -135,48 +126,6 @@ function MatchingTable() {
 	const [mediumChecked, setMediumChecked] = useState(false)
 	const [typeChecked, setTypeChecked] = useState(false)
 
-	function handleUpdate(e) {
-		e.preventDefault()
-		if (versionNumberChecked)
-			{var version_number = e.target.version_number.value}
-		if (catalogChecked)
-			{var catalog = e.target.catalog.value}
-		if (mediumChecked)
-			{var medium = e.target.medium.value}
-		if (typeChecked)
-			{var type = e.target.type.value}
-		if (distributorChecked)
-			{var distributor = e.target.distributor.value}
-		if (upcChecked)
-			{var upc = e.target.upc.value}
-		if (descriptionChecked)
-			{var description = e.target.description.value}
-		
-		// select which elements to update on
-		fetch('http://localhost:5000/income/update-errors', {
-			method: 'PUT',
-			body: JSON.stringify(
-				{
-					'upc_id': e.target.new_upc.value,
-					'data_to_match' : 
-						[
-							{
-							'distributor': distributor,
-							'upc_id': upc,
-							'catalog_id': catalog,
-							'type': type,
-							'version_number': version_number,
-							'medium': medium,
-							'description': description,
-							}
-						]
-		})}
-		)
-		.then(res => fetch('http://localhost:5000/income/matching-errors'))
-		.then(res => res.json())
-		.then(json => setRows(json))
-		.catch(res => setMsg('Error fetching data'))
-	}
 
 	const [columns] = useState([
 		{ name: 'distributor', title: 'Distributor'},
@@ -227,10 +176,51 @@ function MatchingTable() {
 				setPage(0);
 			};
 
+	function handleUpdate(e) {
+				e.preventDefault()
+				if (versionNumberChecked)
+						{var version_number = e.target.version_number.value}
+				if (catalogChecked)
+						{var catalog = e.target.catalog.value}
+				if (mediumChecked)
+						{var medium = e.target.medium.value}
+				if (typeChecked)
+						{var type = e.target.type.value}
+				if (distributorChecked)
+						{var distributor = e.target.distributor.value}
+				if (upcChecked)
+						{var upc = e.target.upc.value}
+				if (descriptionChecked)
+						{var description = e.target.description.value}
+				
+				// select which elements to update on
+				fetch('http://localhost:5000/income/update-errors', {
+					method: 'PUT',
+					body: JSON.stringify(
+					{
+					'upc_id': e.target.new_upc.value,
+					'data_to_match' : 
+					[
+					{
+					'distributor': distributor,
+					'upc_id': upc,
+					'catalog_id': catalog,
+					'type': type,
+					'version_number': version_number,
+					'medium': medium,
+					'description': description,
+					}
+					]
+						})}
+								)
+					.then(res => fetch('http://localhost:5000/income/matching-errors'))
+							.then(res => res.json())
+									.then(json => props.setRows(json))
+											.catch(res => setMsg('Error fetching data'))
+												}
 
 	return (
 		<Container component={Paper}>
-			<Typography variant="caption">Select which column to update.</Typography>
 			<Table id="matching_error_table">
 				<TableRow>
 				{ columns.map((column) => 
@@ -240,8 +230,8 @@ function MatchingTable() {
 				)}
 				</TableRow>
 			{ (rowsPerPage > 0 ?
-				 rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-				: rows
+				 props.rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+				: props.rows
 			).map((row) => 
 				<TableRow>
 						<input type="hidden"
@@ -338,6 +328,8 @@ function MatchingTable() {
 								id={`form${row.id}`}
 								onSubmit={handleUpdate}>
 								<Button
+									variant="outlined"
+									color="primary"
 									type="submit"
 									id="update">
 								Update
@@ -351,7 +343,7 @@ function MatchingTable() {
 		            <TablePagination
 		              rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
 		              colSpan={3}
-		              count={rows.length}
+		              count={props.rows.length}
 		              rowsPerPage={rowsPerPage}
 		              page={page}
 		              SelectProps={{

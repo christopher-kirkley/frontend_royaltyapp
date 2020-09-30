@@ -63,8 +63,6 @@ function PendingImports(props) {
 		return null
 	}
 
-	console.log(props.pendingStatements)
-
 
 	return (
 		<React.Fragment>
@@ -107,7 +105,7 @@ function PendingImports(props) {
 					type="submit"
 					fullWidth
 					onClick={props.goToMatchingErrorPage}	
-					disabled={ props.matchingErrors > 0 ? false : true }
+					disabled={ false }
 				>Fix</Button>
 			</Grid>
 		</Grid>
