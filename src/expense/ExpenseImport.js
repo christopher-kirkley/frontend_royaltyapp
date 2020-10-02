@@ -19,7 +19,7 @@ const useStyles = makeStyles(theme => ({
 	},
 }))
 
-function Expense() {
+function ExpenseImport() {
 	
 	const classes = useStyles()
 
@@ -70,7 +70,7 @@ function Expense() {
 
 	return (
 			<Container>
-				<Header name='Expense'/>
+				<Header name='Expense Import'/>
 				<Grid container spacing={4} direction="column">
 					<Grid item xs={12}>
 						<Paper elevation={3} className={classes.paper}>
@@ -95,4 +95,4 @@ function Expense() {
 	}
 
 
-export default Expense
+export default ExpenseImport
