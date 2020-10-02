@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from 'react'
 
-import { Redirect } from 'react-router-dom'
+
+import { makeStyles } from '@material-ui/core/styles';
 import { useHistory } from "react-router-dom";
 
-import Button from '@material-ui/core/Button';
-import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
-import { makeStyles } from '@material-ui/core/styles';
+import Container from '@material-ui/core/Container';
 
 import Header from '../components/Header'
-import AddExpenseStatementForm from './AddExpenseStatementForm'
-import PendingImports from '../income/PendingImports'
+import ExpenseTable from './ExpenseTable'
 
 const useStyles = makeStyles(theme => ({
 	paper: {
@@ -20,74 +20,72 @@ const useStyles = makeStyles(theme => ({
 }))
 
 function Expense() {
-	
-	const classes = useStyles()
 
 	const history = useHistory()
 
-	const [ matchingErrors, setMatchingErrors ] = useState(0)
-	const [ matchingErrorsMsg, setMatchingErrorsMsg ] = useState('')
-	const [ pendingStatements, setPendingStatements ] = useState([])
+	const classes = useStyles()
+
+	const [ importedExpense, setImportedExpense ] = useState([])
 
 	useEffect(() => {
-		fetch('http://localhost:5000/expense/pending-statements')
+		fetch('http://localhost:5000/expense/imported-statements')
 		.then(res => res.json())
-		.then(json => setPendingStatements(json))
+		.then(json => (setImportedExpense(json)))
 	}, [])
 
-	function getPendingStatements() {
-		fetch(`http://localhost:5000/expense/pending-statements`)
+	function getImportedExpense() {
+		fetch('http://localhost:5000/expense/imported-statements')
 		.then(res => res.json())
-		.then(res => setPendingStatements(res))
+		.then(json => setImportedExpense(json))
 	}
 
-	useEffect(() => { 
-			fetch(`http://localhost:5000/expense/matching-errors`)
-			.then(res => res.json())
-			.then(res => res[0]['total_matching_errors'].length)
-			.then(res => (
-				setMatchingErrors(res)
-				))
-			.catch(error => setMatchingErrorsMsg('Error!'))
-	}, [])
-
-	function getMatchingErrors() {
-		fetch(`http://localhost:5000/expense/matching-errors`)
-		.then(res => res.json())
-		.then(res => res[0]['total_matching_errors'].length)
-		.then(res => setMatchingErrors(res))
+	function handleImport() {
+		history.push('/expense/import')
 	}
 
-	function goToMatchingErrorPage() {
-		history.push('/expense/matching-errors')
-	}
-
-	function processPending() {
-		fetch('http://localhost:5000/expense/process-pending', {
-				method: 'POST'}
-		)
+	function handleAdd() {
+		history.push('/expense/add')
 	}
 
 	return (
 			<Container>
 				<Header name='Expense'/>
-				<Grid container spacing={4} direction="column">
+				<Grid container direction="row" >
 					<Grid item xs={12}>
-						<Paper elevation={3} className={classes.paper}>
-							<AddExpenseStatementForm
-								getMatchingErrors={getMatchingErrors}
-								getPendingStatements={getPendingStatements}
+						<Paper className={classes.paper}> 
+							<Grid container justify="space-between">
+								<Grid item xs={2} >
+									<Typography color="textSecondary" component="h6" variant="caption" align="center">EXPENSE STATEMENTS</Typography>
+								</Grid>
+								<Grid container spacing={1} item xs={3} >
+									<Grid item >
+										<Button
+											id="add_expense"
+											size="small"
+											variant="contained"
+											color="secondary"
+											onClick={handleAdd}
+											>
+										Add
+										</Button>
+									</Grid>
+									<Grid item xs={1}>
+										<Button
+											id="import_expense"
+											size="small"
+											variant="contained"
+											onClick={handleImport}
+											>
+										Import
+										</Button>
+									</Grid>
+								</Grid>
+							</Grid>
+							<ExpenseTable
+								importedExpense={importedExpense}
+								getImportedExpense={getImportedExpense}
 							/>
-						</Paper>
-					</Grid>
-					<Grid item xs={12}>
-						<Paper elevation={3} className={classes.paper}>
-							<PendingImports
-								pendingStatements={pendingStatements}
-								processPending={processPending}
-								matchingErrors={matchingErrors}
-								goToMatchingErrorPage={goToMatchingErrorPage}/>
-						</Paper>
+							</Paper>
 					</Grid>
 				</Grid>
 			</Container>
