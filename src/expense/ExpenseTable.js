@@ -8,7 +8,7 @@ import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 import Typography from '@material-ui/core/Typography';
 
-function ImportedStatementTable(props) {
+function ExpenseTable(props) {
 
 	const history = useHistory()
 
@@ -79,4 +79,4 @@ function ImportedStatementTable(props) {
 }
 
 
-export default ImportedStatementTable
+export default ExpenseTable
