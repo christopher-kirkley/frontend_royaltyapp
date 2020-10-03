@@ -77,7 +77,6 @@ function AddStatementForm(props) {
 				</Grid>
 			</Grid>
 		</form>
-		<Typography id="statement_message">{msg}</Typography>
 		</Container>
 	)
 }

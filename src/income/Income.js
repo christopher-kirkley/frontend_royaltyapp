@@ -10,6 +10,7 @@ import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
 
 import Header from '../components/Header'
+import StatementsHeader from '../components/StatementsHeader'
 
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
@@ -57,32 +58,13 @@ function Income() {
 					<Grid item xs={12}>
 						<Paper className={classes.paper}> 
 							<Grid container justify="space-between">
-								<Grid item xs={3} >
+								<Grid item xs={2} >
 									<Typography color="textSecondary" component="h6" variant="caption" align="center">INCOME STATEMENTS</Typography>
 								</Grid>
-								<Grid container spacing={1} item xs={3} >
-									<Grid item>
-										<Button
-											id="import_income"
-											size="small"
-											variant="contained"
-											onClick={handleImport}
-											>
-										Import
-										</Button>
-									</Grid>
-									<Grid item xs={1} >
-										<Button
-											id="add_income"
-											size="small"
-											variant="contained"
-											color="secondary"
-											onClick={handleAdd}
-											>
-										Add
-										</Button>
-									</Grid>
-								</Grid>
+							<StatementsHeader
+								handleAdd={handleAdd}
+								handleImport={handleImport}
+							/>
 							</Grid>
 							<IncomeTable
 								importedIncome={importedIncome}

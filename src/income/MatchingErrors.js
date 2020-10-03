@@ -25,9 +25,7 @@ function MatchingErrors(props) {
 	return (
 			<Container>
 				<Header name='Income Matching Errors'/>
-				<Alert severity="error">You have { rows.length} errors</Alert>
-				<Divider style={{marginTop: 10}}/>
-				<Alert severity="info">Match by column, select the column which you want to match.</Alert>
+				<Alert severity="error">You have { rows.length} UPC matching errors</Alert>
 				<Divider style={{marginTop: 10}}/>
 				<MatchingTable
 					rows={rows}

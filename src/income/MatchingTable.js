@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from "react-router-dom";
 
+import Alert from '@material-ui/lab/Alert';
+
 import PropTypes from 'prop-types';
 
 import Button from '@material-ui/core/Button';
@@ -130,18 +132,6 @@ function MatchingTable(props) {
 	const [typeChecked, setTypeChecked] = useState(false)
 
 
-	const [columns] = useState([
-		{ name: 'distributor', title: 'Distributor'},
-		{ name: 'upc_id', title: 'UPC'},
-		{ name: 'version_number', title: 'Version'},
-		{ name: 'catalog_id', title: 'Catalog'},
-		{ name: 'medium', title: 'Medium'},
-		{ name: 'type', title: 'Type'},
-		{ name: 'description	', title: 'Description'},
-		{ name: '', title: ''},
-		{ name: '', title: ''},
-	])
-
 
 	function changeColor(item) {
 		if (item == 'distributor') {
@@ -230,13 +220,17 @@ function MatchingTable(props) {
 
 	return (
 		<Container component={Paper}>
-			<Table id="matching_error_table">
+			<Table id="matching_error_table" size="small">
 				<TableRow>
-				{ columns.map((column) => 
-						<TableCell>
-						{ column.title }
-						</TableCell>
-				)}
+					<TableCell>Distributor</TableCell>
+					<TableCell><Alert severity="error">UPC</Alert></TableCell>
+					<TableCell>Version</TableCell>
+					<TableCell>Catalog</TableCell>
+					<TableCell>Medium</TableCell>
+					<TableCell>Type</TableCell>
+					<TableCell>Description</TableCell>
+					<TableCell>Updated UPC</TableCell>
+					<TableCell></TableCell>
 				</TableRow>
 			{ (rowsPerPage > 0 ?
 				 props.rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
@@ -270,7 +264,7 @@ function MatchingTable(props) {
 							className={ upcChecked ? classes.active : null }
 							onClick={()=>changeColor('upc')}
 						>
-						{ row.upc_id }
+						<Alert severity="error">{ row.upc_id }</Alert>
 						</TableCell>
 						<input type="hidden"
 							form={`form${row.id}`}

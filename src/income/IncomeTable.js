@@ -75,7 +75,7 @@ function IncomeTable(props) {
 			)}
 			</Table>
 			:
-			<Typography align="center">No data</Typography>
+			<Typography id="income-data" variant="h6" align="center">No data</Typography> 
 		}
 		</React.Fragment>
 		);
