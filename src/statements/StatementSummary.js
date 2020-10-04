@@ -15,7 +15,15 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import Header from '../components/Header'
 
+const useStyles = makeStyles(theme => ({
+	paper: {
+		padding: 20,
+	},
+}))
+
 function StatementSummary() {
+
+	const classes = useStyles()
 
 	const history = useHistory()
 
@@ -59,7 +67,8 @@ function StatementSummary() {
 					<TableCell>
 						<Button
 							color="primary"
-							variant="contained"
+							variant="outlined"
+							size="small"
 							onClick={handleClick}
 							value={ row.id }
 							id={ row.id }
@@ -73,20 +82,36 @@ function StatementSummary() {
 
 	return (
 			<Container>
-				<Header name='Statement Summary'/>
+				<Header name="Statement Summary"/>
 				<Grid container
-					style={{marginTop: 10}}
 					spacing={3}>
 						<Grid item xs={12}>
-						<Paper style={{padding: 15}}>
-							<Typography id="statement-name" component="h5" variant="h5">{statementName}</Typography>
-							<Typography id="current-owed" component="h6" variant="h6">Current Owed: {summary['statement_total']}</Typography>
-							<Typography id="current-owed" component="h6" variant="h6">Previous Balance: {summary['previous_balance']}</Typography>
+							<Typography id="statement-name" component="h5" variant="h6">{statementName}</Typography>
+						</Grid>
+						<Grid item xs={12}>
+						<Paper
+							elevation={3}
+							className={classes.paper}
+					 	>
+							<Grid container spacing={1}>
+								<Grid item xs={12}>
+									<Typography id="title" component="h5" variant="caption">OVERVIEW</Typography>
+								</Grid>
+								<Grid item xs={12}>
+									<Typography id="current-owed" component="h6" variant="subtitle1">Current Owed: ${summary['statement_total']}</Typography>
+								</Grid>
+								<Grid item xs={12}>
+									<Typography id="current-owed" component="h6" variant="subtitle1">Previous Balance: ${summary['previous_balance']}</Typography>
+								</Grid>
+							</Grid>
 						</Paper>
 					</Grid>
 					<Grid item xs={12}>
-						<Paper style={{padding: 15}}>
-						<Table id="statement_summary_table">
+						<Paper
+							elevation={3}
+							className={classes.paper}
+						>
+						<Table id="statement_summary_table" size="small">
 							<TableRow>
 								<TableCell>Artist</TableCell>
 								<TableCell>Open Balance</TableCell>
