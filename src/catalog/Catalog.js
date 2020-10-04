@@ -1,6 +1,6 @@
 import React from 'react';
 
-import CatalogTable from "./CatalogTable";
+import CatalogTable from './CatalogTable'
 
 import { Redirect } from 'react-router-dom'
 import { useHistory } from "react-router-dom";

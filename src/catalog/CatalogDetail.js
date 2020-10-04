@@ -3,8 +3,6 @@ import React, { useState } from 'react'
 import { useParams } from 'react-router-dom'
 
 import CatalogForm from './CatalogForm'
-import VersionForm from './VersionForm'
-import TrackInfo from './TrackInfo'
 
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';

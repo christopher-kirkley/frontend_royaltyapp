@@ -5,9 +5,6 @@ import { useParams } from 'react-router-dom'
 import { useHistory } from 'react-router-dom'
 
 import CatalogForm from './CatalogForm'
-import VersionInfo from './VersionInfo'
-import VersionForm from './VersionForm'
-import TrackInfo from './TrackInfo'
 
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';

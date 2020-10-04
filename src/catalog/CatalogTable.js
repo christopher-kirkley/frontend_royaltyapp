@@ -26,7 +26,6 @@ function CatalogTable() {
 
 	function handleCatalogDetail(id) {
 		history.push(`/catalog/${id}`)
-
 	}
 
 	return (

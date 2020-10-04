@@ -17,9 +17,12 @@ import CatalogDetail from "./catalog/CatalogDetail"
 import Import from "./catalog/Import"
 
 import Income from "./income/Income"
+import IncomeImport from "./income/IncomeImport"
+import IncomeAdd from "./income/IncomeAdd"
 import MatchingErrors from "./income/MatchingErrors"
 import ImportedIncome from "./income/ImportedIncome"
 import DetailImportedIncome from "./income/DetailImportedIncome"
+import Statement from "./statements/Statement"
 import StatementGenerate from "./statements/StatementGenerate"
 import StatementView from "./statements/StatementView"
 import StatementSummary from "./statements/StatementSummary"
@@ -36,8 +39,8 @@ import ViewListIcon from '@material-ui/icons/ViewList';
 import ImportExportIcon from '@material-ui/icons/ImportExport';
 
 import Expense from "./expense/Expense"
+import ExpenseImport from "./expense/ExpenseImport"
 import ExpenseMatchingErrors from "./expense/ExpenseMatchingErrors"
-import ImportedExpense from "./expense/ImportedExpense"
 import DetailImportedExpense from "./expense/DetailImportedExpense"
 import ImportedExpenseTable from "./expense/DetailImportedExpenseTable"
 
@@ -159,90 +162,61 @@ function Main() {
 					</ListItem>
 				</Link>
 
-
-					<ListItem button id="income" onClick={handleOpenIncome}>
+				<Link to="/income" className={classes.link}>
+					<ListItem button id="income">
 						<ListItemIcon>
 							<IncomeIcon />
 						</ListItemIcon>
 						<ListItemText primary={"Income"}/>
-						{ openIncome ? <ExpandLess /> : <ExpandMore />}
 					</ListItem>
-					<Collapse in={openIncome} timeout="auto" unmountOnExit>
-						<List component="div" disablePadding>
-						<Link to="/income" className={classes.link}>
-							<ListItem button id="import_income" className={classes.nested}>
-								<ListItemIcon>
-									<AddCircleIcon />
-								</ListItemIcon>
-								<ListItemText primary={"Import Income"}/>
-							</ListItem>
-						</Link>
-						<Link to="/income/view-imported" className={classes.link}>
-							<ListItem button id="view_imported_income" className={classes.nested}>
-								<ListItemIcon>
-									<ViewListIcon />
-								</ListItemIcon>
-								<ListItemText primary={"View Imported"}/>
-							</ListItem>
-						</Link>
-						</List>
-					</Collapse>
+				</Link>
 
-					<ListItem button id="expense" onClick={handleOpenExpense}>
+				<Link to="/expense" className={classes.link}>
+					<ListItem button id="expense">
 						<ListItemIcon>
 							<MoneyOffIcon />
 						</ListItemIcon>
 						<ListItemText primary={"Expense"}/>
-						{ openExpense ? <ExpandLess /> : <ExpandMore />}
 					</ListItem>
-					<Collapse in={openExpense} timeout="auto" unmountOnExit>
-						<List component="div" disablePadding>
-						<Link to="/expense" className={classes.link}>
-							<ListItem button id="import_expense" className={classes.nested}>
-								<ListItemIcon>
-									<AddCircleIcon />
-								</ListItemIcon>
-								<ListItemText primary={"Import Expense"}/>
-							</ListItem>
-						</Link>
-						<Link to="/expense/view-imported-expense" className={classes.link}>
-							<ListItem button id="view_imported_expense" className={classes.nested}>
-								<ListItemIcon>
-									<ViewListIcon />
-								</ListItemIcon>
-								<ListItemText primary={"View Imported"}/>
-							</ListItem>
-						</Link>
-						</List>
-					</Collapse>
+				</Link>
 
-					<ListItem button id="statement" onClick={handleOpenStatement}>
+				<Link to="/statements" className={classes.link}>
+					<ListItem button id="statements">
 						<ListItemIcon>
 							<DescriptionIcon />
 						</ListItemIcon>
 						<ListItemText primary={"Statement"}/>
-						{ openStatement ? <ExpandLess /> : <ExpandMore />}
-						</ListItem>
-		      <Collapse in={openStatement} timeout="auto" unmountOnExit>
-						<List component="div" disablePadding>
-						<Link to="/statements/generate" className={classes.link}>
-							<ListItem button id="statements_generate" className={classes.nested}>
-							<ListItemIcon>
-								<AddCircleIcon />
-							</ListItemIcon>
-							<ListItemText primary={"Generate"}/>
-							</ListItem>
-						</Link>
-						<Link to="/statements/view" className={classes.link}>
-							<ListItem button id="statements_view" className={classes.nested}>
-								<ListItemIcon>
-									<ViewListIcon />
-								</ListItemIcon>
-								<ListItemText primary={"View"}/>
-							</ListItem>
-						</Link>
-						</List>
-					</Collapse>
+					</ListItem>
+				</Link>
+
+		{
+					// <ListItem button id="statement" onClick={handleOpenStatement}>
+					// 	<ListItemIcon>
+					// 	</ListItemIcon>
+					// 	<ListItemText primary={"Statement"}/>
+					// 	{ openStatement ? <ExpandLess /> : <ExpandMore />}
+					// 	</ListItem>
+		      // <Collapse in={openStatement} timeout="auto" unmountOnExit>
+					// 	<List component="div" disablePadding>
+					// 	<Link to="/statements/generate" className={classes.link}>
+					// 		<ListItem button id="statements_generate" className={classes.nested}>
+					// 		<ListItemIcon>
+					// 			<AddCircleIcon />
+					// 		</ListItemIcon>
+					// 		<ListItemText primary={"Generate"}/>
+					// 		</ListItem>
+					// 	</Link>
+					// 	<Link to="/statements/view" className={classes.link}>
+					// 		<ListItem button id="statements_view" className={classes.nested}>
+					// 			<ListItemIcon>
+					// 				<ViewListIcon />
+					// 			</ListItemIcon>
+					// 			<ListItemText primary={"View"}/>
+					// 		</ListItem>
+					// 	</Link>
+					// 	</List>
+					// </Collapse>
+		}
 
 				</List>
 			</Drawer>
@@ -255,13 +229,15 @@ function Main() {
 				<Route exact path="/catalog/import" component={Import}/>
 				<Route exact path="/catalog/:id" component={CatalogDetail}/>
 				<Route exact path="/income" component={Income}/>
+				<Route exact path="/income/add" component={IncomeAdd}/>
+				<Route exact path="/income/import" component={IncomeImport}/>
 				<Route exact path="/income/matching-errors" component={MatchingErrors}/>
-				<Route exact path="/income/view-imported" component={ImportedIncome}/>
 				<Route exact path="/income/:id" component={DetailImportedIncome}/>
 				<Route exact path="/expense" component={Expense}/>
+				<Route exact path="/expense/import" component={ExpenseImport}/>
 				<Route exact path="/expense/matching-errors" component={ExpenseMatchingErrors}/>
-				<Route exact path="/expense/view-imported-expense" component={ImportedExpense}/>
 				<Route exact path="/expense/:id" component={DetailImportedExpense}/>
+				<Route exact path="/statements" component={Statement}/>
 				<Route exact path="/statements/generate" component={StatementGenerate}/>
 				<Route exact path="/statements/view" component={StatementView}/>
 				<Route exact path="/statements/:id" component={StatementSummary}/>

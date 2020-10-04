@@ -14,12 +14,14 @@ function Toggle(props) {
 			<ToggleButton
 				id="view"
 				value={false}
+				disabled={ props.edit ? false : true }
 			>
 			View
 			</ToggleButton>
 			<ToggleButton
 				id="edit"
 				value={true}
+				disabled={ props.edit ? true : false }
 			>
 			Edit
 			</ToggleButton>
