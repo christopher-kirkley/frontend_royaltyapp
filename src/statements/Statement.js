@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react'
 import { useHistory } from "react-router-dom";
 
 import Button from '@material-ui/core/Button';
+import Divider from '@material-ui/core/Divider';
 import Table from '@material-ui/core/Table';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
@@ -12,6 +13,8 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
 import Header from '../components/Header'
+
+import StatementTable from './StatementTable'
 
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -67,58 +70,24 @@ function Statement() {
 								<Grid item xs={2} >
 									<Typography color="textSecondary" component="h6" variant="caption" align="center">STATEMENTS</Typography>
 								</Grid>
-								<Grid container spacing={1} item xs={3} >
-									<Grid item xs={1}>
-										<Button
-											id="generate"
-											size="small"
-											variant="contained"
-											onClick={()=>handleGenerate()}
-											>
-										Generate
-										</Button>
-									</Grid>
+								<Grid item xs={1}>
+									<Button
+										id="generate"
+										size="small"
+										variant="contained"
+										color="secondary"
+										onClick={()=>handleGenerate()}
+										>
+									New
+									</Button>
 								</Grid>
-				<Table id="statement_table">
-					<TableRow>
-						<TableCell>
-						Statement Name
-						</TableCell>
-						<TableCell/>
-					</TableRow>
-				{ statements.map((row) => 
-					<TableRow>
-							<TableCell>
-								{row.statement_detail_table}
-							</TableCell>
-							<TableCell>
-							<Button
-								variant="contained"
-								color="primary"
-								id={row.id}
-								value={row.id}
-								name="submit"
-								type="submit"
-								fullWidth
-								onClick={handleClick}
-								>
-								View
-								</Button>
-							</TableCell>
-							<TableCell>
-							<Button
-								variant="contained"
-								id="edit"
-								value={row.id}
-								onClick={handleEdit}
-								fullWidth
-								>
-								Edit
-								</Button>
-							</TableCell>
-					</TableRow>
-				)}
-				</Table>
+							</Grid>
+							<Divider style={{marginTop: 10}}/>
+							<Grid>
+								<StatementTable
+									handleClick={handleClick}
+									statements={statements}
+								/>
 							</Grid>
 							</Paper>
 					</Grid>
