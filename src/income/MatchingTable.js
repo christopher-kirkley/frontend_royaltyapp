@@ -10,6 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import Paper from '@material-ui/core/Paper';
 import { DataGrid } from '@material-ui/data-grid';
+import MaterialTable from "material-table";
 
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 
@@ -23,21 +24,32 @@ const columns = [
   { field: 'description', headerName: 'Description', width: 300 },
 ];
 
-
 function MatchingTable(props) {
 
-	function handleSelect(e){
-		console.log(e.rowIndex)
+	const [ numSelected, setNumSelected ] = useState()
+
+	const [ selected, setSelected ] = useState([])
+
+	function handleDelete(e, data){
+		console.log(data)
 	}
+
 	
 	return (
-			<div style={{ height: 400, width: '100%' }}>
-			<DataGrid
-				rows={props.rows}
+			<div style={{ height: 700, width: '100%' }}>
+			<MaterialTable
+				data={props.rows}
 				columns={columns}
-				pageSize={5}
-				checkboxSelection
-				onRowSelected={handleSelect}
+				options={{
+					selection: true
+				}}
+				actions={[
+					{
+					icon: 'delete',
+					onClick: (evt, data) => handleDelete(evt, data)
+					
+					}
+				]}
 			/>
 			</div>
 		)
