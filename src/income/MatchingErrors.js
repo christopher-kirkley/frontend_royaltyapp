@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useHistory } from "react-router-dom";
 
 import Container from '@material-ui/core/Container';
+import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
@@ -27,10 +28,12 @@ function MatchingErrors(props) {
 				<Header name='Income Matching Errors'/>
 				<Alert severity="error">You have { rows.length} UPC matching errors</Alert>
 				<Divider style={{marginTop: 10}}/>
+				<Paper>
 				<MatchingTable
 					rows={rows}
 					setRows={setRows}
 				/>
+				</Paper>
 			</Container>
 		)
 	}
