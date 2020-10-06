@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
+import Collapse from '@material-ui/core/Collapse';
 import Table from '@material-ui/core/Table';
 import TableHead from '@material-ui/core/TableHead';
 import TableBody from '@material-ui/core/TableBody';
@@ -16,7 +17,7 @@ import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import Paper from '@material-ui/core/Paper';
 
-import { useTable, usePagination, useRowSelect } from 'react-table'
+import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table'
 
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 
@@ -66,13 +67,18 @@ function MatchingTable(props) {
 	 		gotoPage,
 	 		pageCount,
 	 		canNextPage,
+	 		canPreviousPage,
+	 		previousPage,
+	 		nextPage,
 	 		pageOptions,
+	 		setPageSize,
 	 		state: { pageIndex, pageSize, selectedRowIds },
 		} = useTable(
 			{ columns,
 				data,
-				initialState: { pageIndex: 0 },
+				initialState: { pageIndex: 0, pageSize: 25 },
 			},
+			useSortBy,
 			usePagination,
 			useRowSelect,
 			hooks => {
@@ -103,6 +109,8 @@ function MatchingTable(props) {
 	function handleUpdate() {
 		console.log(selectedRowIds)
 	}
+
+
 
 	return (
 		<div>
@@ -144,9 +152,15 @@ function MatchingTable(props) {
 						 {// Loop over the headers in each row
 						 headerGroup.headers.map(column => (
 							 // Apply the header cell props
-							 <TableCell {...column.getHeaderProps()}>
-								 {// Render the header
-								 column.render('Header')}
+							 <TableCell {...column.getHeaderProps(column.getSortByToggleProps())}>
+								 {column.render('Header')}
+							 		<span>
+							 			{column.isSorted
+											? columns.isSortedDesc
+											? ' > '
+											: ' < '
+										: ''}
+							 		</span>
 							 </TableCell>
 						 ))}
 					 </TableRow>
@@ -166,6 +180,7 @@ function MatchingTable(props) {
 								 // Apply the cell props
 								 return (
 									 <TableCell {...cell.getCellProps()}>
+
 										 {// Render the cell contents
 										 cell.render('Cell')}
 									 </TableCell>
@@ -177,6 +192,16 @@ function MatchingTable(props) {
 			 </TableBody>
 		 </Table>
 			<div className="pagination">
+        <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
+		          {'<<'}
+		        </button>{' '}
+		        <button onClick={() => previousPage()} disabled={!canPreviousPage}>
+		          {'<'}
+		        </button>{' '}
+		        <button onClick={() => nextPage()} disabled={!canNextPage}>
+		          {'>'}
+		        </button>{' '}
+		
 				<button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
 					{'>>'}
 				</button>{' '}
