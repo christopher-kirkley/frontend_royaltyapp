@@ -6,6 +6,7 @@ import Alert from '@material-ui/lab/Alert';
 import PropTypes from 'prop-types';
 
 import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
 import Table from '@material-ui/core/Table';
 import TableHead from '@material-ui/core/TableHead';
 import TableBody from '@material-ui/core/TableBody';
@@ -99,8 +100,41 @@ function MatchingTable(props) {
 		}
 	)
 
+	function handleUpdate() {
+		console.log(selectedRowIds)
+	}
+
 	return (
 		<div>
+		{ Object.keys(selectedRowIds).length > 0 ?
+
+			// null
+			// :
+			<Grid container style={{backgroundColor: "green", padding: 10}}>
+				<Grid item xs={8}>
+					<Typography variant="subtitle1">{ Object.keys(selectedRowIds).length } rows selected.</Typography>
+				</Grid>
+				<Grid item xs={2}>
+					<Button
+						variant="contained"
+						size="small"
+						onClick={handleUpdate}
+					>
+					Update
+					</Button>
+				</Grid>
+				<Grid item xs={2}>
+					<Button
+						variant="contained"
+						size="small"
+					>
+					Delete
+					</Button>
+				</Grid>
+			</Grid>
+			:
+			null
+		}
 		 <Table {...getTableProps()} size="small">
 			 <TableHead>
 				 {// Loop over the header rows
@@ -143,15 +177,15 @@ function MatchingTable(props) {
 			 </TableBody>
 		 </Table>
 			<div className="pagination">
-		        <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
-		          {'>>'}
-		        </button>{' '}
-		        <span>
-		          Page{' '}
-		          <strong>
-		            {pageIndex + 1} of {pageOptions.length}
-		          </strong>{' '}
-		        </span>
+				<button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
+					{'>>'}
+				</button>{' '}
+				<span>
+					Page{' '}
+					<strong>
+						{pageIndex + 1} of {pageOptions.length}
+					</strong>{' '}
+				</span>
 			</div>
 		</div>
 		)
