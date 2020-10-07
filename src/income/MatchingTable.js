@@ -110,7 +110,7 @@ function MatchingTable(props) {
 		const index = Object.keys(selectedRowIds)
 	}
 
-	const [ open, setOpen ] = useState(false)
+	const [ open, setOpen ] = useState(true)
 
 	const [ selected, setSelected ] = useState(['0'])
 
