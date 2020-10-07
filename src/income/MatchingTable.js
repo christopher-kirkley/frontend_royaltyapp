@@ -16,14 +16,12 @@ import TableRow from '@material-ui/core/TableRow';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import Paper from '@material-ui/core/Paper';
-import Modal from '@material-ui/core/Modal';
+
+import UpdateModal from './UpdateModal'
 
 import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table'
 
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-
-// const columns = [
-// ];
 
 const IndeterminateCheckbox = React.forwardRef(
   ({ indeterminate, ...rest }, ref) => {
@@ -42,20 +40,8 @@ const IndeterminateCheckbox = React.forwardRef(
   }
 )
 
-const useStyles = makeStyles((theme) => ({
-		paper: {
-					position: 'absolute',
-					width: 400,
-					backgroundColor: theme.palette.background.paper,
-					border: '2px solid #000',
-					boxShadow: theme.shadows[5],
-					padding: theme.spacing(2, 4, 3),
-				},
-}));
 
 function MatchingTable(props) {
-
-	const classes = useStyles();
 
 	const data = React.useMemo( () => props.rows)
 
@@ -120,59 +106,34 @@ function MatchingTable(props) {
 		}
 	)
 
+	function handleDelete() {
+		const index = Object.keys(selectedRowIds)
+	}
+
+	const [ open, setOpen ] = useState(false)
+
+	const [ selected, setSelected ] = useState(['0'])
+
 	function handleOpen() {
 		setOpen(true)
+		const indexes = Object.keys(selectedRowIds)
+		const sel = indexes.map((index) =>
+			props.rows[index])
+		setSelected(sel)
 	}
 
 	function handleClose() {
 		setOpen(false)
 	}
 
-	function handleDelete() {
-		console.log(selectedRowIds)
-	}
-
-	const [ open, setOpen ] = useState(false)
-
-	const body = (
-				<div style={{transform: "translate(100%, 100%)"}} className={classes.paper}>
-					<Typography variant="h6">Update Selected</Typography>
-					<p id="simple-modal-description">
-					id number: { Object.keys(selectedRowIds) }
-					</p>
-					<Grid container>
-						<Grid item xs={7}>
-							<Button
-								size="small"
-								onClick={handleClose}
-							>Cancel</Button>
-						</Grid>
-						<Grid item xs={3}>
-							<Button
-								variant="contained"
-								color="primary"
-								size="small"
-							>Update</Button>
-						</Grid>
-						<Grid item xs={2}>
-							<Button
-								variant="contained"
-								color="secondary"
-								size="small"
-							>Match</Button>
-						</Grid>
-					</Grid>
-				</div>
-			);
-
 	return (
 		<div>
-					<Modal
-						open={open}
-						onClose={handleClose}
-					>
-					{body}
-					</Modal>
+			<UpdateModal
+				handleClose={handleClose}
+				handleOpen={handleOpen}
+				open={open}
+				selected={selected}
+			/>
 
 		{ Object.keys(selectedRowIds).length > 0 ?
 
