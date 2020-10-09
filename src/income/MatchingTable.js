@@ -18,6 +18,7 @@ import Container from '@material-ui/core/Container';
 import Paper from '@material-ui/core/Paper';
 
 import UpdateModal from './UpdateModal'
+import MatchModal from './MatchModal'
 
 import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table'
 
@@ -110,7 +111,8 @@ function MatchingTable(props) {
 		const index = Object.keys(selectedRowIds)
 	}
 
-	const [ open, setOpen ] = useState(true)
+	const [ open, setOpen ] = useState(false)
+	const [ matchOpen, setMatchOpen ] = useState(false)
 
 	const [ selected, setSelected ] = useState(['0'])
 
@@ -120,6 +122,15 @@ function MatchingTable(props) {
 		const sel = indexes.map((index) =>
 			props.rows[index])
 		setSelected(sel)
+	}
+
+	function handleMatchOpen() {
+		setMatchOpen(true)
+	}
+
+	function handleMatchClose() {
+		console.log('e')
+		setMatchOpen(false)
 	}
 
 	function handleClose() {
@@ -134,11 +145,13 @@ function MatchingTable(props) {
 				open={open}
 				selected={selected}
 			/>
+			<MatchModal
+				matchOpen={matchOpen}
+				handleMatchClose={handleMatchClose}
+			/>
 
 		{ Object.keys(selectedRowIds).length > 0 ?
 
-			// null
-			// :
 			<Grid container style={{backgroundColor: "grey", padding: 20}}>
 				<Grid item xs={8}>
 					<Typography variant="subtitle1">{ Object.keys(selectedRowIds).length } rows selected.</Typography>
@@ -163,9 +176,15 @@ function MatchingTable(props) {
 				</Grid>
 			</Grid>
 			:
-			<Grid container style={{padding: 20}}>
-				<Grid item>
-				<p> </p>
+			<Grid container style={{padding: 20}} justify="flex-end">
+				<Grid item xs={2} >
+					<Button
+						variant="contained"
+						color="secondary"
+						size="small"
+						onClick={handleMatchOpen}
+					>
+					Match All</Button>
 				</Grid>
 			</Grid>
 		}
