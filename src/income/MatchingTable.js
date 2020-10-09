@@ -41,14 +41,8 @@ const IndeterminateCheckbox = React.forwardRef(
   }
 )
 
-const useStyles = makeStyles(theme => ({
-	highlight: {
-		backgroundColor: "green"
-	},
-}))
 
 function MatchingTable(props) {
-	const classes = useStyles();
 
 	const data = React.useMemo( () => props.rows)
 
@@ -64,8 +58,7 @@ function MatchingTable(props) {
 				],
 		[])
 
-
- const {
+	 const {
 			getTableProps,
 			getTableBodyProps,
 			headerGroups,
@@ -118,35 +111,29 @@ function MatchingTable(props) {
 	}
 
 	const [ open, setOpen ] = useState(false)
-	const [ match, setMatch ] = useState(false)
+	const [ matchOpen, setMatchOpen ] = useState(true)
 
 	const [ selected, setSelected ] = useState(['0'])
-
 
 	function handleOpen() {
 		setOpen(true)
 		const indexes = Object.keys(selectedRowIds)
 		const sel = indexes.map((index) =>
 			props.rows[index])
+		setSelected(sel)
+	}
+
+	function handleMatchOpen() {
+		setMatchOpen(true)
+	}
+
+	function handleMatchClose() {
+		setMatchOpen(false)
 	}
 
 	function handleClose() {
 		setOpen(false)
 	}
-
-	function handleMatch(id) {
-		setMatch(!match)
-	}
-
-	function handleSelected(cell) {
-		console.log(cell)
-		if (cell.column.id == 'upc_id')
-			{setUpc(cell.value)}
-	}
-
-	const [ upc, setUpc ] = useState('')
-
-	const [ sel, setSel ] = useState(false)
 
 	return (
 		<div>
@@ -156,44 +143,16 @@ function MatchingTable(props) {
 				open={open}
 				selected={selected}
 			/>
+			<MatchModal
+				matchOpen={matchOpen}
+				handleMatchClose={handleMatchClose}
+			/>
 
-		{ match ?
-			<Grid container style={{padding: 20}} spacing={1}>
-				<Grid item xs={3}>
-					<Typography variant="subtitle1">
-					Select cells to match:
-					</Typography>
-				</Grid>
-			{ upc !== ''
-				?
-				<Grid item xs={12}>
-					<Typography variant="subtitle1">
-					UPC is equal to {upc}
-					</Typography>
-				</Grid>
-				:
-				null
-			}
-				<Grid item xs={12}>
-					<Button
-						variant="contained"
-						color="secondary"
-						size="small"
-					>
-					Update
-					</Button>
-				</Grid>
-			</Grid>
-			:
-
-			Object.keys(selectedRowIds).length > 0 ?
+		{ Object.keys(selectedRowIds).length > 0 ?
 
 			<Grid container style={{backgroundColor: "grey", padding: 20}}>
 				<Grid item xs={8}>
 					<Typography variant="subtitle1">{ Object.keys(selectedRowIds).length } rows selected.</Typography>
-				</Grid>
-				<Grid item>
-					
 				</Grid>
 				<Grid item xs={2}>
 					<Button
@@ -221,10 +180,9 @@ function MatchingTable(props) {
 						variant="contained"
 						color="secondary"
 						size="small"
-						onClick={handleMatch}
+						onClick={handleMatchOpen}
 					>
-					 Match
-					</Button>
+					Match All</Button>
 				</Grid>
 			</Grid>
 		}
@@ -259,23 +217,18 @@ function MatchingTable(props) {
 					 prepareRow(row)
 					 return (
 						 // Apply the row props
-						 <TableRow {...row.getRowProps()}
-						 >
+						 <TableRow {...row.getRowProps()}>
 							 {// Loop over the rows cells
-							 row.cells.map((cell, index) => {
+							 row.cells.map(cell => {
 								 // Apply the cell props
 								 return (
-									 <TableCell {...cell.getCellProps()}
-											onClick={() => handleSelected(cell)}
-									 	>
+									 <TableCell {...cell.getCellProps()}>
 
 										 {// Render the cell contents
 										 cell.render('Cell')}
 									 </TableCell>
 								 )
 							 })}
-						 	<TableCell>
-						 	</TableCell>
 						 </TableRow>
 					 )
 				 })}
