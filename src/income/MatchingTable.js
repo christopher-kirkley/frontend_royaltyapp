@@ -111,7 +111,7 @@ function MatchingTable(props) {
 	}
 
 	const [ open, setOpen ] = useState(false)
-	const [ matchOpen, setMatchOpen ] = useState(true)
+	const [ matchOpen, setMatchOpen ] = useState(false)
 
 	const [ selected, setSelected ] = useState(['0'])
 
@@ -135,6 +135,9 @@ function MatchingTable(props) {
 		setOpen(false)
 	}
 
+	function handleMatch() {
+	}
+
 	return (
 		<div>
 			<UpdateModal
@@ -151,19 +154,30 @@ function MatchingTable(props) {
 		{ Object.keys(selectedRowIds).length > 0 ?
 
 			<Grid container style={{backgroundColor: "grey", padding: 20}}>
-				<Grid item xs={8}>
+				<Grid item xs={9}>
 					<Typography variant="subtitle1">{ Object.keys(selectedRowIds).length } rows selected.</Typography>
 				</Grid>
-				<Grid item xs={2}>
+				<Grid item xs={1}>
 					<Button
 						variant="contained"
+						color="primary"
 						size="small"
 						onClick={handleOpen}
 					>
 					Update
 					</Button>
 				</Grid>
-				<Grid item xs={2}>
+				<Grid item xs={1}>
+					<Button
+						variant="contained"
+						color="secondary"
+						size="small"
+						onClick={handleMatch}
+					>
+					Match
+					</Button>
+				</Grid>
+				<Grid item xs={1}>
 					<Button
 						variant="contained"
 						size="small"

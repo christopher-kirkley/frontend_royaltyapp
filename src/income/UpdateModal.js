@@ -21,6 +21,9 @@ const useStyles = makeStyles((theme) => ({
 					boxShadow: theme.shadows[5],
 					padding: theme.spacing(2, 4, 3),
 				},
+	selected: {
+		backgroundColor: "yellow"
+		}
 }));
 
 
@@ -87,21 +90,26 @@ function UpdateModal(props) {
 		return shared
 	}
 
+	const [ upc, setUpc ] = useState(false)
+
 	const body = (
 			<div style={{transform: "translate(100%, 100%)"}} className={classes.paper}>
 				<Typography variant="h6" gutterBottom>Update Selected</Typography>
 				<Grid container>
-					<Grid item xs={12}>
-					<Typography variant="subtitle1">UPC: { sharedObj.upc_id }</Typography>
+					<Grid item xs={12}
+						onClick={() => setUpc(!upc)}
+						className={ upc ? classes.selected : null }
+					>
+						<Typography variant="subtitle1">UPC: { sharedObj.upc_id }</Typography>
 					</Grid>
 					<Grid item xs={12}>
-					<Typography variant="subtitle1">Distributor: { sharedObj.distributor }</Typography>
+						<Typography variant="subtitle1">Distributor: { sharedObj.distributor }</Typography>
 					</Grid>
 					<Grid item xs={12}>
-					<Typography variant="subtitle1">Catalog: { sharedObj.catalog_id }</Typography>
+						<Typography variant="subtitle1">Catalog: { sharedObj.catalog_id }</Typography>
 					</Grid>
 					<Grid item xs={12}>
-					<Typography variant="subtitle1">Medium: { sharedObj.medium }</Typography>
+						<Typography variant="subtitle1">Medium: { sharedObj.medium }</Typography>
 					</Grid>
 					<Grid item xs={12}>
 					<Typography variant="subtitle1">Type: { sharedObj.type }</Typography>
