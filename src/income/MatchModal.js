@@ -53,12 +53,26 @@ function MatchModal(props) {
 	const body = (
 			<div style={{transform: "translate(100%, 100%)"}} className={classes.paper}>
 				<Typography variant="h6" gutterBottom>Update Selected</Typography>
-				<Grid container>
-					<Grid item xs={12}>
-					<Typography variant="subtitle1"></Typography>
+				<Grid container spacing={1}>
+					<Grid container item xs={12} spacing={2}>
+						<Grid item={4}>
+							<Typography variant="subtitle1">where UPC is</Typography>
+						</Grid>
+						<Grid item={4}>
+							<NativeSelect>
+								<option>Potatoes</option>
+							</NativeSelect>
+						</Grid>
 					</Grid>
 					<Grid item xs={12}>
-					<Typography variant="subtitle1"></Typography>
+						<Grid item={6}>
+							<Typography variant="subtitle1">where Distributor is</Typography>
+						</Grid>
+						<Grid item={6}>
+							<NativeSelect>
+								<option>Any</option>
+							</NativeSelect>
+						</Grid>
 					</Grid>
 					<Grid item xs={12}>
 					<Typography variant="subtitle1"></Typography>
