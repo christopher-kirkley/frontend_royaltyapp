@@ -52,9 +52,13 @@ function MatchingTable(props) {
 								{ accessor: 'upc_id', Header: 'UPC'},
 								{ accessor: 'distributor', Header: 'Distributor'},
 								{ accessor: 'catalog_id', Header: 'Catalog'},
+								{ accessor: 'isrc_id', Header: 'ISRC'},
+								{ accessor: 'version_number', Header: 'Version'},
 								{ accessor: 'medium', Header: 'Medium'},
 								{ accessor: 'type', Header: 'Type'},
 								{ accessor: 'description', Header: 'Description'},
+								{ accessor: 'album_name', Header: 'Album'},
+								{ accessor: 'track_name', Header: 'Track'},
 				],
 		[])
 
@@ -111,7 +115,7 @@ function MatchingTable(props) {
 	}
 
 	const [ open, setOpen ] = useState(false)
-	const [ matchOpen, setMatchOpen ] = useState(true)
+	const [ matchOpen, setMatchOpen ] = useState(false)
 
 	const [ selected, setSelected ] = useState(['0'])
 
