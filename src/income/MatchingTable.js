@@ -49,7 +49,6 @@ function MatchingTable(props) {
 
 	const columns = React.useMemo(
 				() => [
-								{ accessor: 'id', Header: 'ID'},
 								{ accessor: 'upc_id', Header: 'UPC'},
 								{ accessor: 'distributor', Header: 'Distributor'},
 								{ accessor: 'catalog_id', Header: 'Catalog'},

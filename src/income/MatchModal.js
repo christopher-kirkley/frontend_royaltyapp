@@ -89,18 +89,32 @@ function MatchModal(props) {
 
 	const choice = watch("column")
 
-	const upcOptions = makeUpcOptions()
+	const upcOptions = makeOptions('upc_id')
+	const catalogOptions = makeOptions('catalog_id')
+	const typeOptions = makeOptions('type')
+	const mediumOptions = makeOptions('medium')
+	const distributorOptions = makeOptions('distributor')
+	const descriptionOptions = makeOptions('description')
 
-	const catalogOptions = makeCatalogOptions()
-
-	function makeUpcOptions() {
+	function makeOptions(id) {
 		const u = new Set(props.data.map((row) => {
-			return row.upc_id
+			if (id === 'upc_id')
+			{return row.upc_id}
+			if (id === 'catalog_id')
+			{return row.catalog_id}
+			if (id === 'type')
+			{return row.type}
+			if (id === 'medium')
+			{return row.medium}
+			if (id === 'description')
+			{return row.description}
+			if (id === 'distributor')
+			{return row.distributor}
 		}))
 
 		let array = [...u]
 
-		const upcOptions = array.map((value) =>
+		const options = array.map((value) =>
 			{
 				return (
 					<option
@@ -111,24 +125,7 @@ function MatchModal(props) {
 				)
 			})
 
-		return upcOptions
-	}
-
-	function makeCatalogOptions() {
-		const u = new Set(props.data.map((row) => {
-			return row.catalog_id
-		}))
-
-		let array = [...u]
-
-		const upcOptions = array.map((value) =>
-			{
-				return (
-					<option>{value}</option>
-				)
-			})
-
-		return upcOptions
+		return options
 	}
 
 	function onSubmit(data) {
@@ -162,7 +159,8 @@ function MatchModal(props) {
 						<Typography variant="subtitle1">is</Typography>
 					</Grid>
 					<Grid item xs={4}>
-						{ choice && choice[index] && choice[index].column === 'upc_id'
+					{
+						choice && choice[index] && choice[index].column === 'upc_id'
 						?
 						<Controller
 							as={<NativeSelect>
@@ -174,6 +172,8 @@ function MatchModal(props) {
 							defaultValue={`${item.value}`}
 							/>
 							:
+							choice && choice[index] && choice[index].column === 'catalog_id'
+							?
 						<Controller
 							as={<NativeSelect>
 									{catalogOptions}
@@ -183,7 +183,70 @@ function MatchModal(props) {
 							name={`value[${index}].value`}
 							defaultValue={`${item.value}`}
 							/>
-						}
+							:
+							choice && choice[index] && choice[index].column === 'type'
+							?
+							<Controller
+								as={<NativeSelect>
+										{typeOptions}
+										</NativeSelect>}
+								control={control}
+								id="value"
+								name={`value[${index}].value`}
+								defaultValue={`${item.value}`}
+								/>
+						:
+							choice && choice[index] && choice[index].column === 'medium'
+							?
+							<Controller
+								as={<NativeSelect>
+										{mediumOptions}
+										</NativeSelect>}
+								control={control}
+								id="value"
+								name={`value[${index}].value`}
+								defaultValue={`${item.value}`}
+								/>
+						:
+							choice && choice[index] && choice[index].column === 'description'
+							?
+							<Controller
+								as={<NativeSelect>
+										{descriptionOptions}
+										</NativeSelect>}
+								control={control}
+								id="value"
+								name={`value[${index}].value`}
+								defaultValue={`${item.value}`}
+								/>
+						:
+							choice && choice[index] && choice[index].column === 'medium'
+							?
+							<Controller
+								as={<NativeSelect>
+										{mediumOptions}
+										</NativeSelect>}
+								control={control}
+								id="value"
+								name={`value[${index}].value`}
+								defaultValue={`${item.value}`}
+								/>
+				:		
+							choice && choice[index] && choice[index].column === 'distributor'
+							?
+							<Controller
+								as={<NativeSelect>
+										{distributorOptions}
+										</NativeSelect>}
+								control={control}
+								id="value"
+								name={`value[${index}].value`}
+								defaultValue={`${item.value}`}
+								/>
+						:
+						null
+							}
+
 					</Grid>
 					<Grid item xs={1}>
 						<IconButton>
