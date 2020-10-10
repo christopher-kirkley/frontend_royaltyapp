@@ -112,7 +112,7 @@ function MatchingTable(props) {
 	}
 
 	const [ open, setOpen ] = useState(false)
-	const [ matchOpen, setMatchOpen ] = useState(false)
+	const [ matchOpen, setMatchOpen ] = useState(true)
 
 	const [ selected, setSelected ] = useState(['0'])
 
@@ -163,53 +163,12 @@ function MatchingTable(props) {
 				open={open}
 				selected={selected}
 			/>
+			<MatchModal
+				open={matchOpen}
+				columns={columns}
+			/>
 
 		{ 
-			matchOpen ?
-			<Container style={{backgroundColor: "grey", padding: 10}}>
-			<Grid container spacing={1}>
-				<Grid item xs={12}>
-					<Typography variant="caption">Match Errors</Typography>
-				</Grid>
-				<Grid item xs={12}>
-					<Typography variant="caption">If UPC is 'y'</Typography>
-				</Grid>
-				<Grid item xs={12}>
-					<Typography variant="caption">AND</Typography>
-				</Grid>
-				<Grid item xs={12}>
-					<Typography variant="caption">If UPC is 'y'</Typography>
-				</Grid>
-				<Grid item>
-					<Typography variant="subtitle1">Set UPC to</Typography>
-				</Grid>
-				<Grid item={6}>
-					<NativeSelect
-						id="new_upc">
-						{upcChoices}
-					</NativeSelect>
-				</Grid>
-				<Grid item container justify="flex-end">
-					<Grid item xs={1}>
-						<Button
-							variant="contained"
-							color="secondary"
-							size="small"
-							onClick={props.handleClose}
-						>Cancel</Button>
-					</Grid>
-					<Grid item xs={1}>
-						<Button
-							variant="contained"
-							color="primary"
-							size="small"
-						>Update</Button>
-					</Grid>
-				</Grid>
-			</Grid>
-			</Container>
-
-			:
 
 			Object.keys(selectedRowIds).length > 0
 			?
