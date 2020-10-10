@@ -112,16 +112,13 @@ function MatchingTable(props) {
 	}
 
 	const [ open, setOpen ] = useState(false)
-	const [ matchOpen, setMatchOpen ] = useState(true)
+	const [ matchOpen, setMatchOpen ] = useState(false)
 
 	const [ selected, setSelected ] = useState(['0'])
 
 	function handleOpen() {
 		setOpen(true)
 		const indexes = Object.keys(selectedRowIds)
-		const sel = indexes.map((index) =>
-			props.rows[index])
-		setSelected(sel)
 	}
 
 	function handleMatchOpen() {
@@ -170,9 +167,18 @@ function MatchingTable(props) {
 		{ 
 			matchOpen ?
 			<Container style={{backgroundColor: "grey", padding: 10}}>
-			<Grid container spacing={2}>
+			<Grid container spacing={1}>
 				<Grid item xs={12}>
-					<Typography variant="h6">Match Errors</Typography>
+					<Typography variant="caption">Match Errors</Typography>
+				</Grid>
+				<Grid item xs={12}>
+					<Typography variant="caption">If UPC is 'y'</Typography>
+				</Grid>
+				<Grid item xs={12}>
+					<Typography variant="caption">AND</Typography>
+				</Grid>
+				<Grid item xs={12}>
+					<Typography variant="caption">If UPC is 'y'</Typography>
 				</Grid>
 				<Grid item>
 					<Typography variant="subtitle1">Set UPC to</Typography>
@@ -200,15 +206,13 @@ function MatchingTable(props) {
 						>Update</Button>
 					</Grid>
 				</Grid>
-
 			</Grid>
 			</Container>
 
 			:
 
-
-			Object.keys(selectedRowIds).length > 0 ?
-
+			Object.keys(selectedRowIds).length > 0
+			?
 			<Grid container style={{backgroundColor: "grey", padding: 20}}>
 				<Grid item xs={9}>
 					<Typography variant="subtitle1">{ Object.keys(selectedRowIds).length } rows selected.</Typography>
