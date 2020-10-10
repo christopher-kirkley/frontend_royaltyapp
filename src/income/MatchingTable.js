@@ -16,6 +16,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import Paper from '@material-ui/core/Paper';
+import NativeSelect from '@material-ui/core/NativeSelect';
 
 import UpdateModal from './UpdateModal'
 import MatchModal from './MatchModal'
@@ -76,7 +77,7 @@ function MatchingTable(props) {
 		} = useTable(
 			{ columns,
 				data,
-				initialState: { pageIndex: 0, pageSize: 25 },
+				initialState: { pageIndex: 0, pageSize: 10 },
 			},
 			useSortBy,
 			usePagination,
@@ -111,7 +112,7 @@ function MatchingTable(props) {
 	}
 
 	const [ open, setOpen ] = useState(false)
-	const [ matchOpen, setMatchOpen ] = useState(false)
+	const [ matchOpen, setMatchOpen ] = useState(true)
 
 	const [ selected, setSelected ] = useState(['0'])
 
@@ -138,6 +139,25 @@ function MatchingTable(props) {
 	function handleMatch() {
 	}
 
+	const [upcs, setUpcs] = useState([])
+
+	useEffect(() => {
+				fetch('http://localhost:5000/version')
+				.then(res => res.json())
+				.then(json => setUpcs(json))
+			}, [])
+
+	const upcChoices = upcs.map((upc) =>
+		{
+			return (
+				<option
+					id={upc.version_number}
+					value={upc.upc}
+				>{upc.version_number}
+				</option>
+			)
+		})
+
 	return (
 		<div>
 			<UpdateModal
@@ -146,12 +166,48 @@ function MatchingTable(props) {
 				open={open}
 				selected={selected}
 			/>
-			<MatchModal
-				matchOpen={matchOpen}
-				handleMatchClose={handleMatchClose}
-			/>
 
-		{ Object.keys(selectedRowIds).length > 0 ?
+		{ 
+			matchOpen ?
+			<Container style={{backgroundColor: "grey", padding: 10}}>
+			<Grid container spacing={2}>
+				<Grid item xs={12}>
+					<Typography variant="h6">Match Errors</Typography>
+				</Grid>
+				<Grid item>
+					<Typography variant="subtitle1">Set UPC to</Typography>
+				</Grid>
+				<Grid item={6}>
+					<NativeSelect
+						id="new_upc">
+						{upcChoices}
+					</NativeSelect>
+				</Grid>
+				<Grid item container justify="flex-end">
+					<Grid item xs={1}>
+						<Button
+							variant="contained"
+							color="secondary"
+							size="small"
+							onClick={props.handleClose}
+						>Cancel</Button>
+					</Grid>
+					<Grid item xs={1}>
+						<Button
+							variant="contained"
+							color="primary"
+							size="small"
+						>Update</Button>
+					</Grid>
+				</Grid>
+
+			</Grid>
+			</Container>
+
+			:
+
+
+			Object.keys(selectedRowIds).length > 0 ?
 
 			<Grid container style={{backgroundColor: "grey", padding: 20}}>
 				<Grid item xs={9}>
@@ -172,7 +228,7 @@ function MatchingTable(props) {
 						variant="contained"
 						color="secondary"
 						size="small"
-						onClick={handleMatch}
+						onClick={handleMatchOpen}
 					>
 					Match
 					</Button>
@@ -189,15 +245,6 @@ function MatchingTable(props) {
 			</Grid>
 			:
 			<Grid container style={{padding: 20}} justify="flex-end">
-				<Grid item xs={2} >
-					<Button
-						variant="contained"
-						color="secondary"
-						size="small"
-						onClick={handleMatchOpen}
-					>
-					Match All</Button>
-				</Grid>
 			</Grid>
 		}
 		 <Table {...getTableProps()} size="small">
