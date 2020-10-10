@@ -166,6 +166,7 @@ function MatchingTable(props) {
 			<MatchModal
 				open={matchOpen}
 				columns={columns}
+				data={data}
 			/>
 
 		{ 

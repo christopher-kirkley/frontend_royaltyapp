@@ -35,7 +35,7 @@ function MatchModal(props) {
 
 	const { register, control, handleSubmit, watch } = useForm({
 		defaultValues: {
-			column: [{ column: 'upc_id'}]
+			column: [{ column: 'upc_id', value: 'none'}]
 		}
 	})
 
@@ -65,6 +65,15 @@ function MatchModal(props) {
 			)
 		})
 
+	const tracks = []
+
+	const trackChoices = tracks.map((track) =>
+		{
+			return (
+				<option></option>
+			)
+		})
+
 	const columnChoices = props.columns.map((column) =>
 		{
 			return (
@@ -76,29 +85,68 @@ function MatchModal(props) {
 			)
 		})
 
-	const newUpc = ['choice1', 'choice2', 'choice3']
-
-	const upcOptions = newUpc.map((value) =>
-		{
-			return (
-				<option>{value}</option>
-			)
-		})
-
 	const [ upc, setUpc ] = useState(false)
 
 	const choice = watch("column")
 
+	const upcOptions = makeUpcOptions()
 
-	console.log(choice[0].column)
+	const catalogOptions = makeCatalogOptions()
+
+	function makeUpcOptions() {
+		const u = new Set(props.data.map((row) => {
+			return row.upc_id
+		}))
+
+		let array = [...u]
+
+		const upcOptions = array.map((value) =>
+			{
+				return (
+					<option
+						id={value}
+						value={value}
+					>{value}
+					</option>
+				)
+			})
+
+		return upcOptions
+	}
+
+	function makeCatalogOptions() {
+		const u = new Set(props.data.map((row) => {
+			return row.catalog_id
+		}))
+
+		let array = [...u]
+
+		const upcOptions = array.map((value) =>
+			{
+				return (
+					<option>{value}</option>
+				)
+			})
+
+		return upcOptions
+	}
+
+	function onSubmit(data) {
+		console.log(data)
+	}
+
+	const assign = watch("new")
+
+	console.log(assign)
 
 	const body = (
 		<div style={{transform: "translate(100%, 20%)"}} className={classes.paper}>
 		<Typography variant="h6" gutterBottom>Conditional Match</Typography>
+			<form onSubmit={handleSubmit(onSubmit)}>
 			<Grid container justify="space-between" alignItems="center">
 			{ fields.map((item, index) => {
 			return (
-				<React.Fragment>
+				<React.Fragment key={index}>
 					<Grid item xs={4}>
 						<Controller
 							as={<NativeSelect>
@@ -114,32 +162,28 @@ function MatchModal(props) {
 						<Typography variant="subtitle1">is</Typography>
 					</Grid>
 					<Grid item xs={4}>
-					{ 
-						choice[index].column === 'upc_id'
+						{ choice && choice[index] && choice[index].column === 'upc_id'
 						?
-						<NativeSelect
-							id="value">
-							{upcOptions}
-						</NativeSelect>
-						:
-						choice[index].column === 'distributor'
-						?
-						<NativeSelect
-							id="value">
-							<option>no</option>
-							<option>you</option>
-						</NativeSelect>
-						:
-						choice[index].column === 'catalog_id'
-						?
-						<NativeSelect
-							id="value">
-							<option>cata</option>
-							<option>you</option>
-						</NativeSelect>
-						:
-						null
-					}
+						<Controller
+							as={<NativeSelect>
+									{upcOptions}
+									</NativeSelect>}
+							control={control}
+							id="value"
+							name={`value[${index}].value`}
+							defaultValue={`${item.value}`}
+							/>
+							:
+						<Controller
+							as={<NativeSelect>
+									{catalogOptions}
+									</NativeSelect>}
+							control={control}
+							id="value"
+							name={`value[${index}].value`}
+							defaultValue={`${item.value}`}
+							/>
+						}
 					</Grid>
 					<Grid item xs={1}>
 						<IconButton>
@@ -167,10 +211,16 @@ function MatchModal(props) {
 					<Typography variant="subtitle1" gutterBottom>Then assign</Typography>
 				</Grid>
 				<Grid item xs={5}>
-					<NativeSelect
-						id="new_upc">
-						<option>Version Number</option>
-					</NativeSelect>
+					<Controller
+						as={<NativeSelect>
+									<option id="version_number" value="version_number">Version Number</option>
+									<option id="track_title" value="track_title">Track Title</option>
+								</NativeSelect>}
+						control={control}
+						defaultValue="version_number"
+						id="new"
+						name="new"
+						/>
 				</Grid>
 				<Grid item xs={2}>
 					<Typography variant="subtitle1">=</Typography>
@@ -178,13 +228,18 @@ function MatchModal(props) {
 				<Grid item xs={5}>
 					<NativeSelect
 						id="new_upc">
-						{upcChoices}
+						{ assign === 'version_number'
+							?
+							upcChoices
+							:
+						  trackChoices
+						}
 					</NativeSelect>
 				</Grid>
 				<Grid container item style={{marginTop: 30}} justify="flex-end">
 					<Grid item xs={3}>
 						<Button
-							variant="contained"
+							variant="outlined"
 							color="secondary"
 							size="small"
 						>Cancel</Button>
@@ -194,10 +249,12 @@ function MatchModal(props) {
 							variant="contained"
 							color="primary"
 							size="small"
+							type="submit"
 						>Submit</Button>
 					</Grid>
 				</Grid>
 			</Grid>
+			</form>
 			</div>
 			);
 	return (
