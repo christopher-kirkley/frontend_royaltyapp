@@ -89,7 +89,6 @@ function MatchModal(props) {
 
 	const choice = watch("column")
 
-	const upcOptions = makeOptions('upc_id')
 	const catalogOptions = makeOptions('catalog_id')
 	const typeOptions = makeOptions('type')
 	const mediumOptions = makeOptions('medium')
@@ -129,28 +128,30 @@ function MatchModal(props) {
 	}
 
 	function onSubmit(data) {
-		const column = data['column']
-		const value = data['value']
-		
-		var obj = {}
-
-		const x = column.map((col, index) => {
-			console.log(col['column'])
-			console.log(value[index])
-			obj[col['column']] = value[index['value']]
-		}
-		)
-	
-
-			console.log(obj)
+		console.log(data)
 	}
 
 
-		
-		
 
 	const assign = watch("new")
 
+	function test(item, index) {
+		if (choice && choice[index])
+		{
+			const column = choice[index].column
+			return(
+						<Controller
+							as={<NativeSelect>
+									{makeOptions(column)}
+									</NativeSelect>}
+							control={control}
+							id={column}
+							name={column}
+							defaultValue={`${item.value}`}
+							/>
+	)
+	}
+	}
 
 	const body = (
 		<div style={{transform: "translate(100%, 20%)"}} className={classes.paper}>
@@ -175,94 +176,7 @@ function MatchModal(props) {
 						<Typography variant="subtitle1">is</Typography>
 					</Grid>
 					<Grid item xs={4}>
-					{
-						choice && choice[index] && choice[index].column === 'upc_id'
-						?
-						<Controller
-							as={<NativeSelect>
-									{upcOptions}
-									</NativeSelect>}
-							control={control}
-							id="value"
-							name={`value[${index}].value`}
-							defaultValue={`${item.value}`}
-							/>
-							:
-							choice && choice[index] && choice[index].column === 'catalog_id'
-							?
-						<Controller
-							as={<NativeSelect>
-									{catalogOptions}
-									</NativeSelect>}
-							control={control}
-							id="value"
-							name={`value[${index}].value`}
-							defaultValue={`${item.value}`}
-							/>
-							:
-							choice && choice[index] && choice[index].column === 'type'
-							?
-							<Controller
-								as={<NativeSelect>
-										{typeOptions}
-										</NativeSelect>}
-								control={control}
-								id="value"
-								name={`value[${index}].value`}
-								defaultValue={`${item.value}`}
-								/>
-						:
-							choice && choice[index] && choice[index].column === 'medium'
-							?
-							<Controller
-								as={<NativeSelect>
-										{mediumOptions}
-										</NativeSelect>}
-								control={control}
-								id="value"
-								name={`value[${index}].value`}
-								defaultValue={`${item.value}`}
-								/>
-						:
-							choice && choice[index] && choice[index].column === 'description'
-							?
-							<Controller
-								as={<NativeSelect>
-										{descriptionOptions}
-										</NativeSelect>}
-								control={control}
-								id="value"
-								name={`value[${index}].value`}
-								defaultValue={`${item.value}`}
-								/>
-						:
-							choice && choice[index] && choice[index].column === 'medium'
-							?
-							<Controller
-								as={<NativeSelect>
-										{mediumOptions}
-										</NativeSelect>}
-								control={control}
-								id="value"
-								name={`value[${index}].value`}
-								defaultValue={`${item.value}`}
-								/>
-				:		
-							choice && choice[index] && choice[index].column === 'distributor'
-							?
-							<Controller
-								as={<NativeSelect>
-										{distributorOptions}
-										</NativeSelect>}
-								control={control}
-								id="value"
-								name={`value[${index}].value`}
-								defaultValue={`${item.value}`}
-								/>
-						:
-						null
-							}
-
+						{test(item, index)}
 					</Grid>
 					<Grid item xs={1}>
 						<IconButton>
