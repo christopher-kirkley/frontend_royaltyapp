@@ -129,12 +129,28 @@ function MatchModal(props) {
 	}
 
 	function onSubmit(data) {
-		console.log(data)
+		const column = data['column']
+		const value = data['value']
+		
+		var obj = {}
+
+		const x = column.map((col, index) => {
+			console.log(col['column'])
+			console.log(value[index])
+			obj[col['column']] = value[index['value']]
+		}
+		)
+	
+
+			console.log(obj)
 	}
+
+
+		
+		
 
 	const assign = watch("new")
 
-	console.log(assign)
 
 	const body = (
 		<div style={{transform: "translate(100%, 20%)"}} className={classes.paper}>
@@ -289,15 +305,22 @@ function MatchModal(props) {
 					<Typography variant="subtitle1">=</Typography>
 				</Grid>
 				<Grid item xs={5}>
-					<NativeSelect
-						id="new_upc">
-						{ assign === 'version_number'
-							?
-							upcChoices
-							:
-						  trackChoices
+					<Controller
+						as={<NativeSelect
+								id="new_value">
+								{ assign === 'track_title'
+									?
+									trackChoices
+									:
+									upcChoices
+								}
+								</NativeSelect>
 						}
-					</NativeSelect>
+						control={control}
+						defaultValue="none"
+						id="new_value"
+						name="new_value"
+					/>
 				</Grid>
 				<Grid container item style={{marginTop: 30}} justify="flex-end">
 					<Grid item xs={3}>
@@ -305,6 +328,7 @@ function MatchModal(props) {
 							variant="outlined"
 							color="secondary"
 							size="small"
+							onClick={props.handleMatchClose}
 						>Cancel</Button>
 					</Grid>
 					<Grid item xs={3}>

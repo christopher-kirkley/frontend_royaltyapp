@@ -168,16 +168,16 @@ function MatchingTable(props) {
 			/>
 			<MatchModal
 				open={matchOpen}
+				handleMatchClose={handleMatchClose}
 				columns={columns}
 				data={data}
 			/>
 
 		{ 
-
 			Object.keys(selectedRowIds).length > 0
 			?
 			<Grid container style={{backgroundColor: "grey", padding: 20}}>
-				<Grid item xs={9}>
+				<Grid item xs={10}>
 					<Typography variant="subtitle1">{ Object.keys(selectedRowIds).length } rows selected.</Typography>
 				</Grid>
 				<Grid item xs={1}>
@@ -193,16 +193,6 @@ function MatchingTable(props) {
 				<Grid item xs={1}>
 					<Button
 						variant="contained"
-						color="secondary"
-						size="small"
-						onClick={handleMatchOpen}
-					>
-					Match
-					</Button>
-				</Grid>
-				<Grid item xs={1}>
-					<Button
-						variant="contained"
 						size="small"
 						onClick={handleDelete}
 					>
@@ -212,6 +202,16 @@ function MatchingTable(props) {
 			</Grid>
 			:
 			<Grid container style={{padding: 20}} justify="flex-end">
+				<Grid item>
+					<Button
+						variant="contained"
+						color="secondary"
+						size="small"
+						onClick={handleMatchOpen}
+					>
+					Match
+					</Button>
+				</Grid>
 			</Grid>
 		}
 		 <Table {...getTableProps()} size="small">

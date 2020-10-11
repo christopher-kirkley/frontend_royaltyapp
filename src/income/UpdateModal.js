@@ -21,9 +21,6 @@ const useStyles = makeStyles((theme) => ({
 					boxShadow: theme.shadows[5],
 					padding: theme.spacing(2, 4, 3),
 				},
-	selected: {
-		backgroundColor: "yellow"
-		}
 }));
 
 
@@ -98,7 +95,6 @@ function UpdateModal(props) {
 				<Grid container>
 					<Grid item xs={12}
 						onClick={() => setUpc(!upc)}
-						className={ upc ? classes.selected : null }
 					>
 						<Typography variant="subtitle1">UPC: { sharedObj.upc_id }</Typography>
 					</Grid>
@@ -127,10 +123,12 @@ function UpdateModal(props) {
 							{upcChoices}
 						</NativeSelect>
 					</Grid>
-					<Grid container item style={{marginTop: 30}}>
-						<Grid item xs={6}>
+					<Grid container item style={{marginTop: 30}} justify="flex-end">
+						<Grid item xs={3}>
 							<Button
 								size="small"
+								variant="outlined"
+								color="secondary"
 								onClick={props.handleClose}
 							>Cancel</Button>
 						</Grid>
@@ -140,13 +138,6 @@ function UpdateModal(props) {
 								color="primary"
 								size="small"
 							>Update</Button>
-						</Grid>
-						<Grid item xs={3}>
-							<Button
-								variant="contained"
-								color="secondary"
-								size="small"
-							>Match All</Button>
 						</Grid>
 					</Grid>
 				</Grid>
