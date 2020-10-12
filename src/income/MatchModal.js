@@ -105,7 +105,7 @@ function MatchModal(props) {
 			{return row.distributor}
 		}))
 
-		let array = [...u]
+		let array = [...u].sort()
 
 		const options = array.map((value) =>
 			{
