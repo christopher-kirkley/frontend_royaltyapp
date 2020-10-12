@@ -89,12 +89,6 @@ function MatchModal(props) {
 
 	const choice = watch("column")
 
-	const catalogOptions = makeOptions('catalog_id')
-	const typeOptions = makeOptions('type')
-	const mediumOptions = makeOptions('medium')
-	const distributorOptions = makeOptions('distributor')
-	const descriptionOptions = makeOptions('description')
-
 	function makeOptions(id) {
 		const u = new Set(props.data.map((row) => {
 			if (id === 'upc_id')
@@ -131,8 +125,6 @@ function MatchModal(props) {
 		console.log(data)
 	}
 
-
-
 	const assign = watch("new")
 
 	function test(item, index) {
@@ -142,12 +134,13 @@ function MatchModal(props) {
 			return(
 						<Controller
 							as={<NativeSelect>
-									{makeOptions(column)}
+										<option id="none" value="none">None</option>
+										{makeOptions(column)}
 									</NativeSelect>}
 							control={control}
 							id={column}
 							name={column}
-							defaultValue={`${item.value}`}
+							defaultValue='none'
 							/>
 	)
 	}
@@ -222,6 +215,7 @@ function MatchModal(props) {
 					<Controller
 						as={<NativeSelect
 								id="new_value">
+								<option id="none" value="none">None</option>
 								{ assign === 'track_title'
 									?
 									trackChoices
