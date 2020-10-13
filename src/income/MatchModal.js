@@ -125,9 +125,6 @@ function MatchModal(props) {
 		return options
 	}
 
-	function onSubmit(data) {
-		console.log(data)
-	}
 
 	const assign = watch("new")
 
@@ -153,7 +150,7 @@ function MatchModal(props) {
 	const body = (
 		<div style={{transform: "translate(100%, 20%)"}} className={classes.paper}>
 		<Typography variant="h6" gutterBottom>Conditional Match</Typography>
-			<form onSubmit={handleSubmit(onSubmit)}>
+			<form onSubmit={handleSubmit(props.onSubmit)}>
 			<Grid container justify="space-between" alignItems="center">
 			{ fields.map((item, index) => {
 			return (

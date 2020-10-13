@@ -158,6 +158,47 @@ function MatchingTable(props) {
 			)
 		})
 
+	function onSubmit(data) {
+		console.log(data)
+		if (data['distributor'])
+		{ var distributor = data['distributor']}
+		if (data['upc_id'])
+		{ var upc_id = data['upc_id']}
+		if (data['catalog_id'])
+		{ var catalog_id = data['catalog_id']}
+		if (data['type'])
+		{ var type = data['type']}
+		if (data['medium'])
+		{ var medium = data['medium']}
+		if (data['version_number'])
+		{ var version_number = data['version_number']}
+		if (data['description'])
+		{ var description = data['description']}
+				fetch('http://localhost:5000/income/update-errors', {
+					method: 'PUT',
+					body: JSON.stringify(
+						{
+							'upc_id': data['new_value'],
+							'data_to_match' : 
+								[
+									{
+										'distributor': distributor,
+										'upc_id': upc_id,
+										'catalog_id': catalog_id,
+										'type': type,
+										'version_number': version_number,
+										'medium': medium,
+										'description': description,
+									}
+								]
+							}
+					)
+				})
+			.then(res => fetch('http://localhost:5000/income/matching-errors'))
+			.then(res => res.json())
+			.then(json => props.setRows(json))
+	}
+
 	return (
 		<div>
 			<UpdateModal
@@ -171,6 +212,7 @@ function MatchingTable(props) {
 				handleMatchClose={handleMatchClose}
 				columns={columns}
 				data={data}
+				onSubmit={onSubmit}
 			/>
 
 		{ 
