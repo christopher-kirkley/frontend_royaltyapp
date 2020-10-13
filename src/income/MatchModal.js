@@ -134,11 +134,13 @@ function MatchModal(props) {
 			const column = choice[index].column
 			return(
 						<Controller
-							as={<NativeSelect>
-										<option id="none" value="none">None</option>
+							as={<NativeSelect
+										id="column">
+										<option disabled="true" value="none">Select...</option>
 										{makeOptions(column)}
 									</NativeSelect>}
 							control={control}
+							required={true}
 							id={column}
 							name={column}
 							defaultValue='none'
@@ -218,7 +220,7 @@ function MatchModal(props) {
 					<Controller
 						as={<NativeSelect
 								id="new_value">
-								<option id="none" value="none">None</option>
+								<option value="none" disabled="true">Select...</option>
 								{ assign === 'track_title'
 									?
 									trackChoices
@@ -231,11 +233,13 @@ function MatchModal(props) {
 						defaultValue="none"
 						id="new_value"
 						name="new_value"
+						required={true}
 					/>
 				</Grid>
 				<Grid container item style={{marginTop: 30}} justify="flex-end">
 					<Grid item xs={3}>
 						<Button
+							id="cancel"
 							variant="outlined"
 							color="secondary"
 							size="small"
@@ -244,6 +248,7 @@ function MatchModal(props) {
 					</Grid>
 					<Grid item xs={3}>
 						<Button
+							id="submit"
 							variant="contained"
 							color="primary"
 							size="small"

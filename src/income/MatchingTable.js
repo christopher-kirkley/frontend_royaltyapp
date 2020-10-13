@@ -224,6 +224,7 @@ function MatchingTable(props) {
 				</Grid>
 				<Grid item xs={1}>
 					<Button
+						id="update"
 						variant="contained"
 						color="primary"
 						size="small"
@@ -234,6 +235,7 @@ function MatchingTable(props) {
 				</Grid>
 				<Grid item xs={1}>
 					<Button
+						id="delete"
 						variant="contained"
 						size="small"
 						onClick={handleDelete}
@@ -246,6 +248,7 @@ function MatchingTable(props) {
 			<Grid container style={{padding: 20}} justify="flex-end">
 				<Grid item>
 					<Button
+						id="match"
 						variant="contained"
 						color="secondary"
 						size="small"
@@ -256,7 +259,7 @@ function MatchingTable(props) {
 				</Grid>
 			</Grid>
 		}
-		 <Table {...getTableProps()} size="small">
+		 <Table {...getTableProps()} size="small" id="matching_error_table">
 			 <TableHead>
 				 {// Loop over the header rows
 				 headerGroups.map(headerGroup => (
