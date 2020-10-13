@@ -103,6 +103,10 @@ function MatchModal(props) {
 			{return row.description}
 			if (id === 'distributor')
 			{return row.distributor}
+			if (id === 'album_name')
+			{return row.album_name}
+			if (id === 'track_name')
+			{return row.track_name}
 		}))
 
 		let array = [...u].sort()
@@ -173,7 +177,9 @@ function MatchModal(props) {
 					</Grid>
 					<Grid item xs={1}>
 						<IconButton>
-						  <DeleteIcon />
+						  <DeleteIcon
+								onClick={() => remove(index)}
+							/>
 						</IconButton>
 					</Grid>
 				</React.Fragment>
