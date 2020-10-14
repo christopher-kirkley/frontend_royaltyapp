@@ -7,11 +7,13 @@ import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
-
+import Snackbar from '@material-ui/core/Snackbar';
+import Alert from '@material-ui/lab/Alert';
 
 function ImportCatalog () {
 
-	const [msg, setMsg] = useState('')
+	const [ success, setSuccess ] = useState(false)
+	const [ error, setError ] = useState(true)
 
 	function handleUpload(e) {
 		const file = e.target.upload.files
@@ -23,8 +25,8 @@ function ImportCatalog () {
 				body: formData
 			})
 		.then(resp => resp.json())
-		.then(res => setMsg('1 file uploaded'))
-		.catch(error => setMsg('Error uploading'))
+		.then(res => setSuccess(true))
+		.catch(error => setError(true))
 	}
 
 	return (
@@ -59,7 +61,16 @@ function ImportCatalog () {
 		</Grid>
 
 			</form>
-			<h3 id='msg'>{ msg }</h3>
+		<Snackbar open={success} autoHideDuration={6000}>
+			<Alert severity="success">
+			Uploaded!
+			</Alert>
+		</Snackbar>
+		<Snackbar open={error} autoHideDuration={6000}>
+			<Alert severity="error">
+			Error
+			</Alert>
+		</Snackbar>
 			
 		</Container>
 	)}
