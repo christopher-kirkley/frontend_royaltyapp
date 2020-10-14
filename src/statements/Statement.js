@@ -82,7 +82,6 @@ function Statement() {
 									</Button>
 								</Grid>
 							</Grid>
-							// <Divider style={{marginTop: 10}}/>
 							<Grid>
 								<StatementTable
 									handleClick={handleClick}
