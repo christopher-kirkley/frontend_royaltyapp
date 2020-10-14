@@ -17,9 +17,11 @@ import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import Paper from '@material-ui/core/Paper';
 import NativeSelect from '@material-ui/core/NativeSelect';
+import Drawer from '@material-ui/core/Drawer';
 
 import UpdateModal from './UpdateModal'
 import MatchModal from './MatchModal'
+import MatchForm from './MatchForm'
 
 import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table'
 
@@ -199,6 +201,7 @@ function MatchingTable(props) {
 			.then(json => props.setRows(json))
 	}
 
+
 	return (
 		<div>
 			<UpdateModal
@@ -259,7 +262,11 @@ function MatchingTable(props) {
 				</Grid>
 			</Grid>
 		}
-		 <Table {...getTableProps()} size="small" id="matching_error_table">
+
+		 <Table {...getTableProps()}
+				size="small"
+				id="matching_error_table"
+			>
 			 <TableHead>
 				 {// Loop over the header rows
 				 headerGroups.map(headerGroup => (

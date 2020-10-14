@@ -12,14 +12,20 @@ import Header from '../components/Header'
 import MatchingTable from './MatchingTable'
 
 function MatchingErrors(props) {
+
 	const history = useHistory()
 
 	const [rows, setRows] = useState([])
+
 
 	useEffect(() => {
 		fetch('http://localhost:5000/income/matching-errors')
 		.then(res => res.json())
 		.then(json => setRows(json))
+		// .then(res =>  {
+	// if (rows.length === 0)
+	// { history.push('/income') }
+		// })
 	}, rows)
 
 

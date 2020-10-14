@@ -38,8 +38,11 @@ function StatementTable(props) {
 	}, [])
 
 	return (
-		<Table id="statement_table">
-		{ props.statements.map((row) => 
+		<React.Fragment>
+		{ props.statements.length > 0
+			?
+			<Table id="statement_table">
+			{ props.statements.map((row) => 
 			<TableRow>
 					<TableCell>
 						{row.statement_detail_table}
@@ -60,6 +63,10 @@ function StatementTable(props) {
 			</TableRow>
 		)}
 		</Table>
+		:
+		<Typography id="income-data" variant="h6" align="center">No data</Typography> 
+		}
+		</React.Fragment>
 		)
 	}
 
