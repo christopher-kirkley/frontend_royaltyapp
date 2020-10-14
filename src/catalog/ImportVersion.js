@@ -8,10 +8,13 @@ import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 
+import SnackbarAlert from '../components/SnackbarAlert'
+
 
 function ImportVersion () {
 
-	const [msg, setMsg] = useState('')
+	const [ success, setSuccess ] = useState(false)
+	const [ error, setError ] = useState(false)
 
 	function handleUpload(e) {
 		const file = e.target.upload.files
@@ -23,8 +26,9 @@ function ImportVersion () {
 				body: formData
 			})
 		.then(resp => resp.json())
-		.then(res => setMsg('1 file uploaded'))
-		.catch(error => setMsg('Error uploading'))
+		.then(res => setSuccess(true))
+
+		.catch(error => setError(true))
 	}
 
 	return (
@@ -53,7 +57,14 @@ function ImportVersion () {
 				</Grid>
 			</Grid>
 			</form>
-			<h3 id='version_msg'>{ msg }</h3>
+
+		<SnackbarAlert
+			success={success}
+			error={error}
+			setSuccess={setSuccess}
+			setError={setError}
+		/>
+
 		</Container>
 	)}
 

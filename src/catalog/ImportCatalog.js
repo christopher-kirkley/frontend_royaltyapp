@@ -7,13 +7,13 @@ import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
-import Snackbar from '@material-ui/core/Snackbar';
-import Alert from '@material-ui/lab/Alert';
+
+import SnackbarAlert from '../components/SnackbarAlert'
 
 function ImportCatalog () {
 
 	const [ success, setSuccess ] = useState(false)
-	const [ error, setError ] = useState(true)
+	const [ error, setError ] = useState(false)
 
 	function handleUpload(e) {
 		const file = e.target.upload.files
@@ -61,16 +61,13 @@ function ImportCatalog () {
 		</Grid>
 
 			</form>
-		<Snackbar open={success} autoHideDuration={6000}>
-			<Alert severity="success">
-			Uploaded!
-			</Alert>
-		</Snackbar>
-		<Snackbar open={error} autoHideDuration={6000}>
-			<Alert severity="error">
-			Error
-			</Alert>
-		</Snackbar>
+		
+		<SnackbarAlert
+			success={success}
+			error={error}
+			setSuccess={setSuccess}
+			setError={setError}
+		/>
 			
 		</Container>
 	)}
