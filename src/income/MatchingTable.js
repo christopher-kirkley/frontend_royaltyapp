@@ -196,9 +196,15 @@ function MatchingTable(props) {
 							}
 					)
 				})
+			.then(res => res.json())
+			.then(json => {
+				props.setUpdated(json['updated'])
+				props.setAlert(true)
+			})
 			.then(res => fetch('http://localhost:5000/income/matching-errors'))
 			.then(res => res.json())
 			.then(json => props.setRows(json))
+			.then(res => setMatchOpen(false))
 	}
 
 
