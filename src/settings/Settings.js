@@ -59,6 +59,15 @@ function Settings() {
 				</option>
 			)
 		})
+
+	const [orderSettings, setOrderSettings] = useState([])
+
+	useEffect(() => {
+				fetch('http://localhost:5000/income/order-settings')
+				.then(res => res.json())
+				.then(json => setOrderSettings(json))
+			}, [])
+
 	return (
 		<Container>
 		<Header name="Settings"/>
@@ -124,8 +133,8 @@ function Settings() {
 								/>
 							</Grid>
 						</Grid>
+						<Button color="primary" variant="contained" size="small">Update</Button>
 				</Grid>
-				
 
 				</Paper>
 			</Grid>
