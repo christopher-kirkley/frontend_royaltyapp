@@ -3,7 +3,10 @@ import React from 'react';
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
+import IconButton from '@material-ui/core/IconButton';
 import { makeStyles } from '@material-ui/core/styles'
+
+import SettingsIcon from '@material-ui/icons/Settings';
 
 const drawerWidth = 220
 
@@ -33,9 +36,14 @@ function Header(props) {
 			<div style={{marginBottom: 90}}>
 			<AppBar position="absolute" className={(classes.appBar, classes.appBarShift)}>
 				<Toolbar>
-					<Typography id="header" component="h1" variant="h6" color="inherit" >
+					<Typography id="header" component="h1" variant="h6" color="inherit" noWrap style={{flexGrow: 1}}>
 					{props.name}
 					</Typography>
+		{
+					// <IconButton color="inherit">
+					// 	<SettingsIcon/>
+					// </IconButton>
+		}
 				</Toolbar>
 			</AppBar>
 		</div>

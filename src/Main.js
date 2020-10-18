@@ -28,8 +28,11 @@ import StatementView from "./statements/StatementView"
 import StatementSummary from "./statements/StatementSummary"
 import StatementEdit from "./statements/StatementEdit"
 import StatementDetail from "./statements/StatementDetail"
+import Settings from "./settings/Settings"
 
 import Collapse from '@material-ui/core/Collapse';
+import Divider from '@material-ui/core/Divider';
+
 import MoneyOffIcon from '@material-ui/icons/MoneyOff';
 import DescriptionIcon from '@material-ui/icons/Description';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
@@ -37,6 +40,7 @@ import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import ViewListIcon from '@material-ui/icons/ViewList';
 import ImportExportIcon from '@material-ui/icons/ImportExport';
+import SettingsIcon from '@material-ui/icons/Settings';
 
 import Expense from "./expense/Expense"
 import ExpenseImport from "./expense/ExpenseImport"
@@ -188,6 +192,17 @@ function Main() {
 						<ListItemText primary={"Statement"}/>
 					</ListItem>
 				</Link>
+				
+				<Divider />
+
+				<Link to="/settings" className={classes.link}>
+					<ListItem button id="settings">
+						<ListItemIcon>
+							<SettingsIcon />
+						</ListItemIcon>
+						<ListItemText primary={"Settings"}/>
+					</ListItem>
+				</Link>
 
 		{
 					// <ListItem button id="statement" onClick={handleOpenStatement}>
@@ -243,6 +258,7 @@ function Main() {
 				<Route exact path="/statements/:id" component={StatementSummary}/>
 				<Route exact path="/statements/:id/edit" component={StatementEdit}/>
 				<Route exact path="/statements/:id/artist/:artistId" component={StatementDetail}/>
+				<Route exact path="/settings" component={Settings}/>
 			</Switch>
 		</div>
 		<div className="content">
