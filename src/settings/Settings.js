@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 import Header from "../components/Header";
 
@@ -41,6 +41,24 @@ function Settings() {
 	function handleClick() {
 	}
 
+	const [distributors, setDistributors] = useState([])
+
+	useEffect(() => {
+				fetch('http://localhost:5000/income/distributors')
+				.then(res => res.json())
+				.then(json => setDistributors(json))
+			}, [])
+
+	const distributorChoices = distributors.map((distributor) =>
+		{
+			return (
+				<option
+					id={distributor.id}
+					value={distributor.id}
+				>{distributor.distributor_name}
+				</option>
+			)
+		})
 	return (
 		<Container>
 		<Header name="Settings"/>
@@ -64,9 +82,7 @@ function Settings() {
 								<Controller
 									as={
 										<NativeSelect>
-											<option>Bandcamp</option>
-											<option>Secretly Physical</option>
-											<option>Secretly Digital</option>
+											{distributorChoices}
 										</NativeSelect>
 									}
 									name="distributor"
