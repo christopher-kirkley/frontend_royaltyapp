@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import { useForm, Controller } from 'react-hook-form'
 
@@ -30,6 +30,25 @@ function AddStatementForm(props) {
 
 	const [msg, setMsg] = useState('')
 
+	const [distributors, setDistributors] = useState([])
+
+	useEffect(() => {
+				fetch('http://localhost:5000/income/distributors')
+				.then(res => res.json())
+				.then(json => setDistributors(json))
+			}, [])
+
+	const distributorChoices = distributors.map((distributor) =>
+		{
+			return (
+				<option
+					id={distributor.id}
+					value={distributor.id}
+				>{distributor.distributor_name}
+				</option>
+			)
+		})
+
 		
 	return (
 		<Container component="main" maxWidth="xs" spacing={4}>
@@ -54,8 +73,7 @@ function AddStatementForm(props) {
 					<Controller
 						as={
 							<NativeSelect>
-								<option id="bandcamp" value="bandcamp">Bandcamp</option>
-								<option id="sd" value="sd">SD Digital</option>
+								{ distributorChoices }
 							</NativeSelect>
 							}
 						name="source_statement"
