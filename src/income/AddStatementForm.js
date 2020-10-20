@@ -42,8 +42,8 @@ function AddStatementForm(props) {
 		{
 			return (
 				<option
-					id={distributor.id}
-					value={distributor.id}
+					id={distributor.distributor_name}
+					value={distributor.distributor_name}
 				>{distributor.distributor_name}
 				</option>
 			)
