@@ -76,9 +76,14 @@ function Settings() {
 				<Paper className={classes.paper}> 
 					<Grid container alignItems="center">
 						<Grid item xs={2} >
-							<Typography color="textSecondary"
-								component="h6" variant="caption" align="left"
-								gutterBottom>INCOME SETTINGS</Typography>
+							<Typography
+								color="textSecondary"
+								component="h6"
+								variant="caption"
+								align="left"
+								gutterBottom
+								>INCOME SETTINGS
+							</Typography>
 						<Divider style={{marginTop: 10, marginBottom: 10}}/>
 						</Grid>
 						<Grid container>

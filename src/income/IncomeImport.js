@@ -28,6 +28,8 @@ function IncomeImport() {
 	const [ matchingErrorsMsg, setMatchingErrorsMsg ] = useState('')
 	const [ pendingStatements, setPendingStatements ] = useState([])
 
+	const [ trackMatchingErrors, setTrackMatchingErrors ] = useState(0)
+
 	useEffect(() => {
 		fetch('http://localhost:5000/income/pending-statements')
 		.then(res => res.json())
@@ -46,6 +48,11 @@ function IncomeImport() {
 			.then(res => res.length)
 			.then(res => setMatchingErrors(res))
 			.catch(error => setMatchingErrorsMsg('Error!'))
+			.then(res => fetch(`http://localhost:5000/income/track-matching-errors`))
+			.then(res => res.json())
+			.then(res => res.length)
+			.then(res => setTrackMatchingErrors(res))
+
 	}, [])
 
 	function getMatchingErrors() {
@@ -53,6 +60,13 @@ function IncomeImport() {
 		.then(res => res.json())
 		.then(res => res.length)
 		.then(res => setMatchingErrors(res))
+	}
+
+	function getTrackMatchingErrors() {
+		fetch(`http://localhost:5000/income/track-matching-errors`)
+		.then(res => res.json())
+		.then(res => res.length)
+		.then(res => setTrackMatchingErrors(res))
 	}
 
 	function goToMatchingErrorPage() {
@@ -97,6 +111,7 @@ function IncomeImport() {
 										matchingErrors={matchingErrors}
 										goToMatchingErrorPage={goToMatchingErrorPage}
 										handleDelete={handleDelete}
+										trackMatchingErrors={trackMatchingErrors}
 									/>
 							</Paper>
 						</Grid>

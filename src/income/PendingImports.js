@@ -51,16 +51,53 @@ function PendingImports(props) {
 	})
 
 	function DisplayMatchingErrors() {
-		if (props.matchingErrors > 0 && props.pendingStatements.length > 0) {
+		if (props.pendingStatements.length > 0) {
 			return (
-				<Alert severity="warning">
-					<AlertTitle>Matching Errors</AlertTitle>
-				  <span id="matching_errors">You have <strong id="error_number">{props.matchingErrors}</strong> matching errors.</span>
-				<Typography component="p" variant="p" id="error_msg">{props.matchingErrorsMsg}</Typography>
-				</Alert>
+				<React.Fragment>
+				{ props.matchingErrors > 0
+					&&
+					<Grid container alignItems="center">
+						<Grid item xs={11}>
+							<Alert severity="warning">
+								<AlertTitle>UPC Matching Errors</AlertTitle>
+								<span id="matching_errors">You have <strong id="error_number">{props.matchingErrors}</strong> UPC matching errors.</span>
+							<Typography component="p" variant="p" id="error_msg">{props.matchingErrorsMsg}</Typography>
+							</Alert>
+						</Grid>
+						<Grid item xs={1}>
+							<Button
+								color="secondary"
+								variant="contained"
+								onClick={props.goToMatchingErrorPage}	
+								>Fix</Button>
+						</Grid>
+					</Grid>
+				}
+
+				{ props.trackMatchingErrors > 0
+					&&
+					<Grid container alignItems="center">
+						<Grid item xs={11}>
+							<Alert severity="warning">
+								<AlertTitle>ISRC Matching Errors</AlertTitle>
+										<span id="track_matching_errors">You have <strong id="error_number">{props.trackMatchingErrors}</strong> track matching errors.</span>
+									<Typography component="p" variant="p" id="error_msg">{props.matchingErrorsMsg}</Typography>
+							</Alert>
+						</Grid>
+						<Grid item xs={1}>
+							<Button
+								color="secondary"
+								variant="contained"
+								onClick={props.goToMatchingErrorPage}	
+								>Fix</Button>
+						</Grid>
+					</Grid>
+				}
+
+				</React.Fragment>
 			)
 		}
-		if (props.matchingErrors == 0 && props.pendingStatements.length > 0) {
+		if (props.matchingErrors == 0 | props.trackMatchingErrors === 0 && props.pendingStatements.length > 0) {
 			return (
 				<Alert severity="success">
 					<AlertTitle>Ready to Process!</AlertTitle>
@@ -100,20 +137,8 @@ function PendingImports(props) {
 					type="submit"
 					fullWidth
 					onClick={props.processPending}
-					disabled={ props.matchingErrors > 0 || props.pendingStatements.length === 0 ? true : false }
+					disabled={ props.matchingErrors > 0 || props.trackMatchingErrors > 0 || props.pendingStatements.length === 0 ? true : false }
 				>Process</Button>
-			</Grid>
-			<Grid item xs={2}>
-				<Button
-					variant="contained"
-					color="primary"
-					id="fix_errors"
-					name="submit"
-					type="submit"
-					fullWidth
-					onClick={props.goToMatchingErrorPage}	
-					disabled={ props.matchingErrors > 0 || props.pendingStatements.length === 0 ? false : true }
-				>Fix</Button>
 			</Grid>
 		</Grid>
 		</React.Fragment>
