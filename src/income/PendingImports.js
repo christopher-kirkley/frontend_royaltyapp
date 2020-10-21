@@ -69,6 +69,7 @@ function PendingImports(props) {
 								color="secondary"
 								variant="contained"
 								onClick={props.goToMatchingErrorPage}	
+								id="fix_upc_errors"
 								>Fix</Button>
 						</Grid>
 					</Grid>
@@ -87,6 +88,7 @@ function PendingImports(props) {
 						<Grid item xs={1}>
 							<Button
 								color="secondary"
+								id="fix_isrc_errors"
 								variant="contained"
 								onClick={props.goToMatchingErrorPage}	
 								>Fix</Button>

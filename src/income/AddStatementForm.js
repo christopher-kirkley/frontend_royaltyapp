@@ -24,6 +24,7 @@ function AddStatementForm(props) {
 			})
 		.then(resp => resp.json())
 		.then(res => {props.getMatchingErrors()})
+		.then(res => {props.getTrackMatchingErrors()})
 		.then(res => {props.getPendingStatements()})
 		.catch(error => setMsg('Error uploading'))
 	}

@@ -87,6 +87,7 @@ function IncomeImport() {
 		})
 		.then(res => getPendingStatements())
 		.then(res => getMatchingErrors())
+		.then(res => getTrackMatchingErrors())
 	}
 
 
@@ -98,6 +99,7 @@ function IncomeImport() {
 						<Paper elevation={3} className={classes.paper}>
 						<AddStatementForm
 							getMatchingErrors={getMatchingErrors}
+							getTrackMatchingErrors={getTrackMatchingErrors}
 							getPendingStatements={getPendingStatements}/>
 						</Paper>
 					</Grid>
