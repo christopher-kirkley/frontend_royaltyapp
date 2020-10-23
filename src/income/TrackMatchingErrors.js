@@ -9,7 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 
 import Header from '../components/Header'
-import MatchingTable from './MatchingTable'
+import TrackMatchingTable from './TrackMatchingTable'
 
 import Snackbar from '@material-ui/core/Snackbar';
 import Alert from '@material-ui/lab/Alert';
@@ -43,7 +43,7 @@ function TrackMatchingErrors(props) {
 				<Alert severity="error">You have { rows.length} ISRC matching errors</Alert>
 				<Divider style={{marginTop: 10}}/>
 				<Paper>
-				<MatchingTable
+				<TrackMatchingTable
 					rows={rows}
 					setRows={setRows}
 					setUpdated={setUpdated}
