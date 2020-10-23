@@ -48,6 +48,8 @@ function MatchModal(props) {
 
 	const [upcs, setUpcs] = useState([])
 
+	const [tracks, setTracks] = useState([])
+
 	useEffect(() => {
 				fetch('http://localhost:5000/version')
 				.then(res => res.json())
@@ -65,12 +67,21 @@ function MatchModal(props) {
 			)
 		})
 
-	const tracks = []
+	useEffect(() => {
+				fetch('http://localhost:5000/tracks')
+				.then(res => res.json())
+				.then(json => setTracks(json))
+				.then(res => console.log(tracks))
+			}, [])
 
 	const trackChoices = tracks.map((track) =>
 		{
 			return (
-				<option></option>
+				<option
+					id={track.isrc_id}
+				>
+				{track.isrc_id}
+				</option>
 			)
 		})
 
