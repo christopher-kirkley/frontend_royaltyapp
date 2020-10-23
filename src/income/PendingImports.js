@@ -90,7 +90,7 @@ function PendingImports(props) {
 								color="secondary"
 								id="fix_isrc_errors"
 								variant="contained"
-								onClick={props.goToMatchingErrorPage}	
+								onClick={()=>history.push('/income/track-matching-errors')}	
 								>Fix</Button>
 						</Grid>
 					</Grid>
