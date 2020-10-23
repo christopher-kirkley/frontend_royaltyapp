@@ -70,8 +70,10 @@ function MatchModal(props) {
 	useEffect(() => {
 				fetch('http://localhost:5000/tracks')
 				.then(res => res.json())
-				.then(json => setTracks(json))
-				.then(res => console.log(tracks))
+				.then(json => {
+					const sorted = [...json].sort((a, b) => (a.isrc > b.isrc))
+					setTracks(sorted)
+				})
 			}, [])
 
 	const trackChoices = tracks.map((track) =>
@@ -80,7 +82,7 @@ function MatchModal(props) {
 				<option
 					id={track.isrc_id}
 				>
-				{track.isrc_id}
+				{track.isrc}
 				</option>
 			)
 		})
@@ -138,6 +140,7 @@ function MatchModal(props) {
 
 
 	const assign = watch("new")
+	console.log(assign)
 
 	function test(item, index) {
 		if (choice && choice[index])
