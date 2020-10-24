@@ -133,7 +133,6 @@ function MatchingTable(props) {
 	}
 
 	function handleMatchClose() {
-		console.log('clcik')
 		setMatchOpen(false)
 	}
 
@@ -218,8 +217,6 @@ function MatchingTable(props) {
 
 	return (
 		<div>
-
-
 			<UpdateModal
 				handleClose={handleClose}
 				handleOpen={handleOpen}

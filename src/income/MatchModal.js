@@ -131,6 +131,8 @@ function MatchModal(props) {
 			{return row.album_name}
 			if (id === 'track_name')
 			{return row.track_name}
+			if (id === 'version_number')
+			{return row.version_number}
 		}))
 
 		let array = [...u].sort()
