@@ -60,7 +60,7 @@ function PendingImports(props) {
 						<Grid item xs={11}>
 							<Alert severity="warning">
 								<AlertTitle>UPC Matching Errors</AlertTitle>
-								<span id="matching_errors">You have <strong id="error_number">{props.matchingErrors}</strong> UPC matching errors.</span>
+								<span id="upc_matching_errors">You have <strong id="error_number">{props.matchingErrors}</strong> UPC matching errors.</span>
 							<Typography component="p" variant="p" id="error_msg">{props.matchingErrorsMsg}</Typography>
 							</Alert>
 						</Grid>

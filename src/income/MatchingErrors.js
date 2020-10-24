@@ -27,11 +27,12 @@ function MatchingErrors(props) {
 	useEffect(() => {
 		fetch('http://localhost:5000/income/matching-errors')
 		.then(res => res.json())
-		.then(json => setRows(json))
-		// .then(res =>  {
-	// if (rows.length === 0)
-	// { history.push('/income') }
-		// })
+		.then(json => {
+			setRows(json)
+			if (json.length === 0 ) {
+				history.push('/income/import')
+			}
+		})
 	}, rows)
 
 

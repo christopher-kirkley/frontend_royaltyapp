@@ -48,6 +48,8 @@ const IndeterminateCheckbox = React.forwardRef(
 
 function MatchingTable(props) {
 
+	const history = useHistory()
+
 	const data = React.useMemo( () => props.rows)
 
 	const columns = React.useMemo(
@@ -205,7 +207,12 @@ function MatchingTable(props) {
 			})
 			.then(res => fetch('http://localhost:5000/income/track-matching-errors'))
 			.then(res => res.json())
-			.then(json => props.setRows(json))
+			.then(json => {
+				props.setRows(json)
+				if (json.length === 0 ) {
+					history.push('/income/import')
+				}
+			})
 			.then(res => setMatchOpen(false))
 	}
 
@@ -219,14 +226,20 @@ function MatchingTable(props) {
 				open={open}
 				selected={selected}
 			/>
+		<Drawer
+			anchor={"right"}
+			open={matchOpen}
+			onClose={handleMatchClose}
+		>
 			<MatchModal
 				open={matchOpen}
-				handleMatchClose={handleMatchClose}
+				type={"track"}
 				columns={columns}
 				data={data}
-				type={"track"}
+				handleMatchClose={handleMatchClose}
 				onSubmit={onSubmit}
 			/>
+		</Drawer>
 
 		{ 
 			Object.keys(selectedRowIds).length > 0

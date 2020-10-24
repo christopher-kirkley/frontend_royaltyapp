@@ -88,8 +88,8 @@ function MatchModal(props) {
 		{
 			return (
 				<option
-					id={track.isrc_id}
-					value={track.isrc_id}
+					id={track.isrc}
+					value={track.isrc}
 				>
 				{track.isrc}
 				</option>
