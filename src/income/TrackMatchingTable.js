@@ -19,6 +19,7 @@ import Paper from '@material-ui/core/Paper';
 import NativeSelect from '@material-ui/core/NativeSelect';
 import Drawer from '@material-ui/core/Drawer';
 
+
 import UpdateModal from './UpdateModal'
 import MatchModal from './MatchModal'
 import MatchForm from './MatchForm'
@@ -211,6 +212,7 @@ function MatchingTable(props) {
 
 	return (
 		<div>
+
 			<UpdateModal
 				handleClose={handleClose}
 				handleOpen={handleOpen}
@@ -222,6 +224,7 @@ function MatchingTable(props) {
 				handleMatchClose={handleMatchClose}
 				columns={columns}
 				data={data}
+				type={"track"}
 				onSubmit={onSubmit}
 			/>
 

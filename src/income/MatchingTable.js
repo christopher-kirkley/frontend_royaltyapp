@@ -131,6 +131,7 @@ function MatchingTable(props) {
 	}
 
 	function handleMatchClose() {
+		console.log('clcik')
 		setMatchOpen(false)
 	}
 
@@ -210,19 +211,27 @@ function MatchingTable(props) {
 
 	return (
 		<div>
+
+
 			<UpdateModal
 				handleClose={handleClose}
 				handleOpen={handleOpen}
 				open={open}
 				selected={selected}
 			/>
+		<Drawer
+			anchor={"right"}
+			open={matchOpen}
+			onClose={handleMatchClose}
+		>
 			<MatchModal
-				open={matchOpen}
-				handleMatchClose={handleMatchClose}
+				type={"upc"}
 				columns={columns}
 				data={data}
+				handleMatchClose={handleMatchClose}
 				onSubmit={onSubmit}
 			/>
+		</Drawer>
 
 		{ 
 			Object.keys(selectedRowIds).length > 0

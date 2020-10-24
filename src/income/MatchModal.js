@@ -6,6 +6,7 @@ import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
 import Container from '@material-ui/core/Container'
 import Grid from '@material-ui/core/Grid'
+import Drawer from '@material-ui/core/Drawer'
 import Typography from '@material-ui/core/Typography'
 import NativeSelect from '@material-ui/core/NativeSelect'
 import Modal from '@material-ui/core/Modal';
@@ -13,33 +14,38 @@ import FormControl from '@material-ui/core/FormControl';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 
+
 import { makeStyles, useTheme } from '@material-ui/core/styles';
+
 
 const useStyles = makeStyles((theme) => ({
 		paper: {
 					position: 'absolute',
-					width: 400,
-					height: 400,
 					backgroundColor: theme.palette.background.paper,
-					border: '2px solid #000',
-					boxShadow: theme.shadows[5],
-					padding: theme.spacing(2, 4, 3),
+					padding: theme.spacing(5, 4, 5),
 				},
 	selected: {
 		backgroundColor: "yellow"
-		}
+		},
+	list: {
+		width: 400,
+		padding: 20
+
+	}
 }));
 
 
 function MatchModal(props) {
 
-	const { register, control, handleSubmit, watch } = useForm({
-		defaultValues: {
-			column: [
-				{ column: 'isrc_id', value: 'none'},
-			]
-		}
-	})
+	const { register, control, handleSubmit, watch } =
+			useForm({
+				defaultValues: {
+					column: 
+					[
+						{ column: 'isrc_id', value: 'none'},
+					]
+				}
+			})
 
 	const { fields, append, remove } = useFieldArray({
 		control,
@@ -143,9 +149,7 @@ function MatchModal(props) {
 		return options
 	}
 
-
 	const assign = watch("new")
-	console.log(assign)
 
 	function test(item, index) {
 		if (choice && choice[index])
@@ -168,9 +172,11 @@ function MatchModal(props) {
 	}
 	}
 
-	const body = (
-		<div style={{transform: "translate(100%, 20%)"}} className={classes.paper}>
+
+	return (
+		<div className={classes.paper, classes.list}>
 		<Typography variant="h6" gutterBottom>Conditional Match</Typography>
+		<Typography variant="subtitle1" gutterBottom>Apply to transactions where</Typography>
 			<form onSubmit={handleSubmit(props.onSubmit)}>
 			<Grid container justify="space-between" alignItems="center">
 			{ fields.map((item, index) => {
@@ -187,7 +193,7 @@ function MatchModal(props) {
 							defaultValue={`${item.column}`}
 							/>
 					</Grid>
-					<Grid item xs={2}>
+					<Grid item xs={1}>
 						<Typography variant="subtitle1">is</Typography>
 					</Grid>
 					<Grid item xs={4}>
@@ -218,29 +224,23 @@ function MatchModal(props) {
 			<Divider style={{marginTop: 10, marginBottom: 10}}/>
 			<Grid container justify="space-between">
 				<Grid item xs={12}>
-					<Typography variant="subtitle1" gutterBottom>Then assign</Typography>
-				</Grid>
-				<Grid item xs={5}>
-					<Controller
-						as={<NativeSelect>
-									<option id="version_number" value="version_number">Version Number</option>
-									<option id="track_title" value="track_title">Track Title</option>
-								</NativeSelect>}
-						control={control}
-						defaultValue="version_number"
-						id="new"
-						name="new"
-						/>
-				</Grid>
-				<Grid item xs={2}>
-					<Typography variant="subtitle1">=</Typography>
+					{ props.type === 'track' 
+						?
+						<Typography variant="subtitle1" gutterBottom>
+						Then assign new ISRC
+						</Typography>
+						:
+						<Typography variant="subtitle1" gutterBottom>
+						Then assign new UPC
+						</Typography>
+					}
 				</Grid>
 				<Grid item xs={5}>
 					<Controller
 						as={<NativeSelect
 								id="new_value">
 								<option value="none" disabled="true">Select...</option>
-								{ assign === 'track_title'
+								{ props.type === 'track'
 									?
 									trackChoices
 									:
@@ -279,14 +279,7 @@ function MatchModal(props) {
 			</form>
 			</div>
 			);
-	return (
-		<Modal
-			open={props.open}
-			onClose={props.handleClose}
-		>
-		{body}
-		</Modal>
-	)
+
 }
 
 export default MatchModal
