@@ -35,7 +35,9 @@ function MatchModal(props) {
 
 	const { register, control, handleSubmit, watch } = useForm({
 		defaultValues: {
-			column: [{ column: 'upc_id', value: 'none'}]
+			column: [
+				{ column: 'isrc_id', value: 'none'},
+			]
 		}
 	})
 
@@ -81,6 +83,7 @@ function MatchModal(props) {
 			return (
 				<option
 					id={track.isrc_id}
+					value={track.isrc_id}
 				>
 				{track.isrc}
 				</option>
@@ -106,6 +109,8 @@ function MatchModal(props) {
 		const u = new Set(props.data.map((row) => {
 			if (id === 'upc_id')
 			{return row.upc_id}
+			if (id === 'isrc_id')
+			{return row.isrc_id}
 			if (id === 'catalog_id')
 			{return row.catalog_id}
 			if (id === 'type')

@@ -164,6 +164,8 @@ function MatchingTable(props) {
 		{ var distributor = data['distributor']}
 		if (data['upc_id'])
 		{ var upc_id = data['upc_id']}
+		if (data['isrc_id'])
+		{ var isrc_id = data['isrc_id']}
 		if (data['catalog_id'])
 		{ var catalog_id = data['catalog_id']}
 		if (data['type'])
@@ -178,12 +180,13 @@ function MatchingTable(props) {
 					method: 'PUT',
 					body: JSON.stringify(
 						{
-							'upc_id': data['new_value'],
+							'isrc_id': data['new_value'],
 							'data_to_match' : 
 								[
 									{
 										'distributor': distributor,
 										'upc_id': upc_id,
+										'isrc_id': isrc_id,
 										'catalog_id': catalog_id,
 										'type': type,
 										'version_number': version_number,
