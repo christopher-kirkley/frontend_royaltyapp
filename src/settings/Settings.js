@@ -123,7 +123,7 @@ function Settings() {
 								<TableBody>
 								{ orderSettings.map((row) =>
 									<TableRow>
-										<TableCell>{row.distributor_id}</TableCell>
+										<TableCell>{row.distributor_name}</TableCell>
 										<TableCell>{row.order_fee}</TableCell>
 										<TableCell>{row.order_limit}</TableCell>
 										<TableCell>{row.order_percentage}</TableCell>
