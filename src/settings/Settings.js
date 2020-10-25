@@ -133,6 +133,16 @@ function Settings() {
 								}
 								</TableBody>
 							</Table>
+				<Grid container justify="flex-end">
+					<Grid item>
+					<Button
+						variant="contained"
+						color="primary"
+						size="small"
+						>Update
+					</Button>
+					</Grid>
+				</Grid>
 				</Paper>
 		</Grid>
 		</Grid>
