@@ -50,6 +50,8 @@ function Income() {
 		history.push('/income/add')
 	}
 
+	console.log(importedIncome)
+
 
 		return (
 			<Container>

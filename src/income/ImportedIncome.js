@@ -32,6 +32,7 @@ function ImportedIncome() {
 		.then(json => setImportedIncome(json))
 	}, [])
 
+
 	function getImportedIncome() {
 		fetch('http://localhost:5000/income/imported-statements')
 		.then(res => res.json())
