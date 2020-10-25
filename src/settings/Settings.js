@@ -21,13 +21,29 @@ import ListItem from '@material-ui/core/ListItem'
 import TextField from '@material-ui/core/TextField'
 import Divider from '@material-ui/core/Divider'
 import NativeSelect from '@material-ui/core/NativeSelect'
+import Table from '@material-ui/core/Table'
+import TableHead from '@material-ui/core/TableHead'
+import TableBody from '@material-ui/core/TableBody'
+import TableRow from '@material-ui/core/TableRow'
+import TableCell from '@material-ui/core/TableCell'
+import Modal from '@material-ui/core/Modal'
+
+import OrderModal from './OrderModal'
 
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
-	paper: {
-		padding: 20,
-	},
+		paper: {
+			padding: 20,
+		},
+		modal: {
+					position: 'absolute',
+					width: 400,
+					backgroundColor: theme.palette.background.paper,
+					border: '2px solid #000',
+					boxShadow: theme.shadows[5],
+					padding: theme.spacing(2, 4, 3),
+				},
 }))
 
 function Settings() {
@@ -36,29 +52,17 @@ function Settings() {
 
 	const history = useHistory();
 
-	const { handleSubmit, control, setValue } = useForm()
 
-	function handleClick() {
+	function handleClose() {
+		setOpen(false)
 	}
 
-	const [distributors, setDistributors] = useState([])
+	function handleClick() {
+		setOpen(true)
+	}
 
-	useEffect(() => {
-				fetch('http://localhost:5000/income/distributors')
-				.then(res => res.json())
-				.then(json => setDistributors(json))
-			}, [])
 
-	const distributorChoices = distributors.map((distributor) =>
-		{
-			return (
-				<option
-					id={distributor.id}
-					value={distributor.id}
-				>{distributor.distributor_name}
-				</option>
-			)
-		})
+	const [open, setOpen] = useState(true)
 
 	const [orderSettings, setOrderSettings] = useState([])
 
@@ -70,83 +74,63 @@ function Settings() {
 
 	return (
 		<Container>
+			<OrderModal
+				open={open}
+				handleClose={handleClose}
+			/>
 		<Header name="Settings"/>
 		<Grid container direction="row" >
 			<Grid item xs={12}>
 				<Paper className={classes.paper}> 
-					<Grid container alignItems="center">
-						<Grid item xs={2} >
+					<Grid container justify="space-between">
+						<Grid item xs={3}>
 							<Typography
 								color="textSecondary"
 								component="h6"
 								variant="caption"
 								align="left"
 								gutterBottom
-								>INCOME SETTINGS
+								>INCOME SOURCE SETTINGS
 							</Typography>
-						<Divider style={{marginTop: 10, marginBottom: 10}}/>
 						</Grid>
-						<Grid container>
-							<Grid xs={3}>
-								<Typography variant="subtitle1">
-								Distributor
-								</Typography>
-							</Grid>
-							<Grid>
-								<Controller
-									as={
-										<NativeSelect>
-											{distributorChoices}
-										</NativeSelect>
-									}
-									name="distributor"
-									id="distributor"
-									defaultValue=""
-									control={control}
-								/>
-							</Grid>
+						<Grid item={3}>
+							<Button
+								id="add_order_fee"
+								size="small"
+								variant="contained"
+								color="secondary"
+								onClick={handleClick}
+								>
+							Add
+							</Button>
 						</Grid>
-						<Grid container>
-							<Grid xs={3}>
-								<Typography variant="subtitle1">
-								Fee per order
-								</Typography>
-							</Grid>
-							<Grid xs={2}>
-								<Controller
-									as={TextField}
-									name="order_fee"
-									id="order_fee"
-									defaultValue=""
-									control={control}
-								/>
-							</Grid>
-						</Grid>
-						<Grid container>
-							<Grid xs={3}>
-								<Typography variant="subtitle1">
-								Percentage per Order
-								</Typography>
-							</Grid>
-							<Grid xs={2}>
-								<Controller
-									as={TextField}
-									name="order_percentage"
-									id="order_percentage"
-									defaultValue=""
-									control={control}
-								/>
-							</Grid>
-						</Grid>
-						<Button color="primary" variant="contained" size="small">Update</Button>
-				</Grid>
-
+					</Grid>
+					<Divider style={{marginTop: 10, marginBottom: 10}}/>
+							<Table>
+								<TableHead>
+									<TableRow>
+										<TableCell>Distributor</TableCell>
+										<TableCell>Fee</TableCell>
+										<TableCell>Fee limit</TableCell>
+										<TableCell>Percentage</TableCell>
+										<TableCell>Active?</TableCell>
+									</TableRow>
+								</TableHead>
+								<TableBody>
+									<TableRow>
+									</TableRow>
+								</TableBody>
+							</Table>
 				</Paper>
-			</Grid>
+		</Grid>
 		</Grid>
 		</Container>
+		
 	)
 }
 
+		{
+
+		}
 
 export default Settings;
