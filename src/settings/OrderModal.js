@@ -69,12 +69,34 @@ function OrderModal(props) {
 
 	const classes = useStyles()
 
+	function onSubmit(data) {
+		
+		const distributor_id = data.distributor
+		const order_fee = data.order_fee
+		const order_limit = data.order_limit
+		const order_percentage = data.order_percentage
+		
+		fetch('http://localhost:5000/settings/order-fee', {
+			method: 'POST',
+			body: JSON.stringify(
+				{
+					distributor_id,
+					order_fee,
+					order_limit,
+					order_percentage,
+				})
+		})
+		.then(res => props.handleClose(false))
+
+	}
+	
 	return (
 		<Modal
 			open={props.open}
 			onClose={props.handleClose}
 		>
 			<div style={{transform: "translate(80%, 50%)"}} className={classes.modal}>
+			<form onSubmit={handleSubmit(onSubmit)} id="form">
 				<Grid container alignItems="center">
 					<Grid item xs={6}>
 						<Typography variant="subtitle1">Distributor</Typography>
@@ -88,7 +110,7 @@ function OrderModal(props) {
 							}
 							name="distributor"
 							id="distributor"
-							defaultValue=""
+							defaultValue="1"
 							control={control}
 						/>
 					</Grid>
@@ -155,9 +177,11 @@ function OrderModal(props) {
 							variant="contained"
 							color="primary"
 							size="small"
+							type="submit"
 						>Update</Button>
 					</Grid>
 				</Grid>
+			</form>
 			</div>
 		</Modal>
 	)

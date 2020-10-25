@@ -67,17 +67,19 @@ function Settings() {
 	const [orderSettings, setOrderSettings] = useState([])
 
 	useEffect(() => {
-				fetch('http://localhost:5000/income/order-settings')
+				fetch('http://localhost:5000/settings/order-fee')
 				.then(res => res.json())
 				.then(json => setOrderSettings(json))
 			}, [])
 
 	return (
 		<Container>
-			<OrderModal
-				open={open}
-				handleClose={handleClose}
-			/>
+		{
+			// <OrderModal
+			// 	open={open}
+			// 	handleClose={handleClose}
+			// />
+		}
 		<Header name="Settings"/>
 		<Grid container direction="row" >
 			<Grid item xs={12}>
@@ -93,17 +95,19 @@ function Settings() {
 								>INCOME SOURCE SETTINGS
 							</Typography>
 						</Grid>
-						<Grid item={3}>
-							<Button
-								id="add_order_fee"
-								size="small"
-								variant="contained"
-								color="secondary"
-								onClick={handleClick}
-								>
-							Add
-							</Button>
-						</Grid>
+		{
+						// <Grid item={3}>
+						// 	<Button
+						// 		id="add_order_fee"
+						// 		size="small"
+						// 		variant="contained"
+						// 		color="secondary"
+						// 		onClick={handleClick}
+						// 		>
+						// 	Add
+						// 	</Button>
+						// </Grid>
+		}
 					</Grid>
 					<Divider style={{marginTop: 10, marginBottom: 10}}/>
 							<Table>
@@ -117,8 +121,16 @@ function Settings() {
 									</TableRow>
 								</TableHead>
 								<TableBody>
+								{ orderSettings.map((row) =>
 									<TableRow>
+										<TableCell>{row.distributor_id}</TableCell>
+										<TableCell>{row.order_fee}</TableCell>
+										<TableCell>{row.order_limit}</TableCell>
+										<TableCell>{row.order_percentage}</TableCell>
+										<TableCell/>
 									</TableRow>
+								)
+								}
 								</TableBody>
 							</Table>
 				</Paper>
@@ -129,8 +141,5 @@ function Settings() {
 	)
 }
 
-		{
-
-		}
 
 export default Settings;
