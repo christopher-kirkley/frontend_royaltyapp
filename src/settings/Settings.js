@@ -48,6 +48,8 @@ const useStyles = makeStyles(theme => ({
 
 function Settings() {
 
+	const { handleSubmit, control, setValue } = useForm()
+
 	const classes = useStyles()
 
 	const history = useHistory();
@@ -61,6 +63,9 @@ function Settings() {
 		setOpen(true)
 	}
 
+	function onSubmit(data) {
+		console.log(data)
+	}
 
 	const [open, setOpen] = useState(true)
 
@@ -110,6 +115,7 @@ function Settings() {
 		}
 					</Grid>
 					<Divider style={{marginTop: 10, marginBottom: 10}}/>
+						<form onSubmit={handleSubmit(onSubmit)} id="form">
 							<Table>
 								<TableHead>
 									<TableRow>
@@ -121,14 +127,57 @@ function Settings() {
 									</TableRow>
 								</TableHead>
 								<TableBody>
-								{ orderSettings.map((row) =>
+								{ orderSettings.map((row, index) =>
+									<React.Fragment>
+											<Controller
+												type="hidden"
+												as={TextField}
+												name={`row[${index}].distributor_id`}
+												id="distributor_id"
+												defaultValue={row.distributor_id}
+												control={control}
+											/>
 									<TableRow>
-										<TableCell>{row.distributor_name}</TableCell>
-										<TableCell>{row.order_fee}</TableCell>
-										<TableCell>{row.order_limit}</TableCell>
-										<TableCell>{row.order_percentage}</TableCell>
-										<TableCell/>
+										<TableCell>
+											<Controller
+												as={TextField}
+												name={`row[${index}].distributor_name`}
+												id="distributor_name"
+												defaultValue={row.distributor_name}
+												control={control}
+												disabled={true}
+											/>
+										</TableCell>
+										<TableCell>
+											<Controller
+												as={TextField}
+												name={`row[${index}].order_fee`}
+												id="order_fee"
+												defaultValue={row.order_fee}
+												control={control}
+											/>
+										</TableCell>
+										<TableCell>
+											<Controller
+												as={TextField}
+												name={`row[${index}].order_limit`}
+												id="order_limit"
+												defaultValue={row.order_limit}
+												control={control}
+											/>
+										</TableCell>
+										<TableCell>
+											<Controller
+												as={TextField}
+												name={`row[${index}].order_percentage`}
+												id="order_percentage"
+												defaultValue={row.order_percentage}
+												control={control}
+											/>
+										</TableCell>
+										<TableCell><Button>Edit</Button></TableCell>
 									</TableRow>
+									</React.Fragment>
 								)
 								}
 								</TableBody>
@@ -139,10 +188,12 @@ function Settings() {
 						variant="contained"
 						color="primary"
 						size="small"
+						type="submit"
 						>Update
 					</Button>
 					</Grid>
 				</Grid>
+							</form>
 				</Paper>
 		</Grid>
 		</Grid>
