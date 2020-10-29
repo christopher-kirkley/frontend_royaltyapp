@@ -23,12 +23,6 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Radio from '@material-ui/core/Radio';
 
-import Table from '@material-ui/core/Table';
-import TableHead from '@material-ui/core/TableHead';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableRow from '@material-ui/core/TableRow';
-
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import ClearIcon from '@material-ui/icons/Clear';
@@ -48,14 +42,7 @@ const useStyles = makeStyles(theme => ({
 	},
 }))
 
-
 function IncomeAdd() {
-
-	const emptyRow = {
-		amount: '',
-		version: '',
-		select: ''
-	}
 
 	const classes = useStyles()
 
@@ -118,12 +105,13 @@ function IncomeAdd() {
 		return (
 			<Container>
 				<Header name='New Income Statement'/>
-
 				<Grid container direction="row" >
 					<Grid item xs={12}>
-
 						<Paper className={classes.paper}> 
 							<Grid container justify="space-between">
+								<Grid item xs={3} >
+									<Typography color="textSecondary" component="h6" variant="caption" align="left">NEW INCOME STATEMENT</Typography>
+								</Grid>
 								<Grid container alignItems="center">
 									<Grid xs={2}>
 									<Typography variant="subtitle1">Statement Name</Typography>
@@ -138,50 +126,24 @@ function IncomeAdd() {
 										/>
 									</Grid>
 								</Grid>
-								<Grid item xs={12}>
+							</Grid>
+			
 			<Divider style={{marginTop: 20, marginBottom: 20}}/>
-
-									<Table>
-										<TableHead>
-											<TableRow>
-												<TableCell>Date</TableCell>
-												<TableCell>Amount</TableCell>
-												<TableCell>Version/Track</TableCell>
-												<TableCell>Select</TableCell>
-												<TableCell>
-													<Button
-														onClick={() => append(emptyRow)}
-													>
-													Add
-													</Button>
-												</TableCell>
-											</TableRow>
 
 		{ 
 			fields.map((newTrack, index) => (
-			<TableRow key={newTrack.id}>
-				<TableCell>
-					<MuiPickersUtilsProvider utils={DateFnsUtils}>
+			<Grid item container spacing={2} style={{marginBottom: 2}} alignItems="center" justify="center" key={newTrack.id}>
+				<Grid item xs={2}>
 					<Controller
 						control={control}
 						id={`newTrack[${index}].date`}
 						name={`newTrack[${index}].date`}
 						label='Date'
-									as={
-										<KeyboardDatePicker
-											disableToolbar
-											variant="inline"
-											format="MM/dd/yy"
-											KeyboardButtonProps={{
-																		'aria-label': 'change date',
-																		}}
-										/>
-									}
-						defaultValue={new Date()}
+						as={TextField}
+						defaultValue={`${index + numberOfTracks + 1}`}
 					/>
-				</MuiPickersUtilsProvider>
-				</TableCell>
-				<TableCell item xs={3}>
+				</Grid>
+				<Grid item xs={3}>
 					<Controller
 						as={TextField}
 						control={control}
@@ -189,10 +151,26 @@ function IncomeAdd() {
 						defaultValue={`${newTrack.amount}`}
 						label='Amount'
 					/>
-				</TableCell>
-				<TableCell Item xs={3}>
-				</TableCell>
-				<TableCell item xs={2}>
+				</Grid>
+				<Grid Item xs={3}>
+					<Controller
+						as={
+							<React.Fragment>
+							<FormControl component="fieldset">
+							  <RadioGroup aria-label="gender" name="gender1" value={radio} onChange={handleChange}>
+							    <FormControlLabel value="female" control={<Radio />} label="Version" />
+							    <FormControlLabel value="male" control={<Radio />} label="Track" />
+							  </RadioGroup>
+							</FormControl>
+							</React.Fragment>
+						}
+						control={control}
+						name={`newTrack[${index}].track_name`}
+						defaultValue={`${newTrack.track_name}`}
+						label='Track Name'
+					/>
+				</Grid>
+				<Grid item xs={2}>
 					<Controller
 					as={
 						<NativeSelect>
@@ -202,8 +180,8 @@ function IncomeAdd() {
 						defaultValue={`${newTrack.artist_id}`}
 						control={control}
 					/>
-				</TableCell>
-				<TableCell item xs={2}>
+				</Grid>
+				<Grid item xs={2}>
 								<IconButton
 									id="delete"
 									name="delete"
@@ -213,42 +191,18 @@ function IncomeAdd() {
 								>
 									<ClearIcon/>
 								</IconButton>
-				</TableCell>
-			</TableRow>
+				</Grid>
+			</Grid>
 			)
 		)
 		}
 
-										</TableHead>
-									</Table>
-
-
-								</Grid>
-								<Grid container alignItems="center" justify="flex-end">
-									<Grid item>
-										<Button
-											id="submit"
-											type="submit"
-											variant="contained"
-											color="primary"
-										>
-											Submit
-										</Button>
-									</Grid>
-								</Grid>
-							</Grid>
-						</Paper>
+							</Paper>
 					</Grid>
 				</Grid>
-			
-
-
-
 			</Container>
 		)
 	}
-
-
 
 
 export default IncomeAdd;
