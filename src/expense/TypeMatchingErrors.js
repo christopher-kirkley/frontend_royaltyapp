@@ -14,7 +14,7 @@ import ExpenseMatchingTable from './ExpenseMatchingTable'
 import Snackbar from '@material-ui/core/Snackbar';
 import Alert from '@material-ui/lab/Alert';
 
-function ArtistMatchingErrors(props) {
+function TypeMatchingErrors(props) {
 
 	const history = useHistory()
 
@@ -25,18 +25,23 @@ function ArtistMatchingErrors(props) {
 	const [ alert, setAlert ] = useState(false)
 
 	useEffect(() => {
-		fetch('http://localhost:5000/expense/artist-matching-errors')
+		fetch('http://localhost:5000/income/matching-errors')
 		.then(res => res.json())
-		.then(json => setRows(json))
+		.then(json => {
+			setRows(json)
+			if (json.length === 0 ) {
+				history.push('/income/import')
+			}
+		})
 	}, rows)
 
 
 	return (
 			<Container>
-				<Header name='Artist Matching Errors'/>
+				<Header name='Income Matching Errors'/>
 		<Grid container direction="row" >
 			<Grid item xs={12}>
-				<Alert severity="error">You have { rows.length} artist matching errors</Alert>
+				<Alert severity="error">You have { rows.length} UPC matching errors</Alert>
 				<Divider style={{marginTop: 10}}/>
 				<Paper>
 				<ExpenseMatchingTable
@@ -64,4 +69,4 @@ function ArtistMatchingErrors(props) {
 	}
 
 
-export default ArtistMatchingErrors
+export default TypeMatchingErrors

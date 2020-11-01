@@ -102,16 +102,16 @@ function PendingImports(props) {
 						<Grid item xs={11}>
 							<Alert severity="warning">
 								<AlertTitle>Artist Matching Errors</AlertTitle>
-										<span id="track_matching_errors">You have <strong id="error_number">{props.artistMatchingErrors}</strong> artist matching errors.</span>
+										<span id="artist_matching_errors">You have <strong id="error_number">{props.artistMatchingErrors}</strong> artist matching errors.</span>
 									<Typography component="p" variant="p" id="error_msg">{props.matchingErrorsMsg}</Typography>
 							</Alert>
 						</Grid>
 						<Grid item xs={1}>
 							<Button
 								color="secondary"
-								id="fix_isrc_errors"
+								id="fix_artist_errors"
 								variant="contained"
-								onClick={()=>history.push('/income/track-matching-errors')}	
+								onClick={()=>history.push('/expense/artist-matching-errors')}	
 								>Fix</Button>
 						</Grid>
 					</Grid>
@@ -123,16 +123,16 @@ function PendingImports(props) {
 						<Grid item xs={11}>
 							<Alert severity="warning">
 								<AlertTitle>Type Matching Errors</AlertTitle>
-										<span id="track_matching_errors">You have <strong id="error_number">{props.typeMatchingErrors}</strong> type matching errors.</span>
+										<span id="type_matching_errors">You have <strong id="error_number">{props.typeMatchingErrors}</strong> type matching errors.</span>
 									<Typography component="p" variant="p" id="error_msg">{props.matchingErrorsMsg}</Typography>
 							</Alert>
 						</Grid>
 						<Grid item xs={1}>
 							<Button
 								color="secondary"
-								id="fix_isrc_errors"
+								id="fix_type_errors"
 								variant="contained"
-								onClick={()=>history.push('/income/track-matching-errors')}	
+								onClick={()=>history.push('/expense/type-matching-errors')}	
 								>Fix</Button>
 						</Grid>
 					</Grid>
@@ -144,16 +144,16 @@ function PendingImports(props) {
 						<Grid item xs={11}>
 							<Alert severity="warning">
 								<AlertTitle>Catalog Matching Errors</AlertTitle>
-										<span id="track_matching_errors">You have <strong id="error_number">{props.catalogMatchingErrors}</strong> catalog matching errors.</span>
+										<span id="catalog_matching_errors">You have <strong id="error_number">{props.catalogMatchingErrors}</strong> catalog matching errors.</span>
 									<Typography component="p" variant="p" id="error_msg">{props.matchingErrorsMsg}</Typography>
 							</Alert>
 						</Grid>
 						<Grid item xs={1}>
 							<Button
 								color="secondary"
-								id="fix_isrc_errors"
+								id="fix_catalog_errors"
 								variant="contained"
-								onClick={()=>history.push('/income/track-matching-errors')}	
+								onClick={()=>history.push('/expense/catalog-matching-errors')}	
 								>Fix</Button>
 						</Grid>
 					</Grid>

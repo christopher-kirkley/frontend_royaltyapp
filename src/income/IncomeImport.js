@@ -10,7 +10,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import Header from '../components/Header'
 import AddStatementForm from './AddStatementForm'
-import PendingImports from './PendingImports'
+import PendingImports from '../components/PendingImports'
 
 const useStyles = makeStyles(theme => ({
 	paper: {

@@ -11,7 +11,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import Header from '../components/Header'
 import AddExpenseStatementForm from './AddExpenseStatementForm'
-import PendingImports from '../income/PendingImports'
+import PendingImports from '../components/PendingImports'
 
 const useStyles = makeStyles(theme => ({
 	paper: {
@@ -44,28 +44,23 @@ function ExpenseImport() {
 		.then(res => setPendingStatements(res))
 	}
 
-	useEffect(() => { 
-			fetch(`http://localhost:5000/expense/matching-errors`)
-			.then(res => res.json())
-			.then(json => {
-				console.log(json)
-				setArtistMatchingErrors(json[0]['artist_matching_errors'].length)
-				setCatalogMatchingErrors(json[0]['catalog_matching_errors'].length)
-				setTypeMatchingErrors(json[0]['type_matching_errors'].length)
-			})
-			.then(res => res[0]['total_matching_errors'].length)
-			.then(res => (
-				setMatchingErrors(res)
-				))
-			.catch(error => setMatchingErrorsMsg('Error!'))
-	}, [])
-
 	function getMatchingErrors() {
-		fetch(`http://localhost:5000/expense/matching-errors`)
-		.then(res => res.json())
-		.then(res => res[0]['total_matching_errors'].length)
-		.then(res => setMatchingErrors(res))
+		fetch('http://localhost:5000/expense/artist-matching-errors')
+			.then(res => res.json())
+			.then(json => setArtistMatchingErrors(json.length))
+
+		fetch('http://localhost:5000/expense/catalog-matching-errors')
+			.then(res => res.json())
+			.then(json => setCatalogMatchingErrors(json.length))
+
+		fetch('http://localhost:5000/expense/type-matching-errors')
+			.then(res => res.json())
+			.then(json => setTypeMatchingErrors(json.length))
 	}
+
+	useEffect(() => { 
+		getMatchingErrors()
+	}, [])
 
 	function goToMatchingErrorPage() {
 		history.push('/expense/matching-errors')

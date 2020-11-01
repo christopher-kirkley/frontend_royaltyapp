@@ -20,6 +20,11 @@ import Income from "./income/Income"
 import IncomeImport from "./income/IncomeImport"
 import IncomeAdd from "./income/IncomeAdd"
 import MatchingErrors from "./income/MatchingErrors"
+
+import ArtistMatchingErrors from "./expense/ArtistMatchingErrors"
+import CatalogMatchingErrors from "./expense/CatalogMatchingErrors"
+import TypeMatchingErrors from "./expense/TypeMatchingErrors"
+
 import TrackMatchingErrors from "./income/TrackMatchingErrors"
 import ImportedIncome from "./income/ImportedIncome"
 import DetailImportedIncome from "./income/DetailImportedIncome"
@@ -252,7 +257,9 @@ function Main() {
 				<Route exact path="/income/:id" component={DetailImportedIncome}/>
 				<Route exact path="/expense" component={Expense}/>
 				<Route exact path="/expense/import" component={ExpenseImport}/>
-				<Route exact path="/expense/matching-errors" component={ExpenseMatchingErrors}/>
+				<Route exact path="/expense/artist-matching-errors" component={ArtistMatchingErrors}/>
+				<Route exact path="/expense/catalog-matching-errors" component={CatalogMatchingErrors}/>
+				<Route exact path="/expense/type-matching-errors" component={TypeMatchingErrors}/>
 				<Route exact path="/expense/:id" component={DetailImportedExpense}/>
 				<Route exact path="/statements" component={Statement}/>
 				<Route exact path="/statements/generate" component={StatementGenerate}/>
