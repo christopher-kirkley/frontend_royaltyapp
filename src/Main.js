@@ -20,6 +20,7 @@ import Income from "./income/Income"
 import IncomeImport from "./income/IncomeImport"
 import IncomeAdd from "./income/IncomeAdd"
 import MatchingErrors from "./income/MatchingErrors"
+import TrackMatchingErrors from "./income/TrackMatchingErrors"
 import ImportedIncome from "./income/ImportedIncome"
 import DetailImportedIncome from "./income/DetailImportedIncome"
 import Statement from "./statements/Statement"
@@ -247,6 +248,7 @@ function Main() {
 				<Route exact path="/income/add" component={IncomeAdd}/>
 				<Route exact path="/income/import" component={IncomeImport}/>
 				<Route exact path="/income/matching-errors" component={MatchingErrors}/>
+				<Route exact path="/income/track-matching-errors" component={TrackMatchingErrors}/>
 				<Route exact path="/income/:id" component={DetailImportedIncome}/>
 				<Route exact path="/expense" component={Expense}/>
 				<Route exact path="/expense/import" component={ExpenseImport}/>

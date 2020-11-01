@@ -24,10 +24,9 @@ function IncomeImport() {
 
 	const history = useHistory()
 
-	const [ matchingErrors, setMatchingErrors ] = useState(0)
 	const [ matchingErrorsMsg, setMatchingErrorsMsg ] = useState('')
 	const [ pendingStatements, setPendingStatements ] = useState([])
-
+	const [ matchingErrors, setMatchingErrors ] = useState(0)
 	const [ trackMatchingErrors, setTrackMatchingErrors ] = useState(0)
 
 	useEffect(() => {
@@ -110,10 +109,10 @@ function IncomeImport() {
 									<PendingImports
 										pendingStatements={pendingStatements}
 										processPending={processPending}
-										matchingErrors={matchingErrors}
 										goToMatchingErrorPage={goToMatchingErrorPage}
 										handleDelete={handleDelete}
 										trackMatchingErrors={trackMatchingErrors}
+										matchingErrors={matchingErrors}
 									/>
 							</Paper>
 						</Grid>

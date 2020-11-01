@@ -96,6 +96,69 @@ function PendingImports(props) {
 					</Grid>
 				}
 
+				{ props.artistMatchingErrors > 0
+					&&
+					<Grid container alignItems="center">
+						<Grid item xs={11}>
+							<Alert severity="warning">
+								<AlertTitle>Artist Matching Errors</AlertTitle>
+										<span id="track_matching_errors">You have <strong id="error_number">{props.artistMatchingErrors}</strong> artist matching errors.</span>
+									<Typography component="p" variant="p" id="error_msg">{props.matchingErrorsMsg}</Typography>
+							</Alert>
+						</Grid>
+						<Grid item xs={1}>
+							<Button
+								color="secondary"
+								id="fix_isrc_errors"
+								variant="contained"
+								onClick={()=>history.push('/income/track-matching-errors')}	
+								>Fix</Button>
+						</Grid>
+					</Grid>
+				}
+
+				{ props.typeMatchingErrors > 0
+					&&
+					<Grid container alignItems="center">
+						<Grid item xs={11}>
+							<Alert severity="warning">
+								<AlertTitle>Type Matching Errors</AlertTitle>
+										<span id="track_matching_errors">You have <strong id="error_number">{props.typeMatchingErrors}</strong> type matching errors.</span>
+									<Typography component="p" variant="p" id="error_msg">{props.matchingErrorsMsg}</Typography>
+							</Alert>
+						</Grid>
+						<Grid item xs={1}>
+							<Button
+								color="secondary"
+								id="fix_isrc_errors"
+								variant="contained"
+								onClick={()=>history.push('/income/track-matching-errors')}	
+								>Fix</Button>
+						</Grid>
+					</Grid>
+				}
+
+				{ props.catalogMatchingErrors > 0
+					&&
+					<Grid container alignItems="center">
+						<Grid item xs={11}>
+							<Alert severity="warning">
+								<AlertTitle>Catalog Matching Errors</AlertTitle>
+										<span id="track_matching_errors">You have <strong id="error_number">{props.catalogMatchingErrors}</strong> catalog matching errors.</span>
+									<Typography component="p" variant="p" id="error_msg">{props.matchingErrorsMsg}</Typography>
+							</Alert>
+						</Grid>
+						<Grid item xs={1}>
+							<Button
+								color="secondary"
+								id="fix_isrc_errors"
+								variant="contained"
+								onClick={()=>history.push('/income/track-matching-errors')}	
+								>Fix</Button>
+						</Grid>
+					</Grid>
+				}
+
 				</React.Fragment>
 			)
 		}

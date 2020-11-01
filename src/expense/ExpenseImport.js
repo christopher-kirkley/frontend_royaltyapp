@@ -28,6 +28,9 @@ function ExpenseImport() {
 	const [ matchingErrors, setMatchingErrors ] = useState(0)
 	const [ matchingErrorsMsg, setMatchingErrorsMsg ] = useState('')
 	const [ pendingStatements, setPendingStatements ] = useState([])
+	const [ artistMatchingErrors, setArtistMatchingErrors ] = useState(0)
+	const [ catalogMatchingErrors, setCatalogMatchingErrors ] = useState(0)
+	const [ typeMatchingErrors, setTypeMatchingErrors ] = useState(0)
 
 	useEffect(() => {
 		fetch('http://localhost:5000/expense/pending-statements')
@@ -44,6 +47,12 @@ function ExpenseImport() {
 	useEffect(() => { 
 			fetch(`http://localhost:5000/expense/matching-errors`)
 			.then(res => res.json())
+			.then(json => {
+				console.log(json)
+				setArtistMatchingErrors(json[0]['artist_matching_errors'].length)
+				setCatalogMatchingErrors(json[0]['catalog_matching_errors'].length)
+				setTypeMatchingErrors(json[0]['type_matching_errors'].length)
+			})
 			.then(res => res[0]['total_matching_errors'].length)
 			.then(res => (
 				setMatchingErrors(res)
@@ -88,7 +97,11 @@ function ExpenseImport() {
 									pendingStatements={pendingStatements}
 									processPending={processPending}
 									matchingErrors={matchingErrors}
-									goToMatchingErrorPage={goToMatchingErrorPage}/>
+									goToMatchingErrorPage={goToMatchingErrorPage}
+									artistMatchingErrors={artistMatchingErrors}
+									typeMatchingErrors={typeMatchingErrors}
+									catalogMatchingErrors={catalogMatchingErrors}
+							/>
 							</Paper>
 						</Grid>
 						:

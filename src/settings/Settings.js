@@ -63,28 +63,35 @@ function Settings() {
 		setOpen(true)
 	}
 
-	function onSubmit(data) {
-		console.log(data)
-	}
 
 	const [open, setOpen] = useState(true)
 
 	const [orderSettings, setOrderSettings] = useState([])
 
-	useEffect(() => {
+	function getOrderSettings() {
 				fetch('http://localhost:5000/settings/order-fee')
 				.then(res => res.json())
-				.then(json => setOrderSettings(json))
+				.then(json => {
+					const sorted = [...json].sort((a, b) => (a.distributor_name > b.distributor_name))
+					setOrderSettings(sorted)
+
+	})
+	}
+
+	useEffect(() => {
+				getOrderSettings()
 			}, [])
+
+	function onSubmit(data) {
+		fetch('http://localhost:5000/settings/order-fee', {
+							method: 'PUT',
+							body: JSON.stringify(data['row'])
+		})
+		.then(res => getOrderSettings())
+	}
 
 	return (
 		<Container>
-		{
-			// <OrderModal
-			// 	open={open}
-			// 	handleClose={handleClose}
-			// />
-		}
 		<Header name="Settings"/>
 		<Grid container direction="row" >
 			<Grid item xs={12}>
@@ -116,13 +123,13 @@ function Settings() {
 					</Grid>
 					<Divider style={{marginTop: 10, marginBottom: 10}}/>
 						<form onSubmit={handleSubmit(onSubmit)} id="form">
-							<Table>
+							<Table id="order_fees">
 								<TableHead>
 									<TableRow>
 										<TableCell>Distributor</TableCell>
-										<TableCell>Fee</TableCell>
-										<TableCell>Fee limit</TableCell>
-										<TableCell>Percentage</TableCell>
+										<TableCell>Fee per order</TableCell>
+										<TableCell>Percentage per order</TableCell>
+										<TableCell>Limit (min amount for fees)</TableCell>
 										<TableCell>Active?</TableCell>
 									</TableRow>
 								</TableHead>
@@ -160,22 +167,21 @@ function Settings() {
 										<TableCell>
 											<Controller
 												as={TextField}
-												name={`row[${index}].order_limit`}
-												id="order_limit"
-												defaultValue={row.order_limit}
-												control={control}
-											/>
-										</TableCell>
-										<TableCell>
-											<Controller
-												as={TextField}
 												name={`row[${index}].order_percentage`}
 												id="order_percentage"
 												defaultValue={row.order_percentage}
 												control={control}
 											/>
 										</TableCell>
-										<TableCell><Button>Edit</Button></TableCell>
+										<TableCell>
+											<Controller
+												as={TextField}
+												name={`row[${index}].order_limit`}
+												id="order_limit"
+												defaultValue={row.order_limit}
+												control={control}
+											/>
+										</TableCell>
 									</TableRow>
 									</React.Fragment>
 								)
@@ -185,6 +191,7 @@ function Settings() {
 				<Grid container justify="flex-end">
 					<Grid item>
 					<Button
+						id="update"
 						variant="contained"
 						color="primary"
 						size="small"

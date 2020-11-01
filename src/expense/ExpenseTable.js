@@ -72,7 +72,7 @@ function ExpenseTable(props) {
 				)}
 				</Table>
 				:
-				<Typography id="income-data" variant="h6" align="center">No data</Typography> 
+				<Typography id="expense-data" variant="h6" align="center">No data</Typography> 
 		}
 		</React.Fragment>
 		);
