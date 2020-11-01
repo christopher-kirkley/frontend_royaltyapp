@@ -75,6 +75,25 @@ function MatchModal(props) {
 			)
 		})
 
+	const [artists, setArtists] = useState([])
+
+	useEffect(() => {
+				fetch('http://localhost:5000/artists')
+				.then(res => res.json())
+				.then(json => setArtists(json))
+			}, [])
+
+	const artistChoices = artists.map((artist) =>
+		{
+			return (
+				<option
+					id={artist.artist_id}
+					value={artist.artist_name}
+				>{artist.artist_name}
+				</option>
+			)
+		})
+
 	useEffect(() => {
 				fetch('http://localhost:5000/tracks')
 				.then(res => res.json())
@@ -84,17 +103,6 @@ function MatchModal(props) {
 				})
 			}, [])
 
-	const trackChoices = tracks.map((track) =>
-		{
-			return (
-				<option
-					id={track.isrc}
-					value={track.isrc}
-				>
-				{track.isrc}
-				</option>
-			)
-		})
 
 	const columnChoices = props.columns.map((column) =>
 		{
@@ -113,26 +121,22 @@ function MatchModal(props) {
 
 	function makeOptions(id) {
 		const u = new Set(props.data.map((row) => {
-			if (id === 'upc_id')
-			{return row.upc_id}
-			if (id === 'isrc_id')
-			{return row.isrc_id}
-			if (id === 'catalog_id')
-			{return row.catalog_id}
-			if (id === 'type')
-			{return row.type}
-			if (id === 'medium')
-			{return row.medium}
+			if (id === 'date')
+			{return row.date}
+			if (id === 'vendor')
+			{return row.vendor}
+			if (id === 'artist_id')
+			{return row.artist_id}
+			if (id === 'catalog_number')
+			{return row.catalog_number}
 			if (id === 'description')
 			{return row.description}
-			if (id === 'distributor')
-			{return row.distributor}
-			if (id === 'album_name')
-			{return row.album_name}
-			if (id === 'track_name')
-			{return row.track_name}
-			if (id === 'version_number')
-			{return row.version_number}
+			if (id === 'net')
+			{return row.net}
+			if (id === 'item_type')
+			{return row.item_type}
+			if (id === 'expense_type')
+			{return row.expense_type}
 		}))
 
 		let array = [...u].sort()
@@ -174,6 +178,69 @@ function MatchModal(props) {
 	}
 	}
 
+	const [ catalog, setCatalog ] = useState([])
+
+	useEffect(() => {
+				fetch('http://localhost:5000/catalog')
+				.then(res => res.json())
+				.then(json => setCatalog(json))
+			}, [])
+
+	function updateChoices() {
+		if (props.type === 'track') {
+			const trackChoices = tracks.map((track) =>
+				{
+					return (
+						<option
+							id={track.isrc}
+							value={track.isrc}
+						>
+						{track.isrc}
+						</option>
+					)
+				})
+		}
+
+		if (props.type == 'upc') {return upcChoices}
+		if (props.type == 'artist') {return artistChoices}
+		if (props.type == 'catalog') {
+
+			const catalogChoices = catalog.map((catalog) =>
+				{
+					return (
+						<option
+							id={catalog.catalog_id}
+							value={catalog.catalog_number}
+						>{catalog.catalog_number}
+						</option>
+					)
+				})
+		
+			return catalogChoices
+
+		}
+
+		if (props.type == 'type') {
+
+			return (
+				<React.Fragment>
+					<option
+						id="advance"
+						value="advance"
+					>
+					Advance
+					</option>
+					<option
+						id="recoupable"
+						value="recoupable"
+					>
+					Recoupable
+					</option>
+				</React.Fragment>
+			)
+
+		}
+	}
 
 	return (
 		<div className={classes.paper, classes.list}>
@@ -226,34 +293,22 @@ function MatchModal(props) {
 			<Divider style={{marginTop: 10, marginBottom: 10}}/>
 			<Grid container justify="space-between">
 				<Grid item xs={12}>
-					{ props.type === 'track' 
-						?
-						<Typography variant="subtitle1" gutterBottom>
-						Then assign new ISRC
-						</Typography>
-						:
-						<Typography variant="subtitle1" gutterBottom>
-						Then assign new UPC
-						</Typography>
-					}
+					<Typography variant="subtitle1" gutterBottom>
+					Then assign new {props.type}
+					</Typography>
 				</Grid>
 				<Grid item xs={5}>
 					<Controller
 						as={<NativeSelect
 								id="new_value">
 								<option value="none" disabled="true">Select...</option>
-								{ props.type === 'track'
-									?
-									trackChoices
-									:
-									upcChoices
-								}
+									{updateChoices()}
 								</NativeSelect>
 						}
 						control={control}
 						defaultValue="none"
 						id="new_value"
-						name="new_value"
+						name={props.type}
 						required={true}
 					/>
 				</Grid>

@@ -141,75 +141,57 @@ function ExpenseMatchingTable(props) {
 	function handleMatch() {
 	}
 
-	const [upcs, setUpcs] = useState([])
-
-	useEffect(() => {
-				fetch('http://localhost:5000/version')
-				.then(res => res.json())
-				.then(json => setUpcs(json))
-			}, [])
-
-	const upcChoices = upcs.map((upc) =>
-		{
-			return (
-				<option
-					id={upc.version_number}
-					value={upc.upc}
-				>{upc.version_number}
-				</option>
-			)
-		})
 
 	function onSubmit(data) {
 		console.log(data)
-		if (data['distributor'])
-		{ var distributor = data['distributor']}
-		if (data['upc_id'])
-		{ var upc_id = data['upc_id']}
-		if (data['catalog_id'])
-		{ var catalog_id = data['catalog_id']}
-		if (data['type'])
-		{ var type = data['type']}
-		if (data['medium'])
-		{ var medium = data['medium']}
-		if (data['version_number'])
-		{ var version_number = data['version_number']}
-		if (data['description'])
-		{ var description = data['description']}
-				fetch('http://localhost:5000/income/update-errors', {
-					method: 'PUT',
-					body: JSON.stringify(
-						{
-							'upc_id': data['new_value'],
-							'data_to_match' : 
-								[
-									{
-										'distributor': distributor,
-										'upc_id': upc_id,
-										'catalog_id': catalog_id,
-										'type': type,
-										'version_number': version_number,
-										'medium': medium,
-										'description': description,
-									}
-								]
-							}
-					)
-				})
-			.then(res => res.json())
-			.then(json => {
-				props.setUpdated(json['updated'])
-				props.setAlert(true)
-			})
-			.then(res => fetch('http://localhost:5000/income/matching-errors'))
-			.then(res => res.json())
-			.then(json => {
-				props.setRows(json)
-				if (json.length === 0 ) {
-					history.push('/income/import')
-				}
-			})
-			.then(res => setMatchOpen(false))
+		// if (data['date'])
+		// { var distributor = data['date']}
+		// if (data['vendor'])
+		// { var upc_id = data['vendor']}
+		// if (data['artist_name'])
+		// { var catalog_id = data['artist_name']}
+		// if (data['type'])
+		// { var type = data['type']}
+		// if (data['medium'])
+		// { var medium = data['medium']}
+		// if (data['version_number'])
+		// { var version_number = data['version_number']}
+		// if (data['description'])
+		// { var description = data['description']}
+		// 		fetch('http://localhost:5000/expense/update-errors', {
+		// 			method: 'PUT',
+		// 			body: JSON.stringify(
+		// 				{
+		// 					'upc_id': data['new_value'],
+		// 					'data_to_match' : 
+		// 						[
+		// 							{
+		// 								'distributor': distributor,
+		// 								'upc_id': upc_id,
+		// 								'catalog_id': catalog_id,
+		// 								'type': type,
+		// 								'version_number': version_number,
+		// 								'medium': medium,
+		// 								'description': description,
+		// 							}
+		// 						]
+		// 					}
+		// 			)
+		// 		})
+		// 	.then(res => res.json())
+		// 	.then(json => {
+		// 		props.setUpdated(json['updated'])
+		// 		props.setAlert(true)
+		// 	})
+		// 	.then(res => fetch('http://localhost:5000/income/matching-errors'))
+		// 	.then(res => res.json())
+		// 	.then(json => {
+		// 		props.setRows(json)
+		// 		if (json.length === 0 ) {
+		// 			history.push('/income/import')
+		// 		}
+		// 	})
+		// 	.then(res => setMatchOpen(false))
 	}
 
 
@@ -221,13 +203,13 @@ function ExpenseMatchingTable(props) {
 				open={open}
 				selected={selected}
 			/>
-		<Drawer
-			anchor={"right"}
-			open={matchOpen}
-			onClose={handleMatchClose}
-		>
+			<Drawer
+				anchor={"right"}
+				open={matchOpen}
+				onClose={handleMatchClose}
+			>
 			<MatchModal
-				type={"upc"}
+				type={props.type}
 				columns={columns}
 				data={data}
 				handleMatchClose={handleMatchClose}

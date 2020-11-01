@@ -25,7 +25,7 @@ function TypeMatchingErrors(props) {
 	const [ alert, setAlert ] = useState(false)
 
 	useEffect(() => {
-		fetch('http://localhost:5000/income/matching-errors')
+		fetch('http://localhost:5000/expense/type-matching-errors')
 		.then(res => res.json())
 		.then(json => {
 			setRows(json)
@@ -38,10 +38,10 @@ function TypeMatchingErrors(props) {
 
 	return (
 			<Container>
-				<Header name='Income Matching Errors'/>
+				<Header name='Type Matching Errors'/>
 		<Grid container direction="row" >
 			<Grid item xs={12}>
-				<Alert severity="error">You have { rows.length} UPC matching errors</Alert>
+				<Alert severity="error">You have { rows.length} Type matching errors</Alert>
 				<Divider style={{marginTop: 10}}/>
 				<Paper>
 				<ExpenseMatchingTable
@@ -49,6 +49,7 @@ function TypeMatchingErrors(props) {
 					setRows={setRows}
 					setUpdated={setUpdated}
 					setAlert={setAlert}
+					type={'type'}
 				/>
 				</Paper>
 			</Grid>

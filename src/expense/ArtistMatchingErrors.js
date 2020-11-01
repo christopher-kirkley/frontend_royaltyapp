@@ -32,22 +32,23 @@ function ArtistMatchingErrors(props) {
 
 
 	return (
-			<Container>
-				<Header name='Artist Matching Errors'/>
-		<Grid container direction="row" >
-			<Grid item xs={12}>
-				<Alert severity="error">You have { rows.length} artist matching errors</Alert>
-				<Divider style={{marginTop: 10}}/>
-				<Paper>
-				<ExpenseMatchingTable
-					rows={rows}
-					setRows={setRows}
-					setUpdated={setUpdated}
-					setAlert={setAlert}
-				/>
-				</Paper>
-			</Grid>
-			</Grid>
+		<Container>
+		<Header name='Artist Matching Errors'/>
+			<Grid container direction="row" >
+				<Grid item xs={12}>
+					<Alert severity="error">You have { rows.length} artist matching errors</Alert>
+					<Divider style={{marginTop: 10}}/>
+					<Paper>
+					<ExpenseMatchingTable
+						rows={rows}
+						setRows={setRows}
+						setUpdated={setUpdated}
+						setAlert={setAlert}
+						type={'artist'}
+					/>
+					</Paper>
+				</Grid>
+				</Grid>
 
 			<Snackbar open={alert}
 				autoHideDuration={1500}

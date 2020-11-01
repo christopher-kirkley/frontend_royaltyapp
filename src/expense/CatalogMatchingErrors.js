@@ -14,7 +14,7 @@ import ExpenseMatchingTable from './ExpenseMatchingTable'
 import Snackbar from '@material-ui/core/Snackbar';
 import Alert from '@material-ui/lab/Alert';
 
-function MatchingErrors(props) {
+function CatalogMatchingErrors(props) {
 
 	const history = useHistory()
 
@@ -25,12 +25,12 @@ function MatchingErrors(props) {
 	const [ alert, setAlert ] = useState(false)
 
 	useEffect(() => {
-		fetch('http://localhost:5000/income/matching-errors')
+		fetch('http://localhost:5000/expense/catalog-matching-errors')
 		.then(res => res.json())
 		.then(json => {
 			setRows(json)
 			if (json.length === 0 ) {
-				history.push('/income/import')
+				history.push('/expense/import')
 			}
 		})
 	}, rows)
@@ -38,35 +38,36 @@ function MatchingErrors(props) {
 
 	return (
 			<Container>
-				<Header name='Income Matching Errors'/>
-		<Grid container direction="row" >
-			<Grid item xs={12}>
-				<Alert severity="error">You have { rows.length} UPC matching errors</Alert>
-				<Divider style={{marginTop: 10}}/>
-				<Paper>
-				<ExpenseMatchingTable
-					rows={rows}
-					setRows={setRows}
-					setUpdated={setUpdated}
-					setAlert={setAlert}
-				/>
-				</Paper>
-			</Grid>
-			</Grid>
+				<Header name='Catalog Matching Errors'/>
+				<Grid container direction="row" >
+					<Grid item xs={12}>
+						<Alert severity="error">You have { rows.length} catalog matching errors</Alert>
+						<Divider style={{marginTop: 10}}/>
+						<Paper>
+						<ExpenseMatchingTable
+							rows={rows}
+							setRows={setRows}
+							setUpdated={setUpdated}
+							setAlert={setAlert}
+							type={'catalog'}
+						/>
+						</Paper>
+					</Grid>
+				</Grid>
 
-			<Snackbar open={alert}
-				autoHideDuration={1500}
-				anchorOrigin={{vertical: 'bottom', horizontal: 'center'}}
-				onClose={()=>setAlert(false)}
-			>
+				<Snackbar open={alert}
+					autoHideDuration={1500}
+					anchorOrigin={{vertical: 'bottom', horizontal: 'center'}}
+					onClose={()=>setAlert(false)}
+				>
 				<Alert severity="success">
-				Updated {updated} errors!
+					Updated {updated} errors!
 				</Alert>
-			</Snackbar>
+				</Snackbar>
 
 			</Container>
 		)
 	}
 
 
-export default MatchingErrors
+export default CatalogMatchingErrors
