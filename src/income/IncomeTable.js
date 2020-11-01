@@ -23,6 +23,14 @@ function IncomeTable(props) {
 
 	const history = useHistory()
 
+	Object.size = function(obj) {
+		var size = 0, key
+		for (key in obj) {
+			if (obj.hasOwnProperty(key))
+				size += obj[key].length
+		}
+		return size
+	}
 
 	function handleClick(e) {
 		const id = e.currentTarget.value
@@ -136,6 +144,8 @@ function IncomeTable(props) {
 	}
 
 	return (
+		<React.Fragment>
+		{ Object.size(props.importedIncome) > 0 ?
 		    <TableContainer>
 		      <Table aria-label="collapsible table">
 		        <TableHead>
@@ -156,6 +166,10 @@ function IncomeTable(props) {
 	        </TableBody>
 		      </Table>
 		    </TableContainer>
+			:
+				<Typography id="income-data" variant="h6" align="center">No data</Typography> 
+		}
+			</React.Fragment>
 	)
 
 }

@@ -141,19 +141,14 @@ function IncomeAdd() {
 								<Grid item xs={12}>
 			<Divider style={{marginTop: 20, marginBottom: 20}}/>
 
-									<Table>
+									<Table size="small">
 										<TableHead>
 											<TableRow>
 												<TableCell>Date</TableCell>
 												<TableCell>Amount</TableCell>
-												<TableCell>Version/Track</TableCell>
+												<TableCell>Type</TableCell>
 												<TableCell>Select</TableCell>
 												<TableCell>
-													<Button
-														onClick={() => append(emptyRow)}
-													>
-													Add
-													</Button>
 												</TableCell>
 											</TableRow>
 
@@ -181,7 +176,7 @@ function IncomeAdd() {
 					/>
 				</MuiPickersUtilsProvider>
 				</TableCell>
-				<TableCell item xs={3}>
+				<TableCell>
 					<Controller
 						as={TextField}
 						control={control}
@@ -190,9 +185,20 @@ function IncomeAdd() {
 						label='Amount'
 					/>
 				</TableCell>
-				<TableCell Item xs={3}>
+				<TableCell>
+					<Controller
+					as={
+						<NativeSelect>
+							<option>Album</option>
+							<option>Track</option>
+						</NativeSelect>
+					}
+						name={`newTrack[${index}].artist_id`}
+						defaultValue={`${newTrack.artist_id}`}
+						control={control}
+					/>
 				</TableCell>
-				<TableCell item xs={2}>
+				<TableCell>
 					<Controller
 					as={
 						<NativeSelect>
@@ -221,11 +227,18 @@ function IncomeAdd() {
 
 										</TableHead>
 									</Table>
-
-
 								</Grid>
-								<Grid container alignItems="center" justify="flex-end">
+								<Grid container alignItems="center" justify="flex-start">
 									<Grid item>
+													<Button
+														onClick={() => append(emptyRow)}
+													>
+													Add
+													</Button>
+									</Grid>
+								</Grid>
+							</Grid>
+						</Paper>
 										<Button
 											id="submit"
 											type="submit"
@@ -234,10 +247,6 @@ function IncomeAdd() {
 										>
 											Submit
 										</Button>
-									</Grid>
-								</Grid>
-							</Grid>
-						</Paper>
 					</Grid>
 				</Grid>
 			

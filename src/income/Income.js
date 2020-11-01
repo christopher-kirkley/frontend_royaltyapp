@@ -47,7 +47,7 @@ function Income() {
 	}
 
 	function handleAdd() {
-		history.push('/income/add')
+		// history.push('/income/add')
 	}
 
 	console.log(importedIncome)
@@ -61,12 +61,14 @@ function Income() {
 						<Paper className={classes.paper}> 
 							<Grid container justify="space-between">
 								<Grid item xs={2} >
-									<Typography color="textSecondary" component="h6" variant="caption" align="center">INCOME STATEMENTS</Typography>
+									<Typography color="textSecondary" component="h6" variant="caption">INCOME STATEMENTS</Typography>
 								</Grid>
-							<StatementsHeader
-								handleAdd={handleAdd}
-								handleImport={handleImport}
-							/>
+								<Grid item xs={5} align="center">
+									<StatementsHeader
+										handleAdd={handleAdd}
+										handleImport={handleImport}
+									/>
+								</Grid>
 							</Grid>
 							<IncomeTable
 								importedIncome={importedIncome}
