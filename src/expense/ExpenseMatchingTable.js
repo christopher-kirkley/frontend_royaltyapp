@@ -202,6 +202,7 @@ function ExpenseMatchingTable(props) {
 				handleOpen={handleOpen}
 				open={open}
 				selected={selected}
+				type={props.type}
 			/>
 			<Drawer
 				anchor={"right"}

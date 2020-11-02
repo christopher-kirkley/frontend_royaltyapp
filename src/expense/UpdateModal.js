@@ -89,6 +89,68 @@ function UpdateModal(props) {
 
 	const [ upc, setUpc ] = useState(false)
 
+	const [artists, setArtists] = useState([])
+
+	useEffect(() => {
+				fetch('http://localhost:5000/artists')
+				.then(res => res.json())
+				.then(json => setArtists(json))
+			}, [])
+
+	const artistChoices = artists.map((artist) =>
+		{
+			return (
+				<option
+					id={artist.artist_id}
+					value={artist.artist_name}
+				>{artist.artist_name}
+				</option>
+			)
+		})
+
+	const [ catalog, setCatalog ] = useState([])
+
+	useEffect(() => {
+				fetch('http://localhost:5000/catalog')
+				.then(res => res.json())
+				.then(json => setCatalog(json))
+			}, [])
+
+		const catalogChoices = catalog.map((catalog) =>
+			{
+				return (
+					<option
+						id={catalog.catalog_id}
+						value={catalog.catalog_number}
+					>{catalog.catalog_number}
+					</option>
+				)
+			})
+		
+	function updateChoices() {
+		if (props.type == 'artist') {return artistChoices}
+		if (props.type == 'type') {
+			return (
+				<React.Fragment>
+					<option
+						id="advance"
+						value="advance"
+					>
+					Advance
+					</option>
+					<option
+						id="recoupable"
+						value="recoupable"
+					>
+					Recoupable
+					</option>
+				</React.Fragment>
+			)
+
+		}
+		if (props.type == 'catalog') {return catalogChoices}
+	}
+
 	const body = (
 			<div style={{transform: "translate(100%, 100%)"}} className={classes.paper}>
 				<Typography variant="h6" gutterBottom>Update Selected</Typography>
@@ -96,31 +158,14 @@ function UpdateModal(props) {
 					<Grid item xs={12}
 						onClick={() => setUpc(!upc)}
 					>
-						<Typography variant="subtitle1">UPC: { sharedObj.upc_id }</Typography>
-					</Grid>
-					<Grid item xs={12}>
-						<Typography variant="subtitle1">Distributor: { sharedObj.distributor }</Typography>
-					</Grid>
-					<Grid item xs={12}>
-						<Typography variant="subtitle1">Catalog: { sharedObj.catalog_id }</Typography>
-					</Grid>
-					<Grid item xs={12}>
-						<Typography variant="subtitle1">Medium: { sharedObj.medium }</Typography>
-					</Grid>
-					<Grid item xs={12}>
-					<Typography variant="subtitle1">Type: { sharedObj.type }</Typography>
-					</Grid>
-					<Grid item xs={12}>
-					<Typography variant="subtitle1">Description: { sharedObj.description }</Typography>
-					<Divider style={{marginTop: 5, marginBottom: 5}}/>
 					</Grid>
 					<Grid item xs={6}>
-					<Typography variant="subtitle1">SET VERSION TO</Typography>
+					<Typography variant="subtitle1">SET {props.type} TO</Typography>
 					</Grid>
 					<Grid item={6}>
 						<NativeSelect
-							id="new_upc">
-							{upcChoices}
+							id={props.type}>
+							{ updateChoices() }
 						</NativeSelect>
 					</Grid>
 					<Grid container item style={{marginTop: 30}} justify="flex-end">
