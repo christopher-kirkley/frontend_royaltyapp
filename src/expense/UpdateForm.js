@@ -26,49 +26,13 @@ function UpdateForm(props) {
 
 	const numSelect = props.selected.length
 
-	var sharedObj = props.selected[0]
-
-	for (var i = 0, len = props.selected.length; i < len; i++) {
-		var sharedObj = shared(sharedObj, props.selected[i+1])
-	}
-
-	function shared(obj1, obj2) {
-		// Make sure an object to compare is provided
-		if (!obj2 || Object.prototype.toString.call(obj2) !== '[object Object]') {
-				return obj1;
-			}
-
-		var shared = {}
-
-		var key;
-
-		var compare = function (item1, item2, key) {
-
-			if (item1 === item2) {
-				shared[key] = item1
-			}
-			
-			if (item1 !== item2) {
-				shared[key] = 'Various'
-			}
-
-			return shared
-	}
-
-		for (key in obj1) {
-				compare(obj1[key], obj2[key], key);
-		}
-
-		return shared
-	}
-
-	const [upcs, setUpcs] = useState([])
-
 	useEffect(() => {
 				fetch('http://localhost:5000/version')
 				.then(res => res.json())
 				.then(json => setUpcs(json))
 			}, [])
+
+	const [ upcs, setUpcs ] = useState([])
 
 	const upcChoices = upcs.map((upc) =>
 		{
@@ -81,7 +45,6 @@ function UpdateForm(props) {
 			)
 		})
 
-	const [ upc, setUpc ] = useState(false)
 
 	const [artists, setArtists] = useState([])
 
@@ -146,22 +109,23 @@ function UpdateForm(props) {
 	}
 
 	function onSubmit(data) {
-
-		const selected_ids = Object.keys(props.selectedRowIds)
-		console.log(data)
-		console.log(selected_ids)
-		console.log(props.rows)
-		
-		// fetch('http://localhost:5000/expense/update-errors', {
-		// 	method: 'PUT',
-		// 	body: JSON.stringify(
-		// 		{
-		// 			'error_type': props.type,
-		// 			'selected_ids': selected_ids,
-		// 			'new_value': data['new_value']
-		// 		})})
-		// .then(res => res.json())
-		// .then(json => console.log(json))
+		const selectedIds = Object.keys(props.selectedRowIds)
+		const newIds = selectedIds.map((id) =>
+			{
+				return props.rows[id].id
+			}
+		)
+			
+		fetch('http://localhost:5000/expense/update-errors', {
+			method: 'PUT',
+			body: JSON.stringify(
+				{
+					'error_type': props.type,
+					'selected_ids': newIds,
+					'new_value': data['new_value']
+				})})
+		.then(res => res.json())
+		.then(res => props.getMatchingErrors())
 	}
 
 	return (

@@ -195,12 +195,6 @@ function ExpenseMatchingTable(props) {
 		// 	.then(res => setMatchOpen(false))
 	}
 
-	function onSub() {
-		const indexes = Object.keys(selectedRowIds)
-		console.log(indexes)
-
-	}
-
 	return (
 		<div>
 		{ 
@@ -211,6 +205,7 @@ function ExpenseMatchingTable(props) {
 				type={props.type}
 				selectedRowIds={selectedRowIds}
 				rows={props.rows}
+				getMatchingErrors={props.getMatchingErrors}
 			/>
 			:
 			null

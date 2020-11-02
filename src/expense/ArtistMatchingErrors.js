@@ -24,10 +24,14 @@ function ArtistMatchingErrors(props) {
 
 	const [ alert, setAlert ] = useState(false)
 
-	useEffect(() => {
+	function getArtistMatchingErrors() {
 		fetch('http://localhost:5000/expense/artist-matching-errors')
 		.then(res => res.json())
 		.then(json => setRows(json))
+	}
+
+	useEffect(() => {
+		getArtistMatchingErrors()
 	}, rows)
 
 
@@ -45,6 +49,7 @@ function ArtistMatchingErrors(props) {
 						setUpdated={setUpdated}
 						setAlert={setAlert}
 						type={'artist'}
+						getMatchingErrors={getArtistMatchingErrors}
 					/>
 					</Paper>
 				</Grid>
