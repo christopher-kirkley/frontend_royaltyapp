@@ -210,6 +210,7 @@ function ExpenseMatchingTable(props) {
 				selected={selected}
 				type={props.type}
 				selectedRowIds={selectedRowIds}
+				rows={props.rows}
 			/>
 			:
 			null

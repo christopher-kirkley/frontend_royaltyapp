@@ -24,7 +24,6 @@ function UpdateForm(props) {
 
 	const classes = useStyles();
 
-
 	const numSelect = props.selected.length
 
 	var sharedObj = props.selected[0]
@@ -96,7 +95,7 @@ function UpdateForm(props) {
 		{
 			return (
 				<option
-					id={artist.artist_id}
+					id={artist.id}
 					value={artist.artist_name}
 				>{artist.artist_name}
 				</option>
@@ -146,6 +145,24 @@ function UpdateForm(props) {
 		if (props.type == 'catalog') {return catalogChoices}
 	}
 
+	function onSubmit(data) {
+
+		const selected_ids = Object.keys(props.selectedRowIds)
+		console.log(data)
+		console.log(selected_ids)
+		console.log(props.rows)
+		
+		// fetch('http://localhost:5000/expense/update-errors', {
+		// 	method: 'PUT',
+		// 	body: JSON.stringify(
+		// 		{
+		// 			'error_type': props.type,
+		// 			'selected_ids': selected_ids,
+		// 			'new_value': data['new_value']
+		// 		})})
+		// .then(res => res.json())
+		// .then(json => console.log(json))
+	}
 
 	return (
 		<React.Fragment>
@@ -154,16 +171,24 @@ function UpdateForm(props) {
 					<Typography variant="caption">{ Object.keys(props.selectedRowIds).length } rows selected.</Typography>
 				</Grid>
 				<Grid item xs={6}>
-					<form onSubmit={handleSubmit(props.onSub)}>
+					<form onSubmit={handleSubmit(onSubmit)}>
 						<Grid container justify="space-around">
 							<Grid item xs={4} align="right">
 							<Typography variant="subtitle1">Set {props.type} to</Typography>
 							</Grid>
 							<Grid item={4}>
-								<NativeSelect
-									id={props.type}>
-									{ updateChoices() }
-								</NativeSelect>
+								<Controller
+									as={
+										<NativeSelect>
+										<option disabled="true" value="none">Select...</option>
+										{ updateChoices() }
+										</NativeSelect>
+									}
+									control={control}
+									id="new_value"
+									name="new_value"
+									defaultValue="none"
+								/>
 							</Grid>
 							<Grid item xs={2}>
 								<Button
@@ -171,6 +196,7 @@ function UpdateForm(props) {
 									variant="contained"
 									color="primary"
 									size="small"
+									type="submit"
 								>
 								Update
 								</Button>
