@@ -24,15 +24,18 @@ function TypeMatchingErrors(props) {
 
 	const [ alert, setAlert ] = useState(false)
 
-	useEffect(() => {
+	function getTypeMatchingErrors() {
 		fetch('http://localhost:5000/expense/type-matching-errors')
 		.then(res => res.json())
 		.then(json => {
-			setRows(json)
-			if (json.length === 0 ) {
-				history.push('/income/import')
-			}
+				setRows(json)
+				if (json.length === 0 ) {
+					history.push('/expense/import')
+				}
 		})
+	}
+	useEffect(() => {
+			getTypeMatchingErrors()
 	}, rows)
 
 
@@ -50,6 +53,7 @@ function TypeMatchingErrors(props) {
 					setUpdated={setUpdated}
 					setAlert={setAlert}
 					type={'type'}
+					getMatchingErrors={getTypeMatchingErrors}
 				/>
 				</Paper>
 			</Grid>

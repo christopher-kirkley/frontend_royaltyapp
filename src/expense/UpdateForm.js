@@ -77,7 +77,7 @@ function UpdateForm(props) {
 			{
 				return (
 					<option
-						id={catalog.catalog_id}
+						id={catalog.id}
 						value={catalog.catalog_number}
 					>{catalog.catalog_number}
 					</option>
@@ -90,13 +90,13 @@ function UpdateForm(props) {
 			return (
 				<React.Fragment>
 					<option
-						id="advance"
+						id="1"
 						value="advance"
 					>
 					Advance
 					</option>
 					<option
-						id="recoupable"
+						id="2"
 						value="recoupable"
 					>
 					Recoupable

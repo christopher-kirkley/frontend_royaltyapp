@@ -27,7 +27,12 @@ function ArtistMatchingErrors(props) {
 	function getArtistMatchingErrors() {
 		fetch('http://localhost:5000/expense/artist-matching-errors')
 		.then(res => res.json())
-		.then(json => setRows(json))
+		.then(json => {
+				setRows(json)
+				if (json.length === 0 ) {
+					history.push('/expense/import')
+				}
+		})
 	}
 
 	useEffect(() => {
