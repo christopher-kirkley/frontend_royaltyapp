@@ -14,40 +14,16 @@ import { makeStyles, useTheme } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
 	paper: {
-				position: 'absolute',
-				width: 400,
-				backgroundColor: theme.palette.background.paper,
-				border: '2px solid #000',
-				boxShadow: theme.shadows[5],
-				padding: theme.spacing(2, 4, 3),
 			},
 }));
 
 
-function UpdateModal(props) {
+function UpdateForm(props) {
 
 	const { register, control, handleSubmit } = useForm()
 
 	const classes = useStyles();
 
-	const [upcs, setUpcs] = useState([])
-
-	useEffect(() => {
-				fetch('http://localhost:5000/version')
-				.then(res => res.json())
-				.then(json => setUpcs(json))
-			}, [])
-
-	const upcChoices = upcs.map((upc) =>
-		{
-			return (
-				<option
-					id={upc.version_number}
-					value={upc.upc}
-				>{upc.version_number}
-				</option>
-			)
-		})
 
 	const numSelect = props.selected.length
 
@@ -86,6 +62,25 @@ function UpdateModal(props) {
 
 		return shared
 	}
+
+	const [upcs, setUpcs] = useState([])
+
+	useEffect(() => {
+				fetch('http://localhost:5000/version')
+				.then(res => res.json())
+				.then(json => setUpcs(json))
+			}, [])
+
+	const upcChoices = upcs.map((upc) =>
+		{
+			return (
+				<option
+					id={upc.version_number}
+					value={upc.upc}
+				>{upc.version_number}
+				</option>
+			)
+		})
 
 	const [ upc, setUpc ] = useState(false)
 
@@ -151,56 +146,52 @@ function UpdateModal(props) {
 		if (props.type == 'catalog') {return catalogChoices}
 	}
 
-	const body = (
-			<div style={{transform: "translate(100%, 100%)"}} className={classes.paper}>
-				<Typography variant="h6" gutterBottom>Update Selected</Typography>
-			<form onSubmit={handleSubmit(props.onSub)}>
-				<Grid container>
-					<Grid item xs={12}
-						onClick={() => setUpc(!upc)}
-					>
-					</Grid>
-					<Grid item xs={6}>
-					<Typography variant="subtitle1">SET {props.type} TO</Typography>
-					</Grid>
-					<Grid item={6}>
-						<NativeSelect
-							id={props.type}>
-							{ updateChoices() }
-						</NativeSelect>
-					</Grid>
-					<Grid container item style={{marginTop: 30}} justify="flex-end">
-						<Grid item xs={3}>
-							<Button
-								size="small"
-								variant="outlined"
-								color="secondary"
-								onClick={props.handleClose}
-							>Cancel</Button>
-						</Grid>
-						<Grid item xs={3}>
-							<Button
-								variant="contained"
-								color="primary"
-								size="small"
-								type="submit"
-							>Update</Button>
-						</Grid>
-					</Grid>
-				</Grid>
-		</form>
-			</div>
-			);
 
 	return (
-		<Modal
-			open={props.open}
-			onClose={props.handleClose}
-		>
-		{body}
-		</Modal>
+		<React.Fragment>
+			<Grid container style={{padding: 20}}>
+				<Grid item xs={6}>
+					<Typography variant="caption">{ Object.keys(props.selectedRowIds).length } rows selected.</Typography>
+				</Grid>
+				<Grid item xs={6}>
+					<form onSubmit={handleSubmit(props.onSub)}>
+						<Grid container justify="space-around">
+							<Grid item xs={4} align="right">
+							<Typography variant="subtitle1">Set {props.type} to</Typography>
+							</Grid>
+							<Grid item={4}>
+								<NativeSelect
+									id={props.type}>
+									{ updateChoices() }
+								</NativeSelect>
+							</Grid>
+							<Grid item xs={2}>
+								<Button
+									id="update"
+									variant="contained"
+									color="primary"
+									size="small"
+								>
+								Update
+								</Button>
+							</Grid>
+							<Grid item xs={2}>
+								<Button
+									id="delete"
+									variant="contained"
+									size="small"
+								>
+								Delete
+								</Button>
+							</Grid>
+						</Grid>
+				</form>
+				</Grid>
+			</Grid>
+			<Divider/>
+		</React.Fragment>
 	)
 }
 
-export default UpdateModal
+export default UpdateForm
 

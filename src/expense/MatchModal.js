@@ -246,7 +246,7 @@ function MatchModal(props) {
 		<div className={classes.paper, classes.list}>
 		<Typography variant="h6" gutterBottom>Conditional Match</Typography>
 		<Typography variant="subtitle1" gutterBottom>Apply to transactions where</Typography>
-			<form onSubmit={handleSubmit(props.onSubmit)}>
+			<form onSubmit={handleSubmit(props.onSub)}>
 			<Grid container justify="space-between" alignItems="center">
 			{ fields.map((item, index) => {
 			return (

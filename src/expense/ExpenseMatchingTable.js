@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
+import Divider from '@material-ui/core/Divider';
 import Collapse from '@material-ui/core/Collapse';
 import Table from '@material-ui/core/Table';
 import TableHead from '@material-ui/core/TableHead';
@@ -22,6 +23,7 @@ import Drawer from '@material-ui/core/Drawer';
 import UpdateModal from './UpdateModal'
 import MatchModal from './MatchModal'
 import MatchForm from './MatchForm'
+import UpdateForm from './UpdateForm'
 
 import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table'
 
@@ -141,7 +143,6 @@ function ExpenseMatchingTable(props) {
 	function handleMatch() {
 	}
 
-
 	function onSubmit(data) {
 		console.log(data)
 		// if (data['date'])
@@ -194,73 +195,24 @@ function ExpenseMatchingTable(props) {
 		// 	.then(res => setMatchOpen(false))
 	}
 
+	function onSub() {
+		const indexes = Object.keys(selectedRowIds)
+		console.log(indexes)
+
+	}
 
 	return (
 		<div>
-			<UpdateModal
-				handleClose={handleClose}
-				handleOpen={handleOpen}
-				open={open}
-				selected={selected}
-				type={props.type}
-			/>
-			<Drawer
-				anchor={"right"}
-				open={matchOpen}
-				onClose={handleMatchClose}
-			>
-			<MatchModal
-				type={props.type}
-				columns={columns}
-				data={data}
-				handleMatchClose={handleMatchClose}
-				onSubmit={onSubmit}
-			/>
-		</Drawer>
-
 		{ 
 			Object.keys(selectedRowIds).length > 0
 			?
-			<Grid container style={{backgroundColor: "grey", padding: 20}}>
-				<Grid item xs={10}>
-					<Typography variant="subtitle1">{ Object.keys(selectedRowIds).length } rows selected.</Typography>
-				</Grid>
-				<Grid item xs={1}>
-					<Button
-						id="update"
-						variant="contained"
-						color="primary"
-						size="small"
-						onClick={handleOpen}
-					>
-					Update
-					</Button>
-				</Grid>
-				<Grid item xs={1}>
-					<Button
-						id="delete"
-						variant="contained"
-						size="small"
-						onClick={handleDelete}
-					>
-					Delete
-					</Button>
-				</Grid>
-			</Grid>
+			<UpdateForm
+				selected={selected}
+				type={props.type}
+				selectedRowIds={selectedRowIds}
+			/>
 			:
-			<Grid container style={{padding: 20}} justify="flex-end">
-				<Grid item>
-					<Button
-						id="match"
-						variant="contained"
-						color="secondary"
-						size="small"
-						onClick={handleMatchOpen}
-					>
-					Match
-					</Button>
-				</Grid>
-			</Grid>
+			null
 		}
 
 		 <Table {...getTableProps()}
