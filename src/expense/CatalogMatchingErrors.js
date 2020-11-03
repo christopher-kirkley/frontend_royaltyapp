@@ -24,15 +24,19 @@ function CatalogMatchingErrors(props) {
 
 	const [ alert, setAlert ] = useState(false)
 
-	useEffect(() => {
+	function getCatalogMatchingErrors() {
 		fetch('http://localhost:5000/expense/catalog-matching-errors')
 		.then(res => res.json())
 		.then(json => {
-			setRows(json)
-			if (json.length === 0 ) {
-				history.push('/expense/import')
-			}
+				setRows(json)
+				if (json.length === 0 ) {
+					history.push('/expense/import')
+				}
 		})
+	}
+
+	useEffect(() => {
+		getCatalogMatchingErrors()
 	}, rows)
 
 
@@ -50,6 +54,7 @@ function CatalogMatchingErrors(props) {
 							setUpdated={setUpdated}
 							setAlert={setAlert}
 							type={'catalog'}
+							getMatchingErrors={getCatalogMatchingErrors}
 						/>
 						</Paper>
 					</Grid>
