@@ -24,7 +24,7 @@ function TrackMatchingErrors(props) {
 
 	const [ alert, setAlert ] = useState(false)
 
-	useEffect(() => {
+	function getTrackMatchingErrors() {
 		fetch('http://localhost:5000/income/track-matching-errors')
 		.then(res => res.json())
 		.then(json => {
@@ -33,12 +33,16 @@ function TrackMatchingErrors(props) {
 				history.push('/income/import')
 			}
 		})
+	}
+
+	useEffect(() => {
+		getTrackMatchingErrors()
 	}, rows)
 
 
 	return (
-			<Container>
-				<Header name='ISRC Matching Errors'/>
+		<Container>
+		<Header name='ISRC Matching Errors'/>
 		<Grid container direction="row" >
 			<Grid item xs={12}>
 				<Alert severity="error">You have { rows.length} ISRC matching errors</Alert>
@@ -49,6 +53,7 @@ function TrackMatchingErrors(props) {
 					setRows={setRows}
 					setUpdated={setUpdated}
 					setAlert={setAlert}
+					getMatchingErrors={getTrackMatchingErrors}
 				/>
 				</Paper>
 			</Grid>
@@ -63,8 +68,7 @@ function TrackMatchingErrors(props) {
 				Updated {updated} errors!
 				</Alert>
 			</Snackbar>
-
-			</Container>
+		</Container>
 		)
 	}
 

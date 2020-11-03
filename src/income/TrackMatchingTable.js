@@ -19,10 +19,10 @@ import Paper from '@material-ui/core/Paper';
 import NativeSelect from '@material-ui/core/NativeSelect';
 import Drawer from '@material-ui/core/Drawer';
 
-
 import UpdateModal from './UpdateModal'
 import MatchModal from './MatchModal'
 import MatchForm from './MatchForm'
+import UpdateForm from '../components/UpdateForm'
 
 import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table'
 
@@ -46,7 +46,7 @@ const IndeterminateCheckbox = React.forwardRef(
 )
 
 
-function MatchingTable(props) {
+function TrackMatchingTable(props) {
 
 	const history = useHistory()
 
@@ -216,10 +216,28 @@ function MatchingTable(props) {
 			.then(res => setMatchOpen(false))
 	}
 
+	function submitUpdateErrors(data) {
+		const selectedIds = Object.keys(selectedRowIds)
+		const newIds = selectedIds.map((id) =>
+			{
+				return props.rows[id].id
+			}
+		)
+
+		fetch('http://localhost:5000/income/update-errors', {
+			method: 'PUT',
+			body: JSON.stringify(
+				{
+					'error_type': 'isrc',
+					'selected_ids': newIds,
+					'new_value': data['new_value']
+				})})
+		.then(res => res.json())
+		.then(res => props.getMatchingErrors())
+	}
 
 	return (
 		<div>
-
 			<UpdateModal
 				handleClose={handleClose}
 				handleOpen={handleOpen}
@@ -244,32 +262,14 @@ function MatchingTable(props) {
 		{ 
 			Object.keys(selectedRowIds).length > 0
 			?
-			<Grid container style={{backgroundColor: "grey", padding: 20}}>
-				<Grid item xs={10}>
-					<Typography variant="subtitle1">{ Object.keys(selectedRowIds).length } rows selected.</Typography>
-				</Grid>
-				<Grid item xs={1}>
-					<Button
-						id="update"
-						variant="contained"
-						color="primary"
-						size="small"
-						onClick={handleOpen}
-					>
-					Update
-					</Button>
-				</Grid>
-				<Grid item xs={1}>
-					<Button
-						id="delete"
-						variant="contained"
-						size="small"
-						onClick={handleDelete}
-					>
-					Delete
-					</Button>
-				</Grid>
-			</Grid>
+			<UpdateForm
+				selected={selected}
+				type={'isrc'}
+				selectedRowIds={selectedRowIds}
+				rows={props.rows}
+				getMatchingErrors={props.getMatchingErrors}
+				submitUpdateErrors={submitUpdateErrors}
+			/>
 			:
 			<Grid container style={{padding: 20}} justify="flex-end">
 				<Grid item>
@@ -363,4 +363,4 @@ function MatchingTable(props) {
 }
 
 
-export default MatchingTable
+export default TrackMatchingTable
