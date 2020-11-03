@@ -21,11 +21,20 @@ const useStyles = makeStyles(theme => ({
 
 function Expense() {
 
+	Object.size = function(obj) {
+		var size = 0, key
+		for (key in obj) {
+			if (obj.hasOwnProperty(key))
+				size += obj[key].length
+		}
+		return size
+	}
+
 	const history = useHistory()
 
 	const classes = useStyles()
 
-	const [ importedExpense, setImportedExpense ] = useState([])
+	const [ importedExpense, setImportedExpense ] = useState({})
 
 	useEffect(() => {
 		fetch('http://localhost:5000/expense/imported-statements')

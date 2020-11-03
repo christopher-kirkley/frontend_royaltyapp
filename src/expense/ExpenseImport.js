@@ -70,6 +70,8 @@ function ExpenseImport() {
 		fetch('http://localhost:5000/expense/process-pending', {
 				method: 'POST'}
 		)
+		.then(res => res.json())
+		.then(res => history.push('/expense'))
 	}
 
 	return (
