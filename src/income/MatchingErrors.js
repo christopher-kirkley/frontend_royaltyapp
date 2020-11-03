@@ -24,7 +24,7 @@ function MatchingErrors(props) {
 
 	const [ alert, setAlert ] = useState(false)
 
-	useEffect(() => {
+	function getMatchingErrors() {
 		fetch('http://localhost:5000/income/matching-errors')
 		.then(res => res.json())
 		.then(json => {
@@ -33,6 +33,10 @@ function MatchingErrors(props) {
 				history.push('/income/import')
 			}
 		})
+	}
+
+	useEffect(() => {
+		getMatchingErrors()
 	}, rows)
 
 
@@ -49,6 +53,7 @@ function MatchingErrors(props) {
 					setRows={setRows}
 					setUpdated={setUpdated}
 					setAlert={setAlert}
+					getMatchingErrors={getMatchingErrors}
 				/>
 				</Paper>
 			</Grid>

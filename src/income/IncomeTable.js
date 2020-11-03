@@ -48,6 +48,8 @@ function IncomeTable(props) {
 	const rows = (Object.keys(props.importedIncome).map((row) =>
 		row))
 
+	console.log(props.importedIncome)
+
 	function Row(props) {
 		const { row } = props
 		const [open, setOpen] = useState(true);
@@ -132,15 +134,8 @@ function IncomeTable(props) {
 						</Collapse>
 					</TableCell>
 				</TableRow>
-
-			{
-	}
-
-
-
 			</React.Fragment>
 		)
-			
 	}
 
 	return (

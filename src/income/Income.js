@@ -28,7 +28,7 @@ function Income() {
 
 	const history = useHistory()
 
-	const [ importedIncome, setImportedIncome ] = useState([])
+	const [ importedIncome, setImportedIncome ] = useState({})
 
 	useEffect(() => {
 		fetch('http://localhost:5000/income/imported-statements')

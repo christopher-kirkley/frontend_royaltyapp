@@ -22,6 +22,7 @@ import Drawer from '@material-ui/core/Drawer';
 import UpdateModal from './UpdateModal'
 import MatchModal from './MatchModal'
 import MatchForm from './MatchForm'
+import UpdateForm from '../components/UpdateForm'
 
 import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table'
 
@@ -163,7 +164,6 @@ function MatchingTable(props) {
 		})
 
 	function onSubmit(data) {
-		console.log(data)
 		if (data['distributor'])
 		{ var distributor = data['distributor']}
 		if (data['upc_id'])
@@ -178,7 +178,7 @@ function MatchingTable(props) {
 		{ var version_number = data['version_number']}
 		if (data['description'])
 		{ var description = data['description']}
-				fetch('http://localhost:5000/income/update-errors', {
+				fetch('http://localhost:5000/income/match-errors', {
 					method: 'PUT',
 					body: JSON.stringify(
 						{
@@ -214,6 +214,25 @@ function MatchingTable(props) {
 			.then(res => setMatchOpen(false))
 	}
 
+	function submitUpdateErrors(data) {
+		const selectedIds = Object.keys(selectedRowIds)
+		const newIds = selectedIds.map((id) =>
+			{
+				return props.rows[id].id
+			}
+		)
+			
+		fetch('http://localhost:5000/income/update-errors', {
+			method: 'PUT',
+			body: JSON.stringify(
+				{
+					'error_type': "upc",
+					'selected_ids': newIds,
+					'new_value': data['new_value']
+				})})
+		.then(res => res.json())
+		.then(res => props.getMatchingErrors())
+	}
 
 	return (
 		<div>
@@ -240,32 +259,14 @@ function MatchingTable(props) {
 		{ 
 			Object.keys(selectedRowIds).length > 0
 			?
-			<Grid container style={{backgroundColor: "grey", padding: 20}}>
-				<Grid item xs={10}>
-					<Typography variant="subtitle1">{ Object.keys(selectedRowIds).length } rows selected.</Typography>
-				</Grid>
-				<Grid item xs={1}>
-					<Button
-						id="update"
-						variant="contained"
-						color="primary"
-						size="small"
-						onClick={handleOpen}
-					>
-					Update
-					</Button>
-				</Grid>
-				<Grid item xs={1}>
-					<Button
-						id="delete"
-						variant="contained"
-						size="small"
-						onClick={handleDelete}
-					>
-					Delete
-					</Button>
-				</Grid>
-			</Grid>
+			<UpdateForm
+				selected={selected}
+				type={"upc"}
+				selectedRowIds={selectedRowIds}
+				rows={props.rows}
+				getMatchingErrors={props.getMatchingErrors}
+				submitUpdateErrors={submitUpdateErrors}
+			/>
 			:
 			<Grid container style={{padding: 20}} justify="flex-end">
 				<Grid item>

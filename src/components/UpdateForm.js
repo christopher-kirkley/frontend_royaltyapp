@@ -40,11 +40,10 @@ function UpdateForm(props) {
 				<option
 					id={upc.version_number}
 					value={upc.upc}
-				>{upc.version_number}
+				>{upc.upc} : {upc.version_number}
 				</option>
 			)
 		})
-
 
 	const [artists, setArtists] = useState([])
 
@@ -86,6 +85,7 @@ function UpdateForm(props) {
 		
 	function updateChoices() {
 		if (props.type == 'artist') {return artistChoices}
+		if (props.type == 'upc') {return upcChoices}
 		if (props.type == 'type') {
 			return (
 				<React.Fragment>
@@ -108,34 +108,14 @@ function UpdateForm(props) {
 		if (props.type == 'catalog') {return catalogChoices}
 	}
 
-	function onSubmit(data) {
-		const selectedIds = Object.keys(props.selectedRowIds)
-		const newIds = selectedIds.map((id) =>
-			{
-				return props.rows[id].id
-			}
-		)
-			
-		fetch('http://localhost:5000/expense/update-errors', {
-			method: 'PUT',
-			body: JSON.stringify(
-				{
-					'error_type': props.type,
-					'selected_ids': newIds,
-					'new_value': data['new_value']
-				})})
-		.then(res => res.json())
-		.then(res => props.getMatchingErrors())
-	}
-
 	return (
 		<React.Fragment>
 			<Grid container style={{padding: 20}}>
-				<Grid item xs={6}>
+				<Grid item xs={2}>
 					<Typography variant="caption">{ Object.keys(props.selectedRowIds).length } rows selected.</Typography>
 				</Grid>
-				<Grid item xs={6}>
-					<form onSubmit={handleSubmit(onSubmit)}>
+				<Grid item xs={10}>
+					<form onSubmit={handleSubmit(props.submitUpdateErrors)}>
 						<Grid container justify="space-around">
 							<Grid item xs={4} align="right">
 							<Typography variant="subtitle1">Set {props.type} to</Typography>
@@ -154,7 +134,7 @@ function UpdateForm(props) {
 									defaultValue="none"
 								/>
 							</Grid>
-							<Grid item xs={2}>
+							<Grid item xs={1}>
 								<Button
 									id="update"
 									variant="contained"
@@ -165,7 +145,7 @@ function UpdateForm(props) {
 								Update
 								</Button>
 							</Grid>
-							<Grid item xs={2}>
+							<Grid item xs={1}>
 								<Button
 									id="delete"
 									variant="contained"

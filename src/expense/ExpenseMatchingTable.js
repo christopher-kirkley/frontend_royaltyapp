@@ -23,7 +23,7 @@ import Drawer from '@material-ui/core/Drawer';
 import UpdateModal from './UpdateModal'
 import MatchModal from './MatchModal'
 import MatchForm from './MatchForm'
-import UpdateForm from './UpdateForm'
+import UpdateForm from '../components/UpdateForm'
 
 import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table'
 
@@ -195,6 +195,26 @@ function ExpenseMatchingTable(props) {
 		// 	.then(res => setMatchOpen(false))
 	}
 
+	function submitUpdateErrors(data) {
+		const selectedIds = Object.keys(selectedRowIds)
+		const newIds = selectedIds.map((id) =>
+			{
+				return props.rows[id].id
+			}
+		)
+			
+		fetch('http://localhost:5000/expense/update-errors', {
+			method: 'PUT',
+			body: JSON.stringify(
+				{
+					'error_type': props.type,
+					'selected_ids': newIds,
+					'new_value': data['new_value']
+				})})
+		.then(res => res.json())
+		.then(res => props.getMatchingErrors())
+	}
+
 	return (
 		<div>
 		{ 
@@ -206,6 +226,7 @@ function ExpenseMatchingTable(props) {
 				selectedRowIds={selectedRowIds}
 				rows={props.rows}
 				getMatchingErrors={props.getMatchingErrors}
+				submitUpdateErrors={submitUpdateErrors}
 			/>
 			:
 			null
