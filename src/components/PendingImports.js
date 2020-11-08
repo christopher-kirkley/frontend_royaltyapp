@@ -81,7 +81,7 @@ function PendingImports(props) {
 						<Grid item xs={11}>
 							<Alert severity="warning">
 								<AlertTitle>ISRC Matching Errors</AlertTitle>
-										<span id="track_matching_errors">You have <strong id="error_number">{props.trackMatchingErrors}</strong> track matching errors.</span>
+										<span id="isrc_matching_errors">You have <strong id="error_number">{props.trackMatchingErrors}</strong> ISRC matching errors.</span>
 									<Typography component="p" variant="p" id="error_msg">{props.matchingErrorsMsg}</Typography>
 							</Alert>
 						</Grid>

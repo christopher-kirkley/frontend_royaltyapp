@@ -82,10 +82,30 @@ function UpdateForm(props) {
 					</option>
 				)
 			})
+
+	const [ tracks, setTracks ] = useState([])
+
+	useEffect(() => {
+				fetch('http://localhost:5000/tracks')
+				.then(res => res.json())
+				.then(json => setTracks(json))
+			}, [])
+
+		const trackChoices = tracks.map((track) =>
+			{
+				return (
+					<option
+						id={track.id}
+						value={track.isrc}
+					>{track.isrc} : {track.track_name}
+					</option>
+				)
+			})
 		
 	function updateChoices() {
 		if (props.type == 'artist') {return artistChoices}
 		if (props.type == 'upc') {return upcChoices}
+		if (props.type == 'isrc') {return trackChoices}
 		if (props.type == 'type') {
 			return (
 				<React.Fragment>
