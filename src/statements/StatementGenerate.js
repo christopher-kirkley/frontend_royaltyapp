@@ -68,6 +68,7 @@ function StatementGenerate() {
 		})
 		.then(res => setMsg('Uploaded!'))
 		.catch(error => setMsg('Error uploading'))
+		.then(res => history.push('/statements'))
 	}
 
 	const previousBalanceChoices = previousBalances.map((previousBalance) =>
