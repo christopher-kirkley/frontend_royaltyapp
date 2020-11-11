@@ -20,8 +20,11 @@ function CatalogTable() {
 	useEffect(() => { 
 		fetch('http://localhost:5000/catalog')
 		.then(res => res.json())
-		.then(json => setCatalog(json))
-		.then(json => console.log(json))
+		.then(json => {
+			console.log(json)
+			const sorted = [...json].sort((a, b) => a.catalog_number > b.catalog_number)
+			setCatalog(sorted)
+		})
 	}, [])
 
 	function handleCatalogDetail(id) {
