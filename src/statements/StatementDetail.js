@@ -39,7 +39,7 @@ function StatementDetail() {
 			console.log(json)
 			setArtistName(json['artist'])
 			setStatementName(json['statement'])
-			setSummary(json['summary'][0])
+			setSummary(json['summary'])
 			setIncome(json['income'])
 			setExpense(json['expense'])
 			setAdvance(json['advance'])

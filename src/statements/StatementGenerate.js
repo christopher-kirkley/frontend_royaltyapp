@@ -44,6 +44,8 @@ function StatementGenerate() {
 
 	const [msg, setMsg] = useState([]);
 
+	const [index, setIndex] = useState('');
+
 
 	function onSubmit(data) {
 		var startDateSQL = data.start_date.toISOString().split('T')[0] 
@@ -61,14 +63,12 @@ function StatementGenerate() {
 			})
 		.then(resp => resp.json())
 		.then(json => {
-			var statementIndex = json['statement_index']
-			fetch(`http://localhost:5000/statements/${statementIndex}/generate-summary`, {
+			var index = json['statement_index']
+			fetch(`http://localhost:5000/statements/${index}/generate-summary`, {
 				method: 'POST'
 			})
 		})
-		.then(res => setMsg('Uploaded!'))
-		.catch(error => setMsg('Error uploading'))
-		.then(res => history.push('/statements'))
+		.then(res => history.push('/statements/'))
 	}
 
 	const previousBalanceChoices = previousBalances.map((previousBalance) =>

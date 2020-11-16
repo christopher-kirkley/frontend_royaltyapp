@@ -10,6 +10,7 @@ import Alert from '@material-ui/lab/Alert';
 import Header from '../components/Header'
 import ImportCatalog from './ImportCatalog'
 import ImportVersion from './ImportVersion'
+import ImportTrack from './ImportTrack'
 import { makeStyles } from '@material-ui/core/styles'
 
 const useStyles = makeStyles(theme => ({
@@ -33,6 +34,11 @@ function Import () {
 					<Grid item xs={12}>
 						<Paper elevation={3} className={classes.paper}>
 							<ImportVersion/>
+						</Paper>
+					</Grid>
+					<Grid item xs={12}>
+						<Paper elevation={3} className={classes.paper}>
+							<ImportTrack/>
 						</Paper>
 					</Grid>
 				</Grid>
