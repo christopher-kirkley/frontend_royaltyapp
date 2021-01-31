@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-import { useParams } from 'react-router-dom'
+import { useParams, useHistory } from 'react-router-dom'
 
 import CatalogForm from './CatalogForm'
 
@@ -22,6 +22,8 @@ const useStyles = makeStyles(theme => ({
 }))
 
 function CatalogDetail(props) {
+
+	const history = useHistory();
 
 	const { id } = useParams()
 
@@ -133,6 +135,14 @@ function CatalogDetail(props) {
 
 	}
 
+	function handleDelete() {
+		fetch(`http://localhost:5000/catalog/${id}`, {
+			method: 'DELETE',
+		})
+		.then(res => res.json())
+		.then(json => history.push('/catalog/'))
+	}
+
 	return (
 		<Container>
 			<Header name='Catalog Item'/>
@@ -164,6 +174,19 @@ function CatalogDetail(props) {
 				</Grid>
 				<Grid item xs={12}>
 				<Paper elevation={4} className={classes.paper}>
+					{ edit ?
+						<Button 
+							size="small"
+							variant="outlined"
+							color="secondary"
+							id="cancel"
+							onClick={handleDelete}
+							>
+							Delete
+						</Button>
+						:
+						null
+					}
 				</Paper>
 				</Grid>
 			</Grid>

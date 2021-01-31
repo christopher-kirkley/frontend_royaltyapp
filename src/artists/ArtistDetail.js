@@ -59,7 +59,7 @@ function ArtistDetail () {
 	}
 
 	function onSubmit(data) {
-			editArtist(data)
+		editArtist(data)
 	}
 
 	function handleEdit() {
@@ -68,6 +68,14 @@ function ArtistDetail () {
 
 	function handleCancel() {
 		handleEdit()
+	}
+
+	function handleDelete() {
+		fetch(`http://localhost:5000/artists/${id}`, {
+			method: 'DELETE',
+		})
+		.then(res => res.json())
+		.then(json => history.push('/artists/'))
 	}
 
 	return (
@@ -92,6 +100,19 @@ function ArtistDetail () {
 				<Grid item={12}>
 					<Paper elevation={3} className={classes.paper}>
 					<ArtistForm onSubmit={onSubmit} id={id} edit={edit} />
+					{ edit ?
+						<Button 
+							size="small"
+							variant="outlined"
+							color="secondary"
+							id="cancel"
+							onClick={handleDelete}
+							>
+							Delete
+						</Button>
+						:
+						null
+					}
 					</Paper>
 				</Grid>
 		</Container>
