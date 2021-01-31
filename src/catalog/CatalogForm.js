@@ -89,17 +89,26 @@ function CatalogForm(props) {
 	
 	const { handleSubmit, setValue, control } = useForm()
 
-	const [artists, setArtists] = useState([])
+	// const [artists, setArtists] = useState([])
 
-	useEffect(() => { 
-		fetch('http://localhost:5000/artists')
-		.then(res => res.json())
-		.then(json => setArtists(json))
-	}, [])
+	// useEffect(() => { 
+	// 	fetch('http://localhost:5000/artists')
+	// 	.then(res => res.json())
+	// 	.then(json => {
+	// 		const sorted = [...json].sort(function(a, b){
+	// 			if(a.artist_name < b.artist_name) {return -1;}
+	// 			if(a.artist_name > b.artist_name) {return 1;}
+	// 		})
+	// 		console.log(sorted)
+	// 		setArtists(sorted)
+	// 	})
+	// 	.then(res => {
+	// 		const artistChoices = artists.map((artist, i) =>
+	// 			<option id={artist.id} value={artist.id}>{artist.artist_name}</option>
+	// )
+	// 	})
+	// }, [])
 
-	const artistChoices = artists.map((artist, i) =>
-		<option id={artist.id} value={artist.id}>{artist.artist_name}</option>
-	)
 
 	const emptyRow = {format: '',
 										catalog_id: '',
