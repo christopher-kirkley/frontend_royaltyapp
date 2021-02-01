@@ -5,6 +5,7 @@ import { useParams, useHistory } from 'react-router-dom'
 import { useForm, Controller } from 'react-hook-form'
 
 import TextField from '@material-ui/core/TextField'
+import Divider from '@material-ui/core/Divider'
 import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid'
 import Container from '@material-ui/core/Container'
@@ -17,6 +18,7 @@ import EditButton from '../components/EditButton'
 import Toggle from '../components/Toggle'
 
 import ArtistForm from './ArtistForm'
+import ArtistTracks from './ArtistTracks'
  
 const useStyles = makeStyles(theme => ({
 	paper: {
@@ -115,6 +117,15 @@ function ArtistDetail () {
 					}
 					</Paper>
 				</Grid>
+		<Divider/>
+		<Grid container justify="space-between">
+			<Grid item={12}>
+				<Paper elevation={3} className={classes.paper}>
+				<Typography>Appears On</Typography>
+				<ArtistTracks/>
+				</Paper>
+			</Grid>
+		</Grid>
 		</Container>
 	)}
 

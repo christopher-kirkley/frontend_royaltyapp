@@ -57,10 +57,11 @@ function CatalogDetail(props) {
 		if (data['version'])
 		{
 			fetch('http://localhost:5000/version', {
-								method: 'PUT',
-								body: JSON.stringify(
-													{'catalog': id,
-														'version': data['version']})
+				method: 'PUT',
+				body: JSON.stringify(
+					{
+						'catalog': id,
+						'version': data['version']})
 							})
 
 			}
