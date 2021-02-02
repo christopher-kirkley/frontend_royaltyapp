@@ -5,6 +5,7 @@ import { useHistory } from "react-router-dom";
 import Container from '@material-ui/core/Container';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
+import CircularProgress from '@material-ui/core/CircularProgress'
 
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -28,6 +29,8 @@ function IncomeImport() {
 	const [ pendingStatements, setPendingStatements ] = useState([])
 	const [ matchingErrors, setMatchingErrors ] = useState(0)
 	const [ trackMatchingErrors, setTrackMatchingErrors ] = useState(0)
+
+	const [ loading, setLoading ] = useState(false)
 
 	useEffect(() => {
 		fetch('http://localhost:5000/income/pending-statements')
@@ -99,10 +102,16 @@ function IncomeImport() {
 						<AddStatementForm
 							getMatchingErrors={getMatchingErrors}
 							getTrackMatchingErrors={getTrackMatchingErrors}
-							getPendingStatements={getPendingStatements}/>
+							getPendingStatements={getPendingStatements}
+							loading={loading}
+							setLoading={setLoading}
+						/>
 						</Paper>
 					</Grid>
-					{ pendingStatements.length > 0
+					{ loading ?
+						<CircularProgress/>
+						:
+					 pendingStatements.length > 0
 						?
 						<Grid item xs={12}>
 							<Paper elevation={3} className={classes.paper}>
@@ -118,6 +127,7 @@ function IncomeImport() {
 						</Grid>
 						:
 						null
+					
 					}
 			</Grid>
 			</Container>

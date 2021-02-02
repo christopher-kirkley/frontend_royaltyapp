@@ -178,6 +178,8 @@ function MatchingTable(props) {
 		{ var version_number = data['version_number']}
 		if (data['description'])
 		{ var description = data['description']}
+		if (data['album_name'])
+		{ var album_name = data['album_name']}
 				fetch('http://localhost:5000/income/match-errors', {
 					method: 'PUT',
 					body: JSON.stringify(
@@ -193,6 +195,7 @@ function MatchingTable(props) {
 										'version_number': version_number,
 										'medium': medium,
 										'description': description,
+										'album_name': album_name,
 									}
 								]
 							}

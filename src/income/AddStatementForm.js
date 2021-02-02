@@ -7,6 +7,9 @@ import Container from '@material-ui/core/Container'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import NativeSelect from '@material-ui/core/NativeSelect'
+import CircularProgress from '@material-ui/core/CircularProgress'
+
+
 
 function AddStatementForm(props) {
 
@@ -16,6 +19,8 @@ function AddStatementForm(props) {
 	
 		const formData = new FormData()
 
+		props.setLoading(true)
+		
 		formData.append('file', data.file_upload[0])
 		formData.append('statement_source', data.source_statement)
 		fetch('http://localhost:5000/income/import-sales', {
@@ -26,6 +31,7 @@ function AddStatementForm(props) {
 		.then(res => {props.getMatchingErrors()})
 		.then(res => {props.getTrackMatchingErrors()})
 		.then(res => {props.getPendingStatements()})
+		.then(res => props.setLoading(false))
 		.catch(error => setMsg('Error uploading'))
 	}
 
@@ -67,6 +73,7 @@ function AddStatementForm(props) {
 						autoFocus
 						ref={register}
 						type="file"
+						multiple
 						defaultValue=""
 					/>
 				</Grid>
@@ -85,6 +92,9 @@ function AddStatementForm(props) {
 					/>
 				</Grid>
 				<Grid item xs={4}>
+				{ props.loading ?
+					<CircularProgress/>
+					:
 					<Button
 						variant="contained"
 						color="primary"
@@ -93,6 +103,7 @@ function AddStatementForm(props) {
 						type="submit"
 						fullWidth
 					>Upload</Button>
+				}
 				</Grid>
 			</Grid>
 		</form>
