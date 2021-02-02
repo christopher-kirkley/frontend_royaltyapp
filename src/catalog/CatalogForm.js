@@ -54,6 +54,7 @@ function CatalogForm(props) {
 			.then(res => res.json())
 			.then(json => (
 				setCatalog(json),
+				getTracks(json),
 				json['version'].sort((a, b) => a.id - b.id),
 				setVersion(json['version'])
 			))
@@ -64,16 +65,6 @@ function CatalogForm(props) {
 			setTracks(json['tracks']);
 			setNumberOfTracks(json['tracks'].length)
 	}
-
-	useEffect(() => { 
-		if (props.id) {
-			fetch(`http://localhost:5000/catalog/${props.id}`)
-			.then(res => res.json())
-			.then((json) => 
-				 {
-					 getTracks(json)
-			})
-	}}, [])
 
 	useEffect(() => {
 		const artist_name = catalog && catalog.artist ? catalog.artist.artist_name : null;

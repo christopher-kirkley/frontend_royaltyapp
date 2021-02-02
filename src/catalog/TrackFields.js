@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 
 import { useForm, Controller, defaultValue, useFieldArray } from 'react-hook-form'
 
@@ -28,6 +28,9 @@ import ConditionalButton from '../components/ConditionalButton'
 
 import { makeStyles } from '@material-ui/core/styles'
 
+import ApiStore from '../ApiStore';
+import { Context } from '../ApiStore';
+
 const useStyles = makeStyles(theme => ({
 	paper: {
 		padding: 20,
@@ -40,6 +43,9 @@ function TrackFields(props) {
 
 	const [catalog, setCatalog ] = useState('')
 
+	const { artistsContext } = useContext(Context)
+
+	const [artists, setArtists] = artistsContext
 
 	useEffect(() => { 
 		if (props.id) {
@@ -60,20 +66,6 @@ function TrackFields(props) {
 		])
 	}, [catalog])
 	
-	const [artists, setArtists] = useState([])
-
-	useEffect(() => { 
-		fetch('http://localhost:5000/artists')
-		.then(res => res.json())
-		.then(json => {
-			const sorted = [...json].sort(function(a, b){
-				if(a.artist_name < b.artist_name) {return -1;}
-				if(a.artist_name > b.artist_name) {return 1;}
-			})
-			setArtists(sorted)
-		})
-	}, [])
-
 	const artistChoices = artists.map((artist, i) =>
 		<option id={artist.id} value={artist.id}>{artist.artist_name}</option>
 	)
