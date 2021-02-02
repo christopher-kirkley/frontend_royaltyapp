@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 
 import { useHistory } from "react-router-dom";
 
@@ -11,23 +11,28 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 
+import ApiStore from '../ApiStore';
+import { Context } from '../ApiStore';
+
 function ArtistTable() {
 	
-	const [artists, setArtists] = useState([])
+	const { catalogContext, artistsContext } = useContext(Context)
+
+	const [artists, setArtists] = artistsContext
 	
 	const history = useHistory()
 
-	useEffect(() => { 
-		fetch('http://localhost:5000/artists')
-		.then(res => res.json())
-		.then(json => {
-			const sorted = [...json].sort(function(a, b){
-				if(a.artist_name < b.artist_name) {return -1;}
-				if(a.artist_name > b.artist_name) {return 1;}
-			})
-			setArtists(sorted)
-		})
-	}, [])
+	// useEffect(() => { 
+	// 	fetch('http://localhost:5000/artists')
+	// 	.then(res => res.json())
+	// 	.then(json => {
+	// 		const sorted = [...json].sort(function(a, b){
+	// 			if(a.artist_name < b.artist_name) {return -1;}
+	// 			if(a.artist_name > b.artist_name) {return 1;}
+	// 		})
+	// 		setArtists(sorted)
+	// 	})
+	// }, [])
 
 	function handleArtistDetail(id) {
 		history.push(`/artist/${id}`)

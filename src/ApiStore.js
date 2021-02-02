@@ -23,10 +23,23 @@ const ApiStore = ({ children }) => {
 		})
 	}, [])
 
+	const [artists, setArtists] = useState([])
+	
+	useEffect(() => { 
+		fetch('http://localhost:5000/artists')
+		.then(res => res.json())
+		.then(json => {
+			const sorted = [...json].sort(function(a, b){
+				if(a.artist_name < b.artist_name) {return -1;}
+				if(a.artist_name > b.artist_name) {return 1;}
+			})
+			setArtists(sorted)
+		})
+	}, [])
 
 
 	return (
-		<Context.Provider value={ [catalog, setCatalog] }>
+		<Context.Provider value={ {catalogContext: [catalog, setCatalog], artistsContext: [artists, setArtists] }}>
 			{children}
 		</Context.Provider>
 	)

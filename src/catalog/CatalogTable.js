@@ -17,7 +17,9 @@ import { Context } from '../ApiStore';
 
 function CatalogTable() {
 
-	const [catalog, setCatalog] = useContext(Context)
+	const { catalogContext, artistContext } = useContext(Context)
+
+	const [catalog, setCatalog] = catalogContext
 
 	const history = useHistory()
 
