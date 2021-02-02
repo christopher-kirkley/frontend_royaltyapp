@@ -7,6 +7,7 @@ import {
 	Switch
 } from "react-router-dom";
 
+import ApiStore from './ApiStore';
 import Artists from "./artists/Artists"
 import ArtistAdd from "./artists/ArtistAdd"
 import ArtistDetail from "./artists/ArtistDetail"
@@ -80,6 +81,7 @@ import ViewAgendaIcon from '@material-ui/icons/ViewAgenda';
 
 
 function Main() {
+
 	const useStyles = makeStyles((theme) => ({
 			drawerPaper: { width: 'inherit' },
 			link: {
@@ -127,6 +129,7 @@ function Main() {
 
 
 	return (
+		<ApiStore>
 		<ThemeProvider theme={theme}>
 		<Router >
 		<div style={{ display: 'flex' }}>
@@ -274,6 +277,7 @@ function Main() {
 		</div>
 	</Router>
 		</ThemeProvider>
+		</ApiStore>
 	)
 }
 

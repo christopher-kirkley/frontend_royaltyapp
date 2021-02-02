@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 
 import { useHistory, useParams } from 'react-router-dom'
 
@@ -11,23 +11,27 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 
+import ApiStore from '../ApiStore';
+import { Context } from '../ApiStore';
+
+
 function CatalogTable() {
-	
-	const [catalog, setCatalog] = useState([])
-	
+
+	const [catalog, setCatalog] = useContext(Context)
+
 	const history = useHistory()
 
-	useEffect(() => { 
-		fetch('http://localhost:5000/catalog')
-		.then(res => res.json())
-		.then(json => {
-			const sorted = [...json].sort(function(a, b){
-				if(a.catalog_number < b.catalog_number) {return -1;}
-				if(a.catalog_number > b.catalog_number) {return 1;}
-			})
-			setCatalog(sorted)
-		})
-	}, [])
+	// useEffect(() => { 
+	// 	fetch('http://localhost:5000/catalog')
+	// 	.then(res => res.json())
+	// 	.then(json => {
+	// 		const sorted = [...json].sort(function(a, b){
+	// 			if(a.catalog_number < b.catalog_number) {return -1;}
+	// 			if(a.catalog_number > b.catalog_number) {return 1;}
+	// 		})
+	// 		setCatalog(sorted)
+	// 	})
+	// }, [])
 
 	function handleCatalogDetail(id) {
 		history.push(`/catalog/${id}`)
