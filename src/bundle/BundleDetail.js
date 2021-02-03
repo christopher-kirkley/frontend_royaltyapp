@@ -1,0 +1,198 @@
+import React, { useState } from 'react'
+
+import { useParams, useHistory } from 'react-router-dom'
+
+import BundleForm from './BundleForm'
+
+import Button from '@material-ui/core/Button';
+import Container from '@material-ui/core/Container';
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
+
+import Header from '../components/Header'
+import EditButton from '../components/EditButton'
+import Toggle from '../components/Toggle'
+
+import { makeStyles } from '@material-ui/core/styles'
+
+const useStyles = makeStyles(theme => ({
+	paper: {
+		padding: 20,
+	},
+}))
+
+function BundleDetail(props) {
+
+	const history = useHistory();
+
+	const { id } = useParams()
+
+	const classes = useStyles()
+
+	const [edit, setEdit] = useState(false)
+
+	function handleEdit() {
+		setEdit(!edit)
+	}
+
+	function handleCancel() {
+		handleEdit()
+	}
+
+	function addVersion(data) {
+		if (data['newVersion'])
+		{
+			fetch('http://localhost:5000/version', {
+				method: 'POST',
+				body: JSON.stringify(
+					{'catalog': id,
+						'version': data['newVersion']})
+								})
+		}
+
+	}
+
+
+	function updateVersion(data) {
+		if (data['version'])
+		{
+			fetch('http://localhost:5000/version', {
+				method: 'PUT',
+				body: JSON.stringify(
+					{
+						'catalog': id,
+						'version': data['version']})
+							})
+
+			}
+	}
+		
+
+				// .then(res => res.json())
+				// .then(res => fetch(`http://localhost:5000/catalog/${id}`))
+				// .then(res => res.json())
+				// .then((json) => {
+				// 				json['version'].sort((a, b) => a.id - b.id);
+				// 				setVersion(json['version'])
+				// 			})
+				// .then(res => reset(version))
+				// .then(res => setEdit(!edit))
+
+
+	function onSubmit(data) {
+		setEdit(!edit)
+		
+		console.log(data)
+
+		const catalog_number = data.catalog_number
+		const catalog_name = data.catalog_name
+		const artist_id = data.artist_id
+
+		const versions = data['version'] ? data['version'] : ''
+		const newVersions = data['newVersion'] ? data['newVersion'] : ''
+		const track = data['track'] ? data['track'] : ''
+		const newTrack = data['newTrack'] ? data['newTrack'] : ''
+
+		// send json to update
+		fetch(`http://localhost:5000/catalog/${id}`, {
+			method: 'PUT',
+			body: JSON.stringify({ catalog_number, catalog_name, artist_id }),
+		})
+		.then(res => res.json())
+		.then(res => 
+							fetch('http://localhost:5000/version', {
+												method: 'PUT',
+												body: JSON.stringify(
+																	{'catalog': id,
+																		'version': versions})
+											}))
+		.then(res => res.json())
+		.then(res => 
+			fetch('http://localhost:5000/version', {
+				method: 'POST',
+				body: JSON.stringify(
+					{'catalog': id,
+						'version': newVersions})
+								})
+		)
+		.then(res => res.json())
+		.then(res => 
+			fetch('http://localhost:5000/track', {
+				method: 'PUT',
+				body: JSON.stringify(
+					{'catalog': id,
+					'tracks': track}
+				)})
+		)
+		.then(res =>
+			fetch('http://localhost:5000/track', {
+				method: 'POST',
+				body: JSON.stringify(
+					{'catalog': id,
+					'track': newTrack })
+		}))
+
+
+
+	}
+
+	function handleDelete() {
+		fetch(`http://localhost:5000/catalog/${id}`, {
+			method: 'DELETE',
+		})
+		.then(res => res.json())
+		.then(json => history.push('/catalog/'))
+	}
+
+	return (
+		<Container>
+			<Header name='Bundle Item'/>
+			<Grid container justify="space-between" style={{marginBottom: 20}}>
+				<Grid item xs={2}>
+					<Toggle
+						edit={edit}
+						handleEdit={handleEdit}
+						/>
+				</Grid>
+				<Grid item xs={2} >
+				{ edit ?
+					<EditButton
+						edit={edit}
+						handleEdit={handleEdit}
+						handleCancel={handleCancel}
+						/> : null }
+				</Grid>
+			</Grid>
+			<Grid container 
+				spacing={4}
+				direction="column"
+				justify="space-evenly"
+				>
+				<Grid item xs={12}>
+					<BundleForm onSubmit={onSubmit} id={id} edit={edit} />
+				</Grid>
+				<Grid item xs={12}>
+				</Grid>
+				<Grid item xs={12}>
+				<Paper elevation={4} className={classes.paper}>
+					{ edit ?
+						<Button 
+							size="small"
+							variant="outlined"
+							color="secondary"
+							id="cancel"
+							onClick={handleDelete}
+							>
+							Delete
+						</Button>
+						:
+						null
+					}
+				</Paper>
+				</Grid>
+			</Grid>
+		</Container>
+	)
+}
+
+export default BundleDetail;

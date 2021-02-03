@@ -17,6 +17,11 @@ import CatalogAdd from "./catalog/CatalogAdd"
 import CatalogDetail from "./catalog/CatalogDetail"
 import Import from "./catalog/Import"
 
+import Bundle from "./bundle/Bundle"
+import BundleAdd from "./bundle/BundleAdd"
+import BundleDetail from "./bundle/BundleDetail"
+// import Import from "./bundle/Import"
+
 import Income from "./income/Income"
 import IncomeImport from "./income/IncomeImport"
 import IncomeAdd from "./income/IncomeAdd"
@@ -75,6 +80,7 @@ import {
 import HomeIcon from "@material-ui/icons/Home"
 import PeopleIcon from "@material-ui/icons/People"
 import CatalogIcon from '@material-ui/icons/Album'
+import BundleIcon from '@material-ui/icons/ViewList'
 import IncomeIcon from '@material-ui/icons/AttachMoney'
 import ViewAgendaIcon from '@material-ui/icons/ViewAgenda';
 
@@ -175,6 +181,15 @@ function Main() {
 					</ListItem>
 				</Link>
 
+				<Link to="/bundle" className={classes.link}>
+					<ListItem button id="bundle">
+						<ListItemIcon>
+							<BundleIcon />
+						</ListItemIcon>
+						<ListItemText primary={"Bundle"}/>
+					</ListItem>
+				</Link>
+
 				<Link to="/income" className={classes.link}>
 					<ListItem button id="income">
 						<ListItemIcon>
@@ -252,6 +267,10 @@ function Main() {
 				<Route exact path="/catalog/add" component={CatalogAdd}/>
 				<Route exact path="/catalog/import" component={Import}/>
 				<Route exact path="/catalog/:id" component={CatalogDetail}/>
+				<Route exact path="/bundle" component={Bundle}/>
+				<Route exact path="/bundle/add" component={BundleAdd}/>
+				// <Route exact path="/bundle/import" component={Import}/>
+				<Route exact path="/bundle/:id" component={BundleDetail}/>
 				<Route exact path="/income" component={Income}/>
 				<Route exact path="/income/add" component={IncomeAdd}/>
 				<Route exact path="/income/import" component={IncomeImport}/>
