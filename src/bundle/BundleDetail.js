@@ -39,109 +39,35 @@ function BundleDetail(props) {
 		handleEdit()
 	}
 
-	function addVersion(data) {
-		if (data['newVersion'])
-		{
-			fetch('http://localhost:5000/version', {
-				method: 'POST',
-				body: JSON.stringify(
-					{'catalog': id,
-						'version': data['newVersion']})
-								})
-		}
-
-	}
-
-
-	function updateVersion(data) {
-		if (data['version'])
-		{
-			fetch('http://localhost:5000/version', {
-				method: 'PUT',
-				body: JSON.stringify(
-					{
-						'catalog': id,
-						'version': data['version']})
-							})
-
-			}
-	}
-		
-
-				// .then(res => res.json())
-				// .then(res => fetch(`http://localhost:5000/catalog/${id}`))
-				// .then(res => res.json())
-				// .then((json) => {
-				// 				json['version'].sort((a, b) => a.id - b.id);
-				// 				setVersion(json['version'])
-				// 			})
-				// .then(res => reset(version))
-				// .then(res => setEdit(!edit))
-
-
 	function onSubmit(data) {
 		setEdit(!edit)
 		
-		console.log(data)
-
-		const catalog_number = data.catalog_number
-		const catalog_name = data.catalog_name
-		const artist_id = data.artist_id
-
-		const versions = data['version'] ? data['version'] : ''
-		const newVersions = data['newVersion'] ? data['newVersion'] : ''
-		const track = data['track'] ? data['track'] : ''
-		const newTrack = data['newTrack'] ? data['newTrack'] : ''
-
-		// send json to update
-		fetch(`http://localhost:5000/catalog/${id}`, {
+		const bundle_id = id
+		const bundle_number = data.bundle_number
+		const bundle_name = data.bundle_name
+		var arr = []
+		arr.push.apply(arr, data.bundleVersion)
+		arr.push.apply(arr, data.newBundleVersion)
+		const bundle_version = arr
+	
+		fetch(`http://localhost:5000/bundle`, {
 			method: 'PUT',
-			body: JSON.stringify({ catalog_number, catalog_name, artist_id }),
+			body: JSON.stringify({
+				bundle_id,
+				bundle_name,
+				bundle_number,
+				bundle_version
+			}),
 		})
-		.then(res => res.json())
-		.then(res => 
-							fetch('http://localhost:5000/version', {
-												method: 'PUT',
-												body: JSON.stringify(
-																	{'catalog': id,
-																		'version': versions})
-											}))
-		.then(res => res.json())
-		.then(res => 
-			fetch('http://localhost:5000/version', {
-				method: 'POST',
-				body: JSON.stringify(
-					{'catalog': id,
-						'version': newVersions})
-								})
-		)
-		.then(res => res.json())
-		.then(res => 
-			fetch('http://localhost:5000/track', {
-				method: 'PUT',
-				body: JSON.stringify(
-					{'catalog': id,
-					'tracks': track}
-				)})
-		)
-		.then(res =>
-			fetch('http://localhost:5000/track', {
-				method: 'POST',
-				body: JSON.stringify(
-					{'catalog': id,
-					'track': newTrack })
-		}))
-
-
 
 	}
 
 	function handleDelete() {
-		fetch(`http://localhost:5000/catalog/${id}`, {
+		fetch(`http://localhost:5000/bundle/${id}`, {
 			method: 'DELETE',
 		})
 		.then(res => res.json())
-		.then(json => history.push('/catalog/'))
+		.then(json => history.push('/bundle/'))
 	}
 
 	return (

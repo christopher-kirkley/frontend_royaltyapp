@@ -43,7 +43,8 @@ function VersionFields(props) {
 	useEffect(() => { 
 		fetch('http://localhost:5000/version')
 		.then(res => res.json())
-		.then(json => setBundleVersions(json))
+		.then(json => {setBundleVersions(json)
+		})
 	}, [])
 
 	const versionChoices = bundleVersions.map((version, i) =>
@@ -51,47 +52,32 @@ function VersionFields(props) {
 	)
 
 	function removeVersion(index) {
-		const cloneVersion = [...props.version]
+		const cloneVersion = [...props.bundleVersion]
 		cloneVersion.splice(index, 1) 
-		props.setVersion(cloneVersion)
+		props.setBundleVersion(cloneVersion)
 	}
 
 	return (
 		<Grid container style={{marginTop: 5}}>
 
 				{
-					props.version.map((version, index) => (
+					props.bundleVersion.map((version, index) => (
 						<Grid item container spacing={2} alignItems="center" key={version.id}>
 								<Controller
 									type="hidden"
 									as={TextField}
 									control={props.control}
-									name={`bundleVersions[${index}].id`}
-									defaultValue={`${bundleVersions.id}`}
+									name={`bundleVersion[${index}].version_id`}
+									defaultValue={`${version.id}`}
 									disabled={props.edit ? false: true}
 								/>
-			<Grid item xs={2}>
-				<FormControl variant="outlined">
-				<InputLabel shrink>Artist</InputLabel>
-				<Controller
-					as={<NativeSelect>
-							{versionChoices}
-							</NativeSelect>
-							}
-					name={`bundleVersion[${index}].version_number`}
-					defaultValue={`${bundleVersions.version_number}`}
-					control={props.control}
-					disabled={props.edit ? false: true}
-				/>
-				</FormControl>
-			</Grid>
-							<Grid item xs={4}>
+							<Grid item xs={6}>
 								<Controller
 									as={TextField}
 									control={props.control}
-									name={`bundleVersion[${index}].percent`}
-									defaultValue={`${bundleVersions.percent}`}
-									label='Percent'
+									name={`bundleVersion[${index}].version_number`}
+									defaultValue={`${version.version_number}`}
+									label='Version Number'
 										disabled={props.edit ? false: true}
 								/>
 							</Grid>
@@ -99,6 +85,7 @@ function VersionFields(props) {
 								<IconButton
 									id="delete"
 									name="delete"
+									disabled={props.edit ? false: true}
 									onClick={() =>
 										removeVersion(index)
 										}
@@ -110,10 +97,11 @@ function VersionFields(props) {
 							)
 							)
 				}
+		
 
 				{ 
-					props.fields.map((newVersion, index) => (
-						<Grid item container spacing={2} alignItems="center" justify="center" key={newVersion.id}>
+					props.fields.map((newBundleVersion, index) => (
+						<Grid item container spacing={2} alignItems="center" justify="center" key={newBundleVersion.id}>
 							<Controller
 								type="hidden"
 								as={TextField}
@@ -130,7 +118,7 @@ function VersionFields(props) {
 									</NativeSelect>
 								}
 									name={`newBundleVersion[${index}].version_id`}
-									defaultValue={`${bundleVersions.version_id}`}
+									defaultValue='1'
 									control={props.control}
 								/>
 								</FormControl>

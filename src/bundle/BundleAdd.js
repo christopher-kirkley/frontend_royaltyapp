@@ -42,6 +42,7 @@ function BundleAdd() {
 
 	function onSubmit(data) {
 		setEdit(!edit)
+		console.log(data)
 		
 		const bundle_number = data.bundle_number
 		const bundle_name = data.bundle_name

@@ -34,6 +34,7 @@ function BundleTable() {
 				if(a.bundle_number > b.bundle_number) {return 1;}
 			})
 			setBundle(sorted)
+			console.log(sorted)
 		})
 	}, [])
 
@@ -61,7 +62,14 @@ function BundleTable() {
 						<TableRow key={i}>
 							<TableCell>{bundleitem.bundle_number}</TableCell>
 							<TableCell>{bundleitem.bundle_name}</TableCell>
-							<TableCell>{bundleitem.bundle_version}</TableCell>
+							<TableCell>
+							{bundleitem.version_bundle.map((versionitem, i) => {
+								return (
+									<Typography variant="caption">{versionitem.version_number} </Typography>
+								)
+							})}
+							</TableCell>
+							<TableCell></TableCell>
 							<TableCell>
 								<Button
 									size="small"

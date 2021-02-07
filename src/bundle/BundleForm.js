@@ -37,56 +37,41 @@ function BundleForm(props) {
 
 	const classes = useStyles()
 
-	const [catalog, setBundle ] = useState('')
+	const [bundle, setBundle ] = useState('')
 
-	const [artistId, setArtistId] = useState('1')
-
-	const [version, setVersion] = useState([])
+	const [bundleVersion, setBundleVersion] = useState([])
 
 
 	useEffect(() => { 
 		if (props.id) {
-			fetch(`http://localhost:5000/catalog/${props.id}`)
+			fetch(`http://localhost:5000/bundle/${props.id}`)
 			.then(res => res.json())
 			.then(json => (
 				setBundle(json),
-				json['version'].sort((a, b) => a.id - b.id),
-				setVersion(json['version'])
+				setBundleVersion(json['version_bundle'])
 			))
 	}}, [])
 
 
 	useEffect(() => {
-		const artist_name = catalog && catalog.artist ? catalog.artist.artist_name : null;
-		const artist_id = catalog && catalog.artist ? catalog.artist.id : 1;
 		
 		setValue([
-			{catalog_number: catalog.catalog_number},
-			{catalog_name: catalog.catalog_name},
-			{artist_name: artist_name},
-			{artist_id: artist_id},
+			{bundle_number: bundle.bundle_number},
+			{bundle_name: bundle.bundle_name},
 		])
-	}, [catalog])
+	}, [bundle])
 	
 	const { handleSubmit, setValue, control } = useForm()
 
-	const emptyRow = {format: '',
-										catalog_id: '',
-										upc: '',
-										version_name: '',
-										version_number: ''}
+	const emptyRow = {
+	}
 
 	const { fields, append, remove } = useFieldArray(
 				{ control,
-					name: 'version',
-					name: 'newVersion',
+					name: 'bundleVersion',
+					name: 'newBundleVersion',
 						}
 				)
-
-	const emptyTrackRow = { track_number: '',
-													isrc: '',
-													artist_id: 1,
-													track_name: ''}
 
 
 	return (
@@ -112,10 +97,10 @@ function BundleForm(props) {
 						</Grid>
 						<VersionFields
 							setValue={setValue}
-							setVersion={setVersion}
+							setBundleVersion={setBundleVersion}
 							control={control}
 							edit={props.edit}
-							version={version}
+							bundleVersion={bundleVersion}
 							append={append}
 							remove={remove}
 							fields={fields}
