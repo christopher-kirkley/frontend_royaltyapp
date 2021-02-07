@@ -40,38 +40,17 @@ function BundleAdd() {
 			history.push('/bundle/')
 	}
 
-	function addBundleVersion(data, id) {
-		const newVersion = data['newVersion'] ? data['newVersion'] : ''
-		fetch('http://localhost:5000/version', {
-			method: 'POST',
-			body: JSON.stringify(
-				{'catalog': id,
-					'version': newVersion })
-							})
-				.then(res => res.json())
-				.then(res => console.log(res))
-				// .then(res => fetch(`http://localhost:5000/catalog/${id}`))
-				// .then(res => res.json())
-				// .then(json => setVersion(json['version']))
-				// .then(res => reset(version))
-			}
-
-
 	function onSubmit(data) {
 		setEdit(!edit)
 		
 		const bundle_number = data.bundle_number
 		const bundle_name = data.bundle_name
+		const bundle_version = data.newBundleVersion
 		
 		fetch('http://localhost:5000/bundle', {
 			method: 'POST',
-			body: JSON.stringify({ bundle_number, bundle_name })
+			body: JSON.stringify({ bundle_number, bundle_name, bundle_version })
 		})
-		.then(res => res.json())
-		.then(res => res['id'])
-		.then(id => (
-			addBundleVersion(data, id)
-		))
 
 	}
 

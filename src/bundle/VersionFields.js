@@ -38,29 +38,6 @@ function VersionFields(props) {
 
 	const classes = useStyles()
 
-	const [catalog, setCatalog ] = useState('')
-
-	useEffect(() => { 
-		if (props.id) {
-			fetch(`http://localhost:5000/catalog/${props.id}`)
-			.then(res => res.json())
-			.then(json => setCatalog(json))
-	}}, [])
-
-	useEffect(() => {
-		const artist_name = catalog && catalog.artist ? catalog.artist.artist_name : null;
-		const artist_id = catalog && catalog.artist ? catalog.artist.id : 1;
-		
-		props.setValue([
-			{catalog_number: catalog.catalog_number},
-			{catalog_name: catalog.catalog_name},
-			{artist_name: artist_name},
-			{artist_id: artist_id},
-		])
-	}, [catalog])
-	
-	const [artists, setArtists] = useState([])
-
 	const [bundleVersions, setBundleVersions] = useState([])
 
 	useEffect(() => { 
@@ -112,7 +89,7 @@ function VersionFields(props) {
 								<Controller
 									as={TextField}
 									control={props.control}
-									name={`version[${index}].percent`}
+									name={`bundleVersion[${index}].percent`}
 									defaultValue={`${bundleVersions.percent}`}
 									label='Percent'
 										disabled={props.edit ? false: true}
@@ -141,7 +118,7 @@ function VersionFields(props) {
 								type="hidden"
 								as={TextField}
 								control={props.control}
-								name={`newVersion[${index}].id`}
+								name={`newBundleVersion[${index}].id`}
 							/>
 							<Grid item xs={6}>
 								<FormControl variant="outlined">
@@ -162,7 +139,7 @@ function VersionFields(props) {
 								<Controller
 									as={TextField}
 									control={props.control}
-									name={`newVersion[${index}].percent`}
+									name={`newBundleVersion[${index}].percent`}
 									defaultValue={''}
 									label='Percent'
 									disabled={props.edit ? false: true}

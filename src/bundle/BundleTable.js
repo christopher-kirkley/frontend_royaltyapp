@@ -15,58 +15,60 @@ import ApiStore from '../ApiStore';
 import { Context } from '../ApiStore';
 
 
-function CatalogTable() {
+function BundleTable() {
 
-	const { catalogContext, artistContext } = useContext(Context)
+	// const { catalogContext, artistContext } = useContext(Context)
 
-	const [catalog, setCatalog] = catalogContext
+	// const [catalog, setCatalog] = catalogContext
+	
+	const [ bundle, setBundle ] = useState([])
 
 	const history = useHistory()
 
-	// useEffect(() => { 
-	// 	fetch('http://localhost:5000/catalog')
-	// 	.then(res => res.json())
-	// 	.then(json => {
-	// 		const sorted = [...json].sort(function(a, b){
-	// 			if(a.catalog_number < b.catalog_number) {return -1;}
-	// 			if(a.catalog_number > b.catalog_number) {return 1;}
-	// 		})
-	// 		setCatalog(sorted)
-	// 	})
-	// }, [])
+	useEffect(() => { 
+		fetch('http://localhost:5000/bundle')
+		.then(res => res.json())
+		.then(json => {
+			const sorted = [...json].sort(function(a, b){
+				if(a.bundle_number < b.bundle_number) {return -1;}
+				if(a.bundle_number > b.bundle_number) {return 1;}
+			})
+			setBundle(sorted)
+		})
+	}, [])
 
-	function handleCatalogDetail(id) {
-		history.push(`/catalog/${id}`)
+	function handleBundleDetail(id) {
+		history.push(`/bundle/${id}`)
 	}
 
 	return (
 		<div>
-		{catalog.length == 0 ?
-			<Typography id="artists-data" variant="h6" align="center">No data</Typography> :
+		{bundle.length == 0 ?
+			<Typography id="bundle-data" variant="h6" align="center">No data</Typography> :
 		<TableContainer>
-		<Table id="catalog_table" size="small">
+		<Table id="bundle_table" size="small">
 			<TableHead>
 				<TableRow>
-					<TableCell>Catalog Number</TableCell>
-					<TableCell>Artist</TableCell>
+					<TableCell>Bundle Number</TableCell>
 					<TableCell>Title</TableCell>
+					<TableCell>Version</TableCell>
 					<TableCell></TableCell>
 				</TableRow>
 			</TableHead>
 			<TableBody>
-				{catalog.map((catalogitem, i) => {
+				{bundle.map((bundleitem, i) => {
 					return (
 						<TableRow key={i}>
-							<TableCell>{catalogitem.catalog_number}</TableCell>
-							<TableCell>{catalogitem.artist.artist_name}</TableCell>
-							<TableCell>{catalogitem.catalog_name}</TableCell>
+							<TableCell>{bundleitem.bundle_number}</TableCell>
+							<TableCell>{bundleitem.bundle_name}</TableCell>
+							<TableCell>{bundleitem.bundle_version}</TableCell>
 							<TableCell>
 								<Button
 									size="small"
-									id="catalog_detail"
+									id="bundle_detail"
 									variant="outlined"
 									color="primary"
-									onClick={()=>handleCatalogDetail(catalogitem.id)}>
+									onClick={()=>handleBundleDetail(bundleitem.id)}>
 										Detail
 								</Button>
 							</TableCell>
@@ -82,4 +84,4 @@ function CatalogTable() {
 }
 
 
-export default CatalogTable
+export default BundleTable
