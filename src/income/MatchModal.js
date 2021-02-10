@@ -266,8 +266,10 @@ function MatchModal(props) {
 									?
 									trackChoices
 									:
-									upcChoices
-									// bundleChoices
+									<React.Fragment>
+									{upcChoices}
+									{bundleChoices}
+									</React.Fragment>
 								}
 								</NativeSelect>
 						}
