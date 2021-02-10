@@ -45,6 +45,7 @@ function BundleDetail(props) {
 		const bundle_id = id
 		const bundle_number = data.bundle_number
 		const bundle_name = data.bundle_name
+		const upc = data.upc
 		var arr = []
 		arr.push.apply(arr, data.bundleVersion)
 		arr.push.apply(arr, data.newBundleVersion)
@@ -56,6 +57,7 @@ function BundleDetail(props) {
 				bundle_id,
 				bundle_name,
 				bundle_number,
+				upc,
 				bundle_version
 			}),
 		})
