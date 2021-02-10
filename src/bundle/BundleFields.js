@@ -65,6 +65,7 @@ function BundleFields(props) {
 		props.setValue([
 			{bundle_number: bundle.bundle_number},
 			{bundle_name: bundle.bundle_name},
+			{upc: bundle.upc},
 		])
 	}, [bundle])
 	
@@ -74,7 +75,7 @@ function BundleFields(props) {
 
 	return (
 		<Grid container spacing={1} alignItems="center" justify="center">
-			<Grid item xs={7}>
+			<Grid item xs={3}>
 				<Controller
 					as={TextField}
 					control={props.control}
@@ -89,7 +90,7 @@ function BundleFields(props) {
 					disabled={props.edit ? false: true}
 				/>
 			</Grid>
-			<Grid item xs={7}>
+			<Grid item xs={4}>
 				<Controller
 					as={TextField}
 					control={props.control}
@@ -99,6 +100,21 @@ function BundleFields(props) {
 					label="Title"
 					id="bundle_name"
 					autoComplete="bundle name"
+					autoFocus
+					defaultValue=""
+					disabled={props.edit ? false: true}
+				/>
+			</Grid>
+			<Grid item xs={3}>
+				<Controller
+					as={TextField}
+					control={props.control}
+					name="upc"
+					required
+					fullWidth
+					label="UPC"
+					id="upc"
+					autoComplete="bundle upc"
 					autoFocus
 					defaultValue=""
 					disabled={props.edit ? false: true}

@@ -34,7 +34,6 @@ function BundleTable() {
 				if(a.bundle_number > b.bundle_number) {return 1;}
 			})
 			setBundle(sorted)
-			console.log(sorted)
 		})
 	}, [])
 

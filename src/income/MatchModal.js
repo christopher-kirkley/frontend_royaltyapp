@@ -58,6 +58,7 @@ function MatchModal(props) {
 
 	const [tracks, setTracks] = useState([])
 
+
 	useEffect(() => {
 				fetch('http://localhost:5000/version')
 				.then(res => res.json())
@@ -71,6 +72,25 @@ function MatchModal(props) {
 					id={upc.version_number}
 					value={upc.upc}
 				>{upc.version_number}
+				</option>
+			)
+		})
+
+	const [bundles, setBundles] = useState([])
+
+	useEffect(() => {
+				fetch('http://localhost:5000/bundle')
+				.then(res => res.json())
+				.then(json => setBundles(json))
+			}, [])
+
+	const bundleChoices = bundles.map((bundle) =>
+		{
+			return (
+				<option
+					id={bundle.bundle_number}
+					value={bundle.upc}
+				>{bundle.bundle_number}
 				</option>
 			)
 		})
@@ -247,6 +267,7 @@ function MatchModal(props) {
 									trackChoices
 									:
 									upcChoices
+									// bundleChoices
 								}
 								</NativeSelect>
 						}

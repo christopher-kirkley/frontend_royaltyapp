@@ -58,6 +58,7 @@ function BundleForm(props) {
 		setValue([
 			{bundle_number: bundle.bundle_number},
 			{bundle_name: bundle.bundle_name},
+			{upc: bundle.upc},
 		])
 	}, [bundle])
 	

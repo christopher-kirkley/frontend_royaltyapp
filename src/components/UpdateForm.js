@@ -102,9 +102,34 @@ function UpdateForm(props) {
 				)
 			})
 		
+	const [bundles, setBundles] = useState([])
+
+	useEffect(() => {
+				fetch('http://localhost:5000/bundle')
+				.then(res => res.json())
+				.then(json => setBundles(json))
+			}, [])
+
+	const bundleChoices = bundles.map((bundle) =>
+		{
+			return (
+				<option
+					id={bundle.bundle_number}
+					value={bundle.upc}
+				>{bundle.bundle_number}
+				</option>
+			)
+		})
+
 	function updateChoices() {
 		if (props.type == 'artist') {return artistChoices}
-		if (props.type == 'upc') {return upcChoices}
+		if (props.type == 'upc') {return (
+			<React.Fragment>
+			{upcChoices}
+			{bundleChoices}
+			</React.Fragment>
+		)}
+
 		if (props.type == 'isrc') {return trackChoices}
 		if (props.type == 'type') {
 			return (

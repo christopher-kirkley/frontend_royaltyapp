@@ -46,11 +46,12 @@ function BundleAdd() {
 		
 		const bundle_number = data.bundle_number
 		const bundle_name = data.bundle_name
+		const upc = data.upc
 		const bundle_version = data.newBundleVersion
 		
 		fetch('http://localhost:5000/bundle', {
 			method: 'POST',
-			body: JSON.stringify({ bundle_number, bundle_name, bundle_version })
+			body: JSON.stringify({ bundle_number, bundle_name, upc, bundle_version })
 		})
 
 	}
