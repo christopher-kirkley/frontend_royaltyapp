@@ -21,7 +21,7 @@ const ApiStore = ({ children }) => {
 			})
 			setCatalog(sorted)
 		})
-	}, [])
+	}, [catalog])
 
 	const [artists, setArtists] = useState([])
 	
@@ -35,7 +35,7 @@ const ApiStore = ({ children }) => {
 			})
 			setArtists(sorted)
 		})
-	}, [])
+	}, [artists])
 
 
 	return (

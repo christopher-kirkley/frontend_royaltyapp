@@ -20,7 +20,7 @@ import Import from "./catalog/Import"
 import Bundle from "./bundle/Bundle"
 import BundleAdd from "./bundle/BundleAdd"
 import BundleDetail from "./bundle/BundleDetail"
-// import Import from "./bundle/Import"
+import BundleImport from "./bundle/BundleImport"
 
 import Income from "./income/Income"
 import IncomeImport from "./income/IncomeImport"
@@ -269,7 +269,7 @@ function Main() {
 				<Route exact path="/catalog/:id" component={CatalogDetail}/>
 				<Route exact path="/bundle" component={Bundle}/>
 				<Route exact path="/bundle/add" component={BundleAdd}/>
-				// <Route exact path="/bundle/import" component={Import}/>
+				<Route exact path="/bundle/import" component={BundleImport}/>
 				<Route exact path="/bundle/:id" component={BundleDetail}/>
 				<Route exact path="/income" component={Income}/>
 				<Route exact path="/income/add" component={IncomeAdd}/>
