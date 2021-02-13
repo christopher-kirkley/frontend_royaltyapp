@@ -10,17 +10,20 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import CircularProgress from '@material-ui/core/CircularProgress'
 
 import ApiStore from '../ApiStore';
 import { Context } from '../ApiStore';
 
 function ArtistTable() {
 	
-	const { catalogContext, artistsContext } = useContext(Context)
+	const { catalogContext, artistsContext, loadingContext } = useContext(Context)
 
 	const [artists, setArtists] = artistsContext
 	
 	const history = useHistory()
+
+	const [ loading, setLoading ] = loadingContext
 
 	// useEffect(() => { 
 	// 	fetch('http://localhost:5000/artists')
@@ -40,8 +43,16 @@ function ArtistTable() {
 
 	return (
 		<React.Fragment>
-		{artists.length === 0 ?
-			<Typography id="artists-data" variant="h6" align="center">No data</Typography> :
+		{
+			loading ?
+			<div align="center">
+			<CircularProgress color="primary" size='2rem'/>
+			</div>
+			:
+			artists.length === 0
+			?
+			<Typography id="artists-data" variant="h6" align="center">No data</Typography>
+			:
 			<TableContainer>
 			<Table id="artist-table" size="small">
 				<TableHead>
@@ -53,7 +64,8 @@ function ArtistTable() {
 					</TableRow>
 				</TableHead>
 				<TableBody>
-					{artists.map((artists, i) => {
+					{ 
+					artists.map((artists, i) => {
 						return (
 							<TableRow key={i}>
 								<TableCell>{artists.artist_name}</TableCell>

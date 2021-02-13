@@ -10,7 +10,6 @@ const ApiStore = ({ children }) => {
 	const [state, setState] = useState(initialState);
 	const [catalog, setCatalog] = useState([]);
 
-
 	useEffect(() => { 
 		fetch('http://localhost:5000/catalog')
 		.then(res => res.json())
@@ -21,11 +20,13 @@ const ApiStore = ({ children }) => {
 			})
 			setCatalog(sorted)
 		})
-	}, [catalog])
+	}, [])
 
 	const [artists, setArtists] = useState([])
+	const [loading, setLoading] = useState(false)
 	
 	useEffect(() => { 
+		setLoading(true)
 		fetch('http://localhost:5000/artists')
 		.then(res => res.json())
 		.then(json => {
@@ -34,12 +35,13 @@ const ApiStore = ({ children }) => {
 				if(a.artist_name > b.artist_name) {return 1;}
 			})
 			setArtists(sorted)
+			setLoading(false)
 		})
-	}, [artists])
+	}, [])
 
 
 	return (
-		<Context.Provider value={ {catalogContext: [catalog, setCatalog], artistsContext: [artists, setArtists] }}>
+		<Context.Provider value={ {catalogContext: [catalog, setCatalog], artistsContext: [artists, setArtists], loadingContext: [loading, setLoading] }}>
 			{children}
 		</Context.Provider>
 	)

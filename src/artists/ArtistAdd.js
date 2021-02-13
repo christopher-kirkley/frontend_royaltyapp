@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 
 import { useParams, useHistory } from 'react-router-dom'
 
@@ -16,6 +16,9 @@ import Header from '../components/Header'
 import ArtistForm from './ArtistForm'
 import EditButton from '../components/EditButton'
  
+import ApiStore from '../ApiStore';
+import { Context } from '../ApiStore';
+
 const useStyles = makeStyles(theme => ({
 	paper: {
 		padding: 20,
@@ -24,10 +27,14 @@ const useStyles = makeStyles(theme => ({
 
 function ArtistAdd () {
 
+	const { catalogContext, artistsContext, loadingContext } = useContext(Context)
+
+	const [artists, setArtists] = artistsContext
+
+	const [loading, setLoading] = loadingContext
+
 	const classes = useStyles()
 
-	const [artist, setArtist] = useState([])
-	
 	const { handleSubmit, control, setValue } = useForm()
 	
 	const history = useHistory();
@@ -41,9 +48,24 @@ function ArtistAdd () {
 			body: JSON.stringify({ artist_name, prenom, surnom }),
 		})
 		.then(res => res.json())
+		.then(res => updateArtists())
 		.then(json => history.push('/artists/'))
 	}
 	
+	function updateArtists() {
+		setLoading(true)
+		fetch('http://localhost:5000/artists')
+		.then(res => res.json())
+		.then(json => {
+			const sorted = [...json].sort(function(a, b){
+				if(a.artist_name < b.artist_name) {return -1;}
+				if(a.artist_name > b.artist_name) {return 1;}
+			})
+			setArtists(sorted)
+			setLoading(false)
+		})
+	}
+
 	function onSubmit(data) {
 		addArtist(data)
 	}
