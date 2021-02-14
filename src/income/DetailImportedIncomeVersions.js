@@ -10,23 +10,24 @@ import TableCell from '@material-ui/core/TableCell';
 function DetailImportedIncomeVersions(props) {
 
 	return (
-		<Container component={Paper}>
-		<div style={{marginTop: 20,
-								padding: 10,
-								display: "flex", flexDirection: "column",
-								alignItems:"center", border: '3px solid black'}}>
-				<Typography component="h2" variant="h5">
-					{props.type} versions
-				</Typography>
-					<Table>
+		<div>
+			<Typography style={{textTransform: 'capitalize'}} color="textSecondary" align="center" component="h2" variant="h5" gutterBottom>
+		{props.type}
+			</Typography>
+					<Table size="small">
 					<TableRow>
-						<TableCell>Version Number</TableCell>
+						<TableCell>Item</TableCell>
 						<TableCell>Quantity</TableCell>
 						<TableCell>Sum</TableCell>
 					</TableRow>
-				{props.versions.map((version) =>
+				{
+					props.versions.map((version) =>
 					<TableRow>
+						{ props.type == 'tracks' ?
+						<TableCell>{version.track_name}</TableCell>
+							:
 						<TableCell>{version.version_number}</TableCell>
+							}
 						<TableCell>{version.quantity}</TableCell>
 						<TableCell>{version.amount}</TableCell>
 					</TableRow>
@@ -34,7 +35,6 @@ function DetailImportedIncomeVersions(props) {
 				}
 				</Table>
 		</div>
-		</Container>
 		);
 }
 

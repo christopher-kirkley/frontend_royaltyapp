@@ -13,13 +13,23 @@ import TableCell from '@material-ui/core/TableCell';
 function DetailImportedIncomeSummary(props) {
 
 	return (
-		<Paper>
+		<React.Fragment>
 			<Typography color="textSecondary" align="center" component="h2" variant="h5" gutterBottom>
 				Income Statement Summary
 			</Typography>
 			<Grid container alignItems="center" justify="center">
 			<Grid item xs={8}>
-			<Table>
+			<Table size="small">
+				<TableRow>
+					<TableCell>
+						<Typography component="p" variant="p">Statement Name</Typography>
+					</TableCell>
+					<TableCell>
+						<Typography component="p" variant="p" id="statement_name">
+						{props.summary.statement_name}
+						</Typography>
+					</TableCell>
+				</TableRow>
 				<TableRow>
 					<TableCell>
 						<Typography component="p" variant="p">
@@ -65,7 +75,7 @@ function DetailImportedIncomeSummary(props) {
 			</Table>
 			</Grid>
 			</Grid>
-		</Paper>
+		</React.Fragment>
 		);
 }
 
