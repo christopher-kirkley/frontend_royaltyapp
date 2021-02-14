@@ -48,7 +48,6 @@ function IncomeTable(props) {
 	const rows = (Object.keys(props.importedIncome).map((row) =>
 		row))
 
-	console.log(props.importedIncome)
 
 	function Row(props) {
 		const { row } = props
@@ -86,7 +85,11 @@ function IncomeTable(props) {
 									</TableRow>
 								</TableHead>
 								<TableBody>
-									{ props.importedIncome && props.importedIncome[row].map((item) =>
+									{ props.importedIncome &&
+										props.importedIncome[row].sort(function(a, b){
+										if(a.start_date < b.start_date) {return -1;}
+										if(a.start_date > b.start_date) {return 1;}
+									}).map((item) =>
 									<TableRow>
 											<TableCell>
 											</TableCell>
@@ -138,6 +141,7 @@ function IncomeTable(props) {
 		)
 	}
 
+
 	return (
 		<React.Fragment>
 		{ Object.size(props.importedIncome) > 0 ?
@@ -149,7 +153,9 @@ function IncomeTable(props) {
 		          </TableRow>
 		        </TableHead>
 		        <TableBody>
-		          {rows.map((row) => (
+		          {
+
+								rows.map((row) => (
 								props.importedIncome[row].length > 0  ?
 								<Row key={row.name} row={row} importedIncome={props.importedIncome} />
 								:

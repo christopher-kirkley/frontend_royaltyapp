@@ -108,14 +108,13 @@ function IncomeImport() {
 						/>
 						</Paper>
 					</Grid>
-					{ loading ?
-						<CircularProgress/>
-						:
+					{ 
 					 pendingStatements.length > 0
 						?
 						<Grid item xs={12}>
 							<Paper elevation={3} className={classes.paper}>
 									<PendingImports
+										loading={loading}
 										pendingStatements={pendingStatements}
 										processPending={processPending}
 										goToMatchingErrorPage={goToMatchingErrorPage}
