@@ -26,6 +26,12 @@ function UpdateForm(props) {
 
 	const numSelect = props.selected.length
 
+	function handleDelete() {
+		const index = Object.keys(props.selectedRowIds)
+		console.log(index)
+
+	}
+
 	useEffect(() => {
 				fetch('http://localhost:5000/version')
 				.then(res => res.json())
@@ -195,6 +201,7 @@ function UpdateForm(props) {
 									id="delete"
 									variant="contained"
 									size="small"
+									onClick={props.deleteErrors}
 								>
 								Delete
 								</Button>
