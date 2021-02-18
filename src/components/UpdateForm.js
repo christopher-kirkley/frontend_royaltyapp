@@ -94,7 +94,13 @@ function UpdateForm(props) {
 	useEffect(() => {
 				fetch('http://localhost:5000/tracks')
 				.then(res => res.json())
-				.then(json => setTracks(json))
+				.then(json => {
+					const sorted = [...json].sort(function(a, b){
+						if(a.isrc < b.isrc) {return -1;}
+						if(a.isrc > b.isrc) {return 1;}
+					})
+					setTracks(sorted)
+				})
 			}, [])
 
 		const trackChoices = tracks.map((track) =>
