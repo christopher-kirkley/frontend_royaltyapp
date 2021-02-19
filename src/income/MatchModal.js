@@ -71,7 +71,7 @@ function MatchModal(props) {
 				<option
 					id={upc.version_number}
 					value={upc.upc}
-				>{upc.version_number}
+				>{upc.version_number} : {upc.upc}
 				</option>
 			)
 		})
@@ -99,7 +99,10 @@ function MatchModal(props) {
 				fetch('http://localhost:5000/tracks')
 				.then(res => res.json())
 				.then(json => {
-					const sorted = [...json].sort((a, b) => (a.isrc > b.isrc))
+					const sorted = [...json].sort(function(a, b){
+						if(a.isrc < b.isrc) {return -1;}
+						if(a.isrc > b.isrc) {return 1;}
+					})
 					setTracks(sorted)
 				})
 			}, [])
@@ -107,12 +110,14 @@ function MatchModal(props) {
 	const trackChoices = tracks.map((track) =>
 		{
 			return (
+				<React.Fragment>
 				<option
 					id={track.isrc}
 					value={track.isrc}
 				>
-				{track.isrc}
+				{track.isrc} : {track.track_name}
 				</option>
+				</React.Fragment>
 			)
 		})
 

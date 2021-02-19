@@ -17,22 +17,44 @@ function AddStatementForm(props) {
 
 	function onSubmit(data) {
 	
-		const formData = new FormData()
-
 		props.setLoading(true)
 		
-		formData.append('file', data.file_upload[0])
-		formData.append('statement_source', data.source_statement)
-		fetch('http://localhost:5000/income/import-sales', {
-				method: 'POST',
-				body: formData
-			})
-		.then(resp => resp.json())
-		.then(res => {props.getMatchingErrors()})
-		.then(res => {props.getTrackMatchingErrors()})
-		.then(res => {props.getPendingStatements()})
-		.then(res => props.setLoading(false))
-		.catch(error => setMsg('Error uploading'))
+		for (const file of data.file_upload) {
+			const formData = new FormData()
+
+			props.setLoading(true)
+			
+			formData.append('file', file)
+			formData.append('statement_source', data.source_statement)
+			fetch('http://localhost:5000/income/import-sales', {
+					method: 'POST',
+					body: formData
+				})
+			.then(resp => resp.json())
+			.then(res => {props.getMatchingErrors()})
+			.then(res => {props.getTrackMatchingErrors()})
+			.then(res => {props.getPendingStatements()})
+			.then(res => props.setLoading(false))
+			.catch(error => setMsg('Error uploading'))
+			console.log(file)
+		}
+		
+		// const formData = new FormData()
+
+		// props.setLoading(true)
+		
+		// formData.append('file', data.file_upload[0])
+		// formData.append('statement_source', data.source_statement)
+		// fetch('http://localhost:5000/income/import-sales', {
+		// 		method: 'POST',
+		// 		body: formData
+		// 	})
+		// .then(resp => resp.json())
+		// .then(res => {props.getMatchingErrors()})
+		// .then(res => {props.getTrackMatchingErrors()})
+		// .then(res => {props.getPendingStatements()})
+		// .then(res => props.setLoading(false))
+		// .catch(error => setMsg('Error uploading'))
 	}
 
 	const [msg, setMsg] = useState('')
