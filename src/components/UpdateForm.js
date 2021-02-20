@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 
 import { useForm, Controller } from 'react-hook-form'
 
@@ -12,6 +12,9 @@ import Modal from '@material-ui/core/Modal';
 
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 
+import ApiStore from '../ApiStore';
+import { Context } from '../ApiStore';
+
 const useStyles = makeStyles((theme) => ({
 	paper: {
 			},
@@ -19,6 +22,8 @@ const useStyles = makeStyles((theme) => ({
 
 
 function UpdateForm(props) {
+
+	const { catalogContext, artistContext, upcContext, trackContext } = useContext(Context)
 
 	const { register, control, handleSubmit } = useForm()
 
@@ -32,13 +37,7 @@ function UpdateForm(props) {
 
 	}
 
-	useEffect(() => {
-				fetch('http://localhost:5000/version')
-				.then(res => res.json())
-				.then(json => setUpcs(json))
-			}, [])
-
-	const [ upcs, setUpcs ] = useState([])
+	const [ upcs, setUpcs ] = upcContext
 
 	const upcChoices = upcs.map((upc) =>
 		{

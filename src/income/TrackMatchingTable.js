@@ -216,6 +216,24 @@ function TrackMatchingTable(props) {
 			.then(res => setMatchOpen(false))
 	}
 
+	function deleteErrors(data) {
+		const selectedIds = Object.keys(selectedRowIds)
+		const newIds = selectedIds.map((id) =>
+			{
+				return props.rows[id].id
+			}
+		)
+			
+		fetch('http://localhost:5000/income/errors', {
+			method: 'DELETE',
+			body: JSON.stringify(
+				{
+					'selected_ids': newIds,
+				})})
+		.then(res => res.json())
+		.then(res => props.getMatchingErrors())
+	}
+
 	function submitUpdateErrors(data) {
 		const selectedIds = Object.keys(selectedRowIds)
 		const newIds = selectedIds.map((id) =>
@@ -269,6 +287,7 @@ function TrackMatchingTable(props) {
 				rows={props.rows}
 				getMatchingErrors={props.getMatchingErrors}
 				submitUpdateErrors={submitUpdateErrors}
+				deleteErrors={deleteErrors}
 			/>
 			:
 			<Grid container style={{padding: 20}} justify="flex-end">
