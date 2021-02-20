@@ -39,9 +39,44 @@ const ApiStore = ({ children }) => {
 		})
 	}, [])
 
+	const [upcs, setUpcs] = useState([])
+
+	useEffect(() => {
+				fetch('http://localhost:5000/version')
+				.then(res => res.json())
+				.then(json => {
+					const sorted = [...json].sort(function(a, b){
+						if(a.version_number < b.version_number) {return -1;}
+						if(a.version_number > b.version_number) {return 1;}
+					})
+					setUpcs(sorted)
+				})
+			}, [])
+
+	const [tracks, setTracks] = useState([])
+
+	useEffect(() => {
+				fetch('http://localhost:5000/tracks')
+				.then(res => res.json())
+				.then(json => {
+					const sorted = [...json].sort(function(a, b){
+						if(a.isrc < b.isrc) {return -1;}
+						if(a.isrc > b.isrc) {return 1;}
+					})
+					setTracks(sorted)
+				})
+			}, [])
+
 
 	return (
-		<Context.Provider value={ {catalogContext: [catalog, setCatalog], artistsContext: [artists, setArtists], loadingContext: [loading, setLoading] }}>
+		<Context.Provider value={
+			{
+				  catalogContext: [catalog, setCatalog],
+					artistsContext: [artists, setArtists],
+					loadingContext: [loading, setLoading],
+					upcContext: [upcs, setUpcs], 
+					trackContext: [tracks, setTracks] }
+		}>
 			{children}
 		</Context.Provider>
 	)

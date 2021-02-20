@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 
 import { useForm, Controller, useFieldArray } from 'react-hook-form'
 
@@ -17,6 +17,8 @@ import DeleteIcon from '@material-ui/icons/Delete';
 
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 
+import ApiStore from '../ApiStore';
+import { Context } from '../ApiStore';
 
 const useStyles = makeStyles((theme) => ({
 		paper: {
@@ -37,6 +39,8 @@ const useStyles = makeStyles((theme) => ({
 
 function MatchModal(props) {
 
+	const { catalogContext, artistContext, upcContext, trackContext } = useContext(Context)
+
 	const { register, control, handleSubmit, watch } =
 			useForm({
 				defaultValues: {
@@ -54,16 +58,9 @@ function MatchModal(props) {
 
 	const classes = useStyles();
 
-	const [upcs, setUpcs] = useState([])
+	const [upcs, setUpcs] = upcContext
 
-	const [tracks, setTracks] = useState([])
-
-
-	useEffect(() => {
-				fetch('http://localhost:5000/version')
-				.then(res => res.json())
-				.then(json => setUpcs(json))
-			}, [])
+	const [tracks, setTracks] = trackContext
 
 	const upcChoices = upcs.map((upc) =>
 		{
@@ -95,17 +92,6 @@ function MatchModal(props) {
 			)
 		})
 
-	useEffect(() => {
-				fetch('http://localhost:5000/tracks')
-				.then(res => res.json())
-				.then(json => {
-					const sorted = [...json].sort(function(a, b){
-						if(a.isrc < b.isrc) {return -1;}
-						if(a.isrc > b.isrc) {return 1;}
-					})
-					setTracks(sorted)
-				})
-			}, [])
 
 	const trackChoices = tracks.map((track) =>
 		{
