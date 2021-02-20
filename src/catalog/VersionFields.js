@@ -182,7 +182,7 @@ function VersionFields(props) {
 									control={props.control}
 									name={`newVersion[${index}].version_name`}
 									defaultValue={''}
-									label='Version Number'
+									label='Version Name'
 									disabled={props.edit ? false: true}
 								/>
 							</Grid>

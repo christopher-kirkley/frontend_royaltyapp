@@ -141,6 +141,7 @@ function CatalogForm(props) {
 							<Typography color="textSecondary" component="h6" variant="caption" align="center">VERSIONS</Typography>
 						</Grid>
 						<VersionFields
+							emptyRow={emptyRow}
 							setValue={setValue}
 							setVersion={setVersion}
 							control={control}
