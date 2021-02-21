@@ -44,6 +44,19 @@ function DetailImportedIncome() {
 				setPhysicalVersions(json[0]['physical'])
 				setDigitalVersions(json[0]['digital'])
 				setTracks(json[0]['track'])
+
+				const physical = [...json[0]['physical']].sort(function(a, b){
+					if(a.version_number < b.version_number) {return -1;}
+					if(a.version_number > b.version_number) {return 1;}
+				})
+				setPhysicalVersions(physical)
+
+				const digital = [...json[0]['digital']].sort(function(a, b){
+					if(a.version_number < b.version_number) {return -1;}
+					if(a.version_number > b.version_number) {return 1;}
+				})
+				setDigitalVersions(digital)
+
 			})
 		}
 	}, [])

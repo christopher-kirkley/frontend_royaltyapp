@@ -44,7 +44,11 @@ function StatementSummary() {
 		.then(res => res.json())
 		.then(json =>
 			{
-				setDetail(json['detail'])
+				const sorted = [...json['detail']].sort(function(a, b){
+					if(a.artist_name < b.artist_name) {return -1;}
+					if(a.artist_name > b.artist_name) {return 1;}
+				})
+				setDetail(sorted)
 				setSummary(json['summary'])
 				setStatementName(json['summary']['statement'])
 			})

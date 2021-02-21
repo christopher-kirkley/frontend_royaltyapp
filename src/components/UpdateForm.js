@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
 
 function UpdateForm(props) {
 
-	const { catalogContext, artistContext, upcContext, trackContext } = useContext(Context)
+	const { catalogContext, artistsContext, upcContext, trackContext } = useContext(Context)
 
 	const { register, control, handleSubmit } = useForm()
 
@@ -50,13 +50,7 @@ function UpdateForm(props) {
 			)
 		})
 
-	const [artists, setArtists] = useState([])
-
-	useEffect(() => {
-				fetch('http://localhost:5000/artists')
-				.then(res => res.json())
-				.then(json => setArtists(json))
-			}, [])
+	const [artists, setArtists] = artistsContext
 
 	const artistChoices = artists.map((artist) =>
 		{
