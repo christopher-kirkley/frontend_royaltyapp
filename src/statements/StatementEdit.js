@@ -87,7 +87,7 @@ function StatementEdit() {
 					<TableCell>
 						<Button
 							color="secondary"
-							variant="contained"
+							variant="outlined"
 							onClick={handleDelete}
 							value={ row.id }
 							id={ row.id }
@@ -147,7 +147,9 @@ function StatementEdit() {
 			)
 	})
 
-	console.log(summary)
+	function handleStatementDelete(e) {
+		console.log(id)
+	}
 
 	return (
 			<Container>
@@ -196,6 +198,19 @@ function StatementEdit() {
 						Save Changes
 						</Button>
 					</form>
+					</Grid>
+					<Grid item xs={12}>
+					<Paper style={{padding: 10}}>
+					<Typography component="p" variant="subtitle" gutterBottom>Delete Statement</Typography>
+						<Button
+							type="submit"
+							variant="contained"
+							color="secondary"
+							onClick={handleStatementDelete}
+						>
+						Delete
+						</Button>
+					</Paper>
 					</Grid>
 				</Grid>
 			</Container>

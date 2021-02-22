@@ -86,6 +86,7 @@ function Statement() {
 								<StatementTable
 									handleClick={handleClick}
 									statements={statements}
+									handleEdit={handleEdit}
 								/>
 							</Grid>
 							</Paper>

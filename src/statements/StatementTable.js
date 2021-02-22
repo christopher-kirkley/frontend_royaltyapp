@@ -60,6 +60,20 @@ function StatementTable(props) {
 						View
 						</Button>
 					</TableCell>
+					<TableCell>
+					<Button
+						variant="outlined"
+						color="secondary"
+						id={row.id}
+						value={row.id}
+						name="edit"
+						type="submit"
+						onClick={props.handleEdit}
+						>
+						Edit
+						</Button>
+					
+					</TableCell>
 			</TableRow>
 		)}
 		</Table>
