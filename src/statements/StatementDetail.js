@@ -36,10 +36,9 @@ function StatementDetail() {
 		fetch(`http://localhost:5000/statements/${id}/artist/${artistId}`)
 		.then(res => res.json())
 		.then(json => {
-			console.log(json)
 			setArtistName(json['artist'])
 			setStatementName(json['statement'])
-			setSummary(json['summary'])
+			setSummary(json['summary'][0])
 			setIncome(json['income'])
 			setExpense(json['expense'])
 			setAdvance(json['advance'])
@@ -193,23 +192,23 @@ function StatementDetail() {
 						<Table size="small" id="artist-statement-summary">
 							<TableRow>
 								<TableCell>Income</TableCell>
-								<TableCell id="sales">{summary['sales']}</TableCell>
+								<TableCell id="summary-sales">{summary['sales']}</TableCell>
 							</TableRow>
 							<TableRow>
 								<TableCell>Expenses</TableCell>
-								<TableCell id="sales">{summary['recoupables']}</TableCell>
+								<TableCell id="summary-recoupables">{summary['recoupables']}</TableCell>
 							</TableRow>
 							<TableRow>
 								<TableCell>Total to be Split</TableCell>
-								<TableCell id="sales">{summary['total_to_split']}</TableCell>
+								<TableCell id="summary-total_to_split">{summary['total_to_split']}</TableCell>
 							</TableRow>
 							<TableRow>
 								<TableCell>50% of Total</TableCell>
-								<TableCell id="sales">{summary['split']}</TableCell>
+								<TableCell id="summary-split">{summary['split']}</TableCell>
 							</TableRow>
 							<TableRow>
 								<TableCell>Less Advances</TableCell>
-								<TableCell id="sales">{summary['advances']}</TableCell>
+								<TableCell id="summary-advances">{summary['advances']}</TableCell>
 							</TableRow>
 							<TableRow>
 								<TableCell>Balance from Previous Statement</TableCell>

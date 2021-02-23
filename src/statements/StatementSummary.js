@@ -75,7 +75,7 @@ function StatementSummary() {
 							size="small"
 							onClick={handleClick}
 							value={ row.id }
-							id={ row.id }
+							id={`view-${row.id}`}
 						>
 							View
 						</Button>
