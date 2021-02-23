@@ -51,7 +51,7 @@ function StatementTable(props) {
 					<Button
 						variant="outlined"
 						color="primary"
-						id={row.id}
+						id={`view-${row.id}`}
 						value={row.id}
 						name="submit"
 						type="submit"
@@ -64,7 +64,7 @@ function StatementTable(props) {
 					<Button
 						variant="outlined"
 						color="secondary"
-						id={row.id}
+						id={`edit-${row.id}`}
 						value={row.id}
 						name="edit"
 						type="submit"
@@ -78,7 +78,7 @@ function StatementTable(props) {
 		)}
 		</Table>
 		:
-		<Typography id="income-data" variant="h6" align="center">No data</Typography> 
+		<Typography id="statement_table" variant="h6" align="center">No data</Typography> 
 		}
 		</React.Fragment>
 		)

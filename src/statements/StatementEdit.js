@@ -148,7 +148,12 @@ function StatementEdit() {
 	})
 
 	function handleStatementDelete(e) {
-		console.log(id)
+		fetch(`http://localhost:5000/statements/${id}`, {
+			method: 'DELETE'
+		})
+		.catch(error => setMsg('Error deleting'))
+		.then(res => res.json())
+		.then(json => history.push('/statements/'))
 	}
 
 	return (
@@ -206,6 +211,7 @@ function StatementEdit() {
 							type="submit"
 							variant="contained"
 							color="secondary"
+							id="delete-statement"
 							onClick={handleStatementDelete}
 						>
 						Delete
