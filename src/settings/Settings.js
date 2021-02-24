@@ -29,6 +29,7 @@ import TableCell from '@material-ui/core/TableCell'
 import Modal from '@material-ui/core/Modal'
 
 import OrderModal from './OrderModal'
+import ImportOpeningBalance from './ImportOpeningBalance'
 
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -204,6 +205,7 @@ function Settings() {
 				</Paper>
 		</Grid>
 		</Grid>
+		<ImportOpeningBalance/>
 		</Container>
 		
 	)
