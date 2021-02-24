@@ -75,7 +75,7 @@ function StatementGenerate() {
 		{
 			return (
 				<option
-					id={previousBalance.statement_balance_name}
+					id={previousBalance.statement_balance_table}
 					value={previousBalance.id}
 				>{previousBalance.statement_balance_table}
 				</option>
