@@ -1,0 +1,132 @@
+import React, { useState, useEffect, useContext } from 'react';
+
+import Header from "../components/Header";
+
+import { Redirect } from 'react-router-dom'
+import {
+	NavLink
+} from "react-router-dom";
+
+import { useHistory } from "react-router-dom";
+
+import { useForm, Controller } from 'react-hook-form'
+
+import Grid from '@material-ui/core/Grid'
+import Paper from '@material-ui/core/Paper'
+import Button from '@material-ui/core/Button'
+import Container from '@material-ui/core/Container'
+import Typography from '@material-ui/core/Typography'
+import List from '@material-ui/core/List'
+import ListItem from '@material-ui/core/ListItem'
+import TextField from '@material-ui/core/TextField'
+import Divider from '@material-ui/core/Divider'
+import NativeSelect from '@material-ui/core/NativeSelect'
+import Table from '@material-ui/core/Table'
+import TableHead from '@material-ui/core/TableHead'
+import TableBody from '@material-ui/core/TableBody'
+import TableRow from '@material-ui/core/TableRow'
+import TableCell from '@material-ui/core/TableCell'
+import Modal from '@material-ui/core/Modal'
+
+import Snackbar from '@material-ui/core/Snackbar';
+import Alert from '@material-ui/lab/Alert';
+
+import OrderModal from './OrderModal'
+import ImportOpeningBalance from './ImportOpeningBalance'
+
+import ApiStore from '../ApiStore';
+import { Context } from '../ApiStore';
+
+import { makeStyles } from '@material-ui/core/styles';
+
+
+const useStyles = makeStyles(theme => ({
+		paper: {
+			padding: 20,
+		},
+		modal: {
+					position: 'absolute',
+					width: 400,
+					backgroundColor: theme.palette.background.paper,
+					border: '2px solid #000',
+					boxShadow: theme.shadows[5],
+					padding: theme.spacing(2, 4, 3),
+				},
+}))
+
+
+function OpeningBalanceFix() {
+
+	const [rows, setRows] = useState([])
+
+	const [ updated, setUpdated ] = useState('')
+
+	const [ alert, setAlert ] = useState(false)
+
+	const { artistsContext } = useContext(Context)
+
+	const [artists, setArtists] = artistsContext
+
+	const artistChoices = artists.map((artist) =>
+		{
+			return (
+				<option
+					id={artist.id}
+					value={artist.artist_name}
+				>{artist.artist_name}
+				</option>
+			)
+		})
+
+	useEffect(() => {
+				fetch('http://localhost:5000/statements/opening-balance-errors')
+				.then(res => res.json())
+				.then(json => setRows(json))
+			}, [])
+
+
+	return (
+		<Container>
+		<Header name="Fix Opening Balance Errors"/>
+			<Grid container direction="row" >
+				<Grid item xs={12}>
+					<Alert severity="error">You have { rows.length} matching errors</Alert>
+					<Divider style={{marginTop: 10}}/>
+					<Paper>
+
+					<Table>
+					<TableRow>
+					<TableCell>Artist</TableCell>
+					<TableCell>Opening Balance</TableCell>
+					<TableCell>Updated Artist</TableCell>
+					<TableCell></TableCell>
+					</TableRow>
+					</Table>
+					{rows.map(row => (
+						<TableRow>
+							<TableCell>row.artist_name</TableCell>
+							<TableCell>row.opening_balance</TableCell>
+							<TableCell>{artistChoices}</TableCell>
+						</TableRow>
+					))}
+
+					</Paper>
+				</Grid>
+				</Grid>
+
+			<Snackbar open={alert}
+				autoHideDuration={1500}
+				anchorOrigin={{vertical: 'bottom', horizontal: 'center'}}
+				onClose={()=>setAlert(false)}
+			>
+				<Alert severity="success">
+				Updated {updated} errors!
+				</Alert>
+			</Snackbar>
+		</Container>
+		
+	)
+}
+
+
+export default OpeningBalanceFix;

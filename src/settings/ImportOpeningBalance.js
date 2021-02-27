@@ -27,8 +27,9 @@ function ImportCatalog () {
 			})
 		.then(resp => resp.json())
 		.then(res => {
-			if (!res.success) history.push('/income/matching-errors')
-			else history.push('/statements')
+			console.log(res)
+			if (!res.errors) history.push('/statements')
+			else history.push('/settings/opening-balance-fix')
 				}
 
 			)
