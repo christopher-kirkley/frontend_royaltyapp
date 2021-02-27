@@ -40,7 +40,9 @@ import StatementView from "./statements/StatementView"
 import StatementSummary from "./statements/StatementSummary"
 import StatementEdit from "./statements/StatementEdit"
 import StatementDetail from "./statements/StatementDetail"
+
 import Settings from "./settings/Settings"
+import OpeningBalanceFix from "./settings/OpeningBalanceFix"
 
 import Collapse from '@material-ui/core/Collapse';
 import Divider from '@material-ui/core/Divider';
@@ -290,6 +292,7 @@ function Main() {
 				<Route exact path="/statements/:id/edit" component={StatementEdit}/>
 				<Route exact path="/statements/:id/artist/:artistId" component={StatementDetail}/>
 				<Route exact path="/settings" component={Settings}/>
+				<Route exact path="/settings/opening-balance-fix" component={OpeningBalanceFix}/>
 			</Switch>
 		</div>
 		<div className="content">

@@ -38,6 +38,11 @@ function StatementSummary() {
 		history.push(`/statements/${id}/artist/${artistId}`)
 	}
 
+	function handleExport(e) {
+		// const artistId = e.currentTarget.value
+		// history.push(`/statements/${id}/artist/${artistId}`)
+	}
+
 	useEffect(() => { 
 		if (id) {
 		fetch(`http://localhost:5000/statements/${id}`)
@@ -80,6 +85,18 @@ function StatementSummary() {
 							View
 						</Button>
 					</TableCell>
+					<TableCell>
+						<Button
+							color="secondary"
+							variant="outlined"
+							size="small"
+							onClick={handleExport}
+							value={ row.id }
+							id={`export-${row.id}`}
+						>
+							Export
+						</Button>
+					</TableCell>
 				</TableRow>
 				)
 		})
@@ -119,6 +136,7 @@ function StatementSummary() {
 							<TableRow>
 								<TableCell>Artist</TableCell>
 								<TableCell>Open Balance</TableCell>
+								<TableCell></TableCell>
 								<TableCell></TableCell>
 							</TableRow>
 							{detailRows}

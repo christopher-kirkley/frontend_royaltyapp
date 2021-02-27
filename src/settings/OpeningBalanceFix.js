@@ -21,6 +21,7 @@ import ListItem from '@material-ui/core/ListItem'
 import TextField from '@material-ui/core/TextField'
 import Divider from '@material-ui/core/Divider'
 import NativeSelect from '@material-ui/core/NativeSelect'
+import InputLabel from '@material-ui/core/InputLabel'
 import Table from '@material-ui/core/Table'
 import TableHead from '@material-ui/core/TableHead'
 import TableBody from '@material-ui/core/TableBody'
@@ -57,6 +58,8 @@ const useStyles = makeStyles(theme => ({
 
 function OpeningBalanceFix() {
 
+	const { handleSubmit, setValue, control } = useForm()
+
 	const [rows, setRows] = useState([])
 
 	const [ updated, setUpdated ] = useState('')
@@ -72,7 +75,7 @@ function OpeningBalanceFix() {
 			return (
 				<option
 					id={artist.id}
-					value={artist.artist_name}
+					value={artist.id}
 				>{artist.artist_name}
 				</option>
 			)
@@ -81,8 +84,35 @@ function OpeningBalanceFix() {
 	useEffect(() => {
 				fetch('http://localhost:5000/statements/opening-balance-errors')
 				.then(res => res.json())
-				.then(json => setRows(json))
+				.then(json => {
+					setRows(json)
+				})
 			}, [])
+
+	function getRows() {
+				fetch('http://localhost:5000/statements/opening-balance-errors')
+				.then(res => res.json())
+				.then(json => {
+					setRows(json)
+				})
+	}
+
+
+	function onSubmit(data) {
+		var new_id = Number(data['id'])
+		var artist_id = Number(data['artist_id'])
+
+		fetch('http://localhost:5000/statements/opening-balance-errors', {
+			method: 'POST',
+			body: JSON.stringify(
+				{'id': new_id,
+				'artist_id': artist_id}
+			)})
+				.then(res => res.json())
+				.then(res => getRows())
+	}
+
+	
 
 
 	return (
@@ -94,21 +124,62 @@ function OpeningBalanceFix() {
 					<Divider style={{marginTop: 10}}/>
 					<Paper>
 
-					<Table>
+					<Table id="opening-balance-errors">
 					<TableRow>
 					<TableCell>Artist</TableCell>
 					<TableCell>Opening Balance</TableCell>
 					<TableCell>Updated Artist</TableCell>
 					<TableCell></TableCell>
+					<TableCell></TableCell>
 					</TableRow>
-					</Table>
 					{rows.map(row => (
 						<TableRow>
-							<TableCell>row.artist_name</TableCell>
-							<TableCell>row.opening_balance</TableCell>
-							<TableCell>{artistChoices}</TableCell>
+							<TableCell>{row.artist_name}</TableCell>
+							<TableCell>{row.balance_forward}</TableCell>
+							<TableCell>
+								<InputLabel htmlFor="catalog_artist">Primary Artist</InputLabel>
+									<Controller
+										name="artist_id"
+										required
+										id="artist_name"
+										as={<NativeSelect>
+												{artistChoices}
+												</NativeSelect>}
+										control={control}
+										defaultValue="1"
+										fullWidth
+									/>
+									<Controller
+										as={TextField}
+										type="hidden"
+										name="id"
+										required
+										id="id"
+										control={control}
+										defaultValue={row.id}
+									/>
+							</TableCell>
+							<TableCell>
+								<form
+									onSubmit={handleSubmit(onSubmit)}
+									id={`update-${row.id}`}
+								>
+								<Button
+									size="small"
+									id={`update-${row.id}`}
+									variant="outlined"
+									color="primary"
+									control={control}
+									value={row.id}
+									type="submit"
+								>
+								Update
+								</Button>
+								</form>
+							</TableCell>
 						</TableRow>
 					))}
+					</Table>
 
 					</Paper>
 				</Grid>
