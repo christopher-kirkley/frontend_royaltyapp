@@ -90,7 +90,7 @@ function StatementEdit() {
 							variant="outlined"
 							onClick={handleDelete}
 							value={ row.id }
-							id={ row.id }
+							id={`delete-${row.id}`}
 						>
 							Delete
 						</Button>
@@ -142,7 +142,7 @@ function StatementEdit() {
 			return (
 				<option
 					value={previousBalance.id}
-				>{previousBalance.id}
+				>{previousBalance.statement_balance_table}
 				</option>
 			)
 	})
@@ -162,6 +162,24 @@ function StatementEdit() {
 				<Grid container spacing={3} style={{marginTop: 8}} alignItems="center">
 					<Grid item xs={12}>
 					<Paper style={{padding: 10}}>
+					<Typography component="h6" variant="h6" gutterBottom>Previous Statement</Typography>
+						<select
+							id="previousStatement"
+							form="update"
+							value={summary['previous_balance_id']}
+							>
+							<option
+								id='None'
+								value='0'
+								>
+							None
+							</option>
+							{previousBalanceChoices}
+						</select>
+					</Paper>
+					</Grid>
+					<Grid item xs={12}>
+					<Paper style={{padding: 10}}>
 					<Typography component="h6" variant="h6" gutterBottom>Statement Versions</Typography>
 					<Table id='edit-statement' size="small">
 						<TableRow>
@@ -172,23 +190,6 @@ function StatementEdit() {
 						</TableRow>
 						{versionRows}
 					</Table>
-					</Paper>
-					</Grid>
-					<Grid item xs={12}>
-					<Paper style={{padding: 10}}>
-					<Typography component="h6" variant="h6" gutterBottom>Previous Statement</Typography>
-						<select
-							id="previousStatement"
-							form="update"
-							defaultValue={summary['previous_balance']}>
-							<option
-								id='None'
-								value='0'
-								>
-							None
-							</option>
-							{previousBalanceChoices}
-						</select>
 					</Paper>
 					</Grid>
 					<Grid item xs={12}>
