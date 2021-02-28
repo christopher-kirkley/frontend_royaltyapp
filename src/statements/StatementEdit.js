@@ -160,6 +160,19 @@ function StatementEdit() {
 			<Container>
 				<Header name='Edit Statement'/>
 				<Grid container spacing={3} style={{marginTop: 8}} alignItems="center">
+					<Grid item xs={6}>
+					<form
+						id="update"
+						onSubmit={handleSubmit}>
+						<Button
+							type="submit"
+							variant="contained"
+							color="primary"
+						>
+						Save Changes
+						</Button>
+					</form>
+					</Grid>
 					<Grid item xs={12}>
 					<Paper style={{padding: 10}}>
 					<Typography component="h6" variant="h6" gutterBottom>Previous Statement</Typography>
@@ -191,19 +204,6 @@ function StatementEdit() {
 						{versionRows}
 					</Table>
 					</Paper>
-					</Grid>
-					<Grid item xs={12}>
-					<form
-						id="update"
-						onSubmit={handleSubmit}>
-						<Button
-							type="submit"
-							variant="contained"
-							color="primary"
-						>
-						Save Changes
-						</Button>
-					</form>
 					</Grid>
 					<Grid item xs={12}>
 					<Paper style={{padding: 10}}>
