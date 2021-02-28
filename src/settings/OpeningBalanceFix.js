@@ -58,8 +58,6 @@ const useStyles = makeStyles(theme => ({
 
 function OpeningBalanceFix() {
 
-	const { handleSubmit, setValue, control } = useForm()
-
 	const [rows, setRows] = useState([])
 
 	const [ updated, setUpdated ] = useState('')
@@ -74,7 +72,7 @@ function OpeningBalanceFix() {
 		{
 			return (
 				<option
-					id={artist.id}
+					id="artistId"
 					value={artist.id}
 				>{artist.artist_name}
 				</option>
@@ -102,16 +100,31 @@ function OpeningBalanceFix() {
 		var new_id = Number(data['id'])
 		var artist_id = Number(data['artist_id'])
 
+		console.log(data)
+		// fetch('http://localhost:5000/statements/opening-balance-errors', {
+		// 	method: 'POST',
+		// 	body: JSON.stringify(
+		// 		{'id': new_id,
+		// 		'artist_id': artist_id}
+		// 	)})
+		// 		.then(res => res.json())
+		// 		.then(res => getRows())
+	}
+
+	function handleSubmit(e) {
+		e.preventDefault()
+		var newId = e.target.newId.value
+		var artistId = e.target.artistId.value
+	
 		fetch('http://localhost:5000/statements/opening-balance-errors', {
 			method: 'POST',
 			body: JSON.stringify(
-				{'id': new_id,
-				'artist_id': artist_id}
+				{'id': newId,
+				'artist_id': artistId}
 			)})
 				.then(res => res.json())
 				.then(res => getRows())
 	}
-
 	
 
 
@@ -133,49 +146,39 @@ function OpeningBalanceFix() {
 					<TableCell></TableCell>
 					</TableRow>
 					{rows.map(row => (
-						<TableRow>
+						<TableRow key={row.id}>
 							<TableCell>{row.artist_name}</TableCell>
 							<TableCell>{row.balance_forward}</TableCell>
 							<TableCell>
 								<InputLabel htmlFor="catalog_artist">Primary Artist</InputLabel>
-									<Controller
-										name="artist_id"
-										required
-										id="artist_name"
-										as={<NativeSelect>
+										<select
+											id="artistId"
+											defaultValue="1"
+											form={`update-${row.id}`} 
+										>
 												{artistChoices}
-												</NativeSelect>}
-										control={control}
-										defaultValue="1"
-										fullWidth
-									/>
-									<Controller
-										as={TextField}
+										</select>
+									<input
 										type="hidden"
-										name="id"
-										required
-										id="id"
-										control={control}
+										id="newId"
+										form={`update-${row.id}`}
 										defaultValue={row.id}
 									/>
 							</TableCell>
 							<TableCell>
-								<form
-									onSubmit={handleSubmit(onSubmit)}
-									id={`update-${row.id}`}
-								>
+							<form
+								id={`update-${row.id}`}
+								onSubmit={handleSubmit}>
 								<Button
+									id={`updatebutton-${row.id}`}
 									size="small"
-									id={`update-${row.id}`}
 									variant="outlined"
 									color="primary"
-									control={control}
-									value={row.id}
 									type="submit"
 								>
 								Update
 								</Button>
-								</form>
+						</form>
 							</TableCell>
 						</TableRow>
 					))}

@@ -43,6 +43,10 @@ function StatementSummary() {
 		// history.push(`/statements/${id}/artist/${artistId}`)
 	}
 
+	function handleExportCSV() {
+		fetch('http://localhost:5000/statements/export-csv')
+	}
+
 	useEffect(() => { 
 		if (id) {
 		fetch(`http://localhost:5000/statements/${id}`)
@@ -90,7 +94,7 @@ function StatementSummary() {
 							color="secondary"
 							variant="outlined"
 							size="small"
-							onClick={handleExport}
+							onClick={handleExportCSV}
 							value={ row.id }
 							id={`export-${row.id}`}
 						>
@@ -106,8 +110,17 @@ function StatementSummary() {
 				<Header name="Statement Summary"/>
 				<Grid container
 					spacing={3}>
-						<Grid item xs={12}>
+						<Grid item xs={9}>
 							<Typography id="statement-name" component="h5" variant="h6">{statementName}</Typography>
+						</Grid>
+						<Grid item xs={3}>
+							<Button
+								color="primary"
+								variant="outlined"
+								onClick={handleExport}
+							>
+							EXPORT CSV
+							</Button>
 						</Grid>
 						<Grid item xs={12}>
 						<Paper
@@ -122,7 +135,7 @@ function StatementSummary() {
 									<Typography id="current-owed" component="h6" variant="subtitle1">Current Owed: ${summary['statement_total']}</Typography>
 								</Grid>
 								<Grid item xs={12}>
-									<Typography id="current-owed" component="h6" variant="subtitle1">Previous Balance: ${summary['previous_balance']}</Typography>
+									<Typography id="previous-balance" component="h6" variant="subtitle1">Previous Balance Table: {summary['previous_balance']}</Typography>
 								</Grid>
 							</Grid>
 						</Paper>
