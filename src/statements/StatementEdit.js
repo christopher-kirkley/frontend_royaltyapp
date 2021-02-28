@@ -8,6 +8,8 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
 import TableRow from '@material-ui/core/TableRow';
+import TableHead from '@material-ui/core/TableHead';
+import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
@@ -68,10 +70,10 @@ function StatementEdit() {
 		.catch(res => setMsg('Error fetching data'))
 	}
 
-	const versionRows = versions.map((row) =>
+	const versionRows = versions.map((row, index) =>
 		{
 			return (
-				<TableRow>
+				<TableRow key={index}>
 					<TableCell
 						id="version_number">
 					{ row.version_number }
@@ -90,7 +92,7 @@ function StatementEdit() {
 							variant="outlined"
 							onClick={handleDelete}
 							value={ row.id }
-							id={`delete-${row.id}`}
+							id={index}
 						>
 							Delete
 						</Button>
@@ -103,15 +105,23 @@ function StatementEdit() {
 		e.preventDefault()
 
 		var previousStatement = e.target.previousStatement.value
-		console.log(previousStatement)
 
-		fetch(`http://localhost:5000/statements/${id}`, {
+		fetch(`http://localhost:5000/statements/${id}/versions`, {
+			method: 'DELETE',
+			body: JSON.stringify(
+				{
+				'versions': versionsDelete,
+			})
+		})
+		.then(res => res.json())
+		.then(res => (
+			fetch(`http://localhost:5000/statements/${id}`, {
 				method: 'PUT',
 				body: JSON.stringify(
 					{
 					'previous_balance_id': previousStatement,
 				})
-			})
+			})))
 		.then(res =>
 			fetch(`http://localhost:5000/statements/${id}/generate-summary`, {
 					method: 'POST'
@@ -123,19 +133,27 @@ function StatementEdit() {
 
 	}
 	
+	const versionsDelete = []
 
 	function handleDelete(e) {
 		const version_id = e.currentTarget.value
-		fetch(`http://localhost:5000/statements/${id}/versions/${version_id}`, {
-			method: 'DELETE'
-		})
-		.then(res => fetch(`http://localhost:5000/statements/${id}/versions`))
-		.then(res => res.json())
-		.then(json => {
-			setVersions(json['versions'])
-		})
-		.catch(res => setMsg('Error fetching data'))
+		
+		versionsDelete.push(version_id)
+
+		var array = [...versions]; // make a separate copy of the array
+		var index = e.currentTarget.id
+		if (index !== -1) {
+			array.splice(index, 1);
+			setVersions(array)
 		}
+
+		// .then(res => fetch(`http://localhost:5000/statements/${id}/versions`))
+		// .then(res => res.json())
+		// .then(json => {
+		// 	setVersions(json['versions'])
+		// })
+		// .catch(res => setMsg('Error fetching data'))
+	}
 
 	const previousBalanceChoices = previousBalances.map((previousBalance) =>
 		{
@@ -165,6 +183,7 @@ function StatementEdit() {
 						id="update"
 						onSubmit={handleSubmit}>
 						<Button
+							id="save"
 							type="submit"
 							variant="contained"
 							color="primary"
@@ -194,14 +213,18 @@ function StatementEdit() {
 					<Grid item xs={12}>
 					<Paper style={{padding: 10}}>
 					<Typography component="h6" variant="h6" gutterBottom>Statement Versions</Typography>
-					<Table id='edit-statement' size="small">
-						<TableRow>
-							<TableCell>Version Number</TableCell>
-							<TableCell>Format</TableCell>
-							<TableCell>Catalog Name</TableCell>
-							<TableCell></TableCell>
-						</TableRow>
+					<Table id='edit-versions' size="small">
+						<TableHead>
+							<TableRow>
+								<TableCell>Version Number</TableCell>
+								<TableCell>Format</TableCell>
+								<TableCell>Catalog Name</TableCell>
+								<TableCell></TableCell>
+							</TableRow>
+						</TableHead>
+						<TableBody>
 						{versionRows}
+						</TableBody>
 					</Table>
 					</Paper>
 					</Grid>
