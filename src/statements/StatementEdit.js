@@ -34,6 +34,7 @@ function StatementEdit() {
 	const [versions, setVersions] = useState([]);
 	const [summary, setSummary] = useState([]);
 	const [previousBalances, setPreviousBalances] = useState([]);
+	const [versionsDelete, setVersionsDelete] = useState([]);
 
 	useEffect(() => {
 		fetch(`http://localhost:5000/statements/${id}/versions`)
@@ -103,7 +104,7 @@ function StatementEdit() {
 
 	function handleSubmit(e) {
 		e.preventDefault()
-
+		
 		var previousStatement = e.target.previousStatement.value
 
 		fetch(`http://localhost:5000/statements/${id}/versions`, {
@@ -127,18 +128,19 @@ function StatementEdit() {
 					method: 'POST'
 				}))
 		.catch(error => setMsg('Error uploading'))
+		.then(res => history.push('/statements/'))
 
 		console.log(previousStatement)
 
 
 	}
 	
-	const versionsDelete = []
-
 	function handleDelete(e) {
 		const version_id = e.currentTarget.value
 		
-		versionsDelete.push(version_id)
+		var versionsArr = [...versionsDelete]
+		versionsArr.push(version_id)
+		setVersionsDelete(versionsArr)
 
 		var array = [...versions]; // make a separate copy of the array
 		var index = e.currentTarget.id
