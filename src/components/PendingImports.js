@@ -76,6 +76,27 @@ function PendingImports(props) {
 					</Grid>
 				}
 
+				{ props.refundMatchingErrors > 0
+					&&
+					<Grid container alignItems="center">
+						<Grid item xs={11}>
+							<Alert severity="warning">
+								<AlertTitle>Refund Matching Errors</AlertTitle>
+										<span id="refund_matching_errors">You have <strong id="error_number">{props.refundMatchingErrors}</strong> refund errors.</span>
+									<Typography component="p" variant="p" id="error_msg">{props.matchingErrorsMsg}</Typography>
+							</Alert>
+						</Grid>
+						<Grid item xs={1}>
+							<Button
+								color="secondary"
+								id="fix_refund_errors"
+								variant="contained"
+								onClick={()=>history.push('/income/refund-matching-errors')}	
+								>Fix</Button>
+						</Grid>
+					</Grid>
+				}
+			
 				{ props.trackMatchingErrors > 0
 					&&
 					<Grid container alignItems="center">

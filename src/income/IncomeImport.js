@@ -29,6 +29,7 @@ function IncomeImport() {
 	const [ pendingStatements, setPendingStatements ] = useState([])
 	const [ matchingErrors, setMatchingErrors ] = useState(0)
 	const [ trackMatchingErrors, setTrackMatchingErrors ] = useState(0)
+	const [ refundMatchingErrors, setRefundMatchingErrors ] = useState(0)
 
 	const [ loading, setLoading ] = useState(false)
 
@@ -54,6 +55,7 @@ function IncomeImport() {
 			.then(res => res.json())
 			.then(res => res.length)
 			.then(res => setTrackMatchingErrors(res))
+			.then(res => getRefundMatchingErrors())
 
 	}, [])
 
@@ -69,6 +71,13 @@ function IncomeImport() {
 		.then(res => res.json())
 		.then(res => res.length)
 		.then(res => setTrackMatchingErrors(res))
+	}
+
+	function getRefundMatchingErrors() {
+		fetch(`http://localhost:5000/income/refund-matching-errors`)
+		.then(res => res.json())
+		.then(res => res.length)
+		.then(res => setRefundMatchingErrors(res))
 	}
 
 	function goToMatchingErrorPage() {
@@ -101,6 +110,7 @@ function IncomeImport() {
 						<Paper elevation={3} className={classes.paper}>
 						<AddStatementForm
 							getMatchingErrors={getMatchingErrors}
+							getRefundMatchingErrors={getRefundMatchingErrors}
 							getTrackMatchingErrors={getTrackMatchingErrors}
 							getPendingStatements={getPendingStatements}
 							loading={loading}
@@ -121,6 +131,7 @@ function IncomeImport() {
 										handleDelete={handleDelete}
 										trackMatchingErrors={trackMatchingErrors}
 										matchingErrors={matchingErrors}
+										refundMatchingErrors={refundMatchingErrors}
 									/>
 							</Paper>
 						</Grid>

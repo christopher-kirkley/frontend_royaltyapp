@@ -32,6 +32,7 @@ function AddStatementForm(props) {
 				})
 			.then(resp => resp.json())
 			.then(res => {props.getMatchingErrors()})
+			.then(res => {props.getRefundMatchingErrors()})
 			.then(res => {props.getTrackMatchingErrors()})
 			.then(res => {props.getPendingStatements()})
 			.then(res => props.setLoading(false))
