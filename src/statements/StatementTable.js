@@ -28,14 +28,6 @@ function StatementTable(props) {
 
 	const classes = useStyles()
 	const [msg, setMsg] = useState([]);
-	const [statements, setStatements] = useState([]);
-
-	useEffect(() => {
-		fetch('http://localhost:5000/statements')
-		.then(res => res.json())
-		.then(json => setStatements(json))
-		.catch(res => setMsg('Error fetching data'))
-	}, [])
 
 	return (
 		<React.Fragment>

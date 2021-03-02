@@ -149,12 +149,6 @@ function StatementEdit() {
 			setVersions(array)
 		}
 
-		// .then(res => fetch(`http://localhost:5000/statements/${id}/versions`))
-		// .then(res => res.json())
-		// .then(json => {
-		// 	setVersions(json['versions'])
-		// })
-		// .catch(res => setMsg('Error fetching data'))
 	}
 
 	const previousBalanceChoices = previousBalances.map((previousBalance) =>
@@ -200,7 +194,7 @@ function StatementEdit() {
 						<select
 							id="previousStatement"
 							form="update"
-							value={summary['previous_balance_id']}
+							value="6"
 							>
 							<option
 								id='None'
