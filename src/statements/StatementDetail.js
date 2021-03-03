@@ -30,6 +30,7 @@ function StatementDetail() {
 	const [advance, setAdvance] = useState([])
 	const [albumSales, setAlbumSales] = useState([])
 	const [trackSales, setTrackSales] = useState([])
+	const [masterSales, setMasterSales] = useState([])
 	const [msg, setMsg] = useState('')
 
 	useEffect(() => {
@@ -44,6 +45,7 @@ function StatementDetail() {
 			setAdvance(json['advance'])
 			setAlbumSales(json['album_sales'])
 			setTrackSales(json['track_sales'])
+			setMasterSales(json['master_sales'])
 		}
 		)
 		.catch(res => setMsg('Error fetching data'))
@@ -178,6 +180,26 @@ function StatementDetail() {
 				)
 		})
 
+	const masterSalesRows = masterSales.map((row) =>
+		{
+			return (
+				<TableRow>
+					<TableCell
+						id="track_name">
+					{ row.track_name }
+					</TableCell>
+					<TableCell
+						id="vendor">
+					{ row.vendor }
+					</TableCell>
+					<TableCell
+						id="net">
+					{ row.net }
+					</TableCell>
+				</TableRow>
+				)
+		})
+
 	return (
 			<Container>
 				<Header name='Statement Detail'/>
@@ -303,6 +325,21 @@ function StatementDetail() {
 							</TableRow>
 							</TableHead>
 							{trackSalesRows}
+						</Table>
+						</Paper>
+					</Grid>
+					<Grid item xs={12} align="center">
+						<Paper style={{padding: 15}} elevation={3}>
+						<Typography variant="h6" component="h6" color="primary">Master Sales</Typography>
+						<Table size="small" id="master-sales">
+							<TableHead>
+							<TableRow>
+								<TableCell>Track</TableCell>
+								<TableCell>Customer</TableCell>
+								<TableCell>Sum</TableCell>
+							</TableRow>
+							</TableHead>
+							{masterSalesRows}
 						</Table>
 						</Paper>
 					</Grid>
