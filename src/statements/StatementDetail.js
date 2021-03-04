@@ -69,6 +69,10 @@ function StatementDetail() {
 					{ row.physical_net }
 					</TableCell>
 					<TableCell
+						id="master_net">
+					{ row.master_net }
+					</TableCell>
+					<TableCell
 						id="combined_net">
 					{ row.combined_net }
 					</TableCell>
@@ -190,7 +194,7 @@ function StatementDetail() {
 					</TableCell>
 					<TableCell
 						id="vendor">
-					{ row.vendor }
+					{ row.notes }
 					</TableCell>
 					<TableCell
 						id="net">
@@ -252,6 +256,7 @@ function StatementDetail() {
 								<TableCell>Release</TableCell>
 								<TableCell>Digital</TableCell>
 								<TableCell>Physical</TableCell>
+								<TableCell>Master</TableCell>
 								<TableCell>Total</TableCell>
 							</TableRow>
 							</TableHead>
@@ -335,7 +340,7 @@ function StatementDetail() {
 							<TableHead>
 							<TableRow>
 								<TableCell>Track</TableCell>
-								<TableCell>Customer</TableCell>
+								<TableCell>Item</TableCell>
 								<TableCell>Sum</TableCell>
 							</TableRow>
 							</TableHead>
