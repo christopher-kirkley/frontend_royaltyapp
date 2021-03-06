@@ -35,8 +35,13 @@ function Statement() {
 	useEffect(() => {
 		fetch('http://localhost:5000/statements')
 		.then(res => res.json())
-		.then(json => setStatements(json))
-		.catch(res => setMsg('Error fetching data'))
+		.then(json => {
+			const sorted = [...json].sort(function(a, b){
+				if(a.statement_summary_table < b.statement_summary_table) {return -1;}
+				if(a.statement_summary_table > b.statement_summary_table) {return 1;}
+			})
+			setStatements(sorted)
+		})
 	}, [])
 
 	function handleGenerate() {
