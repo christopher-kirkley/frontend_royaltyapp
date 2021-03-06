@@ -13,6 +13,10 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
+
+import FormControl from '@material-ui/core/FormControl';
+import InputLabel from '@material-ui/core/InputLabel';
+import NativeSelect from '@material-ui/core/NativeSelect';
 import { makeStyles } from '@material-ui/core/styles';
 
 import DateFnsUtils from '@date-io/date-fns';
@@ -25,6 +29,12 @@ import {
 import Header from '../components/Header'
 
 function StatementEdit() {
+
+	const [value, setValue] = useState('0');
+
+	function onChange(value) {
+		setValue(value)
+	}
 
 	const history = useHistory()
 
@@ -59,6 +69,7 @@ function StatementEdit() {
 		.then(json =>
 			{
 				setSummary(json['summary'])
+				setValue(json['summary']['previous_balance_id'])
 			})
 	}, [])
 
@@ -191,10 +202,12 @@ function StatementEdit() {
 					<Grid item xs={12}>
 					<Paper style={{padding: 10}}>
 					<Typography component="h6" variant="h6" gutterBottom>Previous Statement</Typography>
+
 						<select
 							id="previousStatement"
 							form="update"
-							value="6"
+							value={value}
+							onChange={e => setValue(e.currentTarget.value)}
 							>
 							<option
 								id='None'
@@ -204,6 +217,7 @@ function StatementEdit() {
 							</option>
 							{previousBalanceChoices}
 						</select>
+		
 					</Paper>
 					</Grid>
 					<Grid item xs={12}>
