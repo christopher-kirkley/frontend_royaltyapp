@@ -6,7 +6,6 @@ import { useHistory } from "react-router-dom";
 
 import { jsPDF } from "jspdf";
 
-
 import domtoimage from 'dom-to-image';
 
 import ReactPDF from '@react-pdf/renderer';

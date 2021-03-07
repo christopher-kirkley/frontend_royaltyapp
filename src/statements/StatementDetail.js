@@ -16,6 +16,15 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import Header from '../components/Header'
 
+
+
+import { jsPDF } from "jspdf";
+import html2canvas from 'html2canvas'
+import domtoimage from 'dom-to-image';
+import 'jspdf-autotable'
+
+
+
 function StatementDetail() {
 
 	const history = useHistory()
@@ -204,16 +213,70 @@ function StatementDetail() {
 				)
 		})
 
+	
+	function handleExport() {
+		var doc = new jsPDF()
+
+		var width = doc.internal.pageSize.getWidth()
+
+		doc.text(`${artistName}`, width/2, 10, 'center');
+		doc.text(`${statementName}`, width/2, 17, 'center');
+
+		doc.setFontSize(12)
+		doc.text("Summary", width/2, 25, 'center');
+		doc.autoTable({
+			startY: 30,
+			html: '#artist-statement-summary'})
+		doc.text("Income", width/2, doc.autoTable.previous.finalY + 10, 'center');
+		doc.autoTable({
+			startY: doc.autoTable.previous.finalY + 15,
+			html: '#artist-statement-income'})
+		doc.text("Expense", width/2, doc.autoTable.previous.finalY + 10, 'center');
+		doc.autoTable({
+			startY: doc.autoTable.previous.finalY + 15,
+			html: '#artist-statement-expense'})
+		doc.text("Advance", width/2, doc.autoTable.previous.finalY + 10, 'center');
+		doc.autoTable({
+			startY: doc.autoTable.previous.finalY + 15,
+			html: '#artist-statement-advance'})
+		doc.text("Album Sales", width/2, doc.autoTable.previous.finalY + 10, 'center');
+		doc.autoTable({
+			startY: doc.autoTable.previous.finalY + 15,
+			html: '#album-sales'})
+		doc.text("Track Sales", width/2, doc.autoTable.previous.finalY + 10, 'center');
+		doc.autoTable({
+			startY: doc.autoTable.previous.finalY + 15,
+			html: '#track-sales'})
+		doc.text("Master/Sync", width/2, doc.autoTable.previous.finalY + 10, 'center');
+		doc.autoTable({
+			startY: doc.autoTable.previous.finalY + 15,
+			html: '#master-sales'})
+		doc.save('table.pdf')
+	}
+	
+
 	return (
 			<Container>
 				<Header name='Statement Detail'/>
-				<Grid container spacing={3} style={{padding: 12}}>
+						<Button
+							color="primary"
+							variant="outlined"
+							size="small"
+							onClick={handleExport}
+							id="export"
+						>
+							Export PDF
+						</Button>
+				<div id="main">
+				<Grid container spacing={3} style={{padding: 12}} id="c-main">
 					<Grid item xs={12} align="center">
 						<Typography component="h5" variant="h5" color="primary">{ artistName }</Typography>
 						<Typography component="h5" variant="h5" color="primary">{ statementName }</Typography>
 					</Grid>
 					<Grid item xs={12} align="left">
-					<Paper style={{padding: 15}} elevation={3}>
+					<Paper style={{padding: 15}} elevation={3} variant="outlined">
+
+						<div id="summary">
 						<Typography component="h6" variant="h6" color="primary" align="center" gutterBottom>Summary</Typography>
 						<Table size="small" id="artist-statement-summary">
 							<TableRow>
@@ -245,10 +308,11 @@ function StatementDetail() {
 								<TableCell id="sales">{summary['balance_forward']}</TableCell>
 							</TableRow>
 						</Table>
+						</div>
 					</Paper>
 					</Grid>
 					<Grid item xs={12} align="left">
-					<Paper style={{padding: 15}} elevation={3}>
+					<Paper style={{padding: 15}} elevation={3} variant="outlined">
 						<Typography component="h6" variant="h6" color="primary" align="center" gutterBottom>Income</Typography>
 						<Table size="small" id="artist-statement-income">
 							<TableHead> 
@@ -265,7 +329,7 @@ function StatementDetail() {
 					</Paper>
 					</Grid>
 					<Grid item xs={12} align="center">
-					<Paper style={{padding: 15}} elevation={3}>
+					<Paper style={{padding: 15}} elevation={3} variant="outlined">
 					<Typography component="h6" variant="h6" color="primary" gutterBottom>Expenses (50% Recoupable)</Typography>
 					<Table size="small" id="artist-statement-expense">
 						<TableHead>
@@ -282,7 +346,7 @@ function StatementDetail() {
 					</Paper>
 					</Grid>
 					<Grid item xs={12} align="center">
-					<Paper style={{padding: 15}} elevation={3}>
+					<Paper style={{padding: 15}} elevation={3} variant="outlined">
 					<Typography component="h6" variant="h6" color="primary" gutterBottom>Advance (100% Recoupable)</Typography>
 					<Table size="small" id="artist-statement-advance">
 						<TableHead>
@@ -302,7 +366,7 @@ function StatementDetail() {
 					<Typography variant="h5" component="h5">Sales Details</Typography>
 					</Grid>
 					<Grid item xs={12} align="center">
-						<Paper style={{padding: 15}} elevation={3}>
+						<Paper style={{padding: 15}} elevation={3} variant="outlined">
 						<Typography variant="h6" component="h6" color="primary">Album Sales</Typography>
 						<Table size="small" id="album-sales">
 							<TableHead> 
@@ -319,7 +383,7 @@ function StatementDetail() {
 						</Paper>
 					</Grid>
 					<Grid item xs={12} align="center">
-						<Paper style={{padding: 15}} elevation={3}>
+						<Paper style={{padding: 15}} elevation={3} variant="outlined">
 						<Typography variant="h6" component="h6" color="primary">Track Sales</Typography>
 						<Table size="small" id="track-sales">
 							<TableHead>
@@ -334,7 +398,7 @@ function StatementDetail() {
 						</Paper>
 					</Grid>
 					<Grid item xs={12} align="center">
-						<Paper style={{padding: 15}} elevation={3}>
+						<Paper style={{padding: 15}} elevation={3} variant="outlined">
 						<Typography variant="h6" component="h6" color="primary">Master Sales</Typography>
 						<Table size="small" id="master-sales">
 							<TableHead>
@@ -349,6 +413,7 @@ function StatementDetail() {
 						</Paper>
 					</Grid>
 					</Grid>
+				</div>
 
 			</Container>
 		)
