@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react'
 
+import axios from 'axios';
+
+
 import { Redirect, useParams } from 'react-router-dom'
 import { useHistory } from "react-router-dom";
 
@@ -258,6 +261,30 @@ function StatementDetail() {
 	}
 	
 	function handleCSV() {
+		fetch(`http://localhost:5000/statements/${id}/artist/${artistId}/make-csv`)
+		.then(res => res.json())
+	}
+
+	function handleExportCSV() {
+
+		async function asyncFunc() {
+			const resp = await axios({
+				url: `http://localhost:5000/statements/${id}/artist/${artistId}/export-csv`,
+				responseType: 'blob'
+			})
+
+			const blob = resp.data;
+			const link = document.createElement("a");
+
+			link.href = URL.createObjectURL(blob);
+			link.download = 'data.csv';
+			document.body.appendChild(link);
+			link.click();
+		}
+
+		asyncFunc()
+
+	
 
 	}
 
@@ -292,7 +319,7 @@ function StatementDetail() {
 							onClose={handleClose}
 						>
 							<MenuItem onClick={handleExport}>PDF</MenuItem>
-							<MenuItem onClick={handleCSV}>DETAIL CSV</MenuItem>
+							<MenuItem onClick={handleExportCSV}>DETAIL CSV</MenuItem>
 						</Menu>
 					</Grid>
 				</Grid>
