@@ -137,6 +137,9 @@ function Main() {
 	}
 
 
+
+
+
 	return (
 		<ApiStore>
 		<ThemeProvider theme={theme}>
@@ -297,8 +300,10 @@ function Main() {
 				<Route exact path="/settings/opening-balance-fix" component={OpeningBalanceFix}/>
 			</Switch>
 		</div>
+
 		<div className="content">
 		</div>
+
 	</Router>
 		</ThemeProvider>
 		</ApiStore>

@@ -1,7 +1,18 @@
 import React, { useState, useEffect } from 'react'
 
+
 import { Redirect, useParams } from 'react-router-dom'
 import { useHistory } from "react-router-dom";
+
+import { jsPDF } from "jspdf";
+
+
+import domtoimage from 'dom-to-image';
+
+import ReactPDF from '@react-pdf/renderer';
+import { pdf } from '@react-pdf/renderer';
+import { PDFViewer } from '@react-pdf/renderer';
+import { Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer';
 
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
@@ -23,6 +34,7 @@ const useStyles = makeStyles(theme => ({
 
 function StatementSummary() {
 
+
 	const classes = useStyles()
 
 	const history = useHistory()
@@ -38,9 +50,48 @@ function StatementSummary() {
 		history.push(`/statements/${id}/artist/${artistId}`)
 	}
 
-	function handleExport(e) {
-		// const artistId = e.currentTarget.value
-		// history.push(`/statements/${id}/artist/${artistId}`)
+	function handleExport() {
+		console.log('h')
+		
+		window.print()
+		// var content = document.getElementById("statement-summary")
+		// var pri = document.getElementById("ifmcontentstoprint").contentWindow;
+		// pri.document.open();
+		// pri.document.write(content.innerHTML);
+		// pri.document.close();
+		// pri.focus();
+		// pri.print();
+
+		// const MyDocument = () => (
+		// 	<Document>
+		// 		<Page size="A4">
+		// 			<View>
+		// 				<Text>Section #1</Text>
+		// 			</View>
+		// 			<View>
+		// 				<Text>Section #2</Text>
+		// 			</View>
+		// 		</Page>
+		// 	</Document>
+		// )
+
+		// const saveBlob = (blob, filename) => {
+		// 	var a = document.createElement("a");
+		// 	document.body.appendChild(a);
+		// 	a.style.display = "none";
+		// 	let url = window.URL.createObjectURL(blob);
+		// 	a.href = url;
+		// 	a.download = filename;
+		// 	a.click();
+		// 	window.URL.revokeObjectURL(url);
+		// };
+
+		// const savePdf = async (document, filename) => {
+		// 	saveBlob(await pdf(document).toBlob(), filename);
+		// };
+
+		// savePdf(<MyDocument/>, "my-doc.pdf")
+			
 	}
 
 	function handleExportCSV() {
@@ -94,7 +145,7 @@ function StatementSummary() {
 							color="secondary"
 							variant="outlined"
 							size="small"
-							onClick={handleExportCSV}
+							onClick={handleExport}
 							value={ row.id }
 							id={`export-${row.id}`}
 						>
@@ -106,8 +157,9 @@ function StatementSummary() {
 		})
 
 	return (
-			<Container>
+			<Container id="statement-summary">
 				<Header name="Statement Summary"/>
+
 				<Grid container
 					spacing={3}>
 						<Grid item xs={9}>
@@ -117,7 +169,7 @@ function StatementSummary() {
 							<Button
 								color="primary"
 								variant="outlined"
-								onClick={handleExport}
+								onClick={handleExportCSV}
 							>
 							EXPORT CSV
 							</Button>
