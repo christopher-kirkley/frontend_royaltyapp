@@ -12,6 +12,9 @@ import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+
 import { makeStyles } from '@material-ui/core/styles';
 
 import Header from '../components/Header'
@@ -254,19 +257,45 @@ function StatementDetail() {
 		doc.save('table.pdf')
 	}
 	
+	function handleCSV() {
+
+	}
+
+	const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
 
 	return (
 			<Container>
 				<Header name='Statement Detail'/>
+				<Grid container spacing={1} style={{padding: 12}} align="right">
+					<Grid item xs={12}>
 						<Button
 							color="primary"
 							variant="outlined"
 							size="small"
-							onClick={handleExport}
-							id="export"
-						>
-							Export PDF
+							aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+							Export
 						</Button>
+						<Menu
+							id="simple-menu"
+							anchorEl={anchorEl}
+							keepMounted
+							open={Boolean(anchorEl)}
+							onClose={handleClose}
+						>
+							<MenuItem onClick={handleExport}>PDF</MenuItem>
+							<MenuItem onClick={handleCSV}>DETAIL CSV</MenuItem>
+						</Menu>
+					</Grid>
+				</Grid>
 				<div id="main">
 				<Grid container spacing={3} style={{padding: 12}} id="c-main">
 					<Grid item xs={12} align="center">
