@@ -265,28 +265,31 @@ function StatementDetail() {
 		.then(res => res.json())
 	}
 
-	function handleExportCSV() {
+	async function asyncFunc() {
+		const resp = await axios({
+			url: `http://localhost:5000/statements/${id}/artist/${artistId}/export-csv`,
+			responseType: 'blob',
+			method: 'post'
+		})
 
-		async function asyncFunc() {
-			const resp = await axios({
-				url: `http://localhost:5000/statements/${id}/artist/${artistId}/export-csv`,
-				responseType: 'blob'
-			})
+		const blob = resp.data;
+		const link = document.createElement("a");
 
-			const blob = resp.data;
-			const link = document.createElement("a");
-
-			link.href = URL.createObjectURL(blob);
-			link.download = 'data.csv';
-			document.body.appendChild(link);
-			link.click();
+		link.href = URL.createObjectURL(blob);
+		link.download = 'data.csv';
+		document.body.appendChild(link);
+		link.click();
+		document.body.removeChild(link);
 		}
 
+
+	function handleExportCSV() {
 		asyncFunc()
+	}
+
 
 	
 
-	}
 
 	const [anchorEl, setAnchorEl] = React.useState(null);
 
