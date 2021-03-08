@@ -55,7 +55,13 @@ function StatementDetail() {
 			setArtistName(json['artist'])
 			setStatementName(json['statement'])
 			setSummary(json['summary'][0])
-			setIncome(json['income'])
+
+			const incomeSorted = [...json['income']].sort(function(a, b){
+				if(a.catalog_name < b.catalog_name) {return -1;}
+				if(a.catalog_name > b.catalog_name) {return 1;}
+			})
+			setIncome(incomeSorted)
+
 			setExpense(json['expense'])
 			setAdvance(json['advance'])
 			setAlbumSales(json['album_sales'])
