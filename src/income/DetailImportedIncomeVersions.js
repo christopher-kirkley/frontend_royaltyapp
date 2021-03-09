@@ -23,10 +23,15 @@ function DetailImportedIncomeVersions(props) {
 				{
 					props.versions.map((version) =>
 					<TableRow>
-						{ props.type == 'tracks' ?
+						{ 
+							props.type =='bundles' ?
+						<TableCell>{version.bundle_number}</TableCell>
+							:
+							props.type == 'tracks' ?
 						<TableCell>{version.track_name}</TableCell>
 							:
 						<TableCell>{version.version_number}</TableCell>
+						
 							}
 						<TableCell>{version.quantity}</TableCell>
 						<TableCell>{version.amount}</TableCell>
