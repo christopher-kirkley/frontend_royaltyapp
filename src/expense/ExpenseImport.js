@@ -74,6 +74,14 @@ function ExpenseImport() {
 		.then(res => history.push('/expense'))
 	}
 
+	function handleDelete(id) {
+		fetch(`http://localhost:5000/expense/pending-statements/${id}`, {
+			  method: 'DELETE'
+		})
+		.then(res => getPendingStatements())
+		.then(res => getMatchingErrors())
+	}
+
 	return (
 			<Container>
 				<Header name='Expense Import'/>
@@ -95,6 +103,7 @@ function ExpenseImport() {
 									processPending={processPending}
 									matchingErrors={matchingErrors}
 									goToMatchingErrorPage={goToMatchingErrorPage}
+									handleDelete={handleDelete}
 									artistMatchingErrors={artistMatchingErrors}
 									typeMatchingErrors={typeMatchingErrors}
 									catalogMatchingErrors={catalogMatchingErrors}
