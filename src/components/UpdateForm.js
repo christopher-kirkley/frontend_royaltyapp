@@ -63,15 +63,10 @@ function UpdateForm(props) {
 			)
 		})
 
-	const [ catalog, setCatalog ] = useState([])
+	const [ catalog, setCatalog ] = catalogContext
 
-	useEffect(() => {
-				fetch('http://localhost:5000/catalog')
-				.then(res => res.json())
-				.then(json => setCatalog(json))
-			}, [])
 
-		const catalogChoices = catalog.map((catalog) =>
+	const catalogChoices = catalog.map((catalog) =>
 			{
 				return (
 					<option
