@@ -346,31 +346,31 @@ function StatementDetail() {
 						<Table size="small" id="artist-statement-summary">
 							<TableRow>
 								<TableCell>Income</TableCell>
-								<TableCell id="summary-sales">{summary['sales']}</TableCell>
+								<TableCell id="summary-sales">${summary['sales']}</TableCell>
 							</TableRow>
 							<TableRow>
 								<TableCell>Expenses</TableCell>
-								<TableCell id="summary-recoupables">{summary['recoupables']}</TableCell>
+								<TableCell id="summary-recoupables">- (${summary['recoupables']})</TableCell>
 							</TableRow>
 							<TableRow>
 								<TableCell>Total to be Split</TableCell>
-								<TableCell id="summary-total_to_split">{summary['total_to_split']}</TableCell>
+								<TableCell id="summary-total_to_split">${summary['total_to_split']}</TableCell>
 							</TableRow>
-							<TableRow>
+							<TableRow style={{backgroundColor: "#66ccff"}}>
 								<TableCell>50% of Total</TableCell>
-								<TableCell id="summary-split">{summary['split']}</TableCell>
+								<TableCell id="summary-split">${summary['split']}</TableCell>
 							</TableRow>
 							<TableRow>
 								<TableCell>Less Advances</TableCell>
-								<TableCell id="summary-advances">{summary['advances']}</TableCell>
+								<TableCell id="summary-advances">- (${summary['advances']})</TableCell>
 							</TableRow>
 							<TableRow>
 								<TableCell>Balance from Previous Statement</TableCell>
-								<TableCell id="sales">{summary['previous_balance']}</TableCell>
+								<TableCell id="sales">${summary['previous_balance']}</TableCell>
 							</TableRow>
-							<TableRow>
+							<TableRow style={{backgroundColor: "#99ff99"}}>
 								<TableCell>Artist Balance Forward</TableCell>
-								<TableCell id="sales">{summary['balance_forward']}</TableCell>
+								<TableCell id="sales" style={{fontWeight: "bold"}}>${summary['balance_forward']}</TableCell>
 							</TableRow>
 						</Table>
 						</div>
