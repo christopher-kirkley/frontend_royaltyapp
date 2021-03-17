@@ -263,7 +263,7 @@ function StatementDetail() {
 		doc.autoTable({
 			startY: doc.autoTable.previous.finalY + 15,
 			html: '#master-sales'})
-		doc.save('table.pdf')
+		doc.save(`${artistName}-${statementName}.pdf`)
 	}
 	
 	function handleCSV() {
@@ -282,7 +282,7 @@ function StatementDetail() {
 		const link = document.createElement("a");
 
 		link.href = URL.createObjectURL(blob);
-		link.download = 'data.csv';
+		link.download = `${artistName}-${statementName}.csv`;
 		document.body.appendChild(link);
 		link.click();
 		document.body.removeChild(link);
