@@ -38,7 +38,7 @@ function ArtistForm (props) {
 
 	const [contact, setContact] = useState([])
 	
-	const { handleSubmit, control, setValue } = useForm()
+	const { handleSubmit, control, setValue, watch } = useForm()
 	
 	const history = useHistory();
 
@@ -49,7 +49,9 @@ function ArtistForm (props) {
 		.then(json => {
 			setArtist(json)
 			console.log(json['contact'])
+			if (json['contact'][0]) {
 			setContact(json['contact'][0])
+			}
 		})
 		}
 	}, [])
@@ -61,6 +63,13 @@ function ArtistForm (props) {
 			{prenom: artist.prenom},
 			{surnom: artist.surnom},
 			{id: artist.id},
+		])
+	}, [artist])
+
+	useEffect(() => {
+		
+		setValue([
+			{contact_id: contact.id},
 			{contact_prenom: contact.prenom},
 			{contact_middle: contact.middle},
 			{contact_surnom: contact.surnom},
@@ -90,7 +99,9 @@ function ArtistForm (props) {
 							<Typography variant="h6" color="textSecondary" align="center">Contact Info</Typography>
 							<ContactFields
 								setValue={setValue}
+								contact={contact}
 								control={control}
+								watch={watch}
 								edit={props.edit}/>
 							</Paper>
 						</Grid>

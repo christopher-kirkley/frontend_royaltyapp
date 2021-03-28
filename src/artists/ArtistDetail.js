@@ -38,7 +38,7 @@ function ArtistDetail () {
 
 	const [edit, setEdit] = useState(false)
 	
-	const { handleSubmit, control, setValue } = useForm()
+	const { handleSubmit, control, setValue, watch } = useForm()
 	
 	const history = useHistory();
 
@@ -48,8 +48,10 @@ function ArtistDetail () {
 		.then(res => res.json())
 		.then(json => {
 			setArtist(json)
-		}
-		)
+			if (json['contact'][0]) {
+				setContact(json['contact'][0])
+			}
+		})
 	
 		}
 	}, [])
@@ -65,7 +67,7 @@ function ArtistDetail () {
 		.then(res => res.json())
 		.then(res => {
 
-			const contact_id = 1
+			const id = data.id
 			const contact_prenom = data.contact_prenom
 			const contact_middle = data.contact_middle
 			const contact_surnom = data.contact_surnom
@@ -75,9 +77,7 @@ function ArtistDetail () {
 			const bban = data.bban
 			const notes = data.notes
 
-			console.log(notes)
-
-			fetch(`http://localhost:5000/contacts/${contact_id}`, {
+			fetch(`http://localhost:5000/contacts/${id}`, {
 				method: 'PUT',
 				body: JSON.stringify({
 					contact_prenom,
@@ -135,7 +135,7 @@ function ArtistDetail () {
 					</Grid>
 				</Grid>
 				<Grid item={12}>
-					<ArtistForm onSubmit={onSubmit} id={id} edit={edit} />
+					<ArtistForm  onSubmit={onSubmit} id={id} edit={edit} />
 					{ edit ?
 						<Button 
 							size="small"

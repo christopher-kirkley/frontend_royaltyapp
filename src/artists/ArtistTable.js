@@ -76,7 +76,7 @@ function ArtistTable() {
 										size="small"
 										variant="outlined"
 										color="primary"
-										id="artist-detail"
+										id={`view-${artists.id}`}
 										value={artists.id}
 										onClick={()=>handleArtistDetail(artists.id)}>
 									Detail

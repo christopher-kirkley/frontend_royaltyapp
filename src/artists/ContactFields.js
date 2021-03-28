@@ -48,9 +48,18 @@ function ContactFields(props) {
 
 	const [catalog, setCatalog ] = useState('')
 
-	// const [artists, setArtists] = artistsContext
-	
 	const [contacts, setContacts] = useState([])
+
+	const [contact, setContact] = useState({})
+
+	useEffect(() => { 
+			fetch('http://localhost:5000/contacts')
+			.then(res => res.json())
+			.then(json => {
+				setContacts(json)
+			})
+
+	}, [])
 
 	useEffect(() => { 
 		if (props.id) {
@@ -59,92 +68,57 @@ function ContactFields(props) {
 			.then(json => setCatalog(json))
 	}}, [])
 
-	// useEffect(() => {
-	// 	const artist_name = catalog && catalog.artist ? catalog.artist.artist_name : null;
-	// 	const artist_id = catalog && catalog.artist ? catalog.artist.id : 1;
-		
-	// 	props.setValue([
-	// 		{contact_prenom: props.contact.prenom},
-	// 		{contact_middle: props.contact.middle},
-	// 		{contact_surnom: props.contact.surnom},
-	// 		{phone: props.contact.phone},
-	// 		{address: props.contact.address},
-	// 		{bank_name: props.contact.bank_name},
-	// 		{bban: props.contact.bban},
-	// 		{notes: props.contact.notes},
-	// 	])
-	// }, [props.contact])
 	
 	const contactChoices = contacts.map((contact, i) =>
 		<option id={contact.id} value={contact.id}>{contact.prenom} {contact.surnom}</option>
 	)
 
+	const [choice, setChoice] = useState('')
+
+	useEffect(() => { 
+		if (props.contact) {
+			console.log(props.contact)
+			setChoice(props.contact.id)
+	}}, [])
+
+	function getContact(id) {
+	if (id != 'none' && id != 'new') {
+		setChoice(id)
+		console.log(choice)
+			fetch(`http://localhost:5000/contacts/${id}`)
+			.then(res => res.json())
+			.then(json => setContact(json))
+	}
+	}
+
+
+
 	return (
-		// <Grid container spacing={1} alignItems="center" justify="center">
-		// 	<Grid item xs={7}>
-		// 		<Controller
-		// 			as={TextField}
-		// 			control={props.control}
-		// 			name="catalog_number"
-		// 			required
-		// 			fullWidth
-		// 			label="Catalog Number"
-		// 			id="catalog_number"
-		// 			autoComplete="catalog number"
-		// 			autoFocus
-		// 			defaultValue=""
-		// 			disabled={props.edit ? false: true}
-		// 		/>
-		// 	</Grid>
-		// 	<Grid item xs={7}>
-		// 		<Controller
-		// 			as={TextField}
-		// 			control={props.control}
-		// 			name="catalog_name"
-		// 			required
-		// 			fullWidth
-		// 			label="Title"
-		// 			id="catalog_name"
-		// 			autoComplete="catalog name"
-		// 			autoFocus
-		// 			defaultValue=""
-		// 			disabled={props.edit ? false: true}
-		// 		/>
-		// 	</Grid>
-		// 	<Grid item xs={7}>
-		// 		<InputLabel htmlFor="catalog_artist">Primary Artist</InputLabel>
-		// 			<Controller
-		// 				name="artist_id"
-		// 				required
-		// 				id="artist_name"
-		// 				as={<NativeSelect>
-		// 						{artistChoices}
-		// 						</NativeSelect>}
-		// 				control={props.control}
-		// 				fullWidth
-		// 				disabled={props.edit ? false: true}
-		// 			/>
-		// 	</Grid>
-		// </Grid>
 
 				<Grid container
 						direction="column"
 						>
 					<Grid item xs={6}>
 						<InputLabel htmlFor="contact">Contact Name</InputLabel>
-							<Controller
-								name="contact_id"
-								required
-								id="contact_name"
-								as={<NativeSelect>
-										<option>Select New</option>
-										{contactChoices}
-										</NativeSelect>}
-								control={props.control}
-								fullWidth
-								disabled={props.edit ? false: true}
-							/>
-					</Grid>
+						<NativeSelect
+							fullWidth
+							id="contact_id"
+							value={choice}
+							onChange={(e)=>{
+								setChoice(e.target.value)
+								getContact(e.target.value)}
+							}>
+							<option id="none" name="none" value="none">None</option>
+							<option id="new" name="new" value="new">New</option>
+							{contactChoices}
+						</NativeSelect>
+		{
+			choice == 'none' &&
+			null
+		}
+		{
+			choice == 'new' &&
+				<React.Fragment>
 					<Grid item xs={12}>
 						<Controller
 							as={TextField}
@@ -257,9 +231,144 @@ function ContactFields(props) {
 							disabled={props.edit ? false : true }
 						/>	
 					</Grid>
+				</React.Fragment>
+
+		}
+		
+		{
+			choice != 'new' && choice != 'none' &&
+				<React.Fragment>
+					<Grid item xs={12}>
+						<Controller
+							type="hidden"
+							as={TextField}
+							control={props.control}
+							defaultValue={contact.id}
+							name='id'
+						/>
+						<Controller
+							as={TextField}
+							name="contact_prenom"
+							id="contact_prenom"
+							defaultValue=""
+							control={props.control}
+							label="Prenom"
+							InputProps={{
+								className: classes.textField,
+							}}
+							disabled={props.edit ? false : true }
+						/>
+					</Grid>
+					<Grid item xs={12}>
+						<Controller
+							as={TextField}
+							name="contact_middle"
+							id="contact_middle"
+							control={props.control}
+							label="Middle Name"
+							defaultValue=""
+							InputProps={{
+								className: classes.textField,
+							}}
+							disabled={props.edit ? false : true }
+						/>	
+					</Grid>
+					<Grid item xs={12}>
+						<Controller
+							as={TextField}
+							name="contact_surnom"
+							id="contact_surnom"
+							control={props.control}
+							label="Surnom"
+							defaultValue=""
+							InputProps={{
+								className: classes.textField,
+							}}
+							disabled={props.edit ? false : true }
+						/>	
+					</Grid>
+					<Grid item xs={12}>
+						<Controller
+							as={TextField}
+							name="address"
+							id="address"
+							control={props.control}
+							defaultValue=""
+							label="Address"
+							InputProps={{
+								className: classes.textField,
+							}}
+							disabled={props.edit ? false : true }
+						/>	
+					</Grid>
+					<Grid item xs={12}>
+						<Controller
+							as={TextField}
+							name="phone"
+							id="phone"
+							defaultValue={contact.phone}
+							control={props.control}
+							label="Phone"
+							InputProps={{
+								className: classes.textField,
+							}}
+							disabled={props.edit ? false : true }
+						/>	
+					</Grid>
+					<Grid item xs={12}>
+						<Controller
+							as={TextField}
+							name="bank_name"
+							id="bank_name"
+							defaultValue={props.contact.bank_name}
+							control={props.control}
+							label="Bank Name"
+							InputProps={{
+								className: classes.textField,
+							}}
+							disabled={props.edit ? false : true }
+						/>	
+					</Grid>
+					<Grid item xs={12}>
+						<Controller
+							as={TextField}
+							name="bban"
+							id="bban"
+							defaultValue={contact.bban}
+							control={props.control}
+							label="BBAN"
+							InputProps={{
+								className: classes.textField,
+							}}
+							disabled={props.edit ? false : true }
+						/>	
+					</Grid>
+					<Grid item xs={12}>
+						<Controller
+							as={TextField}
+							name="notes"
+							id="notes"
+							control={props.control}
+							defaultValue={contact.notes}
+							label="Notes"
+							InputProps={{
+								className: classes.textField,
+							}}
+							disabled={props.edit ? false : true }
+						/>	
+					</Grid>
+				</React.Fragment>
+
+		}
+						
+					</Grid>
 			</Grid>
 	)
 	
 }
+
+
+//
+//
 
 export default ContactFields
