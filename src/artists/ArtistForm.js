@@ -35,6 +35,8 @@ function ArtistForm (props) {
 	const { id } = useParams()
 
 	const [artist, setArtist] = useState([])
+
+	const [contact, setContact] = useState([])
 	
 	const { handleSubmit, control, setValue } = useForm()
 	
@@ -44,7 +46,11 @@ function ArtistForm (props) {
 		if (id) {
 		fetch(`http://localhost:5000/artists/${props.id}`)
 		.then(res => res.json())
-		.then(json => setArtist(json))
+		.then(json => {
+			setArtist(json)
+			console.log(json['contact'])
+			setContact(json['contact'][0])
+		})
 		}
 	}, [])
 
@@ -55,8 +61,16 @@ function ArtistForm (props) {
 			{prenom: artist.prenom},
 			{surnom: artist.surnom},
 			{id: artist.id},
+			{contact_prenom: contact.prenom},
+			{contact_middle: contact.middle},
+			{contact_surnom: contact.surnom},
+			{phone: contact.phone},
+			{address: contact.address},
+			{bank_name: contact.bank_name},
+			{bban: contact.bban},
+			{notes: contact.notes},
 		])
-	}, [artist])
+	}, [contact])
 
 	return (
 				<form onSubmit={handleSubmit(props.onSubmit)} id="form">

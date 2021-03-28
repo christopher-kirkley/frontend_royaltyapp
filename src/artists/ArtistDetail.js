@@ -34,6 +34,8 @@ function ArtistDetail () {
 
 	const [artist, setArtist] = useState([])
 
+	const [contact, setContact] = useState([])
+
 	const [edit, setEdit] = useState(false)
 	
 	const { handleSubmit, control, setValue } = useForm()
@@ -44,7 +46,11 @@ function ArtistDetail () {
 		if (id) {
 		fetch(`http://localhost:5000/artists/${id}`)
 		.then(res => res.json())
-		.then(json => setArtist(json))
+		.then(json => {
+			setArtist(json)
+		}
+		)
+	
 		}
 	}, [])
 
@@ -57,6 +63,35 @@ function ArtistDetail () {
 			body: JSON.stringify({ artist_name, prenom, surnom }),
 		})
 		.then(res => res.json())
+		.then(res => {
+
+			const contact_id = 1
+			const contact_prenom = data.contact_prenom
+			const contact_middle = data.contact_middle
+			const contact_surnom = data.contact_surnom
+			const address = data.address
+			const phone = data.phone
+			const bank_name = data.bank_name
+			const bban = data.bban
+			const notes = data.notes
+
+			console.log(notes)
+
+			fetch(`http://localhost:5000/contacts/${contact_id}`, {
+				method: 'PUT',
+				body: JSON.stringify({
+					contact_prenom,
+					contact_middle,
+					contact_surnom,
+					address,
+					phone,
+					bank_name,
+					bban,
+					notes
+					}),
+			})
+
+		})
 		.then(json => history.push('/artists/'))
 	}
 

@@ -59,17 +59,21 @@ function ContactFields(props) {
 			.then(json => setCatalog(json))
 	}}, [])
 
-	useEffect(() => {
-		const artist_name = catalog && catalog.artist ? catalog.artist.artist_name : null;
-		const artist_id = catalog && catalog.artist ? catalog.artist.id : 1;
+	// useEffect(() => {
+	// 	const artist_name = catalog && catalog.artist ? catalog.artist.artist_name : null;
+	// 	const artist_id = catalog && catalog.artist ? catalog.artist.id : 1;
 		
-		props.setValue([
-			{catalog_number: catalog.catalog_number},
-			{catalog_name: catalog.catalog_name},
-			{artist_name: artist_name},
-			{artist_id: artist_id},
-		])
-	}, [catalog])
+	// 	props.setValue([
+	// 		{contact_prenom: props.contact.prenom},
+	// 		{contact_middle: props.contact.middle},
+	// 		{contact_surnom: props.contact.surnom},
+	// 		{phone: props.contact.phone},
+	// 		{address: props.contact.address},
+	// 		{bank_name: props.contact.bank_name},
+	// 		{bban: props.contact.bban},
+	// 		{notes: props.contact.notes},
+	// 	])
+	// }, [props.contact])
 	
 	const contactChoices = contacts.map((contact, i) =>
 		<option id={contact.id} value={contact.id}>{contact.prenom} {contact.surnom}</option>
@@ -189,8 +193,8 @@ function ContactFields(props) {
 							name="address"
 							id="address"
 							control={props.control}
-							label="Address"
 							defaultValue=""
+							label="Address"
 							InputProps={{
 								className: classes.textField,
 							}}
@@ -202,9 +206,9 @@ function ContactFields(props) {
 							as={TextField}
 							name="phone"
 							id="phone"
+							defaultValue=""
 							control={props.control}
 							label="Phone"
-							defaultValue=""
 							InputProps={{
 								className: classes.textField,
 							}}
@@ -216,9 +220,9 @@ function ContactFields(props) {
 							as={TextField}
 							name="bank_name"
 							id="bank_name"
+							defaultValue=""
 							control={props.control}
 							label="Bank Name"
-							defaultValue=""
 							InputProps={{
 								className: classes.textField,
 							}}
@@ -230,9 +234,9 @@ function ContactFields(props) {
 							as={TextField}
 							name="bban"
 							id="bban"
+							defaultValue=""
 							control={props.control}
 							label="BBAN"
-							defaultValue=""
 							InputProps={{
 								className: classes.textField,
 							}}
@@ -245,8 +249,8 @@ function ContactFields(props) {
 							name="notes"
 							id="notes"
 							control={props.control}
-							label="Notes"
 							defaultValue=""
+							label="Notes"
 							InputProps={{
 								className: classes.textField,
 							}}

@@ -39,6 +39,25 @@ function ArtistAdd () {
 	
 	const history = useHistory();
 
+	function addContact(data, id) {
+
+		fetch('http://localhost:5000/contacts', {
+			method: 'POST',
+			body: JSON.stringify(
+				{
+					'artist_id': id,
+					'contact_prenom': data['contact_prenom'],
+					'contact_middle': data['contact_middle'],
+					'contact_surnom': data['contact_surnom'],
+					'address': data['address'],
+					'phone': data['phone'],
+					'bank_name': data['bank_name'],
+					'bban': data['bban'],
+					'notes': data['notes'],
+				})
+		})
+	}
+
 	function addArtist(data) {
 		const artist_name = data.artist_name
 		const prenom = data.prenom
@@ -48,6 +67,10 @@ function ArtistAdd () {
 			body: JSON.stringify({ artist_name, prenom, surnom }),
 		})
 		.then(res => res.json())
+		.then(res => res['id'])
+		.then(id => (
+			addContact(data, id)
+		))
 		.then(res => updateArtists())
 		.then(json => history.push('/artists/'))
 	}

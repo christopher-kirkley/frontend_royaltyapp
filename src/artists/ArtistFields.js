@@ -74,53 +74,6 @@ function ArtistFields(props) {
 	)
 
 	return (
-		// <Grid container spacing={1} alignItems="center" justify="center">
-		// 	<Grid item xs={7}>
-		// 		<Controller
-		// 			as={TextField}
-		// 			control={props.control}
-		// 			name="catalog_number"
-		// 			required
-		// 			fullWidth
-		// 			label="Catalog Number"
-		// 			id="catalog_number"
-		// 			autoComplete="catalog number"
-		// 			autoFocus
-		// 			defaultValue=""
-		// 			disabled={props.edit ? false: true}
-		// 		/>
-		// 	</Grid>
-		// 	<Grid item xs={7}>
-		// 		<Controller
-		// 			as={TextField}
-		// 			control={props.control}
-		// 			name="catalog_name"
-		// 			required
-		// 			fullWidth
-		// 			label="Title"
-		// 			id="catalog_name"
-		// 			autoComplete="catalog name"
-		// 			autoFocus
-		// 			defaultValue=""
-		// 			disabled={props.edit ? false: true}
-		// 		/>
-		// 	</Grid>
-		// 	<Grid item xs={7}>
-		// 		<InputLabel htmlFor="catalog_artist">Primary Artist</InputLabel>
-		// 			<Controller
-		// 				name="artist_id"
-		// 				required
-		// 				id="artist_name"
-		// 				as={<NativeSelect>
-		// 						{artistChoices}
-		// 						</NativeSelect>}
-		// 				control={props.control}
-		// 				fullWidth
-		// 				disabled={props.edit ? false: true}
-		// 			/>
-		// 	</Grid>
-		// </Grid>
-
 				<Grid container
 						direction="column"
 						alignItems="center">
