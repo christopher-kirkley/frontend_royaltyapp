@@ -12,6 +12,8 @@ import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/core/styles'
 
+import ArtistFields from './ArtistFields'
+import ContactFields from './ContactFields'
 import Header from '../components/Header'
  
 const useStyles = makeStyles(theme => ({
@@ -58,54 +60,29 @@ function ArtistForm (props) {
 
 	return (
 				<form onSubmit={handleSubmit(props.onSubmit)} id="form">
-				<Grid container
-						direction="column"
-						alignItems="center">
-					<Grid item xs={12}>
-						<Controller
-							as={TextField}
-							name="artist_name"
-							id="artist_name"
-							defaultValue=""
-							control={control}
-							label="Artist Name"
-							InputProps={{
-								className: classes.textField,
-							}}
-							disabled={props.edit ? false : true }
-						/>
+					<Grid container spacing={2}>
+						<Grid item xs={12}>
+							<Paper elevation={3} className={classes.paper}>
+							<Typography variant="h6" color="textSecondary" align="center">Artist Info</Typography>
+							<ArtistFields
+								setValue={setValue}
+								control={control}
+								edit={props.edit}/>
+							</Paper>
+						</Grid>
+	{/*----------- Contacts ---------- */}
+						<Grid item xs={12}>
+							<Paper elevation={3} className={classes.paper}>
+							<Typography variant="h6" color="textSecondary" align="center">Contact Info</Typography>
+							<ContactFields
+								setValue={setValue}
+								control={control}
+								edit={props.edit}/>
+							</Paper>
+						</Grid>
 					</Grid>
-					<Grid item xs={12}>
-						<Controller
-							as={TextField}
-							name="prenom"
-							id="prenom"
-							control={control}
-							label="Prenom"
-							defaultValue=""
-							InputProps={{
-								className: classes.textField,
-							}}
-							disabled={props.edit ? false : true }
-						/>	
-					</Grid>
-					<Grid item xs={12}>
-						<Controller
-							as={TextField}
-							name="surnom"
-							id="surnom"
-							control={control}
-							label="Surnom"
-							defaultValue=""
-							style={{marginBottom: 20}}
-							InputProps={{
-								className: classes.textField,
-							}}
-							disabled={props.edit ? false : true }
-						/>	
-					</Grid>
-			</Grid>
-		</form>
+				</form>
+
 	)}
 
 

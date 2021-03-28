@@ -100,7 +100,6 @@ function ArtistDetail () {
 					</Grid>
 				</Grid>
 				<Grid item={12}>
-					<Paper elevation={3} className={classes.paper}>
 					<ArtistForm onSubmit={onSubmit} id={id} edit={edit} />
 					{ edit ?
 						<Button 
@@ -115,7 +114,6 @@ function ArtistDetail () {
 						:
 						null
 					}
-					</Paper>
 				</Grid>
 		<Divider/>
 		<Grid container justify="space-between">
