@@ -36,50 +36,58 @@ function ArtistForm (props) {
 
 	const [artist, setArtist] = useState([])
 
-	const [contact, setContact] = useState([])
-	
 	const { handleSubmit, control, setValue, watch } = useForm()
 	
 	const history = useHistory();
 
+	const [contactId, setContactId] = useState('none')
+
+	const [contactInfo, setContactInfo] = useState({})
+
 	useEffect(() => { 
+		
+		// check to see if new record or editing existing record
 		if (id) {
-		fetch(`http://localhost:5000/artists/${props.id}`)
+		fetch(`http://localhost:5000/artists/${id}`)
 		.then(res => res.json())
 		.then(json => {
+			console.log(json)
 			setArtist(json)
+
 			console.log(json['contact'])
-			if (json['contact'][0]) {
-			setContact(json['contact'][0])
+			if (json['contact']) {
+			setContactId(json['contact'].id)
+			setContactInfo(json['contact'])
 			}
-		})
-		}
+			})
+	}
+		
 	}, [])
 
 	useEffect(() => {
+			setValue([
+				{artist_name: artist.artist_name},
+				{prenom: artist.prenom},
+				{surnom: artist.surnom},
+				{id: artist.id},
+			])
 		
-		setValue([
-			{artist_name: artist.artist_name},
-			{prenom: artist.prenom},
-			{surnom: artist.surnom},
-			{id: artist.id},
-		])
 	}, [artist])
 
 	useEffect(() => {
 		
 		setValue([
-			{contact_id: contact.id},
-			{contact_prenom: contact.prenom},
-			{contact_middle: contact.middle},
-			{contact_surnom: contact.surnom},
-			{phone: contact.phone},
-			{address: contact.address},
-			{bank_name: contact.bank_name},
-			{bban: contact.bban},
-			{notes: contact.notes},
+			{id: contactInfo.id},
+			{contact_prenom: contactInfo.prenom},
+			{contact_middle: contactInfo.middle},
+			{contact_surnom: contactInfo.surnom},
+			{phone: contactInfo.phone},
+			{address: contactInfo.address},
+			{bank_name: contactInfo.bank_name},
+			{bban: contactInfo.bban},
+			{notes: contactInfo.notes},
 		])
-	}, [contact])
+	}, [contactInfo])
 
 	return (
 				<form onSubmit={handleSubmit(props.onSubmit)} id="form">
@@ -99,9 +107,10 @@ function ArtistForm (props) {
 							<Typography variant="h6" color="textSecondary" align="center">Contact Info</Typography>
 							<ContactFields
 								setValue={setValue}
-								contact={contact}
+								contactId={contactId}
+								setContactId={setContactId}
 								control={control}
-								watch={watch}
+								// watch={watch}
 								edit={props.edit}/>
 							</Paper>
 						</Grid>

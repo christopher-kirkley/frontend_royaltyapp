@@ -44,14 +44,8 @@ function ContactFields(props) {
 
 	const classes = useStyles()
 
-	const { artistsContext } = useContext(Context)
-
-	const [catalog, setCatalog ] = useState('')
-
 	const [contacts, setContacts] = useState([])
-
-	const [contact, setContact] = useState({})
-
+	
 	useEffect(() => { 
 			fetch('http://localhost:5000/contacts')
 			.then(res => res.json())
@@ -61,36 +55,37 @@ function ContactFields(props) {
 
 	}, [])
 
-	useEffect(() => { 
-		if (props.id) {
-			fetch(`http://localhost:5000/catalog/${props.id}`)
-			.then(res => res.json())
-			.then(json => setCatalog(json))
-	}}, [])
-
-	
 	const contactChoices = contacts.map((contact, i) =>
 		<option id={contact.id} value={contact.id}>{contact.prenom} {contact.surnom}</option>
 	)
 
-	const [choice, setChoice] = useState('')
 
-	useEffect(() => { 
-		if (props.contact) {
-			console.log(props.contact)
-			setChoice(props.contact.id)
-	}}, [])
+	const [contact, setContact] = useState('')
 
 	function getContact(id) {
 	if (id != 'none' && id != 'new') {
-		setChoice(id)
-		console.log(choice)
-			fetch(`http://localhost:5000/contacts/${id}`)
-			.then(res => res.json())
-			.then(json => setContact(json))
+		fetch(`http://localhost:5000/contacts/${id}`)
+		.then(res => res.json())
+		.then(json => setContact(json))
+		console.log(contact)
 	}
 	}
 
+	
+	useEffect(() => {
+		
+		props.setValue([
+			{id: contact.id},
+			{contact_prenom: contact.prenom},
+			{contact_middle: contact.middle},
+			{contact_surnom: contact.surnom},
+			{phone: contact.phone},
+			{address: contact.address},
+			{bank_name: contact.bank_name},
+			{bban: contact.bban},
+			{notes: contact.notes},
+		])
+	}, [contact])
 
 
 	return (
@@ -101,29 +96,33 @@ function ContactFields(props) {
 					<Grid item xs={6}>
 						<InputLabel htmlFor="contact">Contact Name</InputLabel>
 						<NativeSelect
+							disabled={props.edit ? false : true }
 							fullWidth
 							id="contact_id"
-							value={choice}
+							value={props.contactId}
 							onChange={(e)=>{
-								setChoice(e.target.value)
-								getContact(e.target.value)}
-							}>
+								props.setContactId(e.target.value)
+								getContact(e.target.value)
+							}
+							}
+						>
+							{contactChoices}
 							<option id="none" name="none" value="none">None</option>
 							<option id="new" name="new" value="new">New</option>
-							{contactChoices}
 						</NativeSelect>
 		{
-			choice == 'none' &&
+			props.contactId == 'none' &&
 			null
 		}
+
 		{
-			choice == 'new' &&
+			props.contactId == 'new' &&
 				<React.Fragment>
 					<Grid item xs={12}>
 						<Controller
 							as={TextField}
-							name="contact_prenom"
-							id="contact_prenom"
+							name="new_contact_prenom"
+							id="new_contact_prenom"
 							defaultValue=""
 							control={props.control}
 							label="Prenom"
@@ -136,8 +135,8 @@ function ContactFields(props) {
 					<Grid item xs={12}>
 						<Controller
 							as={TextField}
-							name="contact_middle"
-							id="contact_middle"
+							name="new_contact_middle"
+							id="new_contact_middle"
 							control={props.control}
 							label="Middle Name"
 							defaultValue=""
@@ -150,8 +149,8 @@ function ContactFields(props) {
 					<Grid item xs={12}>
 						<Controller
 							as={TextField}
-							name="contact_surnom"
-							id="contact_surnom"
+							name="new_contact_surnom"
+							id="new_contact_surnom"
 							control={props.control}
 							label="Surnom"
 							defaultValue=""
@@ -164,8 +163,8 @@ function ContactFields(props) {
 					<Grid item xs={12}>
 						<Controller
 							as={TextField}
-							name="address"
-							id="address"
+							name="new_address"
+							id="new_address"
 							control={props.control}
 							defaultValue=""
 							label="Address"
@@ -178,8 +177,8 @@ function ContactFields(props) {
 					<Grid item xs={12}>
 						<Controller
 							as={TextField}
-							name="phone"
-							id="phone"
+							name="new_phone"
+							id="new_phone"
 							defaultValue=""
 							control={props.control}
 							label="Phone"
@@ -192,8 +191,8 @@ function ContactFields(props) {
 					<Grid item xs={12}>
 						<Controller
 							as={TextField}
-							name="bank_name"
-							id="bank_name"
+							name="new_bank_name"
+							id="new_bank_name"
 							defaultValue=""
 							control={props.control}
 							label="Bank Name"
@@ -206,8 +205,8 @@ function ContactFields(props) {
 					<Grid item xs={12}>
 						<Controller
 							as={TextField}
-							name="bban"
-							id="bban"
+							name="new_bban"
+							id="new_bban"
 							defaultValue=""
 							control={props.control}
 							label="BBAN"
@@ -220,8 +219,8 @@ function ContactFields(props) {
 					<Grid item xs={12}>
 						<Controller
 							as={TextField}
-							name="notes"
-							id="notes"
+							name="new_notes"
+							id="new_notes"
 							control={props.control}
 							defaultValue=""
 							label="Notes"
@@ -236,15 +235,16 @@ function ContactFields(props) {
 		}
 		
 		{
-			choice != 'new' && choice != 'none' &&
+			props.contactId != 'new' && props.contactId != 'none' &&
 				<React.Fragment>
 					<Grid item xs={12}>
 						<Controller
 							type="hidden"
 							as={TextField}
 							control={props.control}
-							defaultValue={contact.id}
+							defaultValue=""
 							name='id'
+							id="id"
 						/>
 						<Controller
 							as={TextField}
@@ -306,7 +306,7 @@ function ContactFields(props) {
 							as={TextField}
 							name="phone"
 							id="phone"
-							defaultValue={contact.phone}
+							defaultValue=""
 							control={props.control}
 							label="Phone"
 							InputProps={{
@@ -320,7 +320,7 @@ function ContactFields(props) {
 							as={TextField}
 							name="bank_name"
 							id="bank_name"
-							defaultValue={props.contact.bank_name}
+							defaultValue=""
 							control={props.control}
 							label="Bank Name"
 							InputProps={{
@@ -334,7 +334,7 @@ function ContactFields(props) {
 							as={TextField}
 							name="bban"
 							id="bban"
-							defaultValue={contact.bban}
+							defaultValue=""
 							control={props.control}
 							label="BBAN"
 							InputProps={{
@@ -349,7 +349,7 @@ function ContactFields(props) {
 							name="notes"
 							id="notes"
 							control={props.control}
-							defaultValue={contact.notes}
+							defaultValue=""
 							label="Notes"
 							InputProps={{
 								className: classes.textField,
