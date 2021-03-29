@@ -58,8 +58,7 @@ function ArtistTable() {
 				<TableHead>
 					<TableRow>
 						<TableCell>Artist Name</TableCell>
-						<TableCell>Prenom</TableCell>
-						<TableCell>Surnom</TableCell>
+						<TableCell>Contact</TableCell>
 						<TableCell></TableCell>
 					</TableRow>
 				</TableHead>
@@ -69,8 +68,11 @@ function ArtistTable() {
 						return (
 							<TableRow key={i}>
 								<TableCell>{artists.artist_name}</TableCell>
-								<TableCell>{artists.prenom}</TableCell>
-								<TableCell>{artists.surnom}</TableCell>
+								<TableCell>{artists.contact ?
+									(artists.contact.prenom + ' ' + artists.contact.middle + ' ' + artists.contact.surnom)
+									:
+									''}
+							</TableCell>
 								<TableCell>
 									<Button
 										size="small"
