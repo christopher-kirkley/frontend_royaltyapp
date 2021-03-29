@@ -168,7 +168,7 @@ function ArtistDetail () {
 	return (
 			<Container>
 			<Header name='Artist Detail'/>
-				<Grid container justify="space-between">
+				<Grid container justify="space-between" style={{marginBottom: 20}}>
 					<Grid item xs={2}>
 						<Toggle
 							edit={edit}
@@ -204,8 +204,8 @@ function ArtistDetail () {
 						null
 					}
 				</Grid>
-		<Divider/>
-		<Grid container justify="space-between">
+		<Divider style={{marginBottom: 20}}/>
+		<Grid container justify="space-between" style={{marginBottom: 20}}>
 			<Grid item={12}>
 				<Paper elevation={3} className={classes.paper}>
 				<Typography>Appears On</Typography>
