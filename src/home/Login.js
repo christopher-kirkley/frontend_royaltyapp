@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,6 +12,8 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import Alert from '@material-ui/lab/Alert';
+
 
 import { useForm, Controller } from 'react-hook-form'
 import { useParams, useHistory } from 'react-router-dom'
@@ -56,15 +58,26 @@ export default function Login() {
 
 	const history = useHistory()
 
+	const [ msg, setMsg ] = useState('')
+
 	function login(data) {
 		const email = data.email
 		const password = data.password
+		console.log(data)
 		fetch('http://localhost:5000/login', {
 			method: 'POST',
 			body: JSON.stringify({ email, password }),
 		})
 		.then(res => res.json())
-		.then(json => history.push('/dashboard'))
+		.then(json => {
+			if (json['success'] == 'true') {
+				history.push('/dashboard')
+			} else { 
+				console.log('daf')
+				setMsg('Invalid Login') }
+		}
+		)
+		.catch(error => setMsg('Invalid Login'))
 	}
 
 	function onSubmit(data) {
@@ -83,7 +96,8 @@ export default function Login() {
           Log in
         </Typography>
         <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
-          <TextField
+          <Controller
+						as={TextField}
             variant="outlined"
             margin="normal"
             required
@@ -92,9 +106,11 @@ export default function Login() {
             label="Email Address"
             name="email"
             autoComplete="email"
+						control={control}
             autoFocus
           />
-          <TextField
+          <Controller
+						as={TextField}
             variant="outlined"
             margin="normal"
             required
@@ -104,6 +120,7 @@ export default function Login() {
             type="password"
             id="password"
             autoComplete="current-password"
+						control={control}
           />
           <Button
 						id="submit"
@@ -122,6 +139,7 @@ export default function Login() {
               </Link>
             </Grid>
           </Grid>
+						<Alert id="alert" severity="error">{msg}</Alert>
         </form>
       </div>
     </Container>

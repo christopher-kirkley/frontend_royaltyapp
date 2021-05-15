@@ -12,6 +12,8 @@ import ApiStore from './ApiStore';
 import Home from "./home/Home"
 import Login from "./home/Login"
 
+import Dashboard from "./dashboard/Dashboard"
+
 import Artists from "./artists/Artists"
 import ArtistAdd from "./artists/ArtistAdd"
 import ArtistDetail from "./artists/ArtistDetail"
@@ -147,8 +149,6 @@ function Main() {
 
 
 
-
-
 	return (
 		<ApiStore>
 		<ThemeProvider theme={theme}>
@@ -170,7 +170,7 @@ function Main() {
 					</ListItem>
 					<hr/>
 
-					<Link to="/" className={classes.link}>
+					<Link to="/dashboard" className={classes.link}>
 					<ListItem button>
 						<ListItemIcon>
 							<HomeIcon />
@@ -252,6 +252,7 @@ function Main() {
 		}
 			<Switch>
 				<Route exact path="/" component={Home}/>
+				<Route exact path="/dashboard" component={Dashboard}/>
 				<Route exact path="/login" component={Login}/>
 				<Route exact path="/artists" component={Artists}/>
 				<Route exact path="/artist/add" component={ArtistAdd}/>
