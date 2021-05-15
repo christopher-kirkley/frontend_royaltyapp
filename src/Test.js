@@ -1,37 +1,35 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import Button from 'react-bootstrap/Button';
-import { Redirect } from 'react-router-dom'
+import { 
+	BrowserRouter as Router,
+	Route,
+	Link,
+	Switch,
+	Redirect,
+	useHistory } from 'react-router-dom'
 
 
-function Form() {
-	return (
-		<form>
-			<input type="text"></input>
-		</form>
-	)
-}
+import Login from "./home/Login"
+import Home from "./home/Home"
 
 function Test(){
-	// declare variable tied to function
-	const [count, setCount] = useState(0);
-	const [word, setWord] = useState('cheese');
-	const [form, showForm] = useState(<h1>heyooooo</h1>)
 
-	useEffect(() => {
-		const hey = document.querySelector('#hey')
-		hey.innerHTML = count
+	const history = useHistory()
 
-	});
+	function handleSubmit() {
+		history.push('/login')
+	}
 
 
 	return (
-		<div className="Artist">
-			{form}
-			<p>Hey, you clicked {count}</p>
-			<button onClick={() => showForm(<Form/>)}>hey</button>
-			<p id="hey">Hey, {word}</p>
-			<button onClick={() => setWord('potatoes')}>hey</button>
+		<div>
+		<Router>
+			<Switch>
+				<Route exact path="/" component={Home}/>
+				<Route exact path="/login" component={Login}/>
+			</Switch>
+		</Router>
 		</div>
 	);
 }

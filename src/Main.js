@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 
 import {
 	BrowserRouter as Router,
@@ -8,6 +8,10 @@ import {
 } from "react-router-dom";
 
 import ApiStore from './ApiStore';
+
+import Home from "./home/Home"
+import Login from "./home/Login"
+
 import Artists from "./artists/Artists"
 import ArtistAdd from "./artists/ArtistAdd"
 import ArtistDetail from "./artists/ArtistDetail"
@@ -87,6 +91,7 @@ import BundleIcon from '@material-ui/icons/ViewList'
 import IncomeIcon from '@material-ui/icons/AttachMoney'
 import ViewAgendaIcon from '@material-ui/icons/ViewAgenda';
 
+import { SessionContext } from './hooks/SessionContext'
 
 
 function Main() {
@@ -138,6 +143,10 @@ function Main() {
 
 
 
+	const { session, setSession } = useContext(SessionContext)
+
+
+
 
 
 	return (
@@ -145,6 +154,7 @@ function Main() {
 		<ThemeProvider theme={theme}>
 		<Router >
 		<div style={{ display: 'flex' }}>
+		{ session ?
 			<Drawer
 				style={{ width: '220px' }}
 				variant="persistent"
@@ -234,38 +244,15 @@ function Main() {
 					</ListItem>
 				</Link>
 
-		{
-					// <ListItem button id="statement" onClick={handleOpenStatement}>
-					// 	<ListItemIcon>
-					// 	</ListItemIcon>
-					// 	<ListItemText primary={"Statement"}/>
-					// 	{ openStatement ? <ExpandLess /> : <ExpandMore />}
-					// 	</ListItem>
-		      // <Collapse in={openStatement} timeout="auto" unmountOnExit>
-					// 	<List component="div" disablePadding>
-					// 	<Link to="/statements/generate" className={classes.link}>
-					// 		<ListItem button id="statements_generate" className={classes.nested}>
-					// 		<ListItemIcon>
-					// 			<AddCircleIcon />
-					// 		</ListItemIcon>
-					// 		<ListItemText primary={"Generate"}/>
-					// 		</ListItem>
-					// 	</Link>
-					// 	<Link to="/statements/view" className={classes.link}>
-					// 		<ListItem button id="statements_view" className={classes.nested}>
-					// 			<ListItemIcon>
-					// 				<ViewListIcon />
-					// 			</ListItemIcon>
-					// 			<ListItemText primary={"View"}/>
-					// 		</ListItem>
-					// 	</Link>
-					// 	</List>
-					// </Collapse>
-		}
 
 				</List>
 			</Drawer>
+			:
+			null
+		}
 			<Switch>
+				<Route exact path="/" component={Home}/>
+				<Route exact path="/login" component={Login}/>
 				<Route exact path="/artists" component={Artists}/>
 				<Route exact path="/artist/add" component={ArtistAdd}/>
 				<Route exact path="/artist/:id" component={ArtistDetail}/>

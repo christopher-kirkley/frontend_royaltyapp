@@ -2,11 +2,11 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import 'fontsource-roboto';
 
-import Main from './Main'
+import App from './App'
 
 import './style.css'
 
 ReactDOM.render(
-	<Main />,
+	<App />,
 	document.getElementById('root')
 )
