@@ -58,7 +58,15 @@ export default function Login() {
 
 	const history = useHistory()
 
-	const [ msg, setMsg ] = useState('')
+	const [ msg, setMsg ] = useState(false)
+
+	function displayMessage() {
+		setMsg(true)
+
+		setTimeout(() => {
+			setMsg(false)
+		}, 3000)
+	}
 
 	function login(data) {
 		const email = data.email
@@ -73,11 +81,11 @@ export default function Login() {
 			if (json['success'] == 'true') {
 				history.push('/dashboard')
 			} else { 
-				console.log('daf')
-				setMsg('Invalid Login') }
+				displayMessage()
+			}
 		}
 		)
-		.catch(error => setMsg('Invalid Login'))
+		.catch(error => displayMessage())
 	}
 
 	function onSubmit(data) {
@@ -134,12 +142,14 @@ export default function Login() {
           </Button>
           <Grid container alignContent="center">
             <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
-              </Link>
             </Grid>
           </Grid>
-						<Alert id="alert" severity="error">{msg}</Alert>
+					{ msg
+						?
+						<Alert id="alert" severity="error">Invalid Login!</Alert>
+						:
+						null
+					}
         </form>
       </div>
     </Container>
