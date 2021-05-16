@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -17,6 +17,8 @@ import Alert from '@material-ui/lab/Alert';
 
 import { useForm, Controller } from 'react-hook-form'
 import { useParams, useHistory } from 'react-router-dom'
+
+import { SessionContext } from '../hooks/SessionContext'
 
 function Copyright() {
   return (
@@ -60,6 +62,8 @@ export default function Login() {
 
 	const [ msg, setMsg ] = useState(false)
 
+	const { session, setSession } = useContext(SessionContext)
+
 	function displayMessage() {
 		setMsg(true)
 
@@ -75,17 +79,21 @@ export default function Login() {
 		fetch('http://localhost:5000/login', {
 			method: 'POST',
 			body: JSON.stringify({ email, password }),
+			// credentials: 'include'
 		})
 		.then(res => res.json())
-		.then(json => {
-			if (json['success'] == 'true') {
+		.then(data => {
+			if (data['success'] == 'true') {
 				history.push('/dashboard')
+				setSession(true)
 			} else { 
 				displayMessage()
 			}
 		}
 		)
-		.catch(error => displayMessage())
+		.catch(error => {
+			displayMessage()
+		})
 	}
 
 	function onSubmit(data) {
