@@ -6,6 +6,7 @@ import './App.css';
 import Main from './Main'
 
 import SessionContextProvider from './hooks/SessionContext'
+import Home from './home/Home'
 
 
 import {
@@ -29,11 +30,9 @@ function App() {
 
 
 	return (
-    <div className="App">
 		<SessionContextProvider>
 			<Main/>
 		</SessionContextProvider>
-		</div>
 	)
 
 }

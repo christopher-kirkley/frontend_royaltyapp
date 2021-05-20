@@ -79,7 +79,7 @@ export default function Login() {
 		fetch('http://localhost:5000/login', {
 			method: 'POST',
 			body: JSON.stringify({ email, password }),
-			// credentials: 'include'
+			credentials: 'include'
 		})
 		.then(res => res.json())
 		.then(data => {

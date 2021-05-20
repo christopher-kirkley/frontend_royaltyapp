@@ -153,7 +153,7 @@ function Main() {
 		<ApiStore>
 		<ThemeProvider theme={theme}>
 		<Router >
-		<div style={{ display: 'flex' }}>
+		<React.Fragment style={{ display: 'flex' }}>
 		{ session ?
 			<Drawer
 				style={{ width: '220px' }}
@@ -287,10 +287,10 @@ function Main() {
 				<Route exact path="/settings" component={Settings}/>
 				<Route exact path="/settings/opening-balance-fix" component={OpeningBalanceFix}/>
 			</Switch>
-		</div>
+		</React.Fragment>
 
-		<div className="content">
-		</div>
+		<React.Fragment className="content">
+		</React.Fragment>
 
 	</Router>
 		</ThemeProvider>
