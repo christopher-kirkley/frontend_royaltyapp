@@ -1,10 +1,12 @@
 import React, { useState, useContext } from "react";
+import Cookies from "js-cookie";
 
 import {
 	BrowserRouter as Router,
 	Route,
 	Link,
-	Switch
+	Switch,
+	Redirect
 } from "react-router-dom";
 
 import ApiStore from './ApiStore';
@@ -95,6 +97,7 @@ import ViewAgendaIcon from '@material-ui/icons/ViewAgenda';
 
 import { SessionContext } from './hooks/SessionContext'
 
+import history from './hooks/history'
 
 function Main() {
 
@@ -115,6 +118,7 @@ function Main() {
 	}))
 
 	const classes = useStyles()
+
 
 	const [openArtist, setOpenArtist] = useState(false)
 	const [openCatalog, setOpenCatalog] = useState(false)
@@ -144,10 +148,28 @@ function Main() {
 	}
 
 
-
 	const { session, setSession } = useContext(SessionContext)
 
+	function isAuthenticated() {
+		let data = Cookies.get('session')
+		if (data == 'true') {
+			setSession(true)
+			return true
+		}
+		else {
+			setSession(false)
+			return false
+		}
+	}
 
+	setInterval(() => {
+		isAuthenticated()
+	}, 3000)
+
+
+	const ProtectedRoute = ({isEnabled, ...props}) => {
+    return (isEnabled) ? <Route {...props} /> : <Redirect to="/"/>;
+	};
 
 	return (
 		<ApiStore>
@@ -252,12 +274,12 @@ function Main() {
 		}
 			<Switch>
 				<Route exact path="/" component={Home}/>
-				<Route exact path="/dashboard" component={Dashboard}/>
 				<Route exact path="/login" component={Login}/>
-				<Route exact path="/artists" component={Artists}/>
-				<Route exact path="/artist/add" component={ArtistAdd}/>
-				<Route exact path="/artist/:id" component={ArtistDetail}/>
-				<Route exact path="/catalog" component={Catalog}/>
+				<ProtectedRoute exact path="/dashboard" component={Dashboard} isEnabled={isAuthenticated()}/>
+				<ProtectedRoute exact path="/artists" component={Artists} isEnabled={isAuthenticated()}/>
+				<ProtectedRoute exact path="/artist/add" component={ArtistAdd} isEnabled={isAuthenticated()}/>
+				<ProtectedRoute exact path="/artist/:id" component={ArtistDetail} isEnabled={isAuthenticated()}/>
+				<ProtectedRoute exact path="/catalog" component={Catalog} isEnabled={isAuthenticated()}/>
 				<Route exact path="/catalog/add" component={CatalogAdd}/>
 				<Route exact path="/catalog/import" component={Import}/>
 				<Route exact path="/catalog/:id" component={CatalogDetail}/>

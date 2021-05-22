@@ -11,6 +11,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import SettingsIcon from '@material-ui/icons/Settings';
 
 import { useHistory } from 'react-router-dom'
+import history from '../hooks/history.js'
 
 import { SessionContext } from '../hooks/SessionContext'
 
@@ -39,8 +40,6 @@ function Header(props) {
 
 	const classes = useStyles();
 
-	const history = useHistory();
-
 	const { session, setSession } = useContext(SessionContext)
 
 	function handleLogout() {
@@ -49,7 +48,6 @@ function Header(props) {
 			credentials: 'include'
 				})
 		.then(res => res.json())
-		.then(res => history.push('/'))
 		.then(json => setSession(false))
 	}
 

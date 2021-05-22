@@ -84,8 +84,8 @@ export default function Login() {
 		.then(res => res.json())
 		.then(data => {
 			if (data['success'] == 'true') {
-				history.push('/dashboard')
 				setSession(true)
+				history.push('/dashboard')
 			} else { 
 				displayMessage()
 			}
