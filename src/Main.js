@@ -150,6 +150,16 @@ function Main() {
 
 	const { session, setSession } = useContext(SessionContext)
 
+	function handleLogout() {
+		let data = Cookies.get('session')
+		if (data) {
+			fetch('http://localhost:5000/logout',
+				{credentials: 'include', method: 'POST'}
+			)
+		}
+		setSession(false)
+	}
+
 	function isAuthenticated() {
 		let data = Cookies.get('session')
 		if (data == 'true') {
@@ -157,7 +167,7 @@ function Main() {
 			return true
 		}
 		else {
-			setSession(false)
+			handleLogout()
 			return false
 		}
 	}
@@ -175,7 +185,7 @@ function Main() {
 		<ApiStore>
 		<ThemeProvider theme={theme}>
 		<Router >
-		<React.Fragment style={{ display: 'flex' }}>
+		<div style={{ display: 'flex' }}>
 		{ session ?
 			<Drawer
 				style={{ width: '220px' }}
@@ -309,10 +319,10 @@ function Main() {
 				<Route exact path="/settings" component={Settings}/>
 				<Route exact path="/settings/opening-balance-fix" component={OpeningBalanceFix}/>
 			</Switch>
-		</React.Fragment>
+		</div>
 
-		<React.Fragment className="content">
-		</React.Fragment>
+		<div className="content">
+		</div>
 
 	</Router>
 		</ThemeProvider>

@@ -37,6 +37,7 @@ const ApiStore = ({ children }) => {
 			setArtists(sorted)
 			setLoading(false)
 		})
+		.catch(res => console.log('error'))
 	}, [])
 
 	const [upcs, setUpcs] = useState([])

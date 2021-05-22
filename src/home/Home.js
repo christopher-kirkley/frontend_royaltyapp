@@ -128,7 +128,7 @@ export default function Home() {
 	}
 
   return (
-    <React.Fragment>
+    <Container>
       <CssBaseline />
       <AppBar position="static" color="default" elevation={0} className={classes.appBar}>
         <Toolbar className={classes.toolbar}>
@@ -198,6 +198,6 @@ export default function Home() {
         </Box>
       </Container>
       {/* End footer */}
-    </React.Fragment>
+    </Container>
   );
 }
