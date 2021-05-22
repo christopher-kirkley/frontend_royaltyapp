@@ -31,13 +31,19 @@ function Income() {
 	const [ importedIncome, setImportedIncome ] = useState({})
 
 	useEffect(() => {
-		fetch('http://localhost:5000/income/imported-statements')
+		fetch('http://localhost:5000/income/imported-statements', {
+			method: 'GET',
+			credentials: 'include'
+		})
 		.then(res => res.json())
 		.then(json => setImportedIncome(json))
 	}, [])
 
 	function getImportedIncome() {
-		fetch('http://localhost:5000/income/imported-statements')
+		fetch('http://localhost:5000/income/imported-statements', {
+			method: 'GET',
+			credentials: 'include'
+		})
 		.then(res => res.json())
 		.then(json => setImportedIncome(json))
 	}
