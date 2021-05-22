@@ -46,6 +46,7 @@ function Header(props) {
 	function handleLogout() {
 		fetch('http://localhost:5000/logout', {
 			method: 'POST',
+			credentials: 'include'
 				})
 		.then(res => res.json())
 		.then(res => history.push('/'))
