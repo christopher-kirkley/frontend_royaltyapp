@@ -17,16 +17,6 @@ const ApiStore = ({ children }) => {
 	const { session, setSession } = useContext(SessionContext)
 	console.log(session)
 
-
-	const getArtists = async (name) => {
-		let resp = await fetch('http://localhost:5000/catalog', {
-			credentials: 'include',
-			method: 'GET'
-		})
-		let data = await resp.json()
-		return data
-	}
-
 	useEffect(() => { 
 		fetch('http://localhost:5000/catalog', {
 			credentials: 'include',
@@ -48,7 +38,7 @@ const ApiStore = ({ children }) => {
 	
 	useEffect(() => { 
 		setLoading(true)
-		getArtists()
+		service.getArtists()
 		.then(res => {
 			const sorted = [...res].sort(function(a, b){
 				if(a.artist_name < b.artist_name) {return -1;}

@@ -1,4 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+
+import { service } from '../_services/services.js'
+import { Context } from '../ApiStore';
 
 import { useParams, useHistory } from 'react-router-dom'
 
@@ -32,6 +35,10 @@ const useStyles = makeStyles(theme => ({
 function ArtistDetail () {
 
 	const classes = useStyles()
+
+	const { catalogContext, artistsContext, loadingContext } = useContext(Context)
+
+	const [artists, setArtists] = artistsContext
 
 	const { id } = useParams()
 
@@ -136,7 +143,8 @@ function ArtistDetail () {
 			if (data.new_contact_prenom)
 			{ postContact(data) }
 		})
-		
+		.then(res => service.getArtists())
+		.then(data => setArtists(data))
 
 	}
 
