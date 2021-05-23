@@ -43,6 +43,7 @@ function ArtistAdd () {
 
 		fetch('http://localhost:5000/contacts', {
 			method: 'POST',
+			credentials: 'include',
 			body: JSON.stringify(
 				{
 					'artist_id': id,
@@ -64,6 +65,7 @@ function ArtistAdd () {
 		const surnom = data.surnom
 		fetch('http://localhost:5000/artists', {
 			method: 'POST',
+			credentials: 'include',
 			body: JSON.stringify({ artist_name, prenom, surnom }),
 		})
 		.then(res => res.json())
@@ -77,7 +79,10 @@ function ArtistAdd () {
 	
 	function updateArtists() {
 		setLoading(true)
-		fetch('http://localhost:5000/artists')
+		fetch('http://localhost:5000/artists', {
+			method: 'GET',
+			credentials: 'include',
+		})
 		.then(res => res.json())
 		.then(json => {
 			const sorted = [...json].sort(function(a, b){
@@ -106,8 +111,9 @@ function ArtistAdd () {
 				</Grid>
 			</Grid>
 			<Grid item={12}>
-				<ArtistForm onSubmit={onSubmit} edit={true}/>
+		 <ArtistForm onSubmit={onSubmit} edit={true} type={'add'}/>
 			</Grid>
+	
 		</Container>
 	)}
 

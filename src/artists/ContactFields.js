@@ -47,7 +47,10 @@ function ContactFields(props) {
 	const [contacts, setContacts] = useState([])
 	
 	useEffect(() => { 
-			fetch('http://localhost:5000/contacts')
+			fetch('http://localhost:5000/contacts', {
+				method: 'GET',
+				credentials: 'include'
+			})
 			.then(res => res.json())
 			.then(json => {
 				setContacts(json)
@@ -64,7 +67,10 @@ function ContactFields(props) {
 
 	function getContact(id) {
 	if (id != 'none' && id != 'new') {
-		fetch(`http://localhost:5000/contacts/${id}`)
+		fetch(`http://localhost:5000/contacts/${id}`, {
+			method: 'GET',
+			credentials: 'include'
+		})
 		.then(res => res.json())
 		.then(json => setContact(json))
 		console.log(contact)
@@ -89,27 +95,27 @@ function ContactFields(props) {
 
 
 	return (
-
-				<Grid container
-						direction="column"
-						>
-					<Grid item xs={6}>
-						<InputLabel htmlFor="contact">Contact Name</InputLabel>
-						<NativeSelect
-							disabled={props.edit ? false : true }
-							fullWidth
-							id="contact_id"
-							value={props.contactId}
-							onChange={(e)=>{
-								props.setContactId(e.target.value)
-								getContact(e.target.value)
-							}
-							}
-						>
-							{contactChoices}
-							<option id="none" name="none" value="none">None</option>
-							<option id="new" name="new" value="new">New</option>
-						</NativeSelect>
+		<Grid container
+			direction="column"
+			alignItems="center"
+		>
+			<Grid item xs={8}>
+				<InputLabel htmlFor="contact">Contact Name</InputLabel>
+				<NativeSelect
+					disabled={props.edit ? false : true }
+					fullWidth
+					id="contact_id"
+					value={props.contactId}
+					onChange={(e)=>{
+						props.setContactId(e.target.value)
+						getContact(e.target.value)
+					}
+					}
+				>
+					{contactChoices}
+					<option id="none" name="none" value="none">None</option>
+					<option id="new" name="new" value="new">New</option>
+				</NativeSelect>
 		{
 			props.contactId == 'none' &&
 			null

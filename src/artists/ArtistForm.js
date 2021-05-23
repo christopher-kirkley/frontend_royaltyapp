@@ -47,8 +47,11 @@ function ArtistForm (props) {
 	useEffect(() => { 
 		
 		// check to see if new record or editing existing record
-		if (id) {
-		fetch(`http://localhost:5000/artists/${id}`)
+		if (props.type !== 'add') {
+		fetch(`http://localhost:5000/artists/${id}`, {
+			credentials: 'include',
+			method: 'GET',
+		})
 		.then(res => res.json())
 		.then(json => {
 			console.log(json)

@@ -17,25 +17,12 @@ import { Context } from '../ApiStore';
 
 function ArtistTable() {
 	
+	const history = useHistory()
 	const { catalogContext, artistsContext, loadingContext } = useContext(Context)
 
 	const [artists, setArtists] = artistsContext
-	
-	const history = useHistory()
 
 	const [ loading, setLoading ] = loadingContext
-
-	// useEffect(() => { 
-	// 	fetch('http://localhost:5000/artists')
-	// 	.then(res => res.json())
-	// 	.then(json => {
-	// 		const sorted = [...json].sort(function(a, b){
-	// 			if(a.artist_name < b.artist_name) {return -1;}
-	// 			if(a.artist_name > b.artist_name) {return 1;}
-	// 		})
-	// 		setArtists(sorted)
-	// 	})
-	// }, [])
 
 	function handleArtistDetail(id) {
 		history.push(`/artist/${id}`)

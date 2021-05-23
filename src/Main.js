@@ -282,42 +282,42 @@ function Main() {
 			:
 			null
 		}
-			<Switch>
 				<Route exact path="/" component={Home}/>
 				<Route exact path="/login" component={Login}/>
+			<Switch>
 				<ProtectedRoute exact path="/dashboard" component={Dashboard} isEnabled={isAuthenticated()}/>
 				<ProtectedRoute exact path="/artists" component={Artists} isEnabled={isAuthenticated()}/>
 				<ProtectedRoute exact path="/artist/add" component={ArtistAdd} isEnabled={isAuthenticated()}/>
 				<ProtectedRoute exact path="/artist/:id" component={ArtistDetail} isEnabled={isAuthenticated()}/>
 				<ProtectedRoute exact path="/catalog" component={Catalog} isEnabled={isAuthenticated()}/>
-				<Route exact path="/catalog/add" component={CatalogAdd}/>
-				<Route exact path="/catalog/import" component={Import}/>
-				<Route exact path="/catalog/:id" component={CatalogDetail}/>
-				<Route exact path="/bundle" component={Bundle}/>
-				<Route exact path="/bundle/add" component={BundleAdd}/>
-				<Route exact path="/bundle/import" component={BundleImport}/>
-				<Route exact path="/bundle/:id" component={BundleDetail}/>
-				<Route exact path="/income" component={Income}/>
-				<Route exact path="/income/add" component={IncomeAdd}/>
-				<Route exact path="/income/import" component={IncomeImport}/>
-				<Route exact path="/income/matching-errors" component={MatchingErrors}/>
-				<Route exact path="/income/track-matching-errors" component={TrackMatchingErrors}/>
-				<Route exact path="/income/refund-matching-errors" component={RefundMatchingErrors}/>
-				<Route exact path="/income/:id" component={DetailImportedIncome}/>
-				<Route exact path="/expense" component={Expense}/>
-				<Route exact path="/expense/import" component={ExpenseImport}/>
-				<Route exact path="/expense/artist-matching-errors" component={ArtistMatchingErrors}/>
-				<Route exact path="/expense/catalog-matching-errors" component={CatalogMatchingErrors}/>
-				<Route exact path="/expense/type-matching-errors" component={TypeMatchingErrors}/>
-				<Route exact path="/expense/:id" component={DetailImportedExpense}/>
-				<Route exact path="/statements" component={Statement}/>
-				<Route exact path="/statements/generate" component={StatementGenerate}/>
-				<Route exact path="/statements/view" component={StatementView}/>
-				<Route exact path="/statements/:id" component={StatementSummary}/>
-				<Route exact path="/statements/:id/edit" component={StatementEdit}/>
-				<Route exact path="/statements/:id/artist/:artistId" component={StatementDetail}/>
-				<Route exact path="/settings" component={Settings}/>
-				<Route exact path="/settings/opening-balance-fix" component={OpeningBalanceFix}/>
+				<ProtectedRoute exact path="/catalog/add" component={CatalogAdd} isEnabled={isAuthenticated()}/>
+				<ProtectedRoute exact path="/catalog/import" component={Import} isEnabled={isAuthenticated()}/>
+				<ProtectedRoute exact path="/catalog/:id" component={CatalogDetail} isEnabled={isAuthenticated()}/>
+				<ProtectedRoute exact path="/bundle" component={Bundle} isEnabled={isAuthenticated()}/>
+				<ProtectedRoute exact path="/bundle/add" component={BundleAdd} isEnabled={isAuthenticated()}/>
+				<ProtectedRoute exact path="/bundle/import" component={BundleImport} isEnabled={isAuthenticated()}/>
+				<ProtectedRoute exact path="/bundle/:id" component={BundleDetail} isEnabled={isAuthenticated()}/>
+				<ProtectedRoute exact path="/income" component={Income} isEnabled={isAuthenticated()}/>
+				<ProtectedRoute exact path="/income/add" component={IncomeAdd} isEnabled={isAuthenticated()}/>
+				<ProtectedRoute exact path="/income/import" component={IncomeImport} isEnabled={isAuthenticated()}/>
+				<ProtectedRoute exact path="/income/matching-errors" component={MatchingErrors} isEnabled={isAuthenticated()}/>
+				<ProtectedRoute exact path="/income/track-matching-errors" component={TrackMatchingErrors} isEnabled={isAuthenticated()}/>
+				<ProtectedRoute exact path="/income/refund-matching-errors" component={RefundMatchingErrors} isEnabled={isAuthenticated()}/>
+				<ProtectedRoute exact path="/income/:id" component={DetailImportedIncome} isEnabled={isAuthenticated()}/>
+				<ProtectedRoute exact path="/expense" component={Expense} isEnabled={isAuthenticated()}/>
+				<ProtectedRoute exact path="/expense/import" component={ExpenseImport} isEnabled={isAuthenticated()}/>
+				<ProtectedRoute exact path="/expense/artist-matching-errors" component={ArtistMatchingErrors} isEnabled={isAuthenticated()}/>
+				<ProtectedRoute exact path="/expense/catalog-matching-errors" component={CatalogMatchingErrors} isEnabled={isAuthenticated()}/>
+				<ProtectedRoute exact path="/expense/type-matching-errors" component={TypeMatchingErrors} isEnabled={isAuthenticated()}/>
+				<ProtectedRoute exact path="/expense/:id" component={DetailImportedExpense} isEnabled={isAuthenticated()}/>
+				<ProtectedRoute exact path="/statements" component={Statement} isEnabled={isAuthenticated()}/>
+				<ProtectedRoute exact path="/statements/generate" component={StatementGenerate} isEnabled={isAuthenticated()}/>
+				<ProtectedRoute exact path="/statements/view" component={StatementView} isEnabled={isAuthenticated()}/>
+				<ProtectedRoute exact path="/statements/:id" component={StatementSummary} isEnabled={isAuthenticated()}/>
+				<ProtectedRoute exact path="/statements/:id/edit" component={StatementEdit} isEnabled={isAuthenticated()}/>
+				<ProtectedRoute exact path="/statements/:id/artist/:artistId" component={StatementDetail} isEnabled={isAuthenticated()}/>
+				<ProtectedRoute exact path="/settings" component={Settings} isEnabled={isAuthenticated()}/>
+				<ProtectedRoute exact path="/settings/opening-balance-fix" component={OpeningBalanceFix} isEnabled={isAuthenticated()}/>
 			</Switch>
 		</div>
 

@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
+
+import { SessionContext } from './hooks/SessionContext'
 
 const initialState = {
 	name: 'Bob Schmob'
@@ -6,12 +8,19 @@ const initialState = {
 
 export const Context = React.createContext()
 
+
 const ApiStore = ({ children }) => {
 	const [state, setState] = useState(initialState);
 	const [catalog, setCatalog] = useState([]);
+	const { session, setSession } = useContext(SessionContext)
+	console.log(session)
+
 
 	useEffect(() => { 
-		fetch('http://localhost:5000/catalog')
+		fetch('http://localhost:5000/catalog', {
+			credentials: 'include',
+			method: 'GET'
+		})
 		.then(res => res.json())
 		.then(json => {
 			const sorted = [...json].sort(function(a, b){
@@ -20,14 +29,18 @@ const ApiStore = ({ children }) => {
 			})
 			setCatalog(sorted)
 		})
-	}, [])
+		.catch(res => console.log('error'))
+	}, [session])
 
 	const [artists, setArtists] = useState([])
 	const [loading, setLoading] = useState(false)
 	
 	useEffect(() => { 
 		setLoading(true)
-		fetch('http://localhost:5000/artists')
+		fetch('http://localhost:5000/artists', {
+			credentials: 'include',
+			method: 'GET'
+				})
 		.then(res => res.json())
 		.then(json => {
 			const sorted = [...json].sort(function(a, b){
@@ -38,35 +51,43 @@ const ApiStore = ({ children }) => {
 			setLoading(false)
 		})
 		.catch(res => console.log('error'))
-	}, [])
+	}, [session])
 
 	const [upcs, setUpcs] = useState([])
 
 	useEffect(() => {
-				fetch('http://localhost:5000/version')
-				.then(res => res.json())
-				.then(json => {
-					const sorted = [...json].sort(function(a, b){
-						if(a.version_number < b.version_number) {return -1;}
-						if(a.version_number > b.version_number) {return 1;}
-					})
-					setUpcs(sorted)
-				})
-			}, [])
+		fetch('http://localhost:5000/version', {
+			credentials: 'include',
+			method: 'GET'
+		})
+			.then(res => res.json())
+			.then(json => {
+				const sorted = [...json].sort(function(a, b){
+					if(a.version_number < b.version_number) {return -1;}
+					if(a.version_number > b.version_number) {return 1;}
+			})
+			setUpcs(sorted)
+		})
+		.catch(res => console.log('error'))
+		}, [session])
 
 	const [tracks, setTracks] = useState([])
 
 	useEffect(() => {
-				fetch('http://localhost:5000/tracks')
-				.then(res => res.json())
-				.then(json => {
-					const sorted = [...json].sort(function(a, b){
-						if(a.isrc < b.isrc) {return -1;}
-						if(a.isrc > b.isrc) {return 1;}
-					})
-					setTracks(sorted)
+		fetch('http://localhost:5000/tracks', {
+			credentials: 'include',
+			method: 'GET'
+		})
+			.then(res => res.json())
+			.then(json => {
+				const sorted = [...json].sort(function(a, b){
+					if(a.isrc < b.isrc) {return -1;}
+					if(a.isrc > b.isrc) {return 1;}
 				})
-			}, [])
+				setTracks(sorted)
+			})
+		.catch(res => console.log('error'))
+		}, [session])
 
 
 	return (
