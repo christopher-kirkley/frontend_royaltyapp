@@ -45,7 +45,10 @@ function ArtistTracks (props) {
 	const history = useHistory();
 
 	useEffect(() => { 
-		fetch(`http://localhost:5000/artists/${id}/track`)
+		fetch(`http://localhost:5000/artists/${id}/track`, {
+			credentials: 'include',
+			method: 'GET'
+	})
 		.then(res => res.json())
 		.then(json => {
 			// const sorted = [...json].sort(function(a, b){

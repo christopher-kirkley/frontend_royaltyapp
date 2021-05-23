@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
+import Cookies from "js-cookie";
 
 import { useParams, useHistory } from 'react-router-dom'
 
@@ -18,6 +19,7 @@ import EditButton from '../components/EditButton'
  
 import ApiStore from '../ApiStore';
 import { Context } from '../ApiStore';
+import { get_csrf_token } from '../csrf'
 
 const useStyles = makeStyles(theme => ({
 	paper: {
@@ -43,21 +45,23 @@ function ArtistAdd () {
 
 		fetch('http://localhost:5000/contacts', {
 			method: 'POST',
+			headers: { 'X-CSRF-TOKEN': get_csrf_token() }, 
 			credentials: 'include',
 			body: JSON.stringify(
 				{
 					'artist_id': id,
-					'contact_prenom': data['contact_prenom'],
-					'contact_middle': data['contact_middle'],
-					'contact_surnom': data['contact_surnom'],
-					'address': data['address'],
-					'phone': data['phone'],
-					'bank_name': data['bank_name'],
-					'bban': data['bban'],
-					'notes': data['notes'],
+					'contact_prenom': data['new_contact_prenom'],
+					'contact_middle': data['new_contact_middle'],
+					'contact_surnom': data['new_contact_surnom'],
+					'address': data['new_address'],
+					'phone': data['new_phone'],
+					'bank_name': data['new_bank_name'],
+					'bban': data['new_bban'],
+					'notes': data['new_notes'],
 				})
 		})
 	}
+
 
 	function addArtist(data) {
 		const artist_name = data.artist_name
@@ -65,6 +69,7 @@ function ArtistAdd () {
 		const surnom = data.surnom
 		fetch('http://localhost:5000/artists', {
 			method: 'POST',
+			headers: { 'X-CSRF-TOKEN': get_csrf_token() }, 
 			credentials: 'include',
 			body: JSON.stringify({ artist_name, prenom, surnom }),
 		})
