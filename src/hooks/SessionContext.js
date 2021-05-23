@@ -5,7 +5,7 @@ export const SessionContext = createContext(null)
 
 function SessionContextProvider(props) {
 
-	const [ session, setSession ] = useState(false)
+	const [ session, setSession ] = useState(true)
 
 	useEffect(() => {
 		let data = Cookies.get('session')

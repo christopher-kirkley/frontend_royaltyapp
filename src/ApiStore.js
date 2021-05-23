@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react'
 
+import { service } from './_services/services.js'
+
 import { SessionContext } from './hooks/SessionContext'
 
 const initialState = {
@@ -15,6 +17,15 @@ const ApiStore = ({ children }) => {
 	const { session, setSession } = useContext(SessionContext)
 	console.log(session)
 
+
+	const getArtists = async (name) => {
+		let resp = await fetch('http://localhost:5000/catalog', {
+			credentials: 'include',
+			method: 'GET'
+		})
+		let data = await resp.json()
+		return data
+	}
 
 	useEffect(() => { 
 		fetch('http://localhost:5000/catalog', {
@@ -37,13 +48,9 @@ const ApiStore = ({ children }) => {
 	
 	useEffect(() => { 
 		setLoading(true)
-		fetch('http://localhost:5000/artists', {
-			credentials: 'include',
-			method: 'GET'
-				})
-		.then(res => res.json())
-		.then(json => {
-			const sorted = [...json].sort(function(a, b){
+		getArtists()
+		.then(res => {
+			const sorted = [...res].sort(function(a, b){
 				if(a.artist_name < b.artist_name) {return -1;}
 				if(a.artist_name > b.artist_name) {return 1;}
 			})

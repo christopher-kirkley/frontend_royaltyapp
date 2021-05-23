@@ -37,8 +37,6 @@ function ArtistDetail () {
 
 	const [artist, setArtist] = useState([])
 
-	// const [contact, setContact] = useState([])
-
 	const [edit, setEdit] = useState(false)
 	
 	const { handleSubmit, control, setValue, watch } = useForm()
@@ -75,45 +73,45 @@ function ArtistDetail () {
 	}
 
 	function postContact(data) {
-				const contact_prenom = data.new_contact_prenom ? data.new_contact_prenom : ''
-				const contact_middle = data.new_contact_middle ? data.new_contact_middle : ''
-				const contact_surnom = data.new_contact_surnom ? data.new_contact_surnom : ''
-				const address = data.new_address ? data.new_address : ''
-				const phone = data.new_phone ? data.new_phone : ''
-				const bank_name = data.new_bank_name ? data.new_bank_name : ''
-				const bban = data.new_bban ? data.new_bban : ''
-				const notes = data.new_notes ? data.new_notes : ''
+		const contact_prenom = data.new_contact_prenom ? data.new_contact_prenom : ''
+		const contact_middle = data.new_contact_middle ? data.new_contact_middle : ''
+		const contact_surnom = data.new_contact_surnom ? data.new_contact_surnom : ''
+		const address = data.new_address ? data.new_address : ''
+		const phone = data.new_phone ? data.new_phone : ''
+		const bank_name = data.new_bank_name ? data.new_bank_name : ''
+		const bban = data.new_bban ? data.new_bban : ''
+		const notes = data.new_notes ? data.new_notes : ''
 
-				fetch('http://localhost:5000/contacts', {
-					method: 'POST',
-					credentials: 'include',
-					headers: { 'X-CSRF-TOKEN': get_csrf_token() }, 
-					body: JSON.stringify(
-						{
-							'artist_id': id,
-							'contact_prenom': contact_prenom,
-							'contact_middle': contact_middle,
-							'contact_surnom': contact_surnom,
-							'address': address,
-							'phone': phone,
-							'bank_name': bank_name,
-							'bban': bban,
-							'notes': notes,
-						})
+		fetch('http://localhost:5000/contacts', {
+			method: 'POST',
+			credentials: 'include',
+			headers: { 'X-CSRF-TOKEN': get_csrf_token() }, 
+			body: JSON.stringify(
+				{
+					'artist_id': id,
+					'contact_prenom': contact_prenom,
+					'contact_middle': contact_middle,
+					'contact_surnom': contact_surnom,
+					'address': address,
+					'phone': phone,
+					'bank_name': bank_name,
+					'bban': bban,
+					'notes': notes,
 				})
-				.then(res => res.json())
-				.then(json => {
-					const contact_id = json['id']
-					const artist_name = data.artist_name
-					const prenom = data.prenom
-					const surnom = data.surnom
-					fetch(`http://localhost:5000/artists/${id}`, {
-						method: 'PUT',
-						credentials: 'include',
-						headers: { 'X-CSRF-TOKEN': get_csrf_token() }, 
-						body: JSON.stringify({ artist_name, prenom, surnom, contact_id }),
-					})
-				})
+		})
+		.then(res => res.json())
+		.then(json => {
+			const contact_id = json['id']
+			const artist_name = data.artist_name
+			const prenom = data.prenom
+			const surnom = data.surnom
+			fetch(`http://localhost:5000/artists/${id}`, {
+				method: 'PUT',
+				credentials: 'include',
+				headers: { 'X-CSRF-TOKEN': get_csrf_token() }, 
+				body: JSON.stringify({ artist_name, prenom, surnom, contact_id }),
+			})
+		})
 
 		
 	}
@@ -134,11 +132,11 @@ function ArtistDetail () {
 		.then(res => res.json())
 		.then(res => {
 			if (data.id)
-			{updateContact(data)}
+			{ updateContact(data) }
 			if (data.new_contact_prenom)
-			{postContact(data)}
-
+			{ postContact(data) }
 		})
+		
 
 	}
 
