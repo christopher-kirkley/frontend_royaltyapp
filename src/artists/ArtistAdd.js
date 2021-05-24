@@ -20,6 +20,7 @@ import EditButton from '../components/EditButton'
 import ApiStore from '../ApiStore';
 import { Context } from '../ApiStore';
 import { get_csrf_token } from '../csrf'
+import { service } from '../_services/services.js'
 
 const useStyles = makeStyles(theme => ({
 	paper: {
@@ -43,12 +44,7 @@ function ArtistAdd () {
 
 	function addContact(data, id) {
 
-		fetch('http://localhost:5000/contacts', {
-			method: 'POST',
-			headers: { 'X-CSRF-TOKEN': get_csrf_token() }, 
-			credentials: 'include',
-			body: JSON.stringify(
-				{
+		const obj = {
 					'artist_id': id,
 					'contact_prenom': data['new_contact_prenom'],
 					'contact_middle': data['new_contact_middle'],
@@ -58,8 +54,9 @@ function ArtistAdd () {
 					'bank_name': data['new_bank_name'],
 					'bban': data['new_bban'],
 					'notes': data['new_notes'],
-				})
-		})
+		}
+
+		service.postItem('contacts', obj)
 	}
 
 
@@ -67,13 +64,9 @@ function ArtistAdd () {
 		const artist_name = data.artist_name
 		const prenom = data.prenom
 		const surnom = data.surnom
-		fetch('http://localhost:5000/artists', {
-			method: 'POST',
-			headers: { 'X-CSRF-TOKEN': get_csrf_token() }, 
-			credentials: 'include',
-			body: JSON.stringify({ artist_name, prenom, surnom }),
-		})
-		.then(res => res.json())
+
+		const obj = { artist_name, prenom, surnom }
+		service.postItem('artists', obj)
 		.then(res => res['id'])
 		.then(id => (
 			addContact(data, id)
@@ -84,19 +77,9 @@ function ArtistAdd () {
 	
 	function updateArtists() {
 		setLoading(true)
-		fetch('http://localhost:5000/artists', {
-			method: 'GET',
-			credentials: 'include',
-		})
-		.then(res => res.json())
-		.then(json => {
-			const sorted = [...json].sort(function(a, b){
-				if(a.artist_name < b.artist_name) {return -1;}
-				if(a.artist_name > b.artist_name) {return 1;}
-			})
-			setArtists(sorted)
-			setLoading(false)
-		})
+		service.getAll('artists')
+		.then(data => setArtists(data))
+		.then(res => setLoading(false))
 	}
 
 	function onSubmit(data) {

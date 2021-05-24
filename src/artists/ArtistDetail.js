@@ -61,11 +61,7 @@ function ArtistDetail () {
 			const bban = data.bban ? data.bban : ''
 			const notes = data.notes ? data.notes : ''
 
-			fetch(`http://localhost:5000/contacts/${contact_id}`, {
-				method: 'PUT',
-				credentials: 'include',
-				headers: { 'X-CSRF-TOKEN': get_csrf_token() }, 
-				body: JSON.stringify({
+			const obj = {
 					contact_prenom,
 					contact_middle,
 					contact_surnom,
@@ -74,9 +70,11 @@ function ArtistDetail () {
 					bank_name,
 					bban,
 					notes,
-					})
-		})
+			}
 
+		service.putItem('contacts', contact_id, obj )
+		.then(res => service.getAll('artists'))
+		.then(data => setArtists(data))
 	}
 
 	function postContact(data) {
@@ -89,35 +87,28 @@ function ArtistDetail () {
 		const bban = data.new_bban ? data.new_bban : ''
 		const notes = data.new_notes ? data.new_notes : ''
 
-		fetch('http://localhost:5000/contacts', {
-			method: 'POST',
-			credentials: 'include',
-			headers: { 'X-CSRF-TOKEN': get_csrf_token() }, 
-			body: JSON.stringify(
-				{
-					'artist_id': id,
-					'contact_prenom': contact_prenom,
-					'contact_middle': contact_middle,
-					'contact_surnom': contact_surnom,
-					'address': address,
-					'phone': phone,
-					'bank_name': bank_name,
-					'bban': bban,
-					'notes': notes,
-				})
-		})
+		const obj = {
+			id,
+			contact_prenom,
+			contact_surnom,
+			address,
+			phone,
+			bank_name,
+			bban,
+			notes
+		}
+
+		service.postItem('contacts', obj )
 		.then(res => res.json())
 		.then(json => {
 			const contact_id = json['id']
 			const artist_name = data.artist_name
 			const prenom = data.prenom
 			const surnom = data.surnom
-			fetch(`http://localhost:5000/artists/${id}`, {
-				method: 'PUT',
-				credentials: 'include',
-				headers: { 'X-CSRF-TOKEN': get_csrf_token() }, 
-				body: JSON.stringify({ artist_name, prenom, surnom, contact_id }),
-			})
+
+			const string = { artist_name, prenom, surnom, contact_id }
+
+			service.putItem('artists', id, string )
 		})
 
 		
