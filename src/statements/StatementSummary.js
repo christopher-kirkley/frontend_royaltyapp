@@ -35,7 +35,6 @@ const useStyles = makeStyles(theme => ({
 
 function StatementSummary() {
 
-
 	const classes = useStyles()
 
 	const history = useHistory()
@@ -55,48 +54,9 @@ function StatementSummary() {
 		console.log('h')
 		
 		window.print()
-		// var content = document.getElementById("statement-summary")
-		// var pri = document.getElementById("ifmcontentstoprint").contentWindow;
-		// pri.document.open();
-		// pri.document.write(content.innerHTML);
-		// pri.document.close();
-		// pri.focus();
-		// pri.print();
-
-		// const MyDocument = () => (
-		// 	<Document>
-		// 		<Page size="A4">
-		// 			<View>
-		// 				<Text>Section #1</Text>
-		// 			</View>
-		// 			<View>
-		// 				<Text>Section #2</Text>
-		// 			</View>
-		// 		</Page>
-		// 	</Document>
-		// )
-
-		// const saveBlob = (blob, filename) => {
-		// 	var a = document.createElement("a");
-		// 	document.body.appendChild(a);
-		// 	a.style.display = "none";
-		// 	let url = window.URL.createObjectURL(blob);
-		// 	a.href = url;
-		// 	a.download = filename;
-		// 	a.click();
-		// 	window.URL.revokeObjectURL(url);
-		// };
-
-		// const savePdf = async (document, filename) => {
-		// 	saveBlob(await pdf(document).toBlob(), filename);
-		// };
-
-		// savePdf(<MyDocument/>, "my-doc.pdf")
-			
 	}
 
 	function handleExportCSV() {
-		fetch('http://localhost:5000/statements/export-csv')
 	}
 
 	useEffect(() => { 

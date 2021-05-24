@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 
 import axios from 'axios';
 
+import Cookies from "js-cookie";
 
 import { Redirect, useParams } from 'react-router-dom'
 import { useHistory } from "react-router-dom";
@@ -265,31 +266,11 @@ function StatementDetail() {
 		doc.save(`${artistName}-${statementName}.pdf`)
 	}
 	
-	async function asyncFunc() {
-		const resp = await axios({
-			url: `http://localhost:5000/statements/${id}/artist/${artistId}/export-csv`,
-			responseType: 'blob',
-			method: 'post'
-		})
-
-		const blob = resp.data;
-		const link = document.createElement("a");
-
-		link.href = URL.createObjectURL(blob);
-		link.download = `${artistName}-${statementName}.csv`;
-		document.body.appendChild(link);
-		link.click();
-		document.body.removeChild(link);
-		}
-
 
 	function handleExportCSV() {
-		asyncFunc()
-	}
-
-
-	
-
+		const filename = `${artistName}_${statementName}`
+		service.postGetFile(`statements/${id}/artist/${artistId}/export-csv`, filename)
+		}
 
 	const [anchorEl, setAnchorEl] = React.useState(null);
 

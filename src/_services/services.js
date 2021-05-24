@@ -1,4 +1,5 @@
 import { Context } from '../ApiStore';
+import axios from 'axios';
 
 import Cookies from "js-cookie";
 
@@ -56,6 +57,25 @@ const postData = async (resource, data) => {
 	let res = await resp.json()
 	return res
 }
+
+async function postGetFile(resource, name) {
+	const resp = await axios({
+		url: `${BASE_URL}/${resource}`,
+		responseType: 'blob',
+		method: 'post',
+		withCredentials: true,
+		headers: { 'X-CSRF-TOKEN': csrf_token() }, 
+	})
+
+	const blob = resp.data;
+	const link = document.createElement("a");
+
+	link.href = URL.createObjectURL(blob);
+	link.download = `${name}.csv`;
+	document.body.appendChild(link);
+	link.click();
+	document.body.removeChild(link);
+	}
 
 const putItem = async (resource, id, data) => {
 	let resp = await fetch(`${BASE_URL}/${resource}/${id}`, {
@@ -129,6 +149,7 @@ export const service = {
 	_deleteItem,
 	post,
 	postData,
+	postGetFile,
 }
 
 
