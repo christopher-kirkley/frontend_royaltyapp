@@ -14,6 +14,8 @@ import ExpenseMatchingTable from './ExpenseMatchingTable'
 import Snackbar from '@material-ui/core/Snackbar';
 import Alert from '@material-ui/lab/Alert';
 
+import { service } from '../_services/services.js'
+
 function ArtistMatchingErrors(props) {
 
 	const history = useHistory()
@@ -25,8 +27,7 @@ function ArtistMatchingErrors(props) {
 	const [ alert, setAlert ] = useState(false)
 
 	function getArtistMatchingErrors() {
-		fetch('http://localhost:5000/expense/artist-matching-errors')
-		.then(res => res.json())
+		service.getAll('expense/artist-matching-errors')
 		.then(json => {
 				setRows(json)
 				if (json.length === 0 ) {

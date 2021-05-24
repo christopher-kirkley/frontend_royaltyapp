@@ -13,6 +13,8 @@ import Header from '../components/Header'
 import AddExpenseStatementForm from './AddExpenseStatementForm'
 import PendingImports from '../components/PendingImports'
 
+import { service } from '../_services/services.js'
+
 const useStyles = makeStyles(theme => ({
 	paper: {
 		padding: 20,
@@ -33,28 +35,23 @@ function ExpenseImport() {
 	const [ typeMatchingErrors, setTypeMatchingErrors ] = useState(0)
 
 	useEffect(() => {
-		fetch('http://localhost:5000/expense/pending-statements')
-		.then(res => res.json())
+		service.getAll('expense/pending-statements')
 		.then(json => setPendingStatements(json))
 	}, [])
 
 	function getPendingStatements() {
-		fetch(`http://localhost:5000/expense/pending-statements`)
-		.then(res => res.json())
+		service.getAll(`expense/pending-statements`)
 		.then(res => setPendingStatements(res))
 	}
 
 	function getMatchingErrors() {
-		fetch('http://localhost:5000/expense/artist-matching-errors')
-			.then(res => res.json())
+		service.getAll('expense/artist-matching-errors')
 			.then(json => setArtistMatchingErrors(json.length))
 
-		fetch('http://localhost:5000/expense/catalog-matching-errors')
-			.then(res => res.json())
+		service.getAll('expense/catalog-matching-errors')
 			.then(json => setCatalogMatchingErrors(json.length))
 
-		fetch('http://localhost:5000/expense/type-matching-errors')
-			.then(res => res.json())
+		service.getAll('expense/type-matching-errors')
 			.then(json => setTypeMatchingErrors(json.length))
 	}
 
@@ -67,17 +64,12 @@ function ExpenseImport() {
 	}
 
 	function processPending() {
-		fetch('http://localhost:5000/expense/process-pending', {
-				method: 'POST'}
-		)
-		.then(res => res.json())
+		service.post('expense/process-pending')
 		.then(res => history.push('/expense'))
 	}
 
 	function handleDelete(id) {
-		fetch(`http://localhost:5000/expense/pending-statements/${id}`, {
-			  method: 'DELETE'
-		})
+		service._delete(`expense/pending-statements/${id}`)
 		.then(res => getPendingStatements())
 		.then(res => getMatchingErrors())
 	}

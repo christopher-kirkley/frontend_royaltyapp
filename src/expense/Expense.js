@@ -13,6 +13,8 @@ import Container from '@material-ui/core/Container';
 import Header from '../components/Header'
 import ExpenseTable from './ExpenseTable'
 
+import { service } from '../_services/services.js'
+
 const useStyles = makeStyles(theme => ({
 	paper: {
 		padding: 20,
@@ -37,8 +39,7 @@ function Expense() {
 	const [ importedExpense, setImportedExpense ] = useState({})
 
 	useEffect(() => {
-		fetch('http://localhost:5000/expense/imported-statements')
-		.then(res => res.json())
+		service.getAll('expense/imported-statements')
 		.then(json => (setImportedExpense(json)))
 	}, [])
 

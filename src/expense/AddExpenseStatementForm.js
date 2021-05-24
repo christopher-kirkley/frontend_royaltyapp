@@ -13,6 +13,8 @@ import InputLabel from '@material-ui/core/InputLabel'
 import FormControl from '@material-ui/core/FormControl'
 import NativeSelect from '@material-ui/core/NativeSelect'
 
+import { service } from '../_services/services.js'
+
 function AddExpenseStatementForm(props) {
 
 	const { register, control, handleSubmit } = useForm()
@@ -21,31 +23,11 @@ function AddExpenseStatementForm(props) {
 		const formData = new FormData()
 
 		formData.append('file', data.file_upload[0])
-		fetch('http://localhost:5000/expense/import-statement', {
-				method: 'POST',
-				body: formData
-			})
-		.then(resp => resp.json())
+		service.postFile('expense/import-statement', formData)
 		.then(res => {props.getMatchingErrors()})
 		.then(res => {props.getPendingStatements()})
 		.catch(error => setMsg('Error uploading'))
 	}
-
-	// function handleUpload(e) {
-	// 	e.preventDefault()
-	// 	const file = e.target.upload.files
-	// 	const formData = new FormData()
-	// 	formData.append('file', file[0])
-	// 	fetch('http://localhost:5000/expense/import-statement', {
-	// 			method: 'POST',
-	// 			body: formData
-	// 		})
-	// 	.then(resp => resp.json())
-	// 	.then(res => setMsg('Uploaded!'))
-	// 	.then(res => {props.getMatchingErrors()})
-	// 	.then(res => {props.getPendingStatements()})
-	// 	.catch(error => setMsg('Error uploading'))
-	// }
 
 	const [msg, setMsg] = useState('')
 		

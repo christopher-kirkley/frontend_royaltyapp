@@ -14,6 +14,8 @@ import ExpenseMatchingTable from './ExpenseMatchingTable'
 import Snackbar from '@material-ui/core/Snackbar';
 import Alert from '@material-ui/lab/Alert';
 
+import { service } from '../_services/services.js'
+
 function CatalogMatchingErrors(props) {
 
 	const history = useHistory()
@@ -25,7 +27,7 @@ function CatalogMatchingErrors(props) {
 	const [ alert, setAlert ] = useState(false)
 
 	function getCatalogMatchingErrors() {
-		fetch('http://localhost:5000/expense/catalog-matching-errors')
+		service.getAll('expense/catalog-matching-errors')
 		.then(res => res.json())
 		.then(json => {
 				setRows(json)

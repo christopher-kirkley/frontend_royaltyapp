@@ -14,6 +14,8 @@ import ExpenseMatchingTable from './ExpenseMatchingTable'
 import Snackbar from '@material-ui/core/Snackbar';
 import Alert from '@material-ui/lab/Alert';
 
+import { service } from '../_services/services.js'
+
 function TypeMatchingErrors(props) {
 
 	const history = useHistory()
@@ -25,8 +27,7 @@ function TypeMatchingErrors(props) {
 	const [ alert, setAlert ] = useState(false)
 
 	function getTypeMatchingErrors() {
-		fetch('http://localhost:5000/expense/type-matching-errors')
-		.then(res => res.json())
+		service.getAll('expense/type-matching-errors')
 		.then(json => {
 				setRows(json)
 				if (json.length === 0 ) {

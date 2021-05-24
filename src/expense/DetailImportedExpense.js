@@ -12,6 +12,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import Header from '../components/Header'
 import DetailImportedExpenseTable from './DetailImportedExpenseTable'
 
+import { service } from '../_services/services.js'
+
 function DetailImportedExpense() {
 
 	const { id } = useParams()
@@ -21,8 +23,7 @@ function DetailImportedExpense() {
 
 	useEffect(() => { 
 		if (id) {
-		fetch(`http://localhost:5000/expense/statements/${id}`)
-		.then(res => res.json())
+		service.getAll(`expense/statements/${id}`)
 		.then(json =>
 			{
 				setStatement(json[0]['data'])
