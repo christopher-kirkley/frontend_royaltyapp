@@ -25,6 +25,8 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import Header from '../components/Header'
 
+import { service } from '../_services/services.js'
+
 const useStyles = makeStyles(theme => ({
 	paper: {
 		padding: 20,
@@ -99,8 +101,7 @@ function StatementSummary() {
 
 	useEffect(() => { 
 		if (id) {
-		fetch(`http://localhost:5000/statements/${id}`)
-		.then(res => res.json())
+		service.getAll(`statements/${id}`)
 		.then(json =>
 			{
 				const sorted = [...json['detail']].sort(function(a, b){

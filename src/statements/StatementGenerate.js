@@ -26,6 +26,8 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import Header from '../components/Header'
 
+import { service } from '../_services/services.js'
+
 const useStyles = makeStyles(theme => ({
 	paper: {
 		padding: 20,
@@ -51,22 +53,16 @@ function StatementGenerate() {
 		var startDateSQL = data.start_date.toISOString().split('T')[0] 
 		var endDateSQL = data.end_date.toISOString().split('T')[0] 
 
-		fetch('http://localhost:5000/statements/generate', {
-				method: 'POST',
-				body: JSON.stringify(
-					{
+		const obj = {
 					'previous_balance_id': data.previous_balance_id,
 					'start_date': startDateSQL,
 					'end_date': endDateSQL
-				}
-				)
-			})
-		.then(resp => resp.json())
+		}
+
+		service.postData('statements/generate', obj)
 		.then(json => {
 			var index = json['statement_index']
-			fetch(`http://localhost:5000/statements/${index}/generate-summary`, {
-				method: 'POST'
-			})
+			service.post(`statements/${index}/generate-summary`)
 		})
 		.then(res => history.push('/statements/'))
 	}
@@ -83,8 +79,7 @@ function StatementGenerate() {
 	})
 
 	useEffect(() => {
-		fetch('http://localhost:5000/statements/view-balances')
-		.then(res => res.json())
+		service.getAll('statements/view-balances')
 		.then(json => (setPreviousBalances(json), console.log(json)))
 		.catch(res => setMsg('Error fetching data'))
 	}, [])

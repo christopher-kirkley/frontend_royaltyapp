@@ -15,6 +15,8 @@ import DetailImportedIncomeTable from './DetailImportedIncomeTable'
 import DetailImportedIncomeSummary from './DetailImportedIncomeSummary'
 import DetailImportedIncomeVersions from './DetailImportedIncomeVersions'
 
+import { service } from '../_services/services.js'
+
 const useStyles = makeStyles(theme => ({
 	paper: {
 		padding: 20,
@@ -36,8 +38,7 @@ function DetailImportedIncome() {
 
 	useEffect(() => { 
 		if (id) {
-		fetch(`http://localhost:5000/income/statements/${id}`)
-		.then(res => res.json())
+		service.getAll(`income/statements/${id}`)
 		.then(json =>
 			{
 				setStatement(json[0]['data'])

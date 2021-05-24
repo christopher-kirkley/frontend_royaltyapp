@@ -28,6 +28,8 @@ import {
 
 import Header from '../components/Header'
 
+import { service } from '../_services/services.js'
+
 function StatementEdit() {
 
 	const [value, setValue] = useState('0');
@@ -47,8 +49,7 @@ function StatementEdit() {
 	const [versionsDelete, setVersionsDelete] = useState([]);
 
 	useEffect(() => {
-		fetch(`http://localhost:5000/statements/${id}/versions`)
-		.then(res => res.json())
+		service.getAll(`statements/${id}/versions`)
 		.then(json => {
 			setVersions(json['versions'])
 		})
@@ -57,15 +58,13 @@ function StatementEdit() {
 
 	
 	useEffect(() => {
-		fetch('http://localhost:5000/statements/view-balances')
-		.then(res => res.json())
+		service.getAll('statements/view-balances')
 		.then(json => setPreviousBalances(json))
 		.catch(res => setMsg('Error fetching data'))
 	}, [])
 
 	useEffect(() => { 
-		fetch(`http://localhost:5000/statements/${id}`)
-		.then(res => res.json())
+		service.getAll(`statements/${id}`)
 		.then(json =>
 			{
 				setSummary(json['summary'])
@@ -74,8 +73,7 @@ function StatementEdit() {
 	}, [])
 
 	function getVersions() {
-		fetch(`http://localhost:5000/statements/${id}/versions`)
-		.then(res => res.json())
+		service.getAll(`statements/${id}/versions`)
 		.then(json => {
 			setVersions(json['versions'])
 		})
@@ -118,31 +116,19 @@ function StatementEdit() {
 		
 		var previousStatement = e.target.previousStatement.value
 
-		fetch(`http://localhost:5000/statements/${id}/versions`, {
-			method: 'DELETE',
-			body: JSON.stringify(
-				{
+		const obj = {
 				'versions': versionsDelete,
-			})
-		})
-		.then(res => res.json())
-		.then(res => (
-			fetch(`http://localhost:5000/statements/${id}`, {
-				method: 'PUT',
-				body: JSON.stringify(
-					{
-					'previous_balance_id': previousStatement,
-				})
-			})))
-		.then(res =>
-			fetch(`http://localhost:5000/statements/${id}/generate-summary`, {
-					method: 'POST'
-				}))
+			}
+		
+		const obj2 = {
+				'previous_balance_id': previousStatement,
+		}
+		
+		service._deleteItem(`statements/${id}/versions`, obj)
+		.then(res => service.putItem('statements', id, obj2))
+		.then(res => service.post(`statements/${id}/generate-summary`))
 		.catch(error => setMsg('Error uploading'))
 		.then(res => history.push('/statements/'))
-
-		console.log(previousStatement)
-
 
 	}
 	
@@ -173,11 +159,8 @@ function StatementEdit() {
 	})
 
 	function handleStatementDelete(e) {
-		fetch(`http://localhost:5000/statements/${id}`, {
-			method: 'DELETE'
-		})
+		service._delete(`statements/${id}`)
 		.catch(error => setMsg('Error deleting'))
-		.then(res => res.json())
 		.then(json => history.push('/statements/'))
 	}
 

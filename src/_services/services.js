@@ -4,19 +4,24 @@ import Cookies from "js-cookie";
 
 const BASE_URL = 'http://localhost:5000'
 
-const csrf_token = Cookies.get('csrf_access_token')
+function csrf_token() {
+	const token = Cookies.get('csrf_access_token')
+	return token
+}
 
 const getAll = async (resource) => {
 	let resp = await fetch(`${BASE_URL}/${resource}`, {
 		credentials: 'include',
+		headers: { 'X-CSRF-TOKEN': csrf_token() }, 
 		method: 'GET'
 	})
 	let data = await resp.json()
-	const sorted = [...data].sort(function(a, b){
-		if(a.artist_name < b.artist_name) {return -1;}
-		if(a.artist_name > b.artist_name) {return 1;}
-	})
-	return sorted
+	return data
+	// const sorted = [...data].sort(function(a, b){
+	// 	if(a.artist_name < b.artist_name) {return -1;}
+	// 	if(a.artist_name > b.artist_name) {return 1;}
+	// })
+	// return sorted
 }
 
 
@@ -24,19 +29,50 @@ const postItem = async (resource, data) => {
 	let resp = await fetch(`${BASE_URL}/${resource}`, {
 		method: 'POST',
 		credentials: 'include',
-		headers: { 'X-CSRF-TOKEN': csrf_token }, 
+		headers: { 'X-CSRF-TOKEN': csrf_token() }, 
 		body: JSON.stringify(data),
 	})
 	let res = await resp.json()
 	return res
 }
 
+const post = async (resource) => {
+	let resp = await fetch(`${BASE_URL}/${resource}`, {
+		method: 'POST',
+		credentials: 'include',
+		headers: { 'X-CSRF-TOKEN': csrf_token() }, 
+	})
+	let res = await resp.json()
+	return res
+}
+
+const postData = async (resource, data) => {
+	let resp = await fetch(`${BASE_URL}/${resource}`, {
+		method: 'POST',
+		credentials: 'include',
+		headers: { 'X-CSRF-TOKEN': csrf_token() }, 
+		body: JSON.stringify(data),
+	})
+	let res = await resp.json()
+	return res
+}
 
 const putItem = async (resource, id, data) => {
 	let resp = await fetch(`${BASE_URL}/${resource}/${id}`, {
 		method: 'PUT',
 		credentials: 'include',
-		headers: { 'X-CSRF-TOKEN': csrf_token }, 
+		headers: { 'X-CSRF-TOKEN': csrf_token() }, 
+		body: JSON.stringify(data),
+	})
+	let res = await resp.json()
+	return res
+}
+
+const put = async (resource, data) => {
+	let resp = await fetch(`${BASE_URL}/${resource}`, {
+		method: 'PUT',
+		credentials: 'include',
+		headers: { 'X-CSRF-TOKEN': csrf_token() }, 
 		body: JSON.stringify(data),
 	})
 	let res = await resp.json()
@@ -44,23 +80,55 @@ const putItem = async (resource, id, data) => {
 }
 
 
-const postFile = async (resource, file) => {
+function postFile(resource, formData) {
+	 return fetch(`${BASE_URL}/${resource}`, {
+			method: 'POST',
+			body: formData,
+			credentials: 'include',
+			headers: { 'X-CSRF-TOKEN': csrf_token() }, 
+		})
+	.then(res => res.json())
+	.then(res => {
+		console.log(res)
+		return res
+	})
+	.catch(error => {
+		console.log(error)
+		return error
+	})
+}
+
+const _delete = async (resource, data) => {
 	let resp = await fetch(`${BASE_URL}/${resource}`, {
-		method: 'POST',
+		method: 'DELETE',
 		credentials: 'include',
-		headers: { 'X-CSRF-TOKEN': csrf_token }, 
-		body: file
+		headers: { 'X-CSRF-TOKEN': csrf_token() }, 
+		body: JSON.stringify(data),
 	})
 	let res = await resp.json()
 	return res
 }
 
+const _deleteItem = async (resource, id) => {
+	let resp = await fetch(`${BASE_URL}/${resource}/${id}`, {
+		method: 'PUT',
+		credentials: 'include',
+		headers: { 'X-CSRF-TOKEN': csrf_token() }, 
+	})
+	let res = await resp.json()
+	return res
+}
 
 export const service = {
 	getAll,
 	putItem,
 	postItem,
 	postFile,
+	put,
+	_delete,
+	_deleteItem,
+	post,
+	postData,
 }
 
 

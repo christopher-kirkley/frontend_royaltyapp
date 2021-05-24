@@ -15,6 +15,8 @@ import Toggle from '../components/Toggle'
 
 import { makeStyles } from '@material-ui/core/styles'
 
+import { service } from '../_services/services.js'
+
 const useStyles = makeStyles(theme => ({
 	paper: {
 		padding: 20,
@@ -42,12 +44,10 @@ function CatalogDetail(props) {
 	function addVersion(data) {
 		if (data['newVersion'])
 		{
-			fetch('http://localhost:5000/version', {
-				method: 'POST',
-				body: JSON.stringify(
-					{'catalog': id,
-						'version': data['newVersion']})
-								})
+			const obj = {
+				'catalog': id,
+				'version': data['newVersion']}
+			service.postItem('version', obj)
 		}
 
 	}
@@ -56,34 +56,17 @@ function CatalogDetail(props) {
 	function updateVersion(data) {
 		if (data['version'])
 		{
-			fetch('http://localhost:5000/version', {
-				method: 'PUT',
-				body: JSON.stringify(
-					{
-						'catalog': id,
-						'version': data['version']})
-							})
-
+			const obj = {
+				'catalog': id,
+				'version': data['version']}
+			service.putItem('version', obj)
 			}
 	}
 		
 
-				// .then(res => res.json())
-				// .then(res => fetch(`http://localhost:5000/catalog/${id}`))
-				// .then(res => res.json())
-				// .then((json) => {
-				// 				json['version'].sort((a, b) => a.id - b.id);
-				// 				setVersion(json['version'])
-				// 			})
-				// .then(res => reset(version))
-				// .then(res => setEdit(!edit))
-
-
 	function onSubmit(data) {
 		setEdit(!edit)
 		
-		console.log(data)
-
 		const catalog_number = data.catalog_number
 		const catalog_name = data.catalog_name
 		const artist_id = data.artist_id

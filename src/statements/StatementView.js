@@ -10,6 +10,8 @@ import Container from '@material-ui/core/Container';
 
 import Header from '../components/Header'
 
+import { service } from '../_services/services.js'
+
 function StatementView() {
 
 	const history = useHistory()
@@ -18,8 +20,7 @@ function StatementView() {
 	const [statements, setStatements] = useState([]);
 
 	useEffect(() => {
-		fetch('http://localhost:5000/statements/view')
-		.then(res => res.json())
+		service.getAll('statements/view')
 		.then(json => setStatements(json))
 		.catch(res => setMsg('Error fetching data'))
 	}, [])
@@ -31,9 +32,7 @@ function StatementView() {
 
 	function handleDelete(e) {
 		const id = e.currentTarget.value
-		fetch(`http://localhost:5000/statements/${id}`, {
-			method: 'DELETE'
-		})
+		service._deleteItem(`http://localhost:5000/statements/${id}`)
 		}
 
 	function handleEdit(e) {

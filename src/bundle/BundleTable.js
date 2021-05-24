@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react'
 
 import { useHistory, useParams } from 'react-router-dom'
 
+
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Table from '@material-ui/core/Table';
@@ -13,6 +14,8 @@ import TableRow from '@material-ui/core/TableRow';
 
 import ApiStore from '../ApiStore';
 import { Context } from '../ApiStore';
+
+import { service } from '../_services/services.js'
 
 
 function BundleTable() {
@@ -26,8 +29,7 @@ function BundleTable() {
 	const history = useHistory()
 
 	useEffect(() => { 
-		fetch('http://localhost:5000/bundle')
-		.then(res => res.json())
+		service.getAll('bundle')
 		.then(json => {
 			const sorted = [...json].sort(function(a, b){
 				if(a.bundle_number < b.bundle_number) {return -1;}

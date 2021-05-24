@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 
 import { useParams } from 'react-router-dom'
 
+import { service } from '../_services/services.js'
+
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
@@ -21,13 +23,9 @@ function ImportVersion () {
 		const formData = new FormData()
 		formData.append('CSV', file[0])
 		e.preventDefault()
-		fetch('http://localhost:5000/catalog/import-version', {
-				method: 'POST',
-				body: formData
-			})
-		.then(resp => resp.json())
-		.then(res => setSuccess(true))
 
+		service.postFile('catalog/import-version', formData)
+		.then(res => setSuccess(true))
 		.catch(error => setError(true))
 	}
 

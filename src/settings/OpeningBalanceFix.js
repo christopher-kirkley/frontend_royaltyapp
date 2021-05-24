@@ -40,6 +40,7 @@ import { Context } from '../ApiStore';
 
 import { makeStyles } from '@material-ui/core/styles';
 
+import { service } from '../_services/services.js'
 
 const useStyles = makeStyles(theme => ({
 		paper: {
@@ -80,49 +81,31 @@ function OpeningBalanceFix() {
 		})
 
 	useEffect(() => {
-				fetch('http://localhost:5000/statements/opening-balance-errors')
-				.then(res => res.json())
+				service.getAll('statements/opening-balance-errors')
 				.then(json => {
 					setRows(json)
 				})
 			}, [])
 
 	function getRows() {
-				fetch('http://localhost:5000/statements/opening-balance-errors')
-				.then(res => res.json())
+				service.getAll('statements/opening-balance-errors')
 				.then(json => {
 					setRows(json)
 				})
 	}
 
 
-	function onSubmit(data) {
-		var new_id = Number(data['id'])
-		var artist_id = Number(data['artist_id'])
-
-		console.log(data)
-		// fetch('http://localhost:5000/statements/opening-balance-errors', {
-		// 	method: 'POST',
-		// 	body: JSON.stringify(
-		// 		{'id': new_id,
-		// 		'artist_id': artist_id}
-		// 	)})
-		// 		.then(res => res.json())
-		// 		.then(res => getRows())
-	}
-
 	function handleSubmit(e) {
 		e.preventDefault()
 		var newId = e.target.newId.value
 		var artistId = e.target.artistId.value
 	
-		fetch('http://localhost:5000/statements/opening-balance-errors', {
-			method: 'POST',
-			body: JSON.stringify(
-				{'id': newId,
-				'artist_id': artistId}
-			)})
-				.then(res => res.json())
+		const obj = {
+				'id': newId,
+				'artist_id': artistId
+		}
+
+		service.postData('statements/opening-balance-errors', obj)
 				.then(res => getRows())
 	}
 	

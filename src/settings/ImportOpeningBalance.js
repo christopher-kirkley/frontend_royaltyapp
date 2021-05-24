@@ -10,7 +10,9 @@ import TextField from '@material-ui/core/TextField';
 
 import SnackbarAlert from '../components/SnackbarAlert'
 
-function ImportCatalog () {
+import { service } from '../_services/services.js'
+
+function ImportOpeningBalance () {
 	const history = useHistory()
 
 	const [ success, setSuccess ] = useState(false)
@@ -21,11 +23,7 @@ function ImportCatalog () {
 		const formData = new FormData()
 		formData.append('CSV', file[0])
 		e.preventDefault()
-		fetch('http://localhost:5000/statements/import-opening-balance', {
-				method: 'POST',
-				body: formData
-			})
-		.then(resp => resp.json())
+		service.postFile('statements/import-opening-balance', formData)
 		.then(res => {
 			console.log(res)
 			if (!res.errors) history.push('/statements')
@@ -81,4 +79,4 @@ function ImportCatalog () {
 
 
 
-export default ImportCatalog;
+export default ImportOpeningBalance;

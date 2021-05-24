@@ -33,6 +33,8 @@ import ImportOpeningBalance from './ImportOpeningBalance'
 
 import { makeStyles } from '@material-ui/core/styles';
 
+import { service } from '../_services/services.js'
+
 const useStyles = makeStyles(theme => ({
 		paper: {
 			padding: 20,
@@ -55,7 +57,6 @@ function Settings() {
 
 	const history = useHistory();
 
-
 	function handleClose() {
 		setOpen(false)
 	}
@@ -70,11 +71,10 @@ function Settings() {
 	const [orderSettings, setOrderSettings] = useState([])
 
 	function getOrderSettings() {
-				fetch('http://localhost:5000/settings/order-fee')
-				.then(res => res.json())
-				.then(json => {
-					const sorted = [...json].sort((a, b) => (a.distributor_name > b.distributor_name))
-					setOrderSettings(sorted)
+			service.getAll('settings/order-fee')
+			.then(json => {
+				const sorted = [...json].sort((a, b) => (a.distributor_name > b.distributor_name))
+				setOrderSettings(sorted)
 
 	})
 	}
@@ -84,10 +84,7 @@ function Settings() {
 			}, [])
 
 	function onSubmit(data) {
-		fetch('http://localhost:5000/settings/order-fee', {
-							method: 'PUT',
-							body: JSON.stringify(data['row'])
-		})
+		service.put('http://localhost:5000/settings/order-fee', data['row'])
 		.then(res => getOrderSettings())
 	}
 

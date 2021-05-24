@@ -9,7 +9,7 @@ import Typography from '@material-ui/core/Typography'
 import NativeSelect from '@material-ui/core/NativeSelect'
 import CircularProgress from '@material-ui/core/CircularProgress'
 
-
+import { service } from '../_services/services.js'
 
 function AddStatementForm(props) {
 
@@ -26,36 +26,16 @@ function AddStatementForm(props) {
 			
 			formData.append('file', file)
 			formData.append('statement_source', data.source_statement)
-			fetch('http://localhost:5000/income/import-sales', {
-					method: 'POST',
-					body: formData
-				})
-			.then(resp => resp.json())
+
+			service.postFile('income/import-sales', formData)
 			.then(res => {props.getMatchingErrors()})
 			.then(res => {props.getRefundMatchingErrors()})
 			.then(res => {props.getTrackMatchingErrors()})
 			.then(res => {props.getPendingStatements()})
 			.then(res => props.setLoading(false))
 			.catch(error => setMsg('Error uploading'))
-			console.log(file)
 		}
 		
-		// const formData = new FormData()
-
-		// props.setLoading(true)
-		
-		// formData.append('file', data.file_upload[0])
-		// formData.append('statement_source', data.source_statement)
-		// fetch('http://localhost:5000/income/import-sales', {
-		// 		method: 'POST',
-		// 		body: formData
-		// 	})
-		// .then(resp => resp.json())
-		// .then(res => {props.getMatchingErrors()})
-		// .then(res => {props.getTrackMatchingErrors()})
-		// .then(res => {props.getPendingStatements()})
-		// .then(res => props.setLoading(false))
-		// .catch(error => setMsg('Error uploading'))
 	}
 
 	const [msg, setMsg] = useState('')
@@ -63,8 +43,7 @@ function AddStatementForm(props) {
 	const [distributors, setDistributors] = useState([])
 
 	useEffect(() => {
-				fetch('http://localhost:5000/income/distributors')
-				.then(res => res.json())
+				service.getAll('income/distributors')
 				.then(json => setDistributors(json))
 			}, [])
 

@@ -28,6 +28,8 @@ import ConditionalButton from '../components/ConditionalButton'
 
 import { makeStyles } from '@material-ui/core/styles'
 
+import { service } from '../_services/services.js'
+
 const useStyles = makeStyles(theme => ({
 	paper: {
 		padding: 20,
@@ -41,8 +43,7 @@ function VersionFields(props) {
 	const [bundleVersions, setBundleVersions] = useState([])
 
 	useEffect(() => { 
-		fetch('http://localhost:5000/version')
-		.then(res => res.json())
+		service.getAll('version')
 		.then(json => {setBundleVersions(json)
 		})
 	}, [])

@@ -13,6 +13,8 @@ import Header from '../components/Header'
 import AddStatementForm from './AddStatementForm'
 import PendingImports from '../components/PendingImports'
 
+import { service } from '../_services/services.js'
+
 const useStyles = makeStyles(theme => ({
 	paper: {
 		padding: 20,
@@ -34,48 +36,39 @@ function IncomeImport() {
 	const [ loading, setLoading ] = useState(false)
 
 	useEffect(() => {
-		fetch('http://localhost:5000/income/pending-statements')
-		.then(res => res.json())
+		service.getAll('income/pending-statements')
 		.then(json => setPendingStatements(json))
 	}, [])
 
 	function getPendingStatements() {
-		fetch(`http://localhost:5000/income/pending-statements`)
-		.then(res => res.json())
+		service.getAll('income/pending-statements')
 		.then(res => setPendingStatements(res))
 	}
 
 	useEffect(() => { 
-			fetch(`http://localhost:5000/income/matching-errors`)
-			.then(res => res.json())
+		service.getAll('income/matching-errors')
 			.then(res => res.length)
 			.then(res => setMatchingErrors(res))
 			.catch(error => setMatchingErrorsMsg('Error!'))
-			.then(res => fetch(`http://localhost:5000/income/track-matching-errors`))
-			.then(res => res.json())
-			.then(res => res.length)
-			.then(res => setTrackMatchingErrors(res))
+			.then(res => getTrackMatchingErrors())
 			.then(res => getRefundMatchingErrors())
 
 	}, [])
 
 	function getMatchingErrors() {
-		fetch(`http://localhost:5000/income/matching-errors`)
-		.then(res => res.json())
+		service.getAll('income/matching-errors')
 		.then(res => res.length)
 		.then(res => setMatchingErrors(res))
 	}
 
 	function getTrackMatchingErrors() {
-		fetch(`http://localhost:5000/income/track-matching-errors`)
-		.then(res => res.json())
+		service.getAll('income/track-matching-errors')
 		.then(res => res.length)
 		.then(res => setTrackMatchingErrors(res))
 	}
 
 	function getRefundMatchingErrors() {
-		fetch(`http://localhost:5000/income/refund-matching-errors`)
-		.then(res => res.json())
+		service.getAll('income/refund-matching-errors')
 		.then(res => res.length)
 		.then(res => setRefundMatchingErrors(res))
 	}
@@ -85,17 +78,12 @@ function IncomeImport() {
 	}
 
 	function processPending() {
-		fetch('http://localhost:5000/income/process-pending', {
-				method: 'POST'}
-		)
-		.then(res => res.json())
+		service.post('income/process-pending')
 		.then(res => history.push('/income'))
 	}
 	
 	function handleDelete(id) {
-		fetch(`http://localhost:5000/income/pending-statements/${id}`, {
-			  method: 'DELETE'
-		})
+		service._deleteItem(`income/pending-statements/${id}`)
 		.then(res => getPendingStatements())
 		.then(res => getMatchingErrors())
 		.then(res => getTrackMatchingErrors())

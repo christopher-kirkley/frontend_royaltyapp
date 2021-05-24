@@ -18,6 +18,8 @@ import StatementTable from './StatementTable'
 
 import { makeStyles } from '@material-ui/core/styles';
 
+import { service } from '../_services/services.js'
+
 const useStyles = makeStyles(theme => ({
 	paper: {
 		padding: 20,
@@ -33,8 +35,7 @@ function Statement() {
 	const [statements, setStatements] = useState([]);
 
 	useEffect(() => {
-		fetch('http://localhost:5000/statements')
-		.then(res => res.json())
+		service.getAll('statements')
 		.then(json => {
 			const sorted = [...json].sort(function(a, b){
 				if(a.statement_summary_table < b.statement_summary_table) {return -1;}
@@ -55,9 +56,7 @@ function Statement() {
 
 	function handleDelete(e) {
 		const id = e.currentTarget.value
-		fetch(`http://localhost:5000/statements/${id}`, {
-			method: 'DELETE'
-		})
+		service._deleteItem(`http://localhost:5000/statements/${id}`)
 		}
 
 	function handleEdit(e) {

@@ -15,6 +15,8 @@ import { makeStyles, useTheme } from '@material-ui/core/styles';
 import ApiStore from '../ApiStore';
 import { Context } from '../ApiStore';
 
+import { service } from '../_services/services.js'
+
 const useStyles = makeStyles((theme) => ({
 	paper: {
 			},
@@ -80,8 +82,7 @@ function UpdateForm(props) {
 	const [ tracks, setTracks ] = useState([])
 
 	useEffect(() => {
-				fetch('http://localhost:5000/tracks')
-				.then(res => res.json())
+				service.getAll('tracks')
 				.then(json => {
 					const sorted = [...json].sort(function(a, b){
 						if(a.isrc < b.isrc) {return -1;}
@@ -105,8 +106,7 @@ function UpdateForm(props) {
 	const [bundles, setBundles] = useState([])
 
 	useEffect(() => {
-				fetch('http://localhost:5000/bundle')
-				.then(res => res.json())
+				service.getAll('bundle')
 				.then(json => setBundles(json))
 			}, [])
 

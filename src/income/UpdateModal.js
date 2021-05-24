@@ -12,6 +12,8 @@ import Modal from '@material-ui/core/Modal';
 
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 
+import { service } from '../_services/services.js'
+
 const useStyles = makeStyles((theme) => ({
 	paper: {
 				position: 'absolute',
@@ -33,8 +35,7 @@ function UpdateModal(props) {
 	const [upcs, setUpcs] = useState([])
 
 	useEffect(() => {
-				fetch('http://localhost:5000/version')
-				.then(res => res.json())
+				service.getAll('version')
 				.then(json => setUpcs(json))
 			}, [])
 

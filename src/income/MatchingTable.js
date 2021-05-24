@@ -28,6 +28,8 @@ import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table'
 
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 
+import { service } from '../_services/services.js'
+
 const IndeterminateCheckbox = React.forwardRef(
   ({ indeterminate, ...rest }, ref) => {
     const defaultRef = React.useRef()
@@ -147,8 +149,7 @@ function MatchingTable(props) {
 	const [upcs, setUpcs] = useState([])
 
 	useEffect(() => {
-				fetch('http://localhost:5000/version')
-				.then(res => res.json())
+				service.getAll('version')
 				.then(json => setUpcs(json))
 			}, [])
 
@@ -180,10 +181,7 @@ function MatchingTable(props) {
 		{ var description = data['description']}
 		if (data['album_name'])
 		{ var album_name = data['album_name']}
-				fetch('http://localhost:5000/income/match-errors', {
-					method: 'PUT',
-					body: JSON.stringify(
-						{
+			const obj = {
 							'upc_id': data['new_value'],
 							'data_to_match' : 
 								[
@@ -199,15 +197,12 @@ function MatchingTable(props) {
 									}
 								]
 							}
-					)
-				})
-			.then(res => res.json())
+			service.put('income/match-errors', obj)
 			.then(json => {
 				props.setUpdated(json['updated'])
 				props.setAlert(true)
 			})
-			.then(res => fetch('http://localhost:5000/income/matching-errors'))
-			.then(res => res.json())
+			.then(res => service.getAll('income/matching-errors'))
 			.then(json => {
 				props.setRows(json)
 				if (json.length === 0 ) {
@@ -225,13 +220,11 @@ function MatchingTable(props) {
 			}
 		)
 			
-		fetch('http://localhost:5000/income/errors', {
-			method: 'DELETE',
-			body: JSON.stringify(
-				{
+		const obj = {
 					'selected_ids': newIds,
-				})})
-		.then(res => res.json())
+				}
+
+		service._delete('income/errors', obj)
 		.then(res => props.getMatchingErrors())
 	}
 
@@ -243,15 +236,13 @@ function MatchingTable(props) {
 			}
 		)
 			
-		fetch('http://localhost:5000/income/update-errors', {
-			method: 'PUT',
-			body: JSON.stringify(
-				{
+		const obj = {
 					'error_type': "upc",
 					'selected_ids': newIds,
 					'new_value': data['new_value']
-				})})
-		.then(res => res.json())
+				}
+
+		service.put('income/update-errors', obj)
 		.then(res => props.getMatchingErrors())
 	}
 
