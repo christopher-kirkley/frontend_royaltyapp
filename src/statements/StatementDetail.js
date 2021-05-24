@@ -22,7 +22,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import Header from '../components/Header'
 
-
+import { service } from '../_services/services.js'
 
 import { jsPDF } from "jspdf";
 import html2canvas from 'html2canvas'
@@ -49,8 +49,7 @@ function StatementDetail() {
 	const [msg, setMsg] = useState('')
 
 	useEffect(() => {
-		fetch(`http://localhost:5000/statements/${id}/artist/${artistId}`)
-		.then(res => res.json())
+		service.getAll(`statements/${id}/artist/${artistId}`)
 		.then(json => {
 			setArtistName(json['artist'])
 			setStatementName(json['statement'])
@@ -266,11 +265,6 @@ function StatementDetail() {
 		doc.save(`${artistName}-${statementName}.pdf`)
 	}
 	
-	function handleCSV() {
-		fetch(`http://localhost:5000/statements/${id}/artist/${artistId}/make-csv`)
-		.then(res => res.json())
-	}
-
 	async function asyncFunc() {
 		const resp = await axios({
 			url: `http://localhost:5000/statements/${id}/artist/${artistId}/export-csv`,
