@@ -143,7 +143,7 @@ function ArtistDetail () {
 			if (data.new_contact_prenom)
 			{ postContact(data) }
 		})
-		.then(res => service.getArtists())
+		.then(res => service.getAll('artists'))
 		.then(data => setArtists(data))
 
 	}

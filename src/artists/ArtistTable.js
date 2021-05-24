@@ -15,14 +15,18 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 import ApiStore from '../ApiStore';
 import { Context } from '../ApiStore';
 
+
 function ArtistTable() {
 	
 	const history = useHistory()
 	const { catalogContext, artistsContext, loadingContext } = useContext(Context)
 
 	const [artists, setArtists] = artistsContext
+	// const [ loading, setLoading ] = loadingContext
+	// console.log(artists)
+	const { loading, setLoading } = useState(false)
 
-	const [ loading, setLoading ] = loadingContext
+
 
 	function handleArtistDetail(id) {
 		history.push(`/artist/${id}`)

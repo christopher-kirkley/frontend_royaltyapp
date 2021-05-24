@@ -15,7 +15,6 @@ const ApiStore = ({ children }) => {
 	const [state, setState] = useState(initialState);
 	const [catalog, setCatalog] = useState([]);
 	const { session, setSession } = useContext(SessionContext)
-	console.log(session)
 
 	useEffect(() => { 
 		fetch('http://localhost:5000/catalog', {
@@ -38,15 +37,9 @@ const ApiStore = ({ children }) => {
 	
 	useEffect(() => { 
 		setLoading(true)
-		service.getArtists()
-		.then(res => {
-			const sorted = [...res].sort(function(a, b){
-				if(a.artist_name < b.artist_name) {return -1;}
-				if(a.artist_name > b.artist_name) {return 1;}
-			})
-			setArtists(sorted)
-			setLoading(false)
-		})
+		service.getAll('artists')
+		.then(data => setArtists(data))
+		.then(res => setLoading(false))
 		.catch(res => console.log('error'))
 	}, [session])
 
