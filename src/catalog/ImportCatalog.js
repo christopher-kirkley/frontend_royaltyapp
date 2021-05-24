@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Cookies from "js-cookie";
 
 import { useParams } from 'react-router-dom'
 
@@ -17,19 +18,17 @@ function ImportCatalog () {
 	const [ success, setSuccess ] = useState(false)
 	const [ error, setError ] = useState(false)
 
+	const csrf_token = Cookies.get('csrf_access_token')
+
 	function handleUpload(e) {
 		const file = e.target.upload.files
 		const formData = new FormData()
 		formData.append('CSV', file[0])
 		e.preventDefault()
 
-		// fetch('http://localhost:5000/catalog/import-catalog', {
-		// 		method: 'POST',
-		// 		body: formData
-		// 	})
 		service.postFile('catalog/import-catalog', formData)
-		// .then(res => setSuccess(true))
-		// .catch(error => setError(true))
+		.then(res => setSuccess(true))
+		.catch(error => setError(true))
 	}
 
 	return (
