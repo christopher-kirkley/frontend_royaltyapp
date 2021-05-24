@@ -10,6 +10,8 @@ import TextField from '@material-ui/core/TextField';
 
 import SnackbarAlert from '../components/SnackbarAlert'
 
+import { service } from '../_services/services.js'
+
 function ImportCatalog () {
 
 	const [ success, setSuccess ] = useState(false)
@@ -20,13 +22,14 @@ function ImportCatalog () {
 		const formData = new FormData()
 		formData.append('CSV', file[0])
 		e.preventDefault()
-		fetch('http://localhost:5000/catalog/import-catalog', {
-				method: 'POST',
-				body: formData
-			})
-		.then(resp => resp.json())
-		.then(res => setSuccess(true))
-		.catch(error => setError(true))
+
+		// fetch('http://localhost:5000/catalog/import-catalog', {
+		// 		method: 'POST',
+		// 		body: formData
+		// 	})
+		service.postFile('catalog/import-catalog', formData)
+		// .then(res => setSuccess(true))
+		// .catch(error => setError(true))
 	}
 
 	return (
