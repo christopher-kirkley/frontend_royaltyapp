@@ -124,8 +124,8 @@ function StatementEdit() {
 				'previous_balance_id': previousStatement,
 		}
 		
-		service._deleteItem(`statements/${id}/versions`, obj)
-		.then(res => service.putItem('statements', id, obj2))
+		service._delete(`statements/${id}/versions`, obj)
+		.then(res => service.put(`statements/${id}`, obj2))
 		.then(res => service.post(`statements/${id}/generate-summary`))
 		.catch(error => setMsg('Error uploading'))
 		.then(res => history.push('/statements/'))
