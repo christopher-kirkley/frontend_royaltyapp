@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import Cookies from "js-cookie";
 
 import { useParams } from 'react-router-dom'
@@ -12,13 +12,16 @@ import TextField from '@material-ui/core/TextField';
 import SnackbarAlert from '../components/SnackbarAlert'
 
 import { service } from '../_services/services.js'
+import { Context } from '../ApiStore';
 
 function ImportCatalog () {
 
 	const [ success, setSuccess ] = useState(false)
 	const [ error, setError ] = useState(false)
 
-	const csrf_token = Cookies.get('csrf_access_token')
+	const { catalogContext, artistsContext } = useContext(Context)
+	const [ catalog, setCatalog ] = catalogContext
+	const [ artists, setArtists ] = artistsContext
 
 	function handleUpload(e) {
 		const file = e.target.upload.files
@@ -27,6 +30,10 @@ function ImportCatalog () {
 		e.preventDefault()
 
 		service.postFile('catalog/import-catalog', formData)
+		.then(res => service.getAll('catalog'))
+		.then(json => setCatalog(json))
+		.then(res => service.getAll('artists'))
+		.then(json => setArtists(json))
 		.then(res => setSuccess(true))
 		.catch(error => setError(true))
 	}

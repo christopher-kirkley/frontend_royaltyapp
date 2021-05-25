@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 
 import { useParams } from 'react-router-dom'
 
@@ -19,6 +19,7 @@ import VersionDisplay from './VersionDisplay'
 import { makeStyles } from '@material-ui/core/styles'
 
 import { service } from '../_services/services';
+import { Context } from '../ApiStore';
 
 const useStyles = makeStyles(theme => ({
 	paper: {
@@ -28,7 +29,11 @@ const useStyles = makeStyles(theme => ({
 
 function CatalogAdd() {
 
+	const { catalogContext }  = useContext(Context)
+	const [ catalog, setCatalog ] = catalogContext
+
 	const [catalogId, setCatalogId] = useState(1)
+
 
 	const [edit, setEdit] = useState(true)
 
@@ -65,6 +70,7 @@ function CatalogAdd() {
 		service.postData('track', obj)
 	}
 
+
 	function onSubmit(data) {
 		setEdit(!edit)
 		
@@ -79,7 +85,8 @@ function CatalogAdd() {
 			addVersion(data, id),
 			addTracks(data, id))
 		)
-
+		.then(res => service.getAll('catalog'))
+		.then(json => setCatalog(json))
 	}
 
 	return (

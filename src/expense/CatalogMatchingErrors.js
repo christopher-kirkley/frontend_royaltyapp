@@ -28,7 +28,6 @@ function CatalogMatchingErrors(props) {
 
 	function getCatalogMatchingErrors() {
 		service.getAll('expense/catalog-matching-errors')
-		.then(res => res.json())
 		.then(json => {
 				setRows(json)
 				if (json.length === 0 ) {
