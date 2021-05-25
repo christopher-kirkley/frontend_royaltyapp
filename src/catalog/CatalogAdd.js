@@ -18,6 +18,8 @@ import VersionDisplay from './VersionDisplay'
 
 import { makeStyles } from '@material-ui/core/styles'
 
+import { service } from '../_services/services';
+
 const useStyles = makeStyles(theme => ({
 	paper: {
 		padding: 20,
@@ -44,33 +46,23 @@ function CatalogAdd() {
 
 	function addVersion(data, id) {
 		const newVersion = data['newVersion'] ? data['newVersion'] : ''
-		fetch('http://localhost:5000/version', {
-			method: 'POST',
-			body: JSON.stringify(
-				{'catalog': id,
-					'version': newVersion })
-							})
-				.then(res => res.json())
-				.then(res => console.log(res))
-				// .then(res => fetch(`http://localhost:5000/catalog/${id}`))
-				// .then(res => res.json())
-				// .then(json => setVersion(json['version']))
-				// .then(res => reset(version))
-			}
+		
+		const obj = {
+			'catalog': id,
+			'version': newVersion }
+		
+		service.postData('version', obj)
+		.then(res => console.log(res))
+		}
 
 	function addTracks(data, id) {
 		const newTrack = data['newTrack'] ? data['newTrack'] : ''
 
-		fetch('http://localhost:5000/track', {
-			method: 'POST',
-			body: JSON.stringify(
-				{'catalog': id,
-				'track': newTrack })
-		})
-		// .then(res => fetch(`http://localhost:5000/catalog/${id}`))
-		// .then(res => res.json())
-		// .then(json => setTrack(json['track']))
-		// .then(res => reset(track))
+		const obj = {
+			'catalog': id,
+			'track': newTrack }
+			
+		service.postData('track', obj)
 	}
 
 	function onSubmit(data) {
@@ -80,11 +72,8 @@ function CatalogAdd() {
 		const catalog_name = data.catalog_name
 		const artist_id = data.artist_id
 		
-		fetch('http://localhost:5000/catalog', {
-			method: 'POST',
-			body: JSON.stringify({ catalog_number, catalog_name, artist_id })
-		})
-		.then(res => res.json())
+		const obj = { catalog_number, catalog_name, artist_id }
+		service.postData('catalog', obj)
 		.then(res => res['id'])
 		.then(id => (
 			addVersion(data, id),

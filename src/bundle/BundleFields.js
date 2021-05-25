@@ -26,6 +26,7 @@ import { makeStyles } from '@material-ui/core/styles'
 
 import ApiStore from '../ApiStore';
 import { Context } from '../ApiStore';
+import { service } from '../_services/services';
 
 const useStyles = makeStyles(theme => ({
 	paper: {
@@ -53,8 +54,7 @@ function BundleFields(props) {
 
 	useEffect(() => { 
 		if (props.id) {
-			fetch(`http://localhost:5000/bundle/${props.id}`)
-			.then(res => res.json())
+			service.getAll(`bundle/${props.id}`)
 			.then(json => setBundle(json))
 	}}, [])
 

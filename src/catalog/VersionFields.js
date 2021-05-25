@@ -26,6 +26,7 @@ import Header from '../components/Header'
 import ConditionalButton from '../components/ConditionalButton'
 
 import { makeStyles } from '@material-ui/core/styles'
+import { service } from '../_services/services';
 
 const useStyles = makeStyles(theme => ({
 	paper: {
@@ -41,8 +42,7 @@ function VersionFields(props) {
 
 	useEffect(() => { 
 		if (props.id) {
-			fetch(`http://localhost:5000/catalog/${props.id}`)
-			.then(res => res.json())
+			service.getAll(`catalog/${props.id}`)
 			.then(json => setCatalog(json))
 	}}, [])
 
@@ -61,8 +61,7 @@ function VersionFields(props) {
 	const [artists, setArtists] = useState([])
 
 	useEffect(() => { 
-		fetch('http://localhost:5000/artists')
-		.then(res => res.json())
+		service.getAll('artists')
 		.then(json => setArtists(json))
 	}, [])
 

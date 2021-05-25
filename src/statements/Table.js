@@ -13,6 +13,7 @@ import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 
 import { makeStyles } from '@material-ui/core/styles';
+import { service } from '../_services/services.js'
 
 
 function ImportedStatementTable(props) {
@@ -26,9 +27,7 @@ function ImportedStatementTable(props) {
 
 	function handleDelete(e) {
 		const id = e.currentTarget.value
-		fetch(`http://localhost:5000/expense/statements/${id}`, {
-			method: 'DELETE'
-		})
+		service._delete('expense/statements', id)
 		.then(res => {props.getImportedExpense()})
 		}
 

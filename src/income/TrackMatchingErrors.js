@@ -14,6 +14,8 @@ import TrackMatchingTable from './TrackMatchingTable'
 import Snackbar from '@material-ui/core/Snackbar';
 import Alert from '@material-ui/lab/Alert';
 
+import { service } from '../_services/services';
+
 function TrackMatchingErrors(props) {
 
 	const history = useHistory()
@@ -25,8 +27,7 @@ function TrackMatchingErrors(props) {
 	const [ alert, setAlert ] = useState(false)
 
 	function getTrackMatchingErrors() {
-		fetch('http://localhost:5000/income/track-matching-errors')
-		.then(res => res.json())
+		service.getAll('income/track-matching-errors')
 		.then(json => {
 			setRows(json)
 			if (json.length === 0 ) {

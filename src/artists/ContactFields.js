@@ -25,6 +25,7 @@ import { makeStyles } from '@material-ui/core/styles'
 
 import ApiStore from '../ApiStore';
 import { Context } from '../ApiStore';
+import { service } from '../_services/services';
 
 const useStyles = makeStyles(theme => ({
 	paper: {
@@ -47,11 +48,7 @@ function ContactFields(props) {
 	const [contacts, setContacts] = useState([])
 	
 	useEffect(() => { 
-			fetch('http://localhost:5000/contacts', {
-				method: 'GET',
-				credentials: 'include'
-			})
-			.then(res => res.json())
+			service.getAll('contacts')
 			.then(json => {
 				setContacts(json)
 			})
@@ -67,11 +64,7 @@ function ContactFields(props) {
 
 	function getContact(id) {
 	if (id != 'none' && id != 'new') {
-		fetch(`http://localhost:5000/contacts/${id}`, {
-			method: 'GET',
-			credentials: 'include'
-		})
-		.then(res => res.json())
+		service.getAll(`contacts/${id}`)
 		.then(json => setContact(json))
 		console.log(contact)
 	}

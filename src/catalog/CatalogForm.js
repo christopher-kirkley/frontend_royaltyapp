@@ -27,6 +27,7 @@ import VersionFields from './VersionFields'
 import TrackFields from './TrackFields'
 
 import { makeStyles } from '@material-ui/core/styles'
+import { service } from '../_services/services.js'
 
 const useStyles = makeStyles(theme => ({
 	paper: {
@@ -50,8 +51,7 @@ function CatalogForm(props) {
 
 	useEffect(() => { 
 		if (props.id) {
-			fetch(`http://localhost:5000/catalog/${props.id}`)
-			.then(res => res.json())
+			service.getAll(`catalog/${props.id}`)
 			.then(json => (
 				setCatalog(json),
 				getTracks(json),
@@ -61,9 +61,9 @@ function CatalogForm(props) {
 	}}, [])
 
 	function getTracks(json) {
-			json['tracks'].sort((a, b) => a.track_number - b.track_number);
-			setTracks(json['tracks']);
-			setNumberOfTracks(json['tracks'].length)
+		json['tracks'].sort((a, b) => a.track_number - b.track_number);
+		setTracks(json['tracks']);
+		setNumberOfTracks(json['tracks'].length)
 	}
 
 	useEffect(() => {
@@ -80,32 +80,11 @@ function CatalogForm(props) {
 	
 	const { handleSubmit, setValue, control } = useForm()
 
-	// const [artists, setArtists] = useState([])
-
-	// useEffect(() => { 
-	// 	fetch('http://localhost:5000/artists')
-	// 	.then(res => res.json())
-	// 	.then(json => {
-	// 		const sorted = [...json].sort(function(a, b){
-	// 			if(a.artist_name < b.artist_name) {return -1;}
-	// 			if(a.artist_name > b.artist_name) {return 1;}
-	// 		})
-	// 		console.log(sorted)
-	// 		setArtists(sorted)
-	// 	})
-	// 	.then(res => {
-	// 		const artistChoices = artists.map((artist, i) =>
-	// 			<option id={artist.id} value={artist.id}>{artist.artist_name}</option>
-	// )
-	// 	})
-	// }, [])
-
-
 	const emptyRow = {format: '',
-										catalog_id: '',
-										upc: '',
-										version_name: '',
-										version_number: ''}
+					catalog_id: '',
+					upc: '',
+					version_name: '',
+					version_number: ''}
 
 	const { fields, append, remove } = useFieldArray(
 				{ control,
@@ -115,9 +94,9 @@ function CatalogForm(props) {
 				)
 
 	const emptyTrackRow = { track_number: '',
-													isrc: '',
-													artist_id: 1,
-													track_name: ''}
+							isrc: '',
+							artist_id: 1,
+							track_name: ''}
 
 
 	return (

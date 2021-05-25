@@ -19,6 +19,7 @@ import { useForm, Controller } from 'react-hook-form'
 import { useParams, useHistory } from 'react-router-dom'
 
 import { SessionContext } from '../hooks/SessionContext'
+import { service } from '../_services/services.js'
 
 function Copyright() {
   return (
@@ -76,12 +77,7 @@ export default function Login() {
 		const email = data.email
 		const password = data.password
 		console.log(data)
-		fetch('http://localhost:5000/login', {
-			method: 'POST',
-			body: JSON.stringify({ email, password }),
-			credentials: 'include'
-		})
-		.then(res => res.json())
+		service.postData('login', { email, password })
 		.then(data => {
 			if (data['success'] == 'true') {
 				setSession(true)

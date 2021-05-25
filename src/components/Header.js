@@ -14,6 +14,7 @@ import { useHistory } from 'react-router-dom'
 import history from '../hooks/history.js'
 
 import { SessionContext } from '../hooks/SessionContext'
+import { service } from '../_services/services.js'
 
 const drawerWidth = 220
 
@@ -43,11 +44,7 @@ function Header(props) {
 	const { session, setSession } = useContext(SessionContext)
 
 	function handleLogout() {
-		fetch('http://localhost:5000/logout', {
-			method: 'POST',
-			credentials: 'include'
-				})
-		.then(res => res.json())
+		service.post('logout')
 		.then(json => setSession(false))
 	}
 

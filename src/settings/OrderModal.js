@@ -29,6 +29,7 @@ import TableCell from '@material-ui/core/TableCell'
 import Modal from '@material-ui/core/Modal'
 
 import { makeStyles } from '@material-ui/core/styles';
+import { service } from '../_services/services';
 
 const useStyles = makeStyles(theme => ({
 		paper: {
@@ -51,8 +52,7 @@ function OrderModal(props) {
 	const [distributors, setDistributors] = useState([])
 
 	useEffect(() => {
-				fetch('http://localhost:5000/income/distributors')
-				.then(res => res.json())
+				service.getAll('income/distributors')
 				.then(json => setDistributors(json))
 			}, [])
 
@@ -76,18 +76,14 @@ function OrderModal(props) {
 		const order_limit = data.order_limit
 		const order_percentage = data.order_percentage
 		
-		fetch('http://localhost:5000/settings/order-fee', {
-			method: 'POST',
-			body: JSON.stringify(
-				{
+		const obj = {
 					distributor_id,
 					order_fee,
 					order_limit,
 					order_percentage,
-				})
-		})
+				}
+		service.postData('settings/order-fee', obj)
 		.then(res => props.handleClose(false))
-
 	}
 	
 	return (

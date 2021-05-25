@@ -26,6 +26,7 @@ import BundleFields from './BundleFields'
 import VersionFields from './VersionFields'
 
 import { makeStyles } from '@material-ui/core/styles'
+import { service } from '../_services/services';
 
 const useStyles = makeStyles(theme => ({
 	paper: {
@@ -44,8 +45,7 @@ function BundleForm(props) {
 
 	useEffect(() => { 
 		if (props.id) {
-			fetch(`http://localhost:5000/bundle/${props.id}`)
-			.then(res => res.json())
+			service.getAll(`bundle/${props.id}`)
 			.then(json => (
 				setBundle(json),
 				setBundleVersion(json['version_bundle'])

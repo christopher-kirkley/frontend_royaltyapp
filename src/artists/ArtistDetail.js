@@ -121,13 +121,7 @@ function ArtistDetail () {
 		const surnom = data.surnom
 		const contact_id = data.id ? data.id : ''
 
-		fetch(`http://localhost:5000/artists/${id}`, {
-			method: 'PUT',
-			body: JSON.stringify({ artist_name, prenom, surnom, contact_id }),
-			credentials: 'include',
-			headers: { 'X-CSRF-TOKEN': get_csrf_token() }, 
-		})
-		.then(res => res.json())
+		service.put(`artists/${id}`, { artist_name, prenom, surnom, contact_id })
 		.then(res => {
 			if (data.id)
 			{ updateContact(data) }
@@ -153,12 +147,7 @@ function ArtistDetail () {
 	}
 
 	function handleDelete() {
-		fetch(`http://localhost:5000/artists/${id}`, {
-			method: 'DELETE',
-			credentials: 'include',
-			headers: { 'X-CSRF-TOKEN': get_csrf_token() }, 
-		})
-		.then(res => res.json())
+		service._delete('artists', id)
 		.then(json => history.push('/artists/'))
 	}
 

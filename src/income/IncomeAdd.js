@@ -42,6 +42,8 @@ import {
 
 import { useForm, Controller, useFieldArray } from 'react-hook-form'
 
+import { service } from '../_services/services.js'
+
 const useStyles = makeStyles(theme => ({
 	paper: {
 		padding: 20,
@@ -77,13 +79,13 @@ function IncomeAdd() {
 	const [ importedIncome, setImportedIncome ] = useState([])
 
 	useEffect(() => {
-		fetch('http://localhost:5000/income/imported-statements')
+		service.getAll('income/imported-statements')
 		.then(res => res.json())
 		.then(json => setImportedIncome(json))
 	}, [])
 
 	function getImportedIncome() {
-		fetch('http://localhost:5000/income/imported-statements')
+		service.getAll('income/imported-statements')
 		.then(res => res.json())
 		.then(json => setImportedIncome(json))
 	}

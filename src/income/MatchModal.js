@@ -19,6 +19,7 @@ import { makeStyles, useTheme } from '@material-ui/core/styles';
 
 import ApiStore from '../ApiStore';
 import { Context } from '../ApiStore';
+import { service } from '../_services/services.js'
 
 const useStyles = makeStyles((theme) => ({
 		paper: {
@@ -76,8 +77,7 @@ function MatchModal(props) {
 	const [bundles, setBundles] = useState([])
 
 	useEffect(() => {
-				fetch('http://localhost:5000/bundle')
-				.then(res => res.json())
+				service.getAll('bundle')
 				.then(json => setBundles(json))
 			}, [])
 

@@ -10,6 +10,8 @@ import TextField from '@material-ui/core/TextField';
 
 import SnackbarAlert from '../components/SnackbarAlert'
 
+import { service } from '../_services/services.js'
+
 function BundleImport () {
 
 	const [ success, setSuccess ] = useState(false)
@@ -20,11 +22,7 @@ function BundleImport () {
 		const formData = new FormData()
 		formData.append('CSV', file[0])
 		e.preventDefault()
-		fetch('http://localhost:5000/bundle/import-bundle', {
-				method: 'POST',
-				body: formData
-			})
-		.then(resp => resp.json())
+		service.postFile('bundle/import-bundle', formData)
 		.then(res => setSuccess(true))
 		.catch(error => setError(true))
 	}

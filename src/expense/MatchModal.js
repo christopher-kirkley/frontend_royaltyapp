@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 
 import { useForm, Controller, useFieldArray } from 'react-hook-form'
 
@@ -17,6 +17,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 
+import { Context } from '../ApiStore';
 
 const useStyles = makeStyles((theme) => ({
 		paper: {
@@ -36,6 +37,12 @@ const useStyles = makeStyles((theme) => ({
 
 
 function MatchModal(props) {
+	const { catalogContext, trackContext, artistsContext, upcContext, loadingContext } = useContext(Context)
+	const [artists, setArtists] = artistsContext
+	const [catalog, setCatalog] = catalogContext
+	const [upcs, setUpcs] = upcContext
+	const [tracks, setTracks] = trackContext
+
 
 	const { register, control, handleSubmit, watch } =
 			useForm({
@@ -54,16 +61,6 @@ function MatchModal(props) {
 
 	const classes = useStyles();
 
-	const [upcs, setUpcs] = useState([])
-
-	const [tracks, setTracks] = useState([])
-
-	useEffect(() => {
-				fetch('http://localhost:5000/version')
-				.then(res => res.json())
-				.then(json => setUpcs(json))
-			}, [])
-
 	const upcChoices = upcs.map((upc) =>
 		{
 			return (
@@ -75,14 +72,6 @@ function MatchModal(props) {
 			)
 		})
 
-	const [artists, setArtists] = useState([])
-
-	useEffect(() => {
-				fetch('http://localhost:5000/artists')
-				.then(res => res.json())
-				.then(json => setArtists(json))
-			}, [])
-
 	const artistChoices = artists.map((artist) =>
 		{
 			return (
@@ -93,16 +82,6 @@ function MatchModal(props) {
 				</option>
 			)
 		})
-
-	useEffect(() => {
-				fetch('http://localhost:5000/tracks')
-				.then(res => res.json())
-				.then(json => {
-					const sorted = [...json].sort((a, b) => (a.isrc > b.isrc))
-					setTracks(sorted)
-				})
-			}, [])
-
 
 	const columnChoices = props.columns.map((column) =>
 		{
@@ -177,14 +156,6 @@ function MatchModal(props) {
 	)
 	}
 	}
-
-	const [ catalog, setCatalog ] = useState([])
-
-	useEffect(() => {
-				fetch('http://localhost:5000/catalog')
-				.then(res => res.json())
-				.then(json => setCatalog(json))
-			}, [])
 
 	function updateChoices() {
 		if (props.type === 'track') {

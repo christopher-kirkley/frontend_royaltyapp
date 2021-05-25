@@ -98,6 +98,7 @@ import ViewAgendaIcon from '@material-ui/icons/ViewAgenda';
 import { SessionContext } from './hooks/SessionContext'
 
 import history from './hooks/history'
+import { service } from './_services/services.js'
 
 function Main() {
 
@@ -153,9 +154,7 @@ function Main() {
 	function handleLogout() {
 		let data = Cookies.get('session')
 		if (data) {
-			fetch('http://localhost:5000/logout',
-				{credentials: 'include', method: 'POST'}
-			)
+			service.post('logout')
 		}
 		setSession(false)
 	}

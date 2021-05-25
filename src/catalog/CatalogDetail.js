@@ -59,7 +59,7 @@ function CatalogDetail(props) {
 			const obj = {
 				'catalog': id,
 				'version': data['version']}
-			service.putItem('version', obj)
+			service.put('version', obj)
 			}
 	}
 		
@@ -76,54 +76,23 @@ function CatalogDetail(props) {
 		const track = data['track'] ? data['track'] : ''
 		const newTrack = data['newTrack'] ? data['newTrack'] : ''
 
+		const obj_catalog = { catalog_number, catalog_name, artist_id }
+		const obj_version = { 'catalog': id, 'version': versions }
+
+		const obj_newVersion = { 'catalog': id, 'version': newVersions }
+		const obj_track = { 'catalog': id, 'tracks': track }
+		const obj_newTrack = { 'catalog': id, 'track': newTrack }
+
 		// send json to update
-		fetch(`http://localhost:5000/catalog/${id}`, {
-			method: 'PUT',
-			body: JSON.stringify({ catalog_number, catalog_name, artist_id }),
-		})
-		.then(res => res.json())
-		.then(res => 
-							fetch('http://localhost:5000/version', {
-												method: 'PUT',
-												body: JSON.stringify(
-																	{'catalog': id,
-																		'version': versions})
-											}))
-		.then(res => res.json())
-		.then(res => 
-			fetch('http://localhost:5000/version', {
-				method: 'POST',
-				body: JSON.stringify(
-					{'catalog': id,
-						'version': newVersions})
-								})
-		)
-		.then(res => res.json())
-		.then(res => 
-			fetch('http://localhost:5000/track', {
-				method: 'PUT',
-				body: JSON.stringify(
-					{'catalog': id,
-					'tracks': track}
-				)})
-		)
-		.then(res =>
-			fetch('http://localhost:5000/track', {
-				method: 'POST',
-				body: JSON.stringify(
-					{'catalog': id,
-					'track': newTrack })
-		}))
-
-
-
+		service.put(`catalog/${id}`, obj_catalog)
+		.then(res => service.put('version', obj_version))
+		.then(res => service.postData('version', obj_newVersion) )
+		.then(res => service.put('track', obj_track)) 
+		.then(res => service.postData('track', obj_newTrack))
 	}
 
 	function handleDelete() {
-		fetch(`http://localhost:5000/catalog/${id}`, {
-			method: 'DELETE',
-		})
-		.then(res => res.json())
+		service._deleteItem('catalog', id)
 		.then(json => history.push('/catalog/'))
 	}
 

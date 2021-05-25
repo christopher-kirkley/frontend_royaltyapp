@@ -14,6 +14,7 @@ import EditButton from '../components/EditButton'
 import Toggle from '../components/Toggle'
 
 import { makeStyles } from '@material-ui/core/styles'
+import { service } from '../_services/services';
 
 const useStyles = makeStyles(theme => ({
 	paper: {
@@ -51,24 +52,20 @@ function BundleDetail(props) {
 		arr.push.apply(arr, data.newBundleVersion)
 		const bundle_version = arr
 	
-		fetch(`http://localhost:5000/bundle`, {
-			method: 'PUT',
-			body: JSON.stringify({
-				bundle_id,
-				bundle_name,
-				bundle_number,
-				upc,
-				bundle_version
-			}),
-		})
+		const obj = {
+			bundle_id,
+			bundle_name,
+			bundle_number,
+			upc,
+			bundle_version
+		}
+		
+		service.put(`bundle`, obj)
 
 	}
 
 	function handleDelete() {
-		fetch(`http://localhost:5000/bundle/${id}`, {
-			method: 'DELETE',
-		})
-		.then(res => res.json())
+		service._delete('bundle', id)
 		.then(json => history.push('/bundle/'))
 	}
 

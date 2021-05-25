@@ -18,6 +18,7 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
+import { service } from '../_services/services';
 
 function IncomeTable(props) {
 
@@ -39,9 +40,7 @@ function IncomeTable(props) {
 
 	function handleDelete(e) {
 		const id = e.currentTarget.value
-		fetch(`http://localhost:5000/income/statements/${id}`, {
-			method: 'DELETE'
-		})
+		service._delete('income/statements', id)
 		.then(res => {props.getImportedIncome()})
 		}
 

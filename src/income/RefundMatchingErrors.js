@@ -14,6 +14,8 @@ import RefundMatchingTable from './RefundMatchingTable'
 import Snackbar from '@material-ui/core/Snackbar';
 import Alert from '@material-ui/lab/Alert';
 
+import { service } from '../_services/services.js'
+
 function RefundMatchingErrors(props) {
 
 	const history = useHistory()
@@ -25,8 +27,7 @@ function RefundMatchingErrors(props) {
 	const [ alert, setAlert ] = useState(false)
 
 	function getRefundMatchingErrors() {
-		fetch('http://localhost:5000/income/refund-matching-errors')
-		.then(res => res.json())
+		service.getAll('refund-matching-errors')
 		.then(json => {
 			setRows(json)
 			if (json.length === 0 ) {

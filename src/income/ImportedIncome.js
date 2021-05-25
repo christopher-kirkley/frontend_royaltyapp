@@ -12,6 +12,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import Header from '../components/Header'
 import IncomeTable from './IncomeTable'
 
+import { service } from '../_services/services.js'
+
 const useStyles = makeStyles(theme => ({
 	paper: {
 		padding: 20,
@@ -27,15 +29,12 @@ function ImportedIncome() {
 	const [ importedIncome, setImportedIncome ] = useState([])
 
 	useEffect(() => {
-		fetch('http://localhost:5000/income/imported-statements')
-		.then(res => res.json())
-		.then(json => setImportedIncome(json))
+		getImportedIncome()
 	}, [])
 
 
 	function getImportedIncome() {
-		fetch('http://localhost:5000/income/imported-statements')
-		.then(res => res.json())
+		service.getAll('income/imported-statements')
 		.then(json => setImportedIncome(json))
 	}
 

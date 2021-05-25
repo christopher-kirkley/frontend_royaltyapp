@@ -17,6 +17,8 @@ import IconButton from '@material-ui/core/IconButton';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 
+import { service } from '../_services/services.js'
+
 function ExpenseTable(props) {
 
 	const history = useHistory()
@@ -28,16 +30,12 @@ function ExpenseTable(props) {
 
 	function handleDelete(e) {
 		const id = e.currentTarget.value
-		fetch(`http://localhost:5000/expense/statements/${id}`, {
-			method: 'DELETE'
-		})
+		service._delete('expense/statements', id)
 		.then(res => {props.getImportedExpense()})
 		}
 
 	const rows = (Object.keys(props.importedExpense).map((row) =>
 		row))
-
-	console.log(props.importedExpense)
 
 	function Row(props) {
 		const { row } = props

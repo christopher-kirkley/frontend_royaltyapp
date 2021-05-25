@@ -16,6 +16,8 @@ import EditButton from '../components/EditButton'
 
 import { makeStyles } from '@material-ui/core/styles'
 
+import { service } from '../_services/services.js'
+
 const useStyles = makeStyles(theme => ({
 	paper: {
 		padding: 20,
@@ -37,7 +39,7 @@ function BundleAdd() {
 	const classes = useStyles()
 
 	function handleCancel(props) {
-			history.push('/bundle/')
+		history.push('/bundle/')
 	}
 
 	function onSubmit(data) {
@@ -48,12 +50,10 @@ function BundleAdd() {
 		const bundle_name = data.bundle_name
 		const upc = data.upc
 		const bundle_version = data.newBundleVersion
-		
-		fetch('http://localhost:5000/bundle', {
-			method: 'POST',
-			body: JSON.stringify({ bundle_number, bundle_name, upc, bundle_version })
-		})
 
+		const obj = { bundle_number, bundle_name, upc, bundle_version }
+		
+		service.postData('bundle', obj)
 	}
 
 	return (

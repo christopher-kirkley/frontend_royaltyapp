@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 
 import { useForm, Controller } from 'react-hook-form'
 
@@ -11,6 +11,9 @@ import NativeSelect from '@material-ui/core/NativeSelect'
 import Modal from '@material-ui/core/Modal';
 
 import { makeStyles, useTheme } from '@material-ui/core/styles';
+
+import { Context } from '../ApiStore';
+
 
 const useStyles = makeStyles((theme) => ({
 	paper: {
@@ -25,18 +28,13 @@ const useStyles = makeStyles((theme) => ({
 
 
 function UpdateModal(props) {
+	const { catalogContext, artistsContext, upcContext, loadingContext } = useContext(Context)
 
 	const { register, control, handleSubmit } = useForm()
 
 	const classes = useStyles();
 
-	const [upcs, setUpcs] = useState([])
-
-	useEffect(() => {
-				fetch('http://localhost:5000/version')
-				.then(res => res.json())
-				.then(json => setUpcs(json))
-			}, [])
+	const [upcs, setUpcs] = upcContext
 
 	const upcChoices = upcs.map((upc) =>
 		{
@@ -89,13 +87,7 @@ function UpdateModal(props) {
 
 	const [ upc, setUpc ] = useState(false)
 
-	const [artists, setArtists] = useState([])
-
-	useEffect(() => {
-				fetch('http://localhost:5000/artists')
-				.then(res => res.json())
-				.then(json => setArtists(json))
-			}, [])
+	const [artists, setArtists] = artistsContext
 
 	const artistChoices = artists.map((artist) =>
 		{
@@ -108,24 +100,19 @@ function UpdateModal(props) {
 			)
 		})
 
-	const [ catalog, setCatalog ] = useState([])
+	const [ catalog, setCatalog ] = catalogContext
 
-	useEffect(() => {
-				fetch('http://localhost:5000/catalog')
-				.then(res => res.json())
-				.then(json => setCatalog(json))
-			}, [])
 
-		const catalogChoices = catalog.map((catalog) =>
-			{
-				return (
-					<option
-						id={catalog.catalog_id}
-						value={catalog.catalog_number}
-					>{catalog.catalog_number}
-					</option>
-				)
-			})
+	const catalogChoices = catalog.map((catalog) =>
+		{
+			return (
+				<option
+					id={catalog.catalog_id}
+					value={catalog.catalog_number}
+				>{catalog.catalog_number}
+				</option>
+			)
+		})
 		
 	function updateChoices() {
 		if (props.type == 'artist') {return artistChoices}

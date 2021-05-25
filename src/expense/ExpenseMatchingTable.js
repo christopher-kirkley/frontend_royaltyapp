@@ -29,6 +29,8 @@ import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table'
 
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 
+import { service } from '../_services/services.js'
+
 const IndeterminateCheckbox = React.forwardRef(
   ({ indeterminate, ...rest }, ref) => {
     const defaultRef = React.useRef()
@@ -145,54 +147,6 @@ function ExpenseMatchingTable(props) {
 
 	function onSubmit(data) {
 		console.log(data)
-		// if (data['date'])
-		// { var distributor = data['date']}
-		// if (data['vendor'])
-		// { var upc_id = data['vendor']}
-		// if (data['artist_name'])
-		// { var catalog_id = data['artist_name']}
-		// if (data['type'])
-		// { var type = data['type']}
-		// if (data['medium'])
-		// { var medium = data['medium']}
-		// if (data['version_number'])
-		// { var version_number = data['version_number']}
-		// if (data['description'])
-		// { var description = data['description']}
-		// 		fetch('http://localhost:5000/expense/update-errors', {
-		// 			method: 'PUT',
-		// 			body: JSON.stringify(
-		// 				{
-		// 					'upc_id': data['new_value'],
-		// 					'data_to_match' : 
-		// 						[
-		// 							{
-		// 								'distributor': distributor,
-		// 								'upc_id': upc_id,
-		// 								'catalog_id': catalog_id,
-		// 								'type': type,
-		// 								'version_number': version_number,
-		// 								'medium': medium,
-		// 								'description': description,
-		// 							}
-		// 						]
-		// 					}
-		// 			)
-		// 		})
-		// 	.then(res => res.json())
-		// 	.then(json => {
-		// 		props.setUpdated(json['updated'])
-		// 		props.setAlert(true)
-		// 	})
-		// 	.then(res => fetch('http://localhost:5000/income/matching-errors'))
-		// 	.then(res => res.json())
-		// 	.then(json => {
-		// 		props.setRows(json)
-		// 		if (json.length === 0 ) {
-		// 			history.push('/income/import')
-		// 		}
-		// 	})
-		// 	.then(res => setMatchOpen(false))
 	}
 
 	function submitUpdateErrors(data) {
@@ -203,15 +157,13 @@ function ExpenseMatchingTable(props) {
 			}
 		)
 			
-		fetch('http://localhost:5000/expense/update-errors', {
-			method: 'PUT',
-			body: JSON.stringify(
-				{
-					'error_type': props.type,
-					'selected_ids': newIds,
-					'new_value': data['new_value']
-				})})
-		.then(res => res.json())
+		const obj = {
+				'error_type': props.type,
+				'selected_ids': newIds,
+				'new_value': data['new_value']
+			}
+
+		service.put('expense/update-errors', obj)
 		.then(res => props.getMatchingErrors())
 	}
 

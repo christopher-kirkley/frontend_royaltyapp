@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useHistory } from "react-router-dom";
 
 import Alert from '@material-ui/lab/Alert';
@@ -28,6 +28,9 @@ import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table'
 
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 
+import { Context } from '../ApiStore';
+import { service } from '../_services/services';
+
 const IndeterminateCheckbox = React.forwardRef(
   ({ indeterminate, ...rest }, ref) => {
     const defaultRef = React.useRef()
@@ -47,6 +50,9 @@ const IndeterminateCheckbox = React.forwardRef(
 
 
 function TrackMatchingTable(props) {
+
+	const { catalogContext, artistsContext, upcContext, trackContext } = useContext(Context)
+	const [ upcs, setUpcs ] = upcContext
 
 	const history = useHistory()
 
@@ -142,14 +148,6 @@ function TrackMatchingTable(props) {
 	function handleMatch() {
 	}
 
-	const [upcs, setUpcs] = useState([])
-
-	useEffect(() => {
-				fetch('http://localhost:5000/version')
-				.then(res => res.json())
-				.then(json => setUpcs(json))
-			}, [])
-
 	const upcChoices = upcs.map((upc) =>
 		{
 			return (
@@ -179,33 +177,28 @@ function TrackMatchingTable(props) {
 		{ var version_number = data['version_number']}
 		if (data['description'])
 		{ var description = data['description']}
-				fetch('http://localhost:5000/income/update-track-errors', {
-					method: 'PUT',
-					body: JSON.stringify(
-						{
-							'isrc_id': data['new_value'],
-							'data_to_match' : 
-								[
-									{
-										'distributor': distributor,
-										'upc_id': upc_id,
-										'isrc_id': isrc_id,
-										'catalog_id': catalog_id,
-										'type': type,
-										'version_number': version_number,
-										'medium': medium,
-										'description': description,
-									}
-								]
+		const obj = {
+					'isrc_id': data['new_value'],
+					'data_to_match' : 
+						[
+							{
+								'distributor': distributor,
+								'upc_id': upc_id,
+								'isrc_id': isrc_id,
+								'catalog_id': catalog_id,
+								'type': type,
+								'version_number': version_number,
+								'medium': medium,
+								'description': description,
 							}
-					)
-				})
-			.then(res => res.json())
+						]
+					}
+			service.put('income/update-track-errors', obj)
 			.then(json => {
 				props.setUpdated(json['updated'])
 				props.setAlert(true)
 			})
-			.then(res => fetch('http://localhost:5000/income/track-matching-errors'))
+			.then(res => service.getAll('income/track-matching-errors'))
 			.then(res => res.json())
 			.then(json => {
 				props.setRows(json)
@@ -224,13 +217,8 @@ function TrackMatchingTable(props) {
 			}
 		)
 			
-		fetch('http://localhost:5000/income/errors', {
-			method: 'DELETE',
-			body: JSON.stringify(
-				{
-					'selected_ids': newIds,
-				})})
-		.then(res => res.json())
+		const obj = { 'selected_ids': newIds }
+		service._delete('http://localhost:5000/income/errors')
 		.then(res => props.getMatchingErrors())
 	}
 
@@ -242,15 +230,12 @@ function TrackMatchingTable(props) {
 			}
 		)
 
-		fetch('http://localhost:5000/income/update-errors', {
-			method: 'PUT',
-			body: JSON.stringify(
-				{
+		const obj = {
 					'error_type': 'isrc',
 					'selected_ids': newIds,
 					'new_value': data['new_value']
-				})})
-		.then(res => res.json())
+				}
+		service.put('income/update-errors', obj)
 		.then(res => props.getMatchingErrors())
 	}
 

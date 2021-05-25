@@ -23,18 +23,6 @@ function CatalogTable() {
 
 	const history = useHistory()
 
-	// useEffect(() => { 
-	// 	fetch('http://localhost:5000/catalog')
-	// 	.then(res => res.json())
-	// 	.then(json => {
-	// 		const sorted = [...json].sort(function(a, b){
-	// 			if(a.catalog_number < b.catalog_number) {return -1;}
-	// 			if(a.catalog_number > b.catalog_number) {return 1;}
-	// 		})
-	// 		setCatalog(sorted)
-	// 	})
-	// }, [])
-
 	function handleCatalogDetail(id) {
 		history.push(`/catalog/${id}`)
 	}

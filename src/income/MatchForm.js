@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 
 import { useForm, Controller, useFieldArray } from 'react-hook-form'
 
@@ -15,6 +15,8 @@ import DeleteIcon from '@material-ui/icons/Delete';
 
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 
+import { Context } from '../ApiStore';
+
 const useStyles = makeStyles((theme) => ({
 		paper: {
 					backgroundColor: theme.palette.background.paper,
@@ -26,6 +28,9 @@ const useStyles = makeStyles((theme) => ({
 
 
 function MatchForm(props) {
+	const { upcContext, artistsContext, loadingContext } = useContext(Context)
+
+	const [upcs, setUpcs] = upcContext
 
 	const { register, control, handleSubmit, watch } = useForm({
 		defaultValues: {
@@ -39,14 +44,6 @@ function MatchForm(props) {
 	})
 
 	const classes = useStyles();
-
-	const [upcs, setUpcs] = useState([])
-
-	useEffect(() => {
-				fetch('http://localhost:5000/version')
-				.then(res => res.json())
-				.then(json => setUpcs(json))
-			}, [])
 
 	const upcChoices = upcs.map((upc) =>
 		{

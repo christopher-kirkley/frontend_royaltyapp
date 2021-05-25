@@ -16,6 +16,8 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
+import { service } from '../_services/services.js'
+
 const useStyles = makeStyles(theme => ({
 	paper: {
 		padding: 20,
@@ -31,20 +33,11 @@ function Income() {
 	const [ importedIncome, setImportedIncome ] = useState({})
 
 	useEffect(() => {
-		fetch('http://localhost:5000/income/imported-statements', {
-			method: 'GET',
-			credentials: 'include'
-		})
-		.then(res => res.json())
-		.then(json => setImportedIncome(json))
+		getImportedIncome()
 	}, [])
 
 	function getImportedIncome() {
-		fetch('http://localhost:5000/income/imported-statements', {
-			method: 'GET',
-			credentials: 'include'
-		})
-		.then(res => res.json())
+		service.getAll('income/imported-statements')
 		.then(json => setImportedIncome(json))
 	}
 

@@ -15,6 +15,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import ArtistFields from './ArtistFields'
 import ContactFields from './ContactFields'
 import Header from '../components/Header'
+import { service } from '../_services/services';
  
 const useStyles = makeStyles(theme => ({
 	paper: {
@@ -48,11 +49,7 @@ function ArtistForm (props) {
 		
 		// check to see if new record or editing existing record
 		if (props.type !== 'add') {
-		fetch(`http://localhost:5000/artists/${id}`, {
-			credentials: 'include',
-			method: 'GET',
-		})
-		.then(res => res.json())
+		service.getAll(`artists/${id}`)
 		.then(json => {
 			console.log(json)
 			setArtist(json)

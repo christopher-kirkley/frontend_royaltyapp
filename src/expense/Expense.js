@@ -39,14 +39,12 @@ function Expense() {
 	const [ importedExpense, setImportedExpense ] = useState({})
 
 	useEffect(() => {
-		service.getAll('expense/imported-statements')
-		.then(json => (setImportedExpense(json)))
+		getImportedExpense()
 	}, [])
 
 	function getImportedExpense() {
-		fetch('http://localhost:5000/expense/imported-statements')
-		.then(res => res.json())
-		.then(json => setImportedExpense(json))
+		service.getAll('expense/imported-statements')
+		.then(json => (setImportedExpense(json)))
 	}
 
 	function handleImport() {

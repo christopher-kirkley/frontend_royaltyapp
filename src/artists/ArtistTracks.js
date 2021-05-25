@@ -19,7 +19,8 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 
 import Header from '../components/Header'
- 
+import { service } from '../_services/services.js'
+
 const useStyles = makeStyles(theme => ({
 	paper: {
 		padding: 20,
@@ -45,11 +46,7 @@ function ArtistTracks (props) {
 	const history = useHistory();
 
 	useEffect(() => { 
-		fetch(`http://localhost:5000/artists/${id}/track`, {
-			credentials: 'include',
-			method: 'GET'
-	})
-		.then(res => res.json())
+		service.getAll(`artists/${id}/track`)
 		.then(json => {
 			// const sorted = [...json].sort(function(a, b){
 			// 	if(a.catalog_number < b.catalog_number) {return -1;}

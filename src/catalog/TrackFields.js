@@ -30,6 +30,7 @@ import { makeStyles } from '@material-ui/core/styles'
 
 import ApiStore from '../ApiStore';
 import { Context } from '../ApiStore';
+import { service } from '../_services/services.js'
 
 const useStyles = makeStyles(theme => ({
 	paper: {
@@ -49,8 +50,7 @@ function TrackFields(props) {
 
 	useEffect(() => { 
 		if (props.id) {
-			fetch(`http://localhost:5000/catalog/${props.id}`)
-			.then(res => res.json())
+			service.getAll(`catalog/${props.id}`)
 			.then(json => setCatalog(json))
 	}}, [])
 

@@ -17,11 +17,7 @@ const ApiStore = ({ children }) => {
 	const { session, setSession } = useContext(SessionContext)
 
 	useEffect(() => { 
-		fetch('http://localhost:5000/catalog', {
-			credentials: 'include',
-			method: 'GET'
-		})
-		.then(res => res.json())
+		service.getAll('catalog')
 		.then(json => {
 			const sorted = [...json].sort(function(a, b){
 				if(a.catalog_number < b.catalog_number) {return -1;}
@@ -46,11 +42,7 @@ const ApiStore = ({ children }) => {
 	const [upcs, setUpcs] = useState([])
 
 	useEffect(() => {
-		fetch('http://localhost:5000/version', {
-			credentials: 'include',
-			method: 'GET'
-		})
-			.then(res => res.json())
+		service.getAll('version')
 			.then(json => {
 				const sorted = [...json].sort(function(a, b){
 					if(a.version_number < b.version_number) {return -1;}
@@ -64,11 +56,7 @@ const ApiStore = ({ children }) => {
 	const [tracks, setTracks] = useState([])
 
 	useEffect(() => {
-		fetch('http://localhost:5000/tracks', {
-			credentials: 'include',
-			method: 'GET'
-		})
-			.then(res => res.json())
+		service.getAll('tracks')
 			.then(json => {
 				const sorted = [...json].sort(function(a, b){
 					if(a.isrc < b.isrc) {return -1;}
