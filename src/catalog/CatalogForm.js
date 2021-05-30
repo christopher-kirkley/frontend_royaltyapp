@@ -99,11 +99,34 @@ function CatalogForm(props) {
 							track_name: ''}
 
 
+	function handleFile(e) {
+		console.log('handled')
+		console.log(e.target.files)
+	}
 	return (
 		<React.Fragment>
 			<form onSubmit={handleSubmit(props.onSubmit)} id="form">
 			<Grid container spacing={2}>
-				<Grid item xs={12}>
+				<Grid item xs={3}>
+					<Paper elevation={3} className={classes.paper}>
+					<Typography variant="h6" color="textSecondary" align="center">Image</Typography>
+						<input
+							accept="image/*"
+							className={classes.input}
+							style={{ display: 'none' }}
+							id="image_to_upload"
+							multiple
+							type="file"
+							onChange={handleFile}
+						/>
+						<label htmlFor="image_to_upload">
+							<Box border={1} width={200} height={200} style={{flex: 1}}>
+							<Typography variant="caption">+ Click to upload</Typography>
+							</Box>
+						</label>
+					</Paper>
+				</Grid>
+				<Grid item xs={9}>
 					<Paper elevation={3} className={classes.paper}>
 					<Typography variant="h6" color="textSecondary" align="center">Catalog Info</Typography>
 					<CatalogFields
