@@ -79,12 +79,14 @@ export default function Login() {
 		console.log(data)
 		service.postData('login', { email, password })
 		.then(data => {
-			if (data['success'] == 'true') {
-				setSession(true)
-				history.push('/dashboard')
-			} else { 
-				displayMessage()
-			}
+			setTimeout(() => {
+				if (data['success'] == 'true') {
+					setSession(true)
+					history.push('/dashboard')
+				} else { 
+					displayMessage()
+				}
+			}, 3000)
 		}
 		)
 		.catch(error => {

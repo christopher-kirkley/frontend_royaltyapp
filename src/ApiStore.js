@@ -34,8 +34,13 @@ const ApiStore = ({ children }) => {
 	useEffect(() => { 
 		setLoading(true)
 		service.getAll('artists')
-		.then(data => setArtists(data))
-		.then(res => setLoading(false))
+			.then(json => {
+				const sorted = [...json].sort(function(a, b){
+					if(a.artist_name < b.artist_name) {return -1;}
+					if(a.artist_name > b.artist_name) {return 1;}
+			})
+			setArtists(sorted)
+		})
 		.catch(res => console.log('error'))
 	}, [session])
 
