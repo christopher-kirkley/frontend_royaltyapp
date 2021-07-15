@@ -27,7 +27,7 @@ function RefundMatchingErrors(props) {
 	const [ alert, setAlert ] = useState(false)
 
 	function getRefundMatchingErrors() {
-		service.getAll('refund-matching-errors')
+		service.getAll('income/refund-matching-errors')
 		.then(json => {
 			setRows(json)
 			if (json.length === 0 ) {

@@ -56,16 +56,16 @@ function RefundMatchingTable(props) {
 	const data = React.useMemo( () => props.rows)
 
 	const columns = React.useMemo(
-				() => [
-								{ accessor: 'order_id', Header: 'Order ID'},
-								{ accessor: 'distributor', Header: 'Distributor'},
-								{ accessor: 'catalog_id', Header: 'Catalog'},
-								{ accessor: 'version_number', Header: 'Version'},
-								{ accessor: 'medium', Header: 'Medium'},
-								{ accessor: 'type', Header: 'Type'},
-								{ accessor: 'description', Header: 'Description'},
-								{ accessor: 'amount', Header: 'Amount'},
-				],
+		() => [
+			{ accessor: 'order_id', Header: 'Order ID'},
+			{ accessor: 'distributor', Header: 'Distributor'},
+			{ accessor: 'catalog_id', Header: 'Catalog'},
+			{ accessor: 'version_number', Header: 'Version'},
+			{ accessor: 'medium', Header: 'Medium'},
+			{ accessor: 'type', Header: 'Type'},
+			{ accessor: 'description', Header: 'Description'},
+			{ accessor: 'amount', Header: 'Amount'},
+		],
 		[])
 
 	 const {

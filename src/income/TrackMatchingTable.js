@@ -199,7 +199,6 @@ function TrackMatchingTable(props) {
 				props.setAlert(true)
 			})
 			.then(res => service.getAll('income/track-matching-errors'))
-			.then(res => res.json())
 			.then(json => {
 				props.setRows(json)
 				if (json.length === 0 ) {
