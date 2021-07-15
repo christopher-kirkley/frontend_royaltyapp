@@ -131,7 +131,7 @@ const _delete = async (resource, data) => {
 
 const _deleteItem = async (resource, id) => {
 	let resp = await fetch(`${BASE_URL}/${resource}/${id}`, {
-		method: 'PUT',
+		method: 'DELETE',
 		credentials: 'include',
 		headers: { 'X-CSRF-TOKEN': csrf_token() }, 
 	})
