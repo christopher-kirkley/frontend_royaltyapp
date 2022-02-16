@@ -83,7 +83,7 @@ function IncomeImport() {
 	}
 	
 	function handleDelete(id) {
-		service._deleteItem(`income/pending-statements/${id}`)
+		service._deleteItem('income/pending-statements', id)
 		.then(res => getPendingStatements())
 		.then(res => getMatchingErrors())
 		.then(res => getTrackMatchingErrors())

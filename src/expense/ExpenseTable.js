@@ -30,7 +30,7 @@ function ExpenseTable(props) {
 
 	function handleDelete(e) {
 		const id = e.currentTarget.value
-		service._delete('expense/statements', id)
+		service._delete(`/expense/statements/${id}`)
 		.then(res => {props.getImportedExpense()})
 		}
 
