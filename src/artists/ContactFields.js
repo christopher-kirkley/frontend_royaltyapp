@@ -50,7 +50,12 @@ function ContactFields(props) {
 	useEffect(() => { 
 			service.getAll('contacts')
 			.then(json => {
-				setContacts(json)
+				const sorted = [...json].sort(function(a, b){
+					if(a.prenom < b.prenom) {return -1;}
+					if(a.prenom > b.prenom) {return 1;}
+			})
+			setContacts(sorted)
+            console.log(sorted)
 			})
 
 	}, [])
@@ -65,9 +70,9 @@ function ContactFields(props) {
 	function getContact(id) {
 	if (id != 'none' && id != 'new') {
 		service.getAll(`contacts/${id}`)
-		.then(json => setContact(json))
-		console.log(contact)
-	}
+        .then(json => setContact(json))
+        }
+
 	}
 
 	

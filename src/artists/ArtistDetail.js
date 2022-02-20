@@ -78,6 +78,7 @@ function ArtistDetail () {
 	}
 
 	function postContact(data) {
+        console.log(data)
 		const contact_prenom = data.new_contact_prenom ? data.new_contact_prenom : ''
 		const contact_middle = data.new_contact_middle ? data.new_contact_middle : ''
 		const contact_surnom = data.new_contact_surnom ? data.new_contact_surnom : ''
@@ -91,6 +92,7 @@ function ArtistDetail () {
 			id,
 			contact_prenom,
 			contact_surnom,
+            contact_middle,
 			address,
 			phone,
 			bank_name,
@@ -99,7 +101,6 @@ function ArtistDetail () {
 		}
 
 		service.postItem('contacts', obj )
-		.then(res => res.json())
 		.then(json => {
 			const contact_id = json['id']
 			const artist_name = data.artist_name
@@ -129,7 +130,14 @@ function ArtistDetail () {
 			{ postContact(data) }
 		})
 		.then(res => service.getAll('artists'))
-		.then(data => setArtists(data))
+        .then(json => {
+            const sorted = [...json].sort(function(a, b){
+                if(a.artist_name < b.artist_name) {return -1;}
+                if(a.artist_name > b.artist_name) {return 1;}
+        })
+        setArtists(sorted)
+        })
+		// .then(data => setArtists(data))
 
 	}
 
